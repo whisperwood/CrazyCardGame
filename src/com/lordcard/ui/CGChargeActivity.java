@@ -14,17 +14,14 @@ public class CGChargeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		if (isYd(this)) { // 移动计费
 			Intent intent = new Intent();
-			intent.setClass(CGChargeActivity.this,
-					cn.cmgame.billing.api.GameOpenActivity.class);
-			// intent.setClassName(this,"cn.cmgame.billing.ui.GameOpenActivit");
+//			intent.setClass(CGChargeActivity.this,cn.cmgame.billing.api.GameOpenActivity.class);
 			startActivity(intent);
 			finish();
 		} else {
 			Intent intent2 = new Intent();
 			try {
 				int id = getId(this, "string", "g_class_name");
-				intent2.setClass(CGChargeActivity.this,
-						Class.forName(getString(id)));
+				intent2.setClass(CGChargeActivity.this,Class.forName(getString(id)));
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}

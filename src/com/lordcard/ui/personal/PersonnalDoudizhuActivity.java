@@ -130,6 +130,7 @@ import com.umeng.analytics.MobclickAgent;
 public class PersonnalDoudizhuActivity extends BaseActivity implements
 		IGameView, OnTouchListener, HasTiShiListenner, OnGestureListener,
 		InitMainGameInterface {
+	private static final String TAG = "PersonnalDoudizhuActivity";
 	/** 动画-无结束监听 */
 	public static final int IS_NONE = 11100;
 	/** 动画-头像移动 */
@@ -324,6 +325,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 		Database.JOIN_ROOM = room;
 		// 检测金豆
 		initGame(type);
+		Log.d("PersonnalDoudizhuActivity", "onCreate");
 	}
 
 	private void initGame(int type) {
@@ -362,7 +364,8 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 		messbtnView.setOnClickListener(clickListener);
 		GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 		if (cacheUser != null) {
-			MobclickAgent.onEventBegin(this, "单机斗地主：" + cacheUser.getAccount());
+			if(Constant.isPayEnable)
+				MobclickAgent.onEventBegin(this, "单机斗地主：" + cacheUser.getAccount());
 		}
 		// mGestureDetector = new GestureDetector(this);
 		// joinGame(true);
@@ -1212,6 +1215,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 	@Override
 	public void onStart() {
 		super.onStart();
+		Log.d("PersonnalDoudizhuActivity", "onStart");
 	}
 
 	@Override
@@ -1220,6 +1224,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 		playOrStopBgMusic();
 		// baoxiangIsShow = false;
 		leftJiPaiQiTurnPlateView.setLocation(Location.Top_Left);
+		Log.d("PersonnalDoudizhuActivity", "onResume");
 	}
 
 	@Override
@@ -2023,6 +2028,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 			@SuppressWarnings("unchecked")
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
+				Log.d(TAG,"handMessage_what:"+msg.what);
 				switch (msg.what) {
 				case 0: // 发牌更新界面
 					cancelTimer(); // 取消定时

@@ -14,7 +14,6 @@ import com.lordcard.common.util.ActivityUtils;
 import com.lordcard.common.util.DialogUtils;
 import com.lordcard.common.util.MultiScreenTool;
 import com.lordcard.constant.Database;
-import com.sdk.group.GroupPayActivity;
 import com.sdk.util.PaySite;
 import com.sdk.util.PayUtils;
 import com.sdk.util.SDKFactory;
@@ -67,7 +66,6 @@ public class PayDialog extends Dialog {
 				@Override
 				public void onClick(View v) {
 					Intent in = new Intent();
-					in.setClass(context, GroupPayActivity.class);
 					context.startActivity(in);
 					mst.unRegisterView(findViewById(R.id.pay_dialog_layout));
 					dismiss();

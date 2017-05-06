@@ -36,7 +36,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-import cn.cmgame.billing.api.GameInterface;
 import cn.egame.terminal.paysdk.EgamePay;
 import cn.play.dserv.CheckTool;
 import cn.play.dserv.ExitCallBack;
@@ -226,15 +225,8 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 		loginProgress = DialogUtils.getWaitProgressDialog(this, "登录中,请稍候...");
 		login(); // 登录
 		// 初始化移动SDK
-		if (CGChargeActivity.isYd(this)) {
-			GameInterface.initializeApp(this);
-		} else {
+		if(Constant.isPayEnable){
 			EgamePay.init(this);
-		}
-		if (Constant.DEBUG) {
-			PreferenceHelper.getMyPreference().getEditor()
-					.putBoolean("jingyin", !GameInterface.isMusicEnabled())
-					.commit();
 		}
 		GoogleAdsHelper.getInstance().showInterstitial();
 	}
@@ -973,7 +965,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 			 * { dialog.dismiss(); } }); builder.create().show();
 			 */
 			if (CGChargeActivity.isYd(this)) {
-				GameInterface.exit(this);
+//				GameInterface.exit(this);
 			} else {
 				this.runOnUiThread(new Runnable() {
 					@Override

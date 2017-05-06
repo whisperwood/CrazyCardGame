@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import com.lordcard.common.util.ActivityUtils;
 import com.lordcard.ui.CGChargeActivity;
 import com.lordcard.ui.LoginActivity;
-import com.sdk.group.GroupPayActivity;
 import com.sdk.jd.sms.util.JDSMSPayUtil;
 import com.sdk.sms.egame.EGameSMSpayUtil;
 import com.sdk.util.vo.PayInit;
@@ -110,6 +109,6 @@ public class SDKFactory {
 	 * @return
 	 */
 	public static Class<?> getPayView() {
-		return GroupPayActivity.class;
+		return null;
 	}
 }

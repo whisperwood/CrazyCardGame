@@ -49,44 +49,45 @@ public class StartActivity extends BaseActivity {
 		initMMChannel();
 		layout = new LinearLayout(this);
 		layout.setGravity(Gravity.CENTER);
-		layout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT));
+		layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT));
 		imageView = new ImageView(this);
 		if (CGChargeActivity.isYd(this)) {
-			imageView.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.start_game, false));
+			imageView.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.start_game, false));
 		} else {
-			imageView.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.start_game, false));
-			// imageView.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.start_game_dx,
-			// false));
+			imageView.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.start_game, false));
 		}
-		imageView.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT));
+		imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
 		layout.addView(imageView);
 		setContentView(layout);
 		sharedData = getApplication().getSharedPreferences(
 				Constant.GAME_ACTIVITE, Context.MODE_PRIVATE);
 		first = sharedData.getBoolean("first", true);
 		// 判断推送服务是否启动
-		Intent newIntent = new Intent(this, NotificationService.class);
-		startService(newIntent);
+		if(Constant.isPayEnable){
+			Intent newIntent = new Intent(this, NotificationService.class);
+			startService(newIntent);
+		}
 		Constant.startCount = 0;
-		ThreadPool.startWork(new Runnable() {
-			@Override
-			public void run() {
-				HttpRequest.loadJoinRoomTip(); // 加载房间提示信息
-				HttpRequest.loadGameNotice(); // 加载游戏公告
-			}
-		});
-		if (Database.CHECK_VERSION) {
-			new Thread() {
+		if(Constant.isPayEnable){
+			ThreadPool.startWork(new Runnable() {
 				@Override
 				public void run() {
-					Database.HAS_NEW_VERSION = UpdateUtils.checkNewVersion(
-							HttpURL.CONFIG_SER, HttpURL.APK_INFO);
-				};
-			}.start();
+					HttpRequest.loadJoinRoomTip(); // 加载房间提示信息
+					HttpRequest.loadGameNotice(); // 加载游戏公告
+				}
+			});
+		}
+		if(Constant.isPayEnable){
+			if (Database.CHECK_VERSION) {
+				new Thread() {
+					@Override
+					public void run() {
+						Database.HAS_NEW_VERSION = UpdateUtils.checkNewVersion(
+								HttpURL.CONFIG_SER, HttpURL.APK_INFO);
+					};
+				}.start();
+			}
 		}
 		HashMap<String, String> playMsg = new HashMap<String, String>();
 		playMsg.put(Constant.KEY_COUNT_PLAY_INNINGS, "0");
@@ -100,19 +101,21 @@ public class StartActivity extends BaseActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		ThreadPool.startWork(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					PayUtils.loadPayInitParam(); // 加载支付初始数据
-					PayUtils.loadPaySiteConfig(); // 加载计费点配置数据
-					HttpRequest.getComSettingDate(); // 获取所有的共用配置
-					/** 获取预充值配置参数 **/
-					PrerechargeManager.getPrerechargeParams();
-				} catch (Exception e) {
+		if(Constant.isPayEnable){
+			ThreadPool.startWork(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						PayUtils.loadPayInitParam(); // 加载支付初始数据
+						PayUtils.loadPaySiteConfig(); // 加载计费点配置数据
+						HttpRequest.getComSettingDate(); // 获取所有的共用配置
+						/** 获取预充值配置参数 **/
+						PrerechargeManager.getPrerechargeParams();
+					} catch (Exception e) {
+					}
 				}
-			}
-		});
+			});
+		}
 		startLogoAnim();
 	}
 
@@ -128,7 +131,7 @@ public class StartActivity extends BaseActivity {
 			public void run() {
 				goToLoginActivity();
 			}
-		}, 2000);
+		}, 1000);
 	}
 
 	private void goToLoginActivity() {
@@ -147,17 +150,19 @@ public class StartActivity extends BaseActivity {
 	}
 
 	private void initMMChannel() {
-		ThreadPool.startWork(new Runnable() {
-			@Override
-			public void run() {
-				String channelId = ChannelUtils.getMMChannel();
-				if (TextUtils.isEmpty(channelId)) {
-					GameCache.remove(CacheKey.CHANNEL_MM_ID);
-				} else {
-					GameCache.putStr(CacheKey.CHANNEL_MM_ID, channelId);
+		if(Constant.isPayEnable){
+			ThreadPool.startWork(new Runnable() {
+				@Override
+				public void run() {
+					String channelId = ChannelUtils.getMMChannel();
+					if (TextUtils.isEmpty(channelId)) {
+						GameCache.remove(CacheKey.CHANNEL_MM_ID);
+					} else {
+						GameCache.putStr(CacheKey.CHANNEL_MM_ID, channelId);
+					}
+					ChannelUtils.loadChannelCfg();
 				}
-				ChannelUtils.loadChannelCfg();
-			}
-		});
+			});
+		}
 	}
 }

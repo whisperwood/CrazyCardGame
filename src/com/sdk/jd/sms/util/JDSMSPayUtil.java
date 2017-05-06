@@ -6,8 +6,8 @@ import java.util.Map;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import cn.cmgame.billing.api.BillingResult;
-import cn.cmgame.billing.api.GameInterface;
+//import cn.cmgame.billing.api.BillingResult;
+//import cn.cmgame.billing.api.GameInterface;
 
 import com.lordcard.common.util.DialogUtils;
 import com.lordcard.common.util.JsonHelper;
@@ -55,44 +55,44 @@ public class JDSMSPayUtil {
 		return SMS_Type;
 	}
 
-	/**
-	 * 基地支付开始
-	 * 
-	 * @param point
-	 * @param paySiteTag
-	 */
-	// 监听SDK付费请求结果，请合作方不要直接抄袭如下代码（仅用于告知调用方式），需要根据自身游戏逻辑处理监听结果
-	static final GameInterface.IPayCallback payCallback = new GameInterface.IPayCallback() {
-		@Override
-		public void onResult(int resultCode, String billingIndex, Object obj) {
-			String result = "";
-			switch (resultCode) {
-			case BillingResult.SUCCESS:
-				JDSMSConfig.PAY_ORDER = null;
-				// result = "购买道具：[" + billingIndex + "] 成功！";
-				/*
-				 * Database.chargingProcessDia =
-				 * DialogUtils.getChargingProgressDialog
-				 * (GroupPayDetailActivity.smsTxt, "充值中，请稍后...");
-				 * Database.chargingProcessDia.setCancelable(false);
-				 * Database.chargingProcessDia.show();
-				 */
-				DialogUtils.mesTip("短信发送成功，由于网络延时金豆可能不会立即到账。请留意您的金豆变化", false,
-						true);
-				break;
-			case BillingResult.FAILED:
-				JDSMSConfig.PAY_ORDER = null;
-				result = "购买道具：[" + billingIndex + "] 失败！";
-				break;
-			default:
-				JDSMSConfig.PAY_ORDER = null;
-				result = "购买道具：[" + billingIndex + "] 取消！";
-				break;
-			}
-			// Toast.makeText(MainActivity.this, result,
-			// Toast.LENGTH_SHORT).show();
-		}
-	};
+//	/**
+//	 * 基地支付开始
+//	 * 
+//	 * @param point
+//	 * @param paySiteTag
+//	 */
+//	// 监听SDK付费请求结果，请合作方不要直接抄袭如下代码（仅用于告知调用方式），需要根据自身游戏逻辑处理监听结果
+//	static final GameInterface.IPayCallback payCallback = new GameInterface.IPayCallback() {
+//		@Override
+//		public void onResult(int resultCode, String billingIndex, Object obj) {
+//			String result = "";
+//			switch (resultCode) {
+//			case BillingResult.SUCCESS:
+//				JDSMSConfig.PAY_ORDER = null;
+//				// result = "购买道具：[" + billingIndex + "] 成功！";
+//				/*
+//				 * Database.chargingProcessDia =
+//				 * DialogUtils.getChargingProgressDialog
+//				 * (GroupPayDetailActivity.smsTxt, "充值中，请稍后...");
+//				 * Database.chargingProcessDia.setCancelable(false);
+//				 * Database.chargingProcessDia.show();
+//				 */
+//				DialogUtils.mesTip("短信发送成功，由于网络延时金豆可能不会立即到账。请留意您的金豆变化", false,
+//						true);
+//				break;
+//			case BillingResult.FAILED:
+//				JDSMSConfig.PAY_ORDER = null;
+//				result = "购买道具：[" + billingIndex + "] 失败！";
+//				break;
+//			default:
+//				JDSMSConfig.PAY_ORDER = null;
+//				result = "购买道具：[" + billingIndex + "] 取消！";
+//				break;
+//			}
+//			// Toast.makeText(MainActivity.this, result,
+//			// Toast.LENGTH_SHORT).show();
+//		}
+//	};
 	static String feeCode = "";
 
 	public static void goPay(final PayPoint point, final String paySiteTag) {
@@ -169,9 +169,9 @@ public class JDSMSPayUtil {
 						Database.currentActivity.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								GameInterface.doBilling(context, true, true,
-										feeCode, JDSMSConfig.PAY_ORDER,
-										payCallback);
+//								GameInterface.doBilling(context, true, true,
+//										feeCode, JDSMSConfig.PAY_ORDER,
+//										payCallback);
 							}
 						});
 					} else {

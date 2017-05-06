@@ -6,7 +6,8 @@ package com.lordcard.constant;
  * @author yinhb
  */
 public class Constant {
-	public static boolean DEBUG = false;
+	public static final boolean DEBUG = false;
+	public static final boolean isPayEnable = false;
 	public static final String GAME = "dizhu";
 	public static final String CHAR = "UTF-8";
 	/** 消息序列号 一直递增 */

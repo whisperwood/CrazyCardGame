@@ -20,7 +20,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import com.sdk.alipay.ui.AlixPayActivity;
 
 public class BaseHelper {
 	public static String convertStreamToString(InputStream is) {
@@ -77,8 +76,6 @@ public class BaseHelper {
 		dialog.setIndeterminate(indeterminate);
 		dialog.setCancelable(false);
 		// dialog.setDefaultButton(false);
-		dialog.setOnCancelListener(new AlixPayActivity.AlixOnCancelListener(
-				(Activity) context));
 		dialog.show();
 		return dialog;
 	}

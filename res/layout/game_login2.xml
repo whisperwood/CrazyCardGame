@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/game_quick_match"
                 android:layout_alignTop="@+id/game_quick_login"
-                android:layout_marginLeft="36dp"
+                android:layout_marginLeft="25dp"
                 android:layout_marginTop="-4dp"
                 android:gravity="center"
                 android:maxLength="10"
