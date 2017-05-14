@@ -1,6 +1,6 @@
 package com.lordcard.entity;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 public class CardType {
 	public static final int HEITAO = 4;

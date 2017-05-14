@@ -6,7 +6,7 @@
  */
 package com.lordcard.ui.base;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -32,7 +32,6 @@ import com.lordcard.network.http.GameHttpTask;
 import com.lordcard.ui.StartActivity;
 import com.lordcard.ui.dizhu.DoudizhuMainGameActivity;
 import com.sdk.util.SDKFactory;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * ui.base.BaseActivity
@@ -166,8 +165,6 @@ public class BaseActivity extends Activity {
 			Database.SCREEN_HEIGHT = dm.widthPixels;
 		}
 		try {
-			MobclickAgent.onResume(this, ChannelUtils.getUappKey(),
-					ChannelUtils.getUChannel());
 		} catch (Exception e) {
 		}
 	}
@@ -175,7 +172,6 @@ public class BaseActivity extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
-		MobclickAgent.onPause(this);
 	}
 
 	@Override

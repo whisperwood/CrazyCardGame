@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +57,7 @@ import com.sdk.jd.sms.util.JDSMSPayUtil;
 import com.sdk.util.PaySite;
 import com.sdk.util.PayTipUtils;
 import com.sdk.util.RechargeUtils;
-import com.umeng.analytics.MobclickAgent;
+
 
 /**
  * 比赛场游戏结束界面
@@ -755,7 +755,6 @@ public class GameEndDialog extends Dialog implements IGameView,
 			// 发消息关闭游戏界面
 			break;
 		case R.id.dzed_recharge_btn:// 充值
-			MobclickAgent.onEvent(context, "游戏中充值");
 			// SDKFactory.smsPay(0, SDKConstant.PLAYING);
 			JDSMSPayUtil.setContext(context);
 			double b = RechargeUtils.calRoomJoinMoney(Database.JOIN_ROOM);

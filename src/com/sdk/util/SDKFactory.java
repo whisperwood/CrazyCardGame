@@ -86,7 +86,7 @@ public class SDKFactory {
 			 * sdkFactory.goPay(payPoint,paySite); }else
 			 * if(PaySite.OFF_LINE.equals(payTo)){//单机账号充值
 			 * sdkFactory.localPay(payPoint,paySite); }
-			 * MobclickAgent.onEvent(CrashApplication
+			 * (CrashApplication
 			 * .getInstance(),"游戏单机充值_"+vn+"_ "+paySite);
 			 */
 		} catch (Exception e) {

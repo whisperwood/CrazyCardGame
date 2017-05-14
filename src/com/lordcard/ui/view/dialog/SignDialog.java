@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ import com.sdk.util.PaySite;
 import com.sdk.util.PayTipUtils;
 import com.sdk.util.PayUtils;
 import com.sdk.util.vo.PayPoint;
-import com.umeng.analytics.MobclickAgent;
+
 
 /**
  * 签名对话框
@@ -248,7 +248,6 @@ public class SignDialog extends Dialog implements
 			break;
 		case R.id.sign_dialog_ok_btn:
 			// 进入充值界面
-			MobclickAgent.onEvent(context, "签到充值");
 			SDKConfig.SIGN_DIALOG = true;
 			JDSMSPayUtil.setContext(context);
 			// 点金快速支付暂时固定5元

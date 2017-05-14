@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +31,7 @@ import com.lordcard.entity.ContentTitle;
 import com.lordcard.entity.GoodsDetails;
 import com.lordcard.network.http.HttpURL;
 import com.lordcard.network.http.HttpUtils;
-import com.umeng.analytics.MobclickAgent;
+
 
 /**
  * 游戏指南
@@ -118,7 +118,6 @@ public class GuideDialog extends Dialog implements OnClickListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
 				try {
-					MobclickAgent.onEvent(context, "游戏指南选项");
 					if (detailList.get(position).getVisibility() == View.GONE) {
 						detailList.get(position).setVisibility(View.VISIBLE);
 					} else {

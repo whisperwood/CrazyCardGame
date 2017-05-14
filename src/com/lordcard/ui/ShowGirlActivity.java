@@ -1,6 +1,6 @@
 package com.lordcard.ui;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.ArrayList;
 import java.util.List;

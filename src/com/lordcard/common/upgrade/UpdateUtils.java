@@ -1,6 +1,6 @@
 package com.lordcard.common.upgrade;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,7 +51,6 @@ import com.lordcard.network.http.HttpUtils;
 import com.lordcard.ui.LoginActivity;
 import com.lordcard.ui.TaskMenuActivity;
 import com.lordcard.ui.view.dialog.UpdateDialog;
-import com.umeng.analytics.MobclickAgent;
 
 public class UpdateUtils {
 	private static NotificationManager notificationManager = null; // 通知栏
@@ -219,17 +218,7 @@ public class UpdateUtils {
 								if (Database.UPDATEING) {
 									dismiss();
 								} else {
-									Database.UPDATEING = true;
-									String showText = "后台正在下载更新包，您可以继续玩游戏！";
-									if (UPVersion.UP_STRONG_ALL
-											.equals(UPVersion.upcodes)) {
-										Database.UPDATEING = false;
-										showText = "游戏正在更新，请稍候！";
-									}
-									DialogUtils.mesToastTip(showText);
-									MobclickAgent.onEvent(content, "更新");
-									MobclickAgent.onEvent(content, "静默更新");
-									downLoadNewVesionSev();// 静默
+									
 								}
 							}
 						}

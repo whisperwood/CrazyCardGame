@@ -7,6 +7,28 @@
     android:background="@drawable/login_bg" >
 
     <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:background="@drawable/goldbean_blank" >
+
+        <com.lordcard.ui.view.NumberIconView
+            android:id="@+id/goldbean"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/game_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/game_setting_sel" />
+
+    <RelativeLayout
         android:id="@+id/game_bg"
         android:layout_width="462dp"
         android:layout_height="250dp"
@@ -105,7 +127,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="7dp"
                 android:background="@drawable/game_start_sel"
                 android:visibility="visible" />
 
@@ -121,7 +142,8 @@
                 android:maxLength="10"
                 android:text="游客"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size14" />
+                android:textSize="@dimen/text_size14"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/game_login_gold"
@@ -134,18 +156,9 @@
                 android:maxLength="10"
                 android:text="120565"
                 android:textColor="@color/gold"
-                android:textSize="@dimen/text_size14" />
+                android:textSize="@dimen/text_size14"
+                android:visibility="gone" />
         </RelativeLayout>
-
-        <ImageButton
-            android:id="@+id/game_set"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/login_bg"
-            android:layout_marginLeft="18dp"
-            android:layout_marginTop="3dp"
-            android:layout_toRightOf="@+id/login_bg"
-            android:background="@drawable/game_setting_sel" />
     </RelativeLayout>
 
     <Button
@@ -285,15 +298,15 @@
         android:visibility="gone" >
     </ViewFlipper>
 
-<!--     <com.google.android.gms.ads.AdView -->
-<!--         android:id="@+id/adView" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_alignParentBottom="true" -->
-<!--         android:layout_centerHorizontal="true" -->
-<!--         ads:adSize="BANNER" -->
-<!--         ads:adUnitId="@string/ad_unit_id_banner" -->
-<!--         android:visibility="gone" > -->
-<!--     </com.google.android.gms.ads.AdView> -->
+    <!-- <com.google.android.gms.ads.AdView -->
+    <!-- android:id="@+id/adView" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_alignParentBottom="true" -->
+    <!-- android:layout_centerHorizontal="true" -->
+    <!-- ads:adSize="BANNER" -->
+    <!-- ads:adUnitId="@string/ad_unit_id_banner" -->
+    <!-- android:visibility="gone" > -->
+    <!-- </com.google.android.gms.ads.AdView> -->
 
 </RelativeLayout>

@@ -1,6 +1,6 @@
 package com.lordcard.adapter;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
@@ -50,7 +50,6 @@ import com.sdk.jd.sms.util.JDSMSPayUtil;
 import com.sdk.util.PaySite;
 import com.sdk.util.PayTipUtils;
 import com.sdk.util.RechargeUtils;
-import com.umeng.analytics.MobclickAgent;
 
 public class RoomlistAdapter extends BaseAdapter {
 	private Context context = null;
@@ -366,23 +365,7 @@ public class RoomlistAdapter extends BaseAdapter {
 		holder.roomItemBg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (Math.abs(System.currentTimeMillis() - Constant.CLICK_TIME) >= Constant.SPACING_TIME) {
-					Constant.CLICK_TIME = System.currentTimeMillis();
-					RechargeUtils.calRoomJoinMoney(room);
-					long limitBean = room.getLimit();
-					GameUser gu = (GameUser) GameCache
-							.getObj(CacheKey.GAME_USER);
-					double btBean = limitBean - gu.getBean();
-					if (btBean > 0) { // 金豆不足需要充值 ，直接在前端先判断。不需要多准确。
-						JDSMSPayUtil.setContext(context);
-						PayTipUtils.showTip(btBean / 10000,
-								PaySite.ROOM_ITEM_CLICK); // 房间
-					} else {
-						joinRoom(room);
-					}
-					String roomName = room.getName();
-					MobclickAgent.onEvent(context, roomName);
-				}
+				
 			}
 		});
 		return convertView;

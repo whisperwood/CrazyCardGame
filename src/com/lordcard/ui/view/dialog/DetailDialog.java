@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ import com.lordcard.network.http.GameCache;
 import com.lordcard.network.http.HttpRequest;
 import com.lordcard.network.http.HttpURL;
 import com.lordcard.network.http.HttpUtils;
-import com.umeng.analytics.MobclickAgent;
+
 
 /**
  * 比赛场详情对话框
@@ -172,7 +172,6 @@ public class DetailDialog extends Dialog implements OnClickListener {
 			public void onClick(View v) {
 				pageNum++;
 				getRecord();
-				MobclickAgent.onEvent(context, "详细获取更多记录");
 			}
 		});
 		initHandler();
@@ -414,7 +413,6 @@ public class DetailDialog extends Dialog implements OnClickListener {
 		case R.id.if_dialog_detail_signup_btn: // 报名
 			Message message = new Message();
 			if (isFuhe) {// 复合赛制
-				MobclickAgent.onEvent(context, "详细复合报名");
 				message.what = FHGPlaceListAdapter.WHAT1;
 				Bundle bundle = new Bundle();
 				bundle.putInt(FHGPlaceListAdapter.POSITION, position);

@@ -1,6 +1,6 @@
 package com.lordcard.ui.dizhu;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
@@ -104,7 +104,6 @@ import com.sdk.util.PaySite;
 import com.sdk.util.PayTipUtils;
 import com.sdk.util.RechargeUtils;
 import com.sdk.util.SDKFactory;
-import com.umeng.analytics.MobclickAgent;
 
 @SuppressLint({ "WorldReadableFiles", "HandlerLeak" })
 public class DoudizhuRoomListActivity extends BaseActivity implements
@@ -1746,7 +1745,6 @@ public class DoudizhuRoomListActivity extends BaseActivity implements
 			Context ctx = CrashApplication.getInstance();
 			switch (v.getId()) {
 			case R.id.common_room_btn: // 普通房
-				MobclickAgent.onEvent(ctx, "房间Tab普通房");
 				roomTopll.setBackgroundDrawable(ImageUtil.getResDrawable(
 						R.drawable.room_list_top_ll_bg1, true));
 				roomListGridView.setVisibility(View.VISIBLE);
@@ -1757,7 +1755,6 @@ public class DoudizhuRoomListActivity extends BaseActivity implements
 				break;
 			// case R.id.fast_game_place_room_btn: // 快速赛场
 			case R.id.vip_room_btn: // vip房
-				MobclickAgent.onEvent(ctx, "房间Tabvip房");
 				roomTopll.setBackgroundDrawable(ImageUtil.getResDrawable(
 						R.drawable.room_list_top_ll_bg2, true));
 				roomListGridView.setVisibility(View.GONE);
@@ -1766,11 +1763,9 @@ public class DoudizhuRoomListActivity extends BaseActivity implements
 				SDKConstant.PAY_ROOM = 1;
 				break;
 			case R.id.game_place_room_btn: // 比赛场
-				MobclickAgent.onEvent(ctx, "房间Tab比赛场");
 				showMatch();
 				break;
 			case R.id.vip_join_btn: // 加入vip包房
-				MobclickAgent.onEvent(ctx, "加入vip包房");
 				vipJoin();
 				break;
 			case R.id.vip_ratio_add: // 创建vip增加倍数
@@ -1902,7 +1897,6 @@ public class DoudizhuRoomListActivity extends BaseActivity implements
 	public synchronized void vipRoomCreate() {
 		Context ctx = CrashApplication.getInstance();
 		int ratio = Integer.parseInt(ratioText.getText().toString()); // Hip包房倍数
-		MobclickAgent.onEvent(ctx, "创建房间" + ratio);
 		// 加入游戏
 		vipCreateCheckTask = new VipRoomCreateCheckTask();
 		vipCreateCheckTask.setFeedback(feedback);
@@ -2099,7 +2093,6 @@ public class DoudizhuRoomListActivity extends BaseActivity implements
 				// GameDialog(DoudizhuRoomListActivity.this) {
 				//
 				// public void okClick() {
-				// MobclickAgent.onEvent(ctx, "房间列表确认退出游戏");
 				// Intent in = new Intent();
 				// in.setClass(DoudizhuRoomListActivity.this,
 				// SDKFactory.getLoginView());
@@ -2108,7 +2101,6 @@ public class DoudizhuRoomListActivity extends BaseActivity implements
 				//
 				// public void cancelClick() {
 				// dismiss();
-				// MobclickAgent.onEvent(ctx, "房间列表取消退出游戏");
 				// };
 				// };
 				// exitDialog.show();

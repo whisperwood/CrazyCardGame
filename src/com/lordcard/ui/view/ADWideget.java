@@ -1,6 +1,6 @@
 package com.lordcard.ui.view;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

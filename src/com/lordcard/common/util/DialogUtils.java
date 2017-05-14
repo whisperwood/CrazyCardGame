@@ -1,6 +1,6 @@
 package com.lordcard.common.util;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -31,7 +31,6 @@ import com.lordcard.ui.view.dialog.BaoXiangDialog;
 import com.lordcard.ui.view.dialog.GameDialog;
 import com.lordcard.ui.view.dialog.SingleDialog;
 import com.sdk.util.SDKFactory;
-import com.umeng.analytics.MobclickAgent;
 
 public class DialogUtils {
 	/** Toast提示消息 */
@@ -293,13 +292,10 @@ public class DialogUtils {
 						@Override
 						public void okClick() {
 							CmdUtils.exitGame();
-							MobclickAgent.onEvent(context, "确认退出游戏中");
 							GameUser gu = (GameUser) GameCache
 									.getObj(CacheKey.GAME_USER);
 							// 记录逃跑日志
 							if (gu != null) {
-								MobclickAgent.onEvent(context,
-										"逃跑:" + gu.getAccount());
 								gu.setRound(0);
 								GameCache.putObj(CacheKey.GAME_USER, gu);
 							}
@@ -465,8 +461,6 @@ public class DialogUtils {
 						@Override
 						public void cancelClick() {
 							dismiss();
-							MobclickAgent.onEvent(Database.currentActivity,
-									"网慢慢进入单机游戏");
 							Intent intent = new Intent();
 							intent.setClass(Database.currentActivity,
 									PersonnalDoudizhuActivity.class);

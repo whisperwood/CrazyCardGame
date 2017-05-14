@@ -1,6 +1,6 @@
 package com.lordcard.ui;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,9 +36,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-import cn.egame.terminal.paysdk.EgamePay;
-import cn.play.dserv.CheckTool;
-import cn.play.dserv.ExitCallBack;
 
 import com.lordcard.common.exception.CrashApplication;
 import com.lordcard.common.mydb.DBHelper;
@@ -73,20 +70,18 @@ import com.lordcard.ui.base.ILoginView;
 import com.lordcard.ui.dizhu.DoudizhuRoomListActivity;
 import com.lordcard.ui.personal.PersonnalDoudizhuActivity;
 import com.lordcard.ui.view.GoogleAdsHelper;
+import com.lordcard.ui.view.NumberIconView;
 import com.lordcard.ui.view.dialog.AccountBindDialog;
 import com.lordcard.ui.view.dialog.ChangeAccountDialog;
 import com.lordcard.ui.view.dialog.GameDialog;
 import com.lordcard.ui.view.dialog.SettingDialog;
-import com.umeng.analytics.MobclickAgent;
 
-@SuppressLint({ "HandlerLeak", "DefaultLocale", "SimpleDateFormat",
-		"WorldReadableFiles" })
-public class LoginActivity extends BaseActivity implements ILoginView,
-		OnTouchListener, OnGestureListener {
+@SuppressLint({ "HandlerLeak", "DefaultLocale", "SimpleDateFormat", "WorldReadableFiles" })
+public class LoginActivity extends BaseActivity implements ILoginView, OnTouchListener,
+		OnGestureListener {
 	private TextView accountTv, goldTv; // 账号，金豆
 	private ImageView headIv;// 头像
-	private Button loginBtn, changeAccountBtn, bindAccountBtn, quickMatch,
-			quickLogin, updateBtn;
+	private Button loginBtn, changeAccountBtn, bindAccountBtn, quickMatch, quickLogin, updateBtn;
 	private AccountBindDialog mAccountBindDialog;// 绑定账号对话框
 	private SharedPreferences sharedPrefrences;
 	// private SharedPreferences sharedViewfiper;
@@ -148,61 +143,60 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch (msg.what) {
-			case HANDLER_WHAT_LOGIN_UPDATE_USER:
-				setUserInfo();
-				break;
-			case HANDLER_WHAT_LOGIN_RESIGSTER_USER:// 注册账号
-				GameUser gameUser = (GameUser) GameCache
-						.getObj(CacheKey.GAME_USER);
-				if (gameUser != null) {
-					DialogUtils.mesToastTip("当前已有账号登录,无需再注册!");
-					return;
-				}
-				loginProgress.setMessage("登录中,请稍候...");
-				loginProgress.show();
-				register();
-				break;
-			case HANDLER_WHAT_LOGIN_ANNOUNCEMENT_OPEN:// 公告展开
-				PXZ = PXZ + PX_MST;
-				LayoutParams lp = t1.getLayoutParams();
-				lp.height = PXZ;
-				t1.setLayoutParams(lp);
-				i = i + 1;
-				break;
-			case HANDLER_WHAT_LOGIN_ANNOUNCEMENT_CLOSE:// 公告收拢
-				PXZ = PXZ - PX_MST;
-				LayoutParams lp2 = t1.getLayoutParams();
-				lp2.height = PXZ;
-				t1.setLayoutParams(lp2);
-				i = i - 1;
-				break;
-			case HANDLER_WHAT_LOGIN_ANNOUNCEMENT_VISIBLE:// 公告显示
-				PXZ = PX_LAST_MST;
-				i = 20;
-				if (autoTask != null) {
-					autoTask.stop(true);
-					autoTask = null;
-				}
-				scrollView.setVisibility(View.VISIBLE);
-				gonggao.setClickable(true);
-				break;
-			case HANDLER_WHAT_LOGIN_ANNOUNCEMENT_GONE:// 公告隐藏
-				PXZ = 0;
-				i = 1;
-				if (autoTask != null) {
-					autoTask.stop(true);
-					autoTask = null;
-				}
-				ggdetaiLayout.setVisibility(View.GONE);
-				gonggao.setClickable(true);
-				break;
-			default:
-				break;
+				case HANDLER_WHAT_LOGIN_UPDATE_USER:
+					setUserInfo();
+					break;
+				case HANDLER_WHAT_LOGIN_RESIGSTER_USER:// 注册账号
+					GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+					if (gameUser != null) {
+						DialogUtils.mesToastTip("当前已有账号登录,无需再注册!");
+						return;
+					}
+					loginProgress.setMessage("登录中,请稍候...");
+					loginProgress.show();
+					register();
+					break;
+				case HANDLER_WHAT_LOGIN_ANNOUNCEMENT_OPEN:// 公告展开
+					PXZ = PXZ + PX_MST;
+					LayoutParams lp = t1.getLayoutParams();
+					lp.height = PXZ;
+					t1.setLayoutParams(lp);
+					i = i + 1;
+					break;
+				case HANDLER_WHAT_LOGIN_ANNOUNCEMENT_CLOSE:// 公告收拢
+					PXZ = PXZ - PX_MST;
+					LayoutParams lp2 = t1.getLayoutParams();
+					lp2.height = PXZ;
+					t1.setLayoutParams(lp2);
+					i = i - 1;
+					break;
+				case HANDLER_WHAT_LOGIN_ANNOUNCEMENT_VISIBLE:// 公告显示
+					PXZ = PX_LAST_MST;
+					i = 20;
+					if (autoTask != null) {
+						autoTask.stop(true);
+						autoTask = null;
+					}
+					scrollView.setVisibility(View.VISIBLE);
+					gonggao.setClickable(true);
+					break;
+				case HANDLER_WHAT_LOGIN_ANNOUNCEMENT_GONE:// 公告隐藏
+					PXZ = 0;
+					i = 1;
+					if (autoTask != null) {
+						autoTask.stop(true);
+						autoTask = null;
+					}
+					ggdetaiLayout.setVisibility(View.GONE);
+					gonggao.setClickable(true);
+					break;
+				default:
+					break;
 			}
 		};
 	};
 	private ImageButton game_set;
-
+	private NumberIconView goldbean;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -224,41 +218,41 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 		mst.adjustView(gameBg);
 		loginProgress = DialogUtils.getWaitProgressDialog(this, "登录中,请稍候...");
 		login(); // 登录
-		// 初始化移动SDK
-		if(Constant.isPayEnable){
-			EgamePay.init(this);
-		}
 		GoogleAdsHelper.getInstance().showInterstitial();
 	}
-
 	@Override
 	public void onBackPressed() {
-		NotificationManager notificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
-		// 关闭升级下载通知
-		notificationManager.cancel(UpdateService.NOTIFICATION_ID);// 多次下载的
-		UpdateUtils.stopDownLoadNewVesionSev(this);
-		ActivityPool.exitApp();
+		String appName = getResources().getString(R.string.app_name);
+		GameDialog gameDialog = new GameDialog(Database.currentActivity) {
+			@Override
+			public void okClick() {
+				ActivityPool.exitApp();
+			}
+			@Override
+			public void cancelClick() {
+				dismiss();
+			};
+		};
+		gameDialog.show();
+		gameDialog.setText("是否退出   " + appName + " ?");
 	}
-
 	/**
 	 * 初始化view控件
 	 */
 	private void initView() {
 		mViewFlipper = (ViewFlipper) findViewById(R.id.viewflipper);
-		mViewFlipper
-				.setOnTouchListener(new android.view.View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View arg0, MotionEvent event) {
-						return mGestureDetector.onTouchEvent(event);
-					}
-				});
-		mViewFlipper
-				.setOnClickListener(new android.view.View.OnClickListener() {
-					@Override
-					public void onClick(View arg0) {
-						return;
-					}
-				});
+		mViewFlipper.setOnTouchListener(new android.view.View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View arg0, MotionEvent event) {
+				return mGestureDetector.onTouchEvent(event);
+			}
+		});
+		mViewFlipper.setOnClickListener(new android.view.View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				return;
+			}
+		});
 		String isShow = GameCache.getStr(LOGIN_VIEW_FLIPPER);
 		// sharedViewfiper = getSharedPreferences("viewflipper",
 		// MODE_WORLD_READABLE);
@@ -310,8 +304,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 		gameBg = (RelativeLayout) findViewById(R.id.layout);
 		gameBg.setBackgroundResource(R.drawable.login_bg);
 		katong = (RelativeLayout) findViewById(R.id.katong);
-		katong.setBackgroundDrawable(ImageUtil.getResDrawable(
-				R.drawable.katong, true));
+		katong.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.katong, true));
 		titleView = (TextView) findViewById(R.id.gg_title);
 		contentView = (TextView) findViewById(R.id.gg_content);
 		timeView = (TextView) findViewById(R.id.gg_time);
@@ -348,6 +341,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 				settingDialog.setPro();
 			}
 		});
+		goldbean = (NumberIconView) findViewById(R.id.goldbean);
 	}
 
 	private SettingDialog settingDialog;
@@ -376,17 +370,16 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 				setUserInfo();
 			}
 		} else {
-			accountTv.setText(TextUtils.isEmpty(GameCache
-					.getStr(Constant.GAME_NAME_CACHE)) ? "东方不败" : GameCache
-					.getStr(Constant.GAME_NAME_CACHE)); // 账号
+			accountTv
+					.setText(TextUtils.isEmpty(GameCache.getStr(Constant.GAME_NAME_CACHE)) ? "东方不败"
+							: GameCache.getStr(Constant.GAME_NAME_CACHE)); // 账号
 			goldTv.setText(checkBeans()); // 金豆
+			goldbean.setNum(Integer.parseInt(checkBeans()));
 		}
 		AudioReadDataUtils.playOrStopBgMusic(this);
 	}
-
 	/**
 	 * 设置用户信息
-	 * 
 	 * @param gameUser
 	 */
 	private void setUserInfo() {
@@ -398,19 +391,18 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 			}
 			// accountTv.setText(account); // 账号
 			accountTv.setText("东方不败"); // 账号
-			goldTv.setText(PatternUtils.changeZhidou(0 > gameUser.getBean() ? 0
-					: gameUser.getBean())); // 金豆
+			goldTv.setText(PatternUtils.changeZhidou(0 > gameUser.getBean() ? 0 : gameUser
+					.getBean())); // 金豆
 			String localBean = GameCache.getStr(Constant.GAME_BEAN_CACHE);
 			goldTv.setText(localBean);
-			if (!TextUtils.isEmpty(gameUser.getGender())
-					&& "1".equals(gameUser.getGender())) {// 女性
+			goldbean.setNum(Integer.parseInt(localBean));
+			if (!TextUtils.isEmpty(gameUser.getGender()) && "1".equals(gameUser.getGender())) {// 女性
 				headIv.setBackgroundResource(R.drawable.nv_user_img);
 			} else {
 				headIv.setBackgroundResource(R.drawable.nan_user_img);
 			}
 		}
 	}
-
 	private synchronized void login() {
 		Database.LOGIN_TIME = DateUtil.formatTimesTampDate(new Date());
 		GameUser localUser = ActivityUtils.loadLocalAccount();// 加载最近登录账号
@@ -426,19 +418,16 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 			taskManager.addTask(loginTask);
 		}
 	}
-
 	/**
 	 * 注册 账号
 	 */
 	private void register() {
-		GenericTask registerTask = new RegisterTask();
-		registerTask.execute();
-		taskManager.addTask(registerTask);
+//		GenericTask registerTask = new RegisterTask();
+//		registerTask.execute();
+//		taskManager.addTask(registerTask);
 	}
-
 	/**
 	 * 登录跳转
-	 * 
 	 * @param gameUser
 	 */
 	private void userLogin(GameUser gameUser) {
@@ -467,143 +456,132 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 		public void onClick(View v) {
 			if (mViewFlipper.getVisibility() != View.VISIBLE) {
 				switch (v.getId()) {
-				case R.id.gonggao:
-					gonggao.setClickable(false);
-					if (boolean1 == false) {
-						scrollView.setVisibility(View.GONE);
-						if (autoTask != null) {
-							autoTask.stop(true);
-							autoTask = null;
-						}
-						/** 画卷收拢 */
-						autoTask = new AutoTask() {
-							@Override
-							public void run() {
-								if (i >= 1) {
-									handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_CLOSE);
-								} else {
-									PXZ = 0;
-									i = 1;
-									stop(true);
-									handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_GONE);
-								}
-							}
-						};
-						ScheduledTask.addRateTask(autoTask, 30);
-						boolean1 = true;
-					} else {
-						if (HAS_GONGGAO) {
-							gonggao.setClickable(false);
-							ggdetaiLayout.setVisibility(View.VISIBLE);
+					case R.id.gonggao:
+						gonggao.setClickable(false);
+						if (boolean1 == false) {
+							scrollView.setVisibility(View.GONE);
 							if (autoTask != null) {
 								autoTask.stop(true);
 								autoTask = null;
 							}
-							/** 画卷展开 */
+							/** 画卷收拢 */
 							autoTask = new AutoTask() {
 								@Override
 								public void run() {
-									if (i >= 0 && i <= 20) {
-										handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_OPEN);
+									if (i >= 1) {
+										handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_CLOSE);
 									} else {
-										PXZ = PX_LAST_MST;
-										i = 20;
-										handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_VISIBLE);
+										PXZ = 0;
+										i = 1;
 										stop(true);
+										handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_GONE);
 									}
 								}
 							};
 							ScheduledTask.addRateTask(autoTask, 30);
-							boolean1 = false;
+							boolean1 = true;
 						} else {
-							runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									DialogUtils.mesToastTip("亲，暂时没有公告哟~");
-									gonggao.setClickable(true);
+							if (HAS_GONGGAO) {
+								gonggao.setClickable(false);
+								ggdetaiLayout.setVisibility(View.VISIBLE);
+								if (autoTask != null) {
+									autoTask.stop(true);
+									autoTask = null;
 								}
-							});
-						}
-					}
-					break;
-				case R.id.game_login_in:// 游戏大厅
-					MobclickAgent.onEvent(LoginActivity.this, "游戏大厅点击");
-					if (!ActivityUtils.isNetworkAvailable()) {
-						showNetWorkDialog();
-					} else {
-						GameUser gameUser = (GameUser) GameCache
-								.getObj(CacheKey.GAME_USER);
-						if (gameUser == null) {
-							// login(true);
-							showLoginDialog();
-						} else {
-							Intent intent = new Intent();
-							intent.setClass(LoginActivity.this,
-									DoudizhuRoomListActivity.class);
-							startActivity(intent);
-						}
-					}
-					break;
-				case R.id.game_login_change_account:// 切换账号
-					MobclickAgent.onEvent(LoginActivity.this, "切换账号点击");
-					if (!ActivityUtils.isNetworkAvailable()) {
-						showNetWorkDialog();
-					} else {
-						showLoginDialog();
-					}
-					break;
-				case R.id.game_login_bind_account:// 绑定账号
-					MobclickAgent.onEvent(LoginActivity.this, "绑定账号点击");
-					if (!ActivityUtils.isNetworkAvailable()) {
-						showNetWorkDialog();
-					} else {
-						GameUser gameUser = (GameUser) GameCache
-								.getObj(CacheKey.GAME_USER);
-						if (gameUser == null) {
-							// login(true);
-							showLoginDialog();
-						} else {
-							if (!mAccountBindDialog.isShowing()) {
-								mAccountBindDialog.show();
-								mAccountBindDialog.initView();
+								/** 画卷展开 */
+								autoTask = new AutoTask() {
+									@Override
+									public void run() {
+										if (i >= 0 && i <= 20) {
+											handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_OPEN);
+										} else {
+											PXZ = PX_LAST_MST;
+											i = 20;
+											handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_VISIBLE);
+											stop(true);
+										}
+									}
+								};
+								ScheduledTask.addRateTask(autoTask, 30);
+								boolean1 = false;
+							} else {
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										DialogUtils.mesToastTip("亲，暂时没有公告哟~");
+										gonggao.setClickable(true);
+									}
+								});
 							}
 						}
-					}
-					break;
-				case R.id.game_quick_match:// 单机
-					MobclickAgent.onEvent(LoginActivity.this, "单机游戏点击");
-					Intent intent = new Intent();
-					intent.setClass(LoginActivity.this,
-							PersonnalDoudizhuActivity.class);
-					startActivity(intent);
-					break;
-				case R.id.game_quick_login:// 快速游戏
-					MobclickAgent.onEvent(LoginActivity.this, "快速游戏点击");
-					if (!ActivityUtils.isNetworkAvailable()) {
-						showNetWorkDialog();
-					} else {
-						GameUser gu = (GameUser) GameCache
-								.getObj(CacheKey.GAME_USER);
-						if (gu == null) {
-							showLoginDialog();
+						break;
+					case R.id.game_login_in:// 游戏大厅
+						if (!ActivityUtils.isNetworkAvailable()) {
+							showNetWorkDialog();
 						} else {
-							FastJoinTask.fastJoin();
+							GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+							if (gameUser == null) {
+								// login(true);
+								showLoginDialog();
+							} else {
+								Intent intent = new Intent();
+								intent.setClass(LoginActivity.this, DoudizhuRoomListActivity.class);
+								startActivity(intent);
+							}
 						}
-					}
-					break;
-				case R.id.update:// 升级游戏
-					if (Database.UPDATED) {
-						UpdateUtils.newVersionTip();
-					} else {
-						if (Math.abs(System.currentTimeMillis()
-								- Constant.CLICK_TIME) >= Constant.SPACING_TIME) {
-							Constant.CLICK_TIME = System.currentTimeMillis();
-							DialogUtils.mesToastTip("您当前已经是最新版本，暂时无需更新！");
+						break;
+					case R.id.game_login_change_account:// 切换账号
+						if (!ActivityUtils.isNetworkAvailable()) {
+							showNetWorkDialog();
+						} else {
+							showLoginDialog();
 						}
-					}
-					break;
-				default:
-					break;
+						break;
+					case R.id.game_login_bind_account:// 绑定账号
+						if (!ActivityUtils.isNetworkAvailable()) {
+							showNetWorkDialog();
+						} else {
+							GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+							if (gameUser == null) {
+								// login(true);
+								showLoginDialog();
+							} else {
+								if (!mAccountBindDialog.isShowing()) {
+									mAccountBindDialog.show();
+									mAccountBindDialog.initView();
+								}
+							}
+						}
+						break;
+					case R.id.game_quick_match:// 单机
+						Intent intent = new Intent();
+						intent.setClass(LoginActivity.this, PersonnalDoudizhuActivity.class);
+						startActivity(intent);
+						break;
+					case R.id.game_quick_login:// 快速游戏
+						if (!ActivityUtils.isNetworkAvailable()) {
+							showNetWorkDialog();
+						} else {
+							GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+							if (gu == null) {
+								showLoginDialog();
+							} else {
+								FastJoinTask.fastJoin();
+							}
+						}
+						break;
+					case R.id.update:// 升级游戏
+						if (Database.UPDATED) {
+							UpdateUtils.newVersionTip();
+						} else {
+							if (Math.abs(System.currentTimeMillis() - Constant.CLICK_TIME) >= Constant.SPACING_TIME) {
+								Constant.CLICK_TIME = System.currentTimeMillis();
+								DialogUtils.mesToastTip("您当前已经是最新版本，暂时无需更新！");
+							}
+						}
+						break;
+					default:
+						break;
 				}
 			}
 		}
@@ -611,7 +589,6 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
 	/**
 	 * 登录游戏 com.lordcard.ui.LoginTask
-	 * 
 	 * @author Administrator <br/>
 	 *         create at 2013 2013-4-8 下午4:17:56
 	 */
@@ -629,19 +606,16 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 				if (loginPwd.length() < 30) { // 长度大于30则认为当前密码是保存的密文
 					loginPwd = EncodeUtils.MD5(loginPwd);
 				}
-				String result = HttpRequest.login(param.getString(ACCOUNT),
-						loginPwd);
+				String result = HttpRequest.login(param.getString(ACCOUNT), loginPwd);
 				if (TextUtils.isEmpty(result)) {
 					return TaskResult.FAILED;
 				}
-				JsonResult jsonResult = JsonHelper.fromJson(result,
-						JsonResult.class);
+				JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 				if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) {
 					loginProgress.dismiss();
 					String gameUserJson = jsonResult.getMethodMessage();
 					Log.d("gameUserJson", "登录gameUserJson: " + gameUserJson);
-					GameUser gameUser = JsonHelper.fromJson(gameUserJson,
-							GameUser.class);
+					GameUser gameUser = JsonHelper.fromJson(gameUserJson, GameUser.class);
 					String account = gameUser.getAccount();
 					if (!TextUtils.isEmpty(gameUser.getRelaAccount())) {
 						account = gameUser.getRelaAccount();
@@ -668,7 +642,6 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
 	/**
 	 * 注册账号 com.lordcard.ui.LoginTask
-	 * 
 	 * @author Administrator <br/>
 	 *         create at 2013 2013-4-8 下午4:17:56
 	 */
@@ -681,13 +654,11 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 				if (TextUtils.isEmpty(result)) {
 					return TaskResult.FAILED;
 				}
-				JsonResult jsonResult = JsonHelper.fromJson(result,
-						JsonResult.class);
+				JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 				if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) {
 					loginProgress.dismiss();
 					String gameUserJson = jsonResult.getMethodMessage();
-					GameUser gameUser = JsonHelper.fromJson(gameUserJson,
-							GameUser.class);
+					GameUser gameUser = JsonHelper.fromJson(gameUserJson, GameUser.class);
 					// 保存注册账号和密码
 					String account = gameUser.getAccount();
 					if (!TextUtils.isEmpty(gameUser.getRelaAccount())) {
@@ -695,9 +666,8 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 					}
 					ActivityUtils.saveAccount(account, gameUser.getMd5Pwd());
 					ActivityUtils.saveAccount(account, gameUser.getMd5Pwd());
-					Log.d("saveLoginAccount",
-							"登录界面》注册》账户：" + gameUser.getAccount() + "密码："
-									+ gameUser.getMd5Pwd());
+					Log.d("saveLoginAccount", "登录界面》注册》账户：" + gameUser.getAccount() + "密码："
+							+ gameUser.getMd5Pwd());
 					// Database.GAME_USER_AUTH_KEY = gameUser.getAuthKey();
 					userLogin(gameUser);
 				} else {
@@ -717,8 +687,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 		@Override
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
-				final NoticesVo notices = (NoticesVo) GameCache
-						.getObj(CacheKey.GAME_NOTICE);
+				final NoticesVo notices = (NoticesVo) GameCache.getObj(CacheKey.GAME_NOTICE);
 				if (notices == null)
 					return TaskResult.FAILED;
 				SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
@@ -726,8 +695,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 				format = new SimpleDateFormat("yyyy-MM-dd");
 				final String time1 = format.format(dt);
 				final String content1 = notices.getContent();// 获取的公告内容
-				sharedPrefrences = getSharedPreferences("account_ban",
-						MODE_WORLD_READABLE);
+				sharedPrefrences = getSharedPreferences("account_ban", MODE_WORLD_READABLE);
 				final String time2 = sharedPrefrences.getString("time", null);
 				// final String content2 = sharedPrefrences.getString("content",
 				// null);// 保存的公告内容
@@ -800,29 +768,24 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 			rjoinTask = null;
 		}
 	}
-
 	public void recyleDrawable() {
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout);
 		layout.removeAllViews();
 	}
-
-	private void mesTip(final String msg, final boolean showCancel,
-			final boolean isFinish) {
+	private void mesTip(final String msg, final boolean showCancel, final boolean isFinish) {
 		try {
 			Database.currentActivity.runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, showCancel) {
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, showCancel) {
 						@Override
 						public void okClick() {
 							if (isFinish) {
 								ActivityUtils.finishAcitivity();
 							}
-							if (null != mChangeAccountDialog
-									&& !mChangeAccountDialog.isShowing()) {
-								mChangeAccountDialog = new ChangeAccountDialog(
-										LoginActivity.this, handler);
+							if (null != mChangeAccountDialog && !mChangeAccountDialog.isShowing()) {
+								mChangeAccountDialog = new ChangeAccountDialog(LoginActivity.this,
+										handler);
 								mChangeAccountDialog.show();
 							}
 						}
@@ -834,15 +797,12 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 		} catch (Exception e) {
 		}
 	}
-
 	@Override
 	public boolean onDown(MotionEvent arg0) {
 		return false;
 	}
-
 	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 		Log.d("forTag", " onFling : ");
 		if (!isShown) {
 			if (e1.getX() - e2.getX() > 30) {// 向右滑动
@@ -853,10 +813,10 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 					// editor.putBoolean("flipper", true);
 					// editor.commit();
 				} else {
-					mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(
-							this, R.anim.push_left_in));
-					mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(
-							this, R.anim.push_left_out));
+					mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,
+							R.anim.push_left_in));
+					mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,
+							R.anim.push_left_out));
 					mViewFlipper.showNext();
 					if (mViewFlipper.getDisplayedChild() == imageId.length) {
 						new Thread() {
@@ -867,14 +827,12 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}
-								LoginActivity.this
-										.runOnUiThread(new Runnable() {
-											@Override
-											public void run() {
-												mViewFlipper
-														.setVisibility(View.GONE);
-											}
-										});
+								LoginActivity.this.runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										mViewFlipper.setVisibility(View.GONE);
+									}
+								});
 							};
 						}.start();
 						GameCache.putStr(LOGIN_VIEW_FLIPPER, "1");
@@ -886,16 +844,15 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 					return true;
 				}
 			} else if (e2.getX() - e1.getX() > 30) {// 向左滑动
-				if (null != mViewFlipper
-						&& View.VISIBLE == mViewFlipper.getVisibility()
+				if (null != mViewFlipper && View.VISIBLE == mViewFlipper.getVisibility()
 						&& mViewFlipper.getDisplayedChild() == 0) {
 					// if (mViewFlipper.getDisplayedChild() == 0) {
 					DialogUtils.toastTip("亲，已经是第一张了");
 				} else {
-					mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(
-							this, R.anim.push_right_in));
-					mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(
-							this, R.anim.push_right_out));
+					mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,
+							R.anim.push_right_in));
+					mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,
+							R.anim.push_right_out));
 					mViewFlipper.showPrevious();
 					return true;
 				}
@@ -903,93 +860,30 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 		}
 		return true;
 	}
-
 	@Override
 	public void onLongPress(MotionEvent arg0) {
 	}
-
 	@Override
-	public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2,
-			float arg3) {
+	public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2, float arg3) {
 		return false;
 	}
-
 	@Override
 	public void onShowPress(MotionEvent arg0) {
 	}
-
 	@Override
 	public boolean onSingleTapUp(MotionEvent arg0) {
 		return false;
 	}
-
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		return this.mGestureDetector.onTouchEvent(event);
 	}
-
 	@Override
 	public boolean onTouch(View arg0, MotionEvent event) {
 		return this.mGestureDetector.onTouchEvent(event);
 	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			// if (Math.abs(System.currentTimeMillis() - Constant.CLICK_TIME) >=
-			// 5000) {
-			// isBackState = false;
-			// Constant.CLICK_TIME = System.currentTimeMillis();
-			// Toast.makeText(LoginActivity.this, "再按一次退出", 1000).show();
-			// } else {
-			// isBackState = !isBackState;
-			// Constant.CLICK_TIME = System.currentTimeMillis();
-			// if (isBackState) {
-			// return super.onKeyDown(keyCode, event);
-			// } else {
-			// Toast.makeText(LoginActivity.this, "再按一次退出", 1000).show();
-			// }
-			// }
-			/*
-			 * String appName = getResources().getString(R.string.app_name);
-			 * AlertDialog.Builder builder = new Builder(LoginActivity.this);
-			 * builder.setMessage("是否退出   <<" + appName + ">> ?");
-			 * builder.setPositiveButton("退出", new
-			 * DialogInterface.OnClickListener() {
-			 * 
-			 * @Override public void onClick(DialogInterface dialog, int which)
-			 * { ActivityPool.exitApp(); } }); builder.setNegativeButton("再玩一会",
-			 * new DialogInterface.OnClickListener() {
-			 * 
-			 * @Override public void onClick(DialogInterface dialog, int which)
-			 * { dialog.dismiss(); } }); builder.create().show();
-			 */
-			if (CGChargeActivity.isYd(this)) {
-//				GameInterface.exit(this);
-			} else {
-				this.runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						CheckTool.exit(LoginActivity.this, new ExitCallBack() {
-							@Override
-							public void exit() {
-								ActivityPool.exitApp();
-							}
-
-							@Override
-							public void cancel() {
-							}
-						});
-					}
-				});
-			}
-		}
-		return false;
-	}
-
 	/**
 	 * 提示没有网络
-	 * 
 	 * @Title: showNetWorkDialog
 	 * @param
 	 * @return void
@@ -1002,10 +896,8 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 			netWorkDialog.show();
 		}
 	}
-
 	/**
 	 * 展示登录或账号切换窗口
-	 * 
 	 * @Title: showLoginDialog
 	 * @param
 	 * @return void
@@ -1013,8 +905,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 	 */
 	public void showLoginDialog() {
 		if (mChangeAccountDialog == null) {
-			mChangeAccountDialog = new ChangeAccountDialog(LoginActivity.this,
-					handler);
+			mChangeAccountDialog = new ChangeAccountDialog(LoginActivity.this, handler);
 		}
 		if (!mChangeAccountDialog.isShowing()) {
 			mChangeAccountDialog.show();
@@ -1026,7 +917,6 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 		// mChangeAccountDialog.show();
 		// }
 	}
-
 	/**
 	 * 检查金豆然后发牌开始
 	 */
@@ -1035,28 +925,24 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 		if (!TextUtils.isEmpty(localBean)) {
 			int allMybeans = Integer.parseInt(localBean);
 			if (allMybeans <= 0) {
-				if (!TextUtils.isEmpty(GameCache
-						.getStr(Constant.GET_BEAN_CACHE))
+				if (!TextUtils.isEmpty(GameCache.getStr(Constant.GET_BEAN_CACHE))
 						&& GameCache.getStr(Constant.GET_BEAN_CACHE).trim()
 								.equals(ActivityUtils.getNowDate().trim())) {
-					int getBeanCount = Integer.parseInt(GameCache.getStr(
-							Constant.GET_BEAN_COUNT).trim());
+					int getBeanCount = Integer.parseInt(GameCache.getStr(Constant.GET_BEAN_COUNT)
+							.trim());
 					if (getBeanCount < 3) {
 						getBeanCount++;
 						DialogUtils.mesToastTip("您的金豆不足，系统赠送1000金豆，每天最多三次！");
 						GameCache.putStr(Constant.GAME_BEAN_CACHE, "1000");
-						GameCache.putStr(Constant.GET_BEAN_COUNT, getBeanCount
-								+ "");
+						GameCache.putStr(Constant.GET_BEAN_COUNT, getBeanCount + "");
 					} else {
 						// 提示不能进去了
 						// DialogUtils.mesTip(getString(R.string.link_server_fail),
 						// true);
-						DialogUtils.mesTip("您的金豆不足,可连网参加比赛，更多惊喜等着您！", false,
-								true);
+						DialogUtils.mesTip("您的金豆不足,可连网参加比赛，更多惊喜等着您！", false, true);
 					}
 				} else {
-					GameCache.putStr(Constant.GET_BEAN_CACHE,
-							ActivityUtils.getNowDate());
+					GameCache.putStr(Constant.GET_BEAN_CACHE, ActivityUtils.getNowDate());
 					DialogUtils.mesToastTip("您的金豆不足，系统赠送1000金豆，每天最多三次！");
 					GameCache.putStr(Constant.GAME_BEAN_CACHE, "1000");
 					GameCache.putStr(Constant.GET_BEAN_COUNT, "1");

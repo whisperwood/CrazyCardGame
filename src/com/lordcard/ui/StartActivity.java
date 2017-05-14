@@ -1,6 +1,6 @@
 package com.lordcard.ui;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.HashMap;
 
@@ -52,16 +52,11 @@ public class StartActivity extends BaseActivity {
 		layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT));
 		imageView = new ImageView(this);
-		if (CGChargeActivity.isYd(this)) {
-			imageView.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.start_game, false));
-		} else {
-			imageView.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.start_game, false));
-		}
+		imageView.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.start_game, false));
 		imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
 		layout.addView(imageView);
 		setContentView(layout);
-		sharedData = getApplication().getSharedPreferences(
-				Constant.GAME_ACTIVITE, Context.MODE_PRIVATE);
+		sharedData = getApplication().getSharedPreferences(Constant.GAME_ACTIVITE, Context.MODE_PRIVATE);
 		first = sharedData.getBoolean("first", true);
 		// 判断推送服务是否启动
 		if(Constant.isPayEnable){

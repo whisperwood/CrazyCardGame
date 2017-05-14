@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.umeng.analytics.MobclickAgent;
+
 import com.lordcard.common.exception.CrashApplication;
 import com.lordcard.common.util.ActivityUtils;
 import com.lordcard.common.util.DialogUtils;
@@ -308,8 +308,6 @@ public class AccountBindDialog extends Dialog implements OnClickListener {
 										public void run() {
 											GameUser cacheUser = (GameUser) GameCache
 													.getObj(CacheKey.GAME_USER);
-											MobclickAgent.onEvent(context,
-													"邀绑定账号提交数据");
 											DialogUtils.toastTip("修改成功");
 											gameIdTv.setText(cacheUser
 													.getAccount());

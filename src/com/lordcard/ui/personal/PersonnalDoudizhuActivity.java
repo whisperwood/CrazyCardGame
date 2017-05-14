@@ -1,7 +1,7 @@
 package com.lordcard.ui.personal;
 
-import com.crazy.shui.R;
-import com.crazy.shui.R.color;
+import com.beauty.lord.R;
+import com.beauty.lord.R.color;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -124,7 +124,6 @@ import com.lordcard.ui.view.TouchRelativeLayout;
 import com.lordcard.ui.view.dialog.ChatDialog;
 import com.lordcard.ui.view.dialog.PhotoDialog;
 import com.lordcard.ui.view.dialog.SettingDialog;
-import com.umeng.analytics.MobclickAgent;
 
 @SuppressLint({ "HandlerLeak", "UseSparseArrays" })
 public class PersonnalDoudizhuActivity extends BaseActivity implements
@@ -364,8 +363,6 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 		messbtnView.setOnClickListener(clickListener);
 		GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 		if (cacheUser != null) {
-			if(Constant.isPayEnable)
-				MobclickAgent.onEventBegin(this, "单机斗地主：" + cacheUser.getAccount());
 		}
 		// mGestureDetector = new GestureDetector(this);
 		// joinGame(true);
@@ -423,8 +420,6 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 				callPoint(0);
 				break;
 			case R.id.game_back:
-				MobclickAgent
-						.onEvent(PersonnalDoudizhuActivity.this, "单机游戏中退出");
 				DialogUtils.exitGame(ctx);
 				break;
 			case R.id.game_robot:
@@ -433,7 +428,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 			case R.id.game_pay:
 				Toast.makeText(PersonnalDoudizhuActivity.this, "对不起，单机暂不提供充值",
 						Toast.LENGTH_SHORT).show();
-				// MobclickAgent.onEvent(PersonnalDoudizhuActivity.this,
+				// (PersonnalDoudizhuActivity.this,
 				// "单机游戏中充值");
 				// PayTipUtils.showTip(0,PaySite.SINGLE_GAME_CLICK); //配置的提示方式
 				break;

@@ -1,6 +1,6 @@
 package com.lordcard.ui;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -67,7 +67,6 @@ import com.lordcard.network.http.HttpCallback;
 import com.lordcard.network.http.HttpRequest;
 import com.lordcard.ui.base.BaseActivity;
 import com.lordcard.ui.view.dialog.GameDialog;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * activity.TaskMenuActivity
@@ -293,7 +292,6 @@ public class TaskMenuActivity extends BaseActivity {
 						// findViewById(R.id.ug_download).setVisibility(View.VISIBLE);
 						// findViewById(R.id.viewpagerLayout).setVisibility(View.VISIBLE);
 						// findViewById(R.id.ug_download2).setVisibility(View.VISIBLE);
-						// MobclickAgent.onEvent(TaskMenuActivity.this, "应用下载");
 						// }else if ("0".equals(isOpen)){
 						// if (null != TaskMenuMap &&
 						// TaskMenuMap.containsKey("fun_no_open")) {
@@ -393,7 +391,6 @@ public class TaskMenuActivity extends BaseActivity {
 				findViewById(R.id.ug_download).setVisibility(View.VISIBLE);
 				findViewById(R.id.viewpagerLayout).setVisibility(View.VISIBLE);
 				findViewById(R.id.ug_download2).setVisibility(View.VISIBLE);
-				MobclickAgent.onEvent(TaskMenuActivity.this, "应用下载");
 			} else if ("0".equals(isOpen)) {
 				if (null != TaskMenuMap
 						&& TaskMenuMap.containsKey(Constant.FUN_NO_OPEN)) {
@@ -528,11 +525,9 @@ public class TaskMenuActivity extends BaseActivity {
 			}
 			switch (v.getId()) {
 			case R.id.set_back:
-				MobclickAgent.onEvent(TaskMenuActivity.this, "赠送返回");
 				finishSelf();
 				break;
 			case R.id.invitation_code_btn:// 邀请码按钮
-				MobclickAgent.onEvent(TaskMenuActivity.this, "短信邀请码获取金豆");
 				String code = codeText.getText().toString();
 				if (!TextUtils.isEmpty(code)) {
 					// 提交邀请码
@@ -553,8 +548,6 @@ public class TaskMenuActivity extends BaseActivity {
 					DialogUtils.mesTip("请输入正确的手机号码!", false);
 				} else {
 					if (ActivityUtils.simExist()) { // 判断SIM卡是否能使用
-						MobclickAgent
-								.onEvent(TaskMenuActivity.this, "手机号获取验证码");
 						String timeStr = String.valueOf(System
 								.currentTimeMillis());
 						String validatorCode = timeStr.substring(timeStr
@@ -584,7 +577,6 @@ public class TaskMenuActivity extends BaseActivity {
 				}
 				break;
 			case R.id.telphone_btn: // 手机号验证
-				MobclickAgent.onEvent(TaskMenuActivity.this, "手机号验证码获取金豆");
 				String auth = authText.getText().toString();
 				if (!TextUtils.isEmpty(auth)
 						&& auth.equals(Database.PHONE_VALIDATOR_CODE)) {
@@ -601,13 +593,11 @@ public class TaskMenuActivity extends BaseActivity {
 				}
 				break;
 			case R.id.userinfo_btn:// 用户信息完善
-				MobclickAgent.onEvent(TaskMenuActivity.this, "完善个人资料获取金豆");
 				Intent userIt = new Intent();
 				userIt.setClass(TaskMenuActivity.this, SettingActivity.class);
 				startActivity(userIt);
 				break;
 			case R.id.frients_btn:// 邀请好友
-				MobclickAgent.onEvent(TaskMenuActivity.this, "邀请好友获取金豆");
 				Intent ftIt = new Intent();
 				ftIt.setClass(TaskMenuActivity.this,
 						InviteToDowanloadActivity.class);
@@ -618,7 +608,6 @@ public class TaskMenuActivity extends BaseActivity {
 				if ("close".equals(emsSwitch)) {
 					DialogUtils.toastTip("此功能暂未开通");
 				} else {
-					MobclickAgent.onEvent(TaskMenuActivity.this, "邀请好友送金豆");
 					bottInvitationMsgBtn
 							.setBackgroundResource(R.drawable.gpl_top_left_select);
 					bottTelphonebtn
@@ -633,11 +622,9 @@ public class TaskMenuActivity extends BaseActivity {
 				break;
 			case R.id.bott_telphone_btn:
 				bottTelphonebtn.setTextColor(Color.WHITE);
-				MobclickAgent.onEvent(TaskMenuActivity.this, "本机号码");
 				twoPage();
 				break;
 			case R.id.bott_userinfo_btn:
-				MobclickAgent.onEvent(TaskMenuActivity.this, "完善信息");
 				bottUserinfoBtn.setTextColor(Color.WHITE);
 				bottInvitationMsgBtn
 						.setBackgroundResource(R.drawable.gpl_top_left);
@@ -651,7 +638,6 @@ public class TaskMenuActivity extends BaseActivity {
 				getPageView(2);
 				break;
 			case R.id.invitation_friend_btn:
-				MobclickAgent.onEvent(TaskMenuActivity.this, "邀请好友");
 				bottInvitationFriendBtn.setTextColor(Color.WHITE);
 				bottInvitationMsgBtn
 						.setBackgroundResource(R.drawable.gpl_top_left);
@@ -699,7 +685,6 @@ public class TaskMenuActivity extends BaseActivity {
 						// findViewById(R.id.ug_download).setVisibility(View.VISIBLE);
 						// findViewById(R.id.viewpagerLayout).setVisibility(View.VISIBLE);
 						// findViewById(R.id.ug_download2).setVisibility(View.VISIBLE);
-						// MobclickAgent.onEvent(TaskMenuActivity.this, "应用下载");
 						// }else if ("0".equals(isOpen)){
 						// if (null != TaskMenuMap &&
 						// TaskMenuMap.containsKey("fun_no_open")) {
@@ -949,22 +934,13 @@ public class TaskMenuActivity extends BaseActivity {
 											false);
 									codeText.setText("");
 									// 登记到友盟
-									MobclickAgent.onEvent(
-											TaskMenuActivity.this,
-											"短信邀请码获取金豆:成功");
 								} else if (CmdUtils.FAIL_CODE.equals(resultTask
 										.getValue())) { // 失败
 									DialogUtils.mesTip("金豆获取失败，请稍候再试!", false);
 									// 登记到友盟
-									MobclickAgent.onEvent(
-											TaskMenuActivity.this,
-											"短信邀请码获取金豆:失败");
 								} else if ("2".equals(resultTask.getValue())) { // 失效
 									DialogUtils.mesTip("无效的邀请码!", false);
 									// 登记到友盟
-									MobclickAgent.onEvent(
-											TaskMenuActivity.this,
-											"短信邀请码获取金豆:失效");
 								}
 							}
 						});

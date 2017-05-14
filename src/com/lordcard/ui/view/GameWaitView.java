@@ -1,6 +1,6 @@
 package com.lordcard.ui.view;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ import com.lordcard.network.http.HttpRequest;
 import com.lordcard.network.task.GetRankTask;
 import com.lordcard.ui.interfaces.ChangeProInterface;
 import com.lordcard.ui.personal.PersonnalDoudizhuActivity;
-import com.umeng.analytics.MobclickAgent;
+
 
 /**
  * widget.GameWaitView
@@ -145,7 +145,6 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 					HttpRequest.returnGamePlace(Database.JOIN_ROOM_CODE);
 					// 退出打牌界面
 					CmdUtils.exitGame();
-					MobclickAgent.onEvent(context, "退赛");
 					// 记录逃跑日志
 					GameUser gameUser = (GameUser) GameCache
 							.getObj(CacheKey.GAME_USER);
@@ -167,7 +166,7 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 		vipRoomId = (TextView) mainView.findViewById(R.id.vip_room_id);
 		Room room = Database.JOIN_ROOM;
 		if (activity.getClass().equals(PersonnalDoudizhuActivity.class)) {
-			vipRoomId.setText("单机斗地主");
+			vipRoomId.setText(R.string.app_name);
 			joinProgrees.setVisibility(View.INVISIBLE);
 		} else {
 			if (room.getCode().equals("-1")) {

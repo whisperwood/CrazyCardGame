@@ -1,7 +1,7 @@
 package com.lordcard.ui.view;
 //
-//import com.crazy.shui.BuildConfig;
-//import com.crazy.shui.R;
+//import com.beauty.lord.BuildConfig;
+//import com.beauty.lord.R;
 //import com.google.android.gms.ads.AdListener;
 //import com.google.android.gms.ads.AdRequest;
 //import com.google.android.gms.ads.AdView;

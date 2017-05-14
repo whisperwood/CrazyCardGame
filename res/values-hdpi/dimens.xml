@@ -30,7 +30,7 @@
 
     <!-- 设置view -->
     <dimen name="setting_tip_top">110dp</dimen>
-    <dimen name="setting_tip_left">25dp</dimen>
+    <dimen name="setting_tip_left">50dp</dimen>
     <dimen name="setting_tip_texttop">65dp</dimen>
     <dimen name="game_login_in_margin_left">10dp</dimen>
 

@@ -1,6 +1,6 @@
 package com.lordcard.ui;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +57,6 @@ import com.lordcard.network.http.HttpUtils;
 import com.lordcard.ui.base.BaseActivity;
 import com.lordcard.ui.view.dialog.DigtailStoveDialog;
 import com.lordcard.ui.view.dialog.StoveDialog;
-import com.umeng.analytics.MobclickAgent;
 
 public class StoveActivity extends BaseActivity implements OnClickListener {
 	private List<LinearLayout> taskLayoutList = new ArrayList<LinearLayout>();
@@ -302,11 +301,9 @@ public class StoveActivity extends BaseActivity implements OnClickListener {
 		}
 		switch (v.getId()) {
 		case R.id.set_back:
-			MobclickAgent.onEvent(CrashApplication.getInstance(), "合成返回");
 			finishSelf();
 			break;
 		case R.id.stove_bean:
-			MobclickAgent.onEvent(CrashApplication.getInstance(), "金豆合成");
 			beanView.setTextColor(Color.WHITE);
 			beanView.setBackgroundDrawable(ImageUtil.getResDrawable(
 					R.drawable.gpl_top_center_select, true));
@@ -339,7 +336,6 @@ public class StoveActivity extends BaseActivity implements OnClickListener {
 			}
 			break;
 		case R.id.stove_digital:
-			MobclickAgent.onEvent(CrashApplication.getInstance(), "数码合成");
 			digitalView.setTextColor(Color.WHITE);
 			beanView.setBackgroundDrawable(ImageUtil.getResDrawable(
 					R.drawable.gpl_top_center, true));
@@ -372,7 +368,6 @@ public class StoveActivity extends BaseActivity implements OnClickListener {
 			}
 			break;
 		case R.id.stove_help:
-			MobclickAgent.onEvent(CrashApplication.getInstance(), "合成帮助");
 			helpbutton.setTextColor(Color.WHITE);
 			beanView.setBackgroundDrawable(ImageUtil.getResDrawable(
 					R.drawable.gpl_top_center, true));
@@ -597,9 +592,6 @@ public class StoveActivity extends BaseActivity implements OnClickListener {
 							ThreadPool.startWork(new Runnable() {
 								@Override
 								public void run() {
-									MobclickAgent.onEvent(
-											CrashApplication.getInstance(),
-											"数码头像");
 									Map<String, String> paramMap = new HashMap<String, String>();
 									paramMap.put("goodsId",
 											datalist.get(position).getTypeId());
@@ -618,8 +610,6 @@ public class StoveActivity extends BaseActivity implements OnClickListener {
 				holder.rightBtn.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						MobclickAgent.onEvent(CrashApplication.getInstance(),
-								"合成按钮");
 						stvDialog = new StoveDialog(Database.currentActivity,
 								R.style.dialog, datalist.get(position)
 										.getTypeName(), datalist.get(position)
@@ -943,7 +933,6 @@ public class StoveActivity extends BaseActivity implements OnClickListener {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// 重写返回键
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			// MobclickAgent.onEvent(CrashApplication.getInstance(), "合成实反键");
 			// if (mMainMenuBar.getGoodsLayout().getVisibility() ==
 			// View.VISIBLE) {
 			// mMainMenuBar.getGoodsLayout().setVisibility(View.GONE);

@@ -1,6 +1,6 @@
 package com.sdk.group;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.List;
 

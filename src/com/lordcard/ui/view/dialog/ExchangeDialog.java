@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.umeng.analytics.MobclickAgent;
+
 import com.google.gson.reflect.TypeToken;
 import com.lordcard.common.util.DialogUtils;
 import com.lordcard.common.util.JsonHelper;
@@ -155,7 +155,6 @@ public class ExchangeDialog extends Dialog implements OnClickListener {
 			} else if (!isMobile) {
 				DialogUtils.mesTip("请输入正确的手机号码!", false);
 			} else {
-				MobclickAgent.onEvent(context, "领取物品填信息");
 				GameUser cacheUser = (GameUser) GameCache
 						.getObj(CacheKey.GAME_USER);
 				Map<String, String> paramMap = new HashMap<String, String>();

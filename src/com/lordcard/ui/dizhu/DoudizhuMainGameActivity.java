@@ -1,7 +1,7 @@
 package com.lordcard.ui.dizhu;
 
-import com.crazy.shui.R;
-import com.crazy.shui.R.color;
+import com.beauty.lord.R;
+import com.beauty.lord.R.color;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -148,7 +148,6 @@ import com.sdk.jd.sms.util.JDSMSPayUtil;
 import com.sdk.util.PaySite;
 import com.sdk.util.PayTipUtils;
 import com.sdk.util.RechargeUtils;
-import com.umeng.analytics.MobclickAgent;
 
 @SuppressLint({ "HandlerLeak", "UseSparseArrays" })
 public class DoudizhuMainGameActivity extends BaseActivity implements
@@ -432,21 +431,18 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 		public void onClick(View v) {
 			int id = v.getId();
 			if (id == R.id.playimageView1 || id == R.id.zhezhao1) { // 位置1玩家图像
-				MobclickAgent.onEvent(ctx, "游戏中点玩家1头像");
 				String p1o = play1Order.getText().toString();
 				if (!TextUtils.isEmpty(p1o)) {
 					photoClick(play1Icon, Integer.parseInt(p1o),
 							mySelfOrder == masterOrder);
 				}
 			} else if (id == PLAY2ICON_ID || id == ZHEZHAO2_ID) { // 位置2玩家图像
-				MobclickAgent.onEvent(ctx, "游戏中点玩家2头像");
 				String p2o = play2Order.getText().toString();
 				if (!TextUtils.isEmpty(p2o)) {
 					photoClick(play2Icon, Integer.parseInt(p2o),
 							(PLAY2ICON_ID - 1300) == masterOrder);
 				}
 			} else if (id == PLAY3ICON_ID || id == ZHEZHAO3_ID) { // 位置3玩家图像
-				MobclickAgent.onEvent(ctx, "游戏中点玩家3头像");
 				String p3o = play3Order.getText().toString();
 				if (!TextUtils.isEmpty(p3o)) {
 					photoClick(play3Icon, Integer.parseInt(p3o),
@@ -464,7 +460,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 						if (!mChatDialog.isShowing()) {
 							mChatDialog.show();
 						}
-						MobclickAgent.onEvent(ctx, "游戏中聊天互动");
 					}
 					break;
 				case R.id.chupai_button:// 出牌
@@ -498,7 +493,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 					callPoint(0);
 					break;
 				case R.id.game_back:
-					MobclickAgent.onEvent(ctx, "游戏中退出");
 					DialogUtils.exitGame(ctx);
 					break;
 				case R.id.game_robot: // "点击托管"
@@ -506,7 +500,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 					break;
 				case R.id.game_pay:// 充值(游戏界面菜单栏充值按钮)
 					JDSMSPayUtil.setContext(ctx);
-					MobclickAgent.onEvent(ctx, "游戏中充值");
 					double b = RechargeUtils
 							.calRoomJoinMoney(Database.JOIN_ROOM); // 计算当前房间进入需要的基本金豆
 					PayTipUtils.showTip(b, PaySite.PLAYING_CLICK); // 配置的提示方式
@@ -515,7 +508,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 				case R.id.dzed_recharge_beans_btn:// 充值(通过预充值提示充值)
 					JDSMSPayUtil.setContext(ctx);
 					// 充值额度的处理未接入，等待接入
-					MobclickAgent.onEvent(ctx, "游戏中预充值");
 					PayTipUtils.showTip(rechargeMoney, PaySite.PREPARERECHARGE); // 配置的提示方式
 					// SDKFactory.smsPay(rechargeMoney, SDKConstant.PLAYING);
 					break;
@@ -551,7 +543,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 					}
 					break;
 				case R.id.game_gilr_items:
-					MobclickAgent.onEvent(ctx, "游戏中美女道具");
 					girlItems.setVisibility(View.INVISIBLE);
 					showPopWindow(true);
 					if (null != toolList) {
@@ -614,7 +605,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 								.show();
 						isShowPrerechargeDialog = true;
 						borrowBeansBtn.setVisibility(View.INVISIBLE);
-						MobclickAgent.onEvent(ctx, "游戏中借点豆");
 					}
 					break;
 				}
@@ -707,7 +697,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 		CmdDetail chat = new CmdDetail();
 		// 发送"加倍"信息，
 		chat.setCmd(CmdUtils.CMD_TILA);
-		MobclickAgent.onEvent(ctx, "游戏中加" + multiple + "倍");
 		jiabei1Iv.setVisibility(View.VISIBLE);
 		ImageView info = new ImageView(ctx);
 		// 1:不加倍,2:加2倍,4:加4倍
@@ -757,7 +746,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 	 */
 	private void clickBaoxiang() {
 		// "恭某某某干了什么事情或得的谁的什么什么奖励，特此公告以资表扬，望大家以此为榜样，共创辉煌";
-		MobclickAgent.onEvent(ctx, "游戏中点击宝箱");
 		if (6 == Database.JOIN_ROOM.getHomeType()) {
 			if (quang == allQuan) {
 				try {
@@ -1858,7 +1846,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 				ImageUtil.clearGirlBitMapCache();
 				popupWindow = null;
 			} else {
-				MobclickAgent.onEvent(DoudizhuMainGameActivity.this, "游戏中实体退出");
 				DialogUtils.exitGame(DoudizhuMainGameActivity.this);
 			}
 			return true;
@@ -2730,7 +2717,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 				super.handleMessage(msg);
 				switch (msg.what) {
 				case 0: // 发牌更新界面
-					MobclickAgent.onEventBegin(ctx, "在线斗地主");
 					ClientCmdMgr.setClientStatus(Client.PLAYING);
 					cancelTimer(); // 取消定时
 					gameWaitLayout.closeTimer();
@@ -2955,7 +2941,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 					purchase.put("room", Database.JOIN_ROOM.getName());
 					purchase.put("account", mGameUser.getAccount());
 					purchase.put("userctime", mGameUser.getCreateDate());
-					MobclickAgent.onEvent(ctx, "斗地主游戏中", purchase);
 					break;
 				case 1: // 叫地主更新界面
 					Grab grab = (Grab) msg.getData().get("grab");
@@ -2994,7 +2979,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 					refreshJiPaiQiAvatar();
 					break;
 				case 4: // 收到打完这盘的牌消息
-					MobclickAgent.onEventEnd(ctx, "在线斗地主");
 					hiddenPlayBtn();
 					LinkedList<Play> playResult = (LinkedList<Play>) msg
 							.getData().get("playResult");
@@ -3412,7 +3396,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 						@Override
 						public void cancelClick() {
 							CmdUtils.exitGame();
-							MobclickAgent.onEvent(ctx, "超过上限取消");
 							// 记录逃跑日志
 							GameUser cacheUser = (GameUser) GameCache
 									.getObj(CacheKey.GAME_USER);
@@ -3472,7 +3455,6 @@ public class DoudizhuMainGameActivity extends BaseActivity implements
 									Constant.GAME_VIEW_SEND_MESS_CLICK_TYPE));
 					break;
 				case Constant.HANDLER_WHAT_GAME_VIEW_SEND_MESS_GIF:// GIF表情
-					MobclickAgent.onEvent(ctx, "游戏中发送表情");
 					final GameUser cacheUser = (GameUser) GameCache
 							.getObj(CacheKey.GAME_USER);
 					String imageName = msg.getData().getString(

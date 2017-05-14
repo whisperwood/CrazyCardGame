@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.umeng.analytics.MobclickAgent;
+
 import com.google.gson.reflect.TypeToken;
 import com.lordcard.common.util.ImageUtil;
 import com.lordcard.common.util.ImageUtil.ImageCallback;
@@ -228,7 +228,6 @@ public class EnvalueDialog extends Dialog implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.stove_btn:
-			MobclickAgent.onEvent(context, "宝鉴合成");
 			int page = 2;// 默认为数码合成
 			if (null != Typeid) {
 				if (Typeid.intValue() == 1 || Typeid.intValue() == 4) {

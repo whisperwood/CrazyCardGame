@@ -1,6 +1,6 @@
 package com.lordcard.adapter;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +50,6 @@ import com.lordcard.ui.view.notification.NotificationService;
 import com.sdk.jd.sms.util.JDSMSPayUtil;
 import com.sdk.util.PaySite;
 import com.sdk.util.PayTipUtils;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 快速比赛场Adapter
@@ -271,28 +270,14 @@ public class FGPlaceListAdapter extends BaseAdapter {
 		mViewHolder.expBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String roomCode = gamePlaceDate.get(position).getCode();
-				MobclickAgent.onEvent(context, "快速详情");
-				if (Database.FAST_EXPLAIN != null
-						&& Database.FAST_EXPLAIN.containsKey(roomCode)) {
-					showDetailDialog(position,
-							Database.FAST_EXPLAIN.get(roomCode));
-				} else {
-					GetGameRuleTask gameRule = new GetGameRuleTask(position);
-					gameRule.execute(roomCode);
-				}
+				
 			}
 		});
 		// 报名
 		mViewHolder.signUpBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				try {
-					MobclickAgent.onEvent(context, "快速报名");
-					joinPutong(position);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				
 			}
 		});
 		return convertView;

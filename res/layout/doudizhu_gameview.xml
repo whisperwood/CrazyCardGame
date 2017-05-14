@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/game_desk_1" />
+            android:background="@drawable/game_desk" />
 
         <!-- 比赛场文字提示 start -->
 

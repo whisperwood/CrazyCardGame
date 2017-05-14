@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.util.Log;
-import cn.egame.terminal.paysdk.EgamePay;
-import cn.egame.terminal.paysdk.EgamePayListener;
 
 import com.lordcard.common.util.DialogUtils;
 import com.lordcard.common.util.JsonHelper;
@@ -15,7 +13,6 @@ import com.lordcard.network.base.ThreadPool;
 import com.lordcard.network.http.HttpRequest;
 import com.lordcard.prerecharge.PrerechargeManager;
 import com.lordcard.ui.view.Assistant;
-import com.sdk.jd.sms.util.JDSMSPayUtil;
 import com.sdk.util.PaySite;
 import com.sdk.util.vo.PayPoint;
 
@@ -100,41 +97,7 @@ public class EGameSMSpayUtil {
 						Database.currentActivity.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								HashMap payParams = new HashMap();
-								payParams.put(
-										EgamePay.PAY_PARAMS_KEY_TOOLS_PRICE,
-										point.getMoney() + "");
-								payParams.put(
-										EgamePay.PAY_PARAMS_KEY_TOOLS_DESC,
-										point.getName());
-								payParams.put(
-										EgamePay.PAY_PARAMS_KEY_CP_PARAMS,
-										EGameSMSConfig.PAY_ORDER);
-								// payParams.put(EgamePay.PAY_PARAMS_KEY_PRIORITY,
-								// "other");
-								EgamePay.pay(JDSMSPayUtil.getContext(),
-										payParams, new EgamePayListener() {
-											@Override
-											public void paySuccess(Map params) {
-												EGameSMSConfig.PAY_ORDER = null;
-												DialogUtils
-														.mesTip("短信发送成功，由于网络延时金豆可能不会立即到账。请留意您的金豆变化",
-																false, true);
-											}
-
-											@Override
-											public void payFailed(Map params,
-													int errorInt) {
-												EGameSMSConfig.PAY_ORDER = null;
-												DialogUtils.mesTip("对不起，支付失败",
-														false, true);
-											}
-
-											@Override
-											public void payCancel(Map params) {
-												EGameSMSConfig.PAY_ORDER = null;
-											}
-										});
+								
 							}
 						});
 					} else {

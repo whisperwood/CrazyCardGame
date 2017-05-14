@@ -2,7 +2,7 @@
 	<item type="id" name="view_tag_id"></item>
     <!-- 相关提示信息 -->
     <string name="desc">abc</string>
-    <string name="app_name">疯狂斗地主</string>
+    <string name="app_name">美女斗地主</string>
     <string name="net_interrupt">网络连接异常,请稍候再试</string>
     <string name="gs_update">游戏服务器临时维护，请重新进入</string>
     <string name="net_timeout">网络连接超时</string>

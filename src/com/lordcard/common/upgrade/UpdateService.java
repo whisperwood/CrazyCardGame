@@ -6,7 +6,7 @@
  */
 package com.lordcard.common.upgrade;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.io.File;
 import java.io.FileOutputStream;

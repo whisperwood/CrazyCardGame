@@ -1,6 +1,6 @@
 package com.lordcard.ui;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,7 +14,6 @@ public class CGChargeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		if (isYd(this)) { // 移动计费
 			Intent intent = new Intent();
-//			intent.setClass(CGChargeActivity.this,cn.cmgame.billing.api.GameOpenActivity.class);
 			startActivity(intent);
 			finish();
 		} else {

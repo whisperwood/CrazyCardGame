@@ -1,6 +1,6 @@
 package com.lordcard.adapter;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,7 +52,6 @@ import com.lordcard.ui.view.notification.NotificationService;
 import com.sdk.jd.sms.util.JDSMSPayUtil;
 import com.sdk.util.PaySite;
 import com.sdk.util.PayTipUtils;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 复合赛场Adapter
@@ -317,40 +316,21 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 		mViewHolder.refreshBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if ((System.currentTimeMillis() - Constant.CLICK_TIME) >= Constant.SPACING_TIME) {// 防止重复刷新
-					Constant.CLICK_TIME = System.currentTimeMillis();
-					MobclickAgent.onEvent(context, "复合刷新");
-					RefreshGoldTask refresh = new RefreshGoldTask();
-					refresh.execute(position);
-				}
+				
 			}
 		});
 		// 详情
 		mViewHolder.expBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String roomCode = gamePlaceDate.get(position).getCode();
-				MobclickAgent.onEvent(context, "复合刷新");
-				if (Database.SORT_EXPLAIN != null
-						&& Database.SORT_EXPLAIN.containsKey(roomCode)) {
-					showDetailDialog(position,
-							Database.SORT_EXPLAIN.get(roomCode));
-				} else {
-					GetGameRuleTask gameRule = new GetGameRuleTask(position);
-					gameRule.execute(roomCode);
-				}
+				
 			}
 		});
 		// 报名
 		mViewHolder.signUpBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				try {
-					MobclickAgent.onEvent(context, "复合报名");
-					joinFuhe(position);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				
 			}
 		});
 		return convertView;

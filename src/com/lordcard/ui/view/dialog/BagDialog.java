@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.umeng.analytics.MobclickAgent;
+
 import com.google.gson.reflect.TypeToken;
 import com.lordcard.common.util.DialogUtils;
 import com.lordcard.common.util.ImageUtil;
@@ -455,7 +455,6 @@ public class BagDialog extends Dialog implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.values_textview:
-			MobclickAgent.onEvent(context, "包裹宝鉴");
 			EnvalueDialog valueDialog = new EnvalueDialog(context);
 			valueDialog.show();
 			break;
@@ -585,7 +584,6 @@ public class BagDialog extends Dialog implements OnClickListener {
 						if (proposMap.get("oper").equals("1")
 								&& Integer.valueOf(gridItemMegDetails
 										.getValue()) >= 30) {// 话费
-							MobclickAgent.onEvent(context, "包裹话费券充值");
 							RechangeDialog rechangeDialog = new RechangeDialog(
 									gridItemMegDetails.getValue(), fresHandler,
 									context, R.style.dialog, gridItemMegDetails
@@ -595,7 +593,6 @@ public class BagDialog extends Dialog implements OnClickListener {
 						if (proposMap.get("oper").equals("1")
 								&& Integer.valueOf(gridItemMegDetails
 										.getValue()) < 30) {// 话费
-							MobclickAgent.onEvent(context, "包裹话费合成");
 							Bundle bundle = new Bundle();
 							bundle.putInt("page", 2);
 							Intent stoveIntent = new Intent();
@@ -604,14 +601,12 @@ public class BagDialog extends Dialog implements OnClickListener {
 							context.startActivity(stoveIntent);
 						}
 						if (proposMap.get("oper").equals("3")) {// 填地址
-							MobclickAgent.onEvent(context, "包裹领取物品");
 							ExchangeDialog exchangeDialog = new ExchangeDialog(
 									fresHandler, context, R.style.dialog,
 									gridItemMegDetails.getId());
 							exchangeDialog.show();
 						}
 						if (proposMap.get("oper").equals("2")) {// 合成
-							MobclickAgent.onEvent(context, "包物品合成");
 							if (gridItemMegDetails.getCompositeType()
 									.intValue() == 2) {// 十二生肖
 								Bundle bundle = new Bundle();
@@ -624,7 +619,6 @@ public class BagDialog extends Dialog implements OnClickListener {
 							}
 						}
 						if (proposMap.get("oper").equals("5")) {// 合成
-							MobclickAgent.onEvent(context, "积分重置");
 							waitDialog = DialogUtils.getWaitProgressDialog(
 									Database.currentActivity, "请稍后...");
 							waitDialog.show();

@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +34,7 @@ import com.lordcard.network.http.HttpCallback;
 import com.lordcard.network.http.HttpRequest;
 import com.lordcard.network.http.HttpURL;
 import com.lordcard.ui.StoveActivity;
-import com.umeng.analytics.MobclickAgent;
+
 
 public class RechangeDialog extends Dialog implements OnClickListener {
 	private Spinner spiEdu = null;
@@ -129,8 +129,6 @@ public class RechangeDialog extends Dialog implements OnClickListener {
 				DialogUtils.mesTip("请输入正确的手机号码!", false);
 				phoneText.setText("");
 			} else {
-				MobclickAgent.onEvent(context, "话费券充值信息完成");
-				MobclickAgent.onEvent(context, "");
 				Map<String, String> paramMap = new HashMap<String, String>();
 				String operatorsid = "";
 				if (card.equals("移动")) {
@@ -183,7 +181,6 @@ public class RechangeDialog extends Dialog implements OnClickListener {
 			}
 			break;
 		case R.id.stovebean_btn:
-			MobclickAgent.onEvent(context, "话费券充值合成金豆");
 			Bundle bundle = new Bundle();
 			bundle.putInt("page", 0);
 			Intent stoveIntent = new Intent();

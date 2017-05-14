@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import com.lordcard.common.util.JsonHelper;
 import com.lordcard.common.util.MultiScreenTool;
 import com.lordcard.entity.Room;
-import com.umeng.analytics.MobclickAgent;
+
 
 public abstract class SignupDialog extends Dialog implements OnClickListener {
 	private Context context;
@@ -108,7 +108,6 @@ public abstract class SignupDialog extends Dialog implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.sign_btn:
 			mst.unRegisterView(layout);
-			MobclickAgent.onEvent(context, "合成剂专场报名");
 			askJoin(room);
 			break;
 		case R.id.sign_cancel_btn:

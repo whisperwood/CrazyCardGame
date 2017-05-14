@@ -6,7 +6,7 @@
  */
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import android.app.Dialog;
 import android.content.Context;

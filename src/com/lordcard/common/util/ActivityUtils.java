@@ -1,6 +1,6 @@
 package com.lordcard.common.util;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.io.BufferedReader;
 import java.io.File;

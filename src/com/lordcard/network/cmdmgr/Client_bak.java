@@ -1,6 +1,6 @@
 //package com.lordcard.net.socket;
 //
-//import com.crazy.shui.R;
+//import com.beauty.lord.R;
 //
 //import java.net.InetSocketAddress;
 //import java.util.Date;

@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ import com.lordcard.entity.GoodsPart;
 import com.lordcard.network.http.GameCache;
 import com.lordcard.network.http.HttpURL;
 import com.lordcard.network.http.HttpUtils;
-import com.umeng.analytics.MobclickAgent;
+
 
 public class StoveDialog extends Dialog implements OnClickListener {
 	private Context context;
@@ -200,7 +200,6 @@ public class StoveDialog extends Dialog implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.stove_stuff_btn:
-			MobclickAgent.onEvent(context, "合成" + nameStr);
 			GameUser cacheUser = (GameUser) GameCache
 					.getObj(CacheKey.GAME_USER);
 			stove(typeid, cacheUser.getLoginToken());

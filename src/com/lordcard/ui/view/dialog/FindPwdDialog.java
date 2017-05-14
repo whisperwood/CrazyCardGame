@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.beauty.lord.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.umeng.analytics.MobclickAgent;
+
 import com.lordcard.common.exception.CrashApplication;
 import com.lordcard.common.util.DialogUtils;
 import com.lordcard.common.util.JsonHelper;
@@ -93,7 +93,6 @@ public class FindPwdDialog extends Dialog implements OnClickListener {
 			DialogUtils.mesTip("邮箱长度需在6~30之间", false);
 		} else {
 			Context ctx = CrashApplication.getInstance();
-			MobclickAgent.onEvent(ctx, "找回密码确定");
 			fetrievePwd(accountStr, emailStr);
 		}
 	};
