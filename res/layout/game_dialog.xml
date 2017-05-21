@@ -2,18 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mm_layout"
-    android:layout_width="wrap_content"
+    android:layout_width="400dip"
     android:layout_height="wrap_content" >
 
     <TableLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:layout_centerHorizontal="true"
+        >
 
         <TableRow>
 
             <LinearLayout
                 android:id="@+id/showmsg_layout"
-                android:layout_width="250dp"
+                android:layout_width="280dp"
                 android:layout_height="170dp"
                 android:background="@drawable/photo_bg"
                 android:orientation="vertical" >
@@ -26,7 +28,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="35dp"
                     android:layout_marginRight="35dp"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="55dp"
                     android:gravity="center"
                     android:text="恭喜您，等级达到150，不滞于物，草木竹石均可为剑，渐进于无剑胜有剑之境。（获得15000金豆，抽奖券15张）"
                     android:textColor="#c2811a"
@@ -45,10 +47,10 @@
             </LinearLayout>
         </TableRow>
 
-        <TableRow>
-        </TableRow>
 
-        <TableRow android:layout_marginTop="-55dp" >
+        <TableRow android:layout_marginTop="-55dp" 
+            android:layout_centerHorizontal="true"
+            >
 
             <RelativeLayout
                 android:layout_width="fill_parent"

@@ -7,11 +7,27 @@
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/game_wait_text" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleSmallInverse"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:indeterminateDrawable="@drawable/game_wait_loading" 
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="20dip"
+            />
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:weightSum="5" >
 
         <LinearLayout
@@ -86,15 +102,15 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/wait_flower"
         android:gravity="bottom|center_horizontal"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="gone" >
 
         <RelativeLayout
             android:id="@+id/join_photo_bottom"
             android:layout_width="160dp"
             android:layout_height="40dp"
             android:layout_marginTop="30dp"
-            android:background="@drawable/join_room_bg" 
-            >
+            android:background="@drawable/join_room_bg" >
 
             <TextView
                 android:id="@+id/vip_room_id"
@@ -116,7 +132,7 @@
         android:layout_marginTop="0dp"
         android:background="@drawable/join_ad"
         android:gravity="center"
-        >
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/join_ad_text"
@@ -166,26 +182,27 @@
             android:singleLine="true"
             android:text="智能拼桌中......"
             android:textColor="@color/yellow"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:visibility="gone" />
     </LinearLayout>
 
-<!--     <com.google.android.gms.ads.AdView -->
-<!--         android:id="@+id/adView" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_alignParentBottom="true" -->
-<!--         android:layout_centerHorizontal="true" -->
-<!--         ads:adSize="BANNER" -->
-<!--         ads:adUnitId="@string/ad_unit_id_banner2" > -->
-<!--     </com.google.android.gms.ads.AdView> -->
+    <!-- <com.google.android.gms.ads.AdView -->
+    <!-- android:id="@+id/adView" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_alignParentBottom="true" -->
+    <!-- android:layout_centerHorizontal="true" -->
+    <!-- ads:adSize="BANNER" -->
+    <!-- ads:adUnitId="@string/ad_unit_id_banner2" > -->
+    <!-- </com.google.android.gms.ads.AdView> -->
 
     <RelativeLayout
         android:id="@+id/join_bottom_ll"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:visibility="invisible"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible" >
 
         <Button
             android:id="@+id/join_gp_return_place_btn"
@@ -197,8 +214,7 @@
             android:background="@drawable/red_ok_btn"
             android:text="退     赛"
             android:textColor="@color/white"
-            android:textSize="16dp"
-            />
+            android:textSize="16dp" />
 
         <Button
             android:id="@+id/join_gp_exit_btn"

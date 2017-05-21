@@ -34,8 +34,7 @@ public class PlayCardAnima {
 	public static AnimationDrawable createEndLose() {
 		animationDrawable = new AnimationDrawable();
 		for (int i = 1; i < (4 + 1); i++) {
-			Drawable drawable = ImageUtil.getResDrawableByName(
-					Constant.END_LOSE + i, true, true);
+			Drawable drawable = ImageUtil.getResDrawableByName(Constant.END_LOSE + i, true, true);
 			animationDrawable.addFrame(drawable, 100);
 		}
 		animationDrawable.setOneShot(false); // 设置是否循环播放 false:循环播放
@@ -89,8 +88,7 @@ public class PlayCardAnima {
 	public static AnimationDrawable createFeiji() {
 		animationDrawable = new AnimationDrawable();
 		for (int i = 1; i < 6; i++) {
-			Drawable drawable = ImageUtil.getResDrawableByName(
-					Constant.FEIJI_IMAGE_START + i, true, true);
+			Drawable drawable = ImageUtil.getResDrawableByName("anim_feiji", true, true);
 			animationDrawable.addFrame(drawable, 50);
 		}
 		animationDrawable.setOneShot(false); // 设置是否循环播放 false:循环播放

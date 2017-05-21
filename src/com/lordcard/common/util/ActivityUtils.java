@@ -1217,7 +1217,7 @@ public class ActivityUtils {
 		if (isDizhu) {// 是否是地主
 			if (gender.equals("1")) {// 性别 0保密/1女/2男
 				IconImg.setImageDrawable(ImageUtil.getResDrawable(
-						R.drawable.dizhu_gril, true));
+						R.drawable.dizhu_girl, true));
 			} else {
 				IconImg.setImageDrawable(ImageUtil.getResDrawable(
 						R.drawable.dizhu, true));
@@ -1293,13 +1293,13 @@ public class ActivityUtils {
 			if (!TextUtils.isEmpty(gender) && gender.trim().equals("1")) {// 性别
 																			// 0保密/1女/2男
 				IconImg.setImageDrawable(ImageUtil.getResDrawable(
-						R.drawable.dizhu_gril, true));
+						R.drawable.dizhu_girl, true));
 				if (null != iqImg && iqImg.containsKey("0")
 						&& !TextUtils.isEmpty(iqImg.get("0"))) {
 					IconImg.setImageBitmap(null == ImageUtil.getGirlBitmap(path
 							+ iqImg.get("0"), true, false) ? BitmapFactory
 							.decodeResource(ctx.getResources(),
-									R.drawable.dizhu_gril) : ImageUtil
+									R.drawable.dizhu_girl) : ImageUtil
 							.getGirlBitmap(path + iqImg.get("0"), true, false));
 				}
 			} else {

@@ -5584,7 +5584,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 		ClientUser user1 = new ClientUser();
 		user1.setOrder(1);
 		user1.setName(TextUtils.isEmpty(GameCache
-				.getStr(Constant.GAME_NAME_CACHE)) ? "东方不败" : GameCache
+				.getStr(Constant.GAME_NAME_CACHE)) ? "武则天" : GameCache
 				.getStr(Constant.GAME_NAME_CACHE)); // 自己
 		ClientUser user2 = new ClientUser();
 		user2.setOrder(2);

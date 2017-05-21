@@ -6,9 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
-import android.app.NotificationManager;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
@@ -18,25 +15,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.ViewFlipper;
-
 import com.lordcard.common.exception.CrashApplication;
 import com.lordcard.common.mydb.DBHelper;
 import com.lordcard.common.schedule.AutoTask;
@@ -44,26 +32,19 @@ import com.lordcard.common.schedule.ScheduledTask;
 import com.lordcard.common.task.GenericTask;
 import com.lordcard.common.task.base.TaskParams;
 import com.lordcard.common.task.base.TaskResult;
-import com.lordcard.common.upgrade.UpdateService;
 import com.lordcard.common.upgrade.UpdateUtils;
 import com.lordcard.common.util.ActivityPool;
 import com.lordcard.common.util.ActivityUtils;
 import com.lordcard.common.util.AudioReadDataUtils;
-import com.lordcard.common.util.DateUtil;
 import com.lordcard.common.util.DialogUtils;
-import com.lordcard.common.util.EncodeUtils;
 import com.lordcard.common.util.ImageUtil;
-import com.lordcard.common.util.JsonHelper;
 import com.lordcard.common.util.PatternUtils;
-import com.lordcard.common.util.PreferenceHelper;
 import com.lordcard.constant.CacheKey;
 import com.lordcard.constant.Constant;
 import com.lordcard.constant.Database;
 import com.lordcard.entity.GameUser;
-import com.lordcard.entity.JsonResult;
 import com.lordcard.entity.NoticesVo;
 import com.lordcard.network.http.GameCache;
-import com.lordcard.network.http.HttpRequest;
 import com.lordcard.ui.base.BaseActivity;
 import com.lordcard.ui.base.FastJoinTask;
 import com.lordcard.ui.base.ILoginView;
@@ -77,8 +58,7 @@ import com.lordcard.ui.view.dialog.GameDialog;
 import com.lordcard.ui.view.dialog.SettingDialog;
 
 @SuppressLint({ "HandlerLeak", "DefaultLocale", "SimpleDateFormat", "WorldReadableFiles" })
-public class LoginActivity extends BaseActivity implements ILoginView, OnTouchListener,
-		OnGestureListener {
+public class LoginActivity extends BaseActivity implements ILoginView {
 	private TextView accountTv, goldTv; // 账号，金豆
 	private ImageView headIv;// 头像
 	private Button loginBtn, changeAccountBtn, bindAccountBtn, quickMatch, quickLogin, updateBtn;
@@ -128,8 +108,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, OnTouchLi
 	private Button gonggao;
 	private GenericTask rjoinTask;
 	public static DBHelper dbHelper;
-	private GestureDetector mGestureDetector = null;
-	private ViewFlipper mViewFlipper;
 	private boolean isShown;
 	private int[] imageId = new int[] {/*
 										 * R.drawable.login_guide1,
@@ -137,7 +115,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, OnTouchLi
 										 * R.drawable.login_guide3 xs_del
 										 */};
 	private AutoTask autoTask; // 定时任务
-	private ProgressDialog loginProgress;
 	private Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -152,9 +129,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, OnTouchLi
 						DialogUtils.mesToastTip("当前已有账号登录,无需再注册!");
 						return;
 					}
-					loginProgress.setMessage("登录中,请稍候...");
-					loginProgress.show();
-					register();
 					break;
 				case HANDLER_WHAT_LOGIN_ANNOUNCEMENT_OPEN:// 公告展开
 					PXZ = PXZ + PX_MST;
@@ -197,13 +171,13 @@ public class LoginActivity extends BaseActivity implements ILoginView, OnTouchLi
 	};
 	private ImageButton game_set;
 	private NumberIconView goldbean;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);// 设置标题栏不显示
 		overridePendingTransition(R.anim.fade, R.anim.hold);
 		setContentView(R.layout.game_login2);
-		mGestureDetector = new GestureDetector(this);
 		initView();
 		i = 1;
 		PXZ = 0;
@@ -216,8 +190,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, OnTouchLi
 		gameNoticeTask.execute();
 		taskManager.addTask(gameNoticeTask);
 		mst.adjustView(gameBg);
-		loginProgress = DialogUtils.getWaitProgressDialog(this, "登录中,请稍候...");
-		login(); // 登录
 		GoogleAdsHelper.getInstance().showInterstitial();
 	}
 	@Override
@@ -240,19 +212,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, OnTouchLi
 	 * 初始化view控件
 	 */
 	private void initView() {
-		mViewFlipper = (ViewFlipper) findViewById(R.id.viewflipper);
-		mViewFlipper.setOnTouchListener(new android.view.View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View arg0, MotionEvent event) {
-				return mGestureDetector.onTouchEvent(event);
-			}
-		});
-		mViewFlipper.setOnClickListener(new android.view.View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				return;
-			}
-		});
 		String isShow = GameCache.getStr(LOGIN_VIEW_FLIPPER);
 		// sharedViewfiper = getSharedPreferences("viewflipper",
 		// MODE_WORLD_READABLE);
@@ -349,33 +308,10 @@ public class LoginActivity extends BaseActivity implements ILoginView, OnTouchLi
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (loginProgress != null) {
-			loginProgress.dismiss();
-		}
-		// 如果有网络，则关闭提示框
-		if (Constant.DEBUG && !ActivityUtils.isNetworkAvailable()) {
-			showNetWorkDialog();
-			return;
-		}
-		if (Constant.DEBUG) {
-			GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
-			if (gameUser == null) {
-				String isShow = GameCache.getStr(LOGIN_VIEW_FLIPPER);
-				if ("1".equals(isShow)) {
-					loginProgress.setMessage("登录中,请稍候...");
-					loginProgress.show();
-				}
-				login();
-			} else {
-				setUserInfo();
-			}
-		} else {
-			accountTv
-					.setText(TextUtils.isEmpty(GameCache.getStr(Constant.GAME_NAME_CACHE)) ? "东方不败"
-							: GameCache.getStr(Constant.GAME_NAME_CACHE)); // 账号
-			goldTv.setText(checkBeans()); // 金豆
-			goldbean.setNum(Integer.parseInt(checkBeans()));
-		}
+		accountTv.setText(TextUtils.isEmpty(GameCache.getStr(Constant.GAME_NAME_CACHE)) ? "武则天"
+				: GameCache.getStr(Constant.GAME_NAME_CACHE)); // 账号
+		goldTv.setText(checkBeans()); // 金豆
+		goldbean.setNum(Integer.parseInt(checkBeans()));
 		AudioReadDataUtils.playOrStopBgMusic(this);
 	}
 	/**
@@ -390,7 +326,7 @@ public class LoginActivity extends BaseActivity implements ILoginView, OnTouchLi
 				account = gameUser.getRelaAccount();
 			}
 			// accountTv.setText(account); // 账号
-			accountTv.setText("东方不败"); // 账号
+			accountTv.setText("武则天"); // 账号
 			goldTv.setText(PatternUtils.changeZhidou(0 > gameUser.getBean() ? 0 : gameUser
 					.getBean())); // 金豆
 			String localBean = GameCache.getStr(Constant.GAME_BEAN_CACHE);
@@ -403,282 +339,140 @@ public class LoginActivity extends BaseActivity implements ILoginView, OnTouchLi
 			}
 		}
 	}
-	private synchronized void login() {
-		Database.LOGIN_TIME = DateUtil.formatTimesTampDate(new Date());
-		GameUser localUser = ActivityUtils.loadLocalAccount();// 加载最近登录账号
-		if (localUser == null) { // MAC注册新账号
-			register();
-		} else { // 本地账号登录
-			// 登录游戏
-			GenericTask loginTask = new LoginTask();
-			TaskParams params = new TaskParams();
-			params.put(ACCOUNT, localUser.getAccount());
-			params.put(PASSWORD, localUser.getMd5Pwd());
-			loginTask.execute(params);
-			taskManager.addTask(loginTask);
-		}
-	}
-	/**
-	 * 注册 账号
-	 */
-	private void register() {
-//		GenericTask registerTask = new RegisterTask();
-//		registerTask.execute();
-//		taskManager.addTask(registerTask);
-	}
-	/**
-	 * 登录跳转
-	 * @param gameUser
-	 */
-	private void userLogin(GameUser gameUser) {
-		// Database.USER = gameUser;
-		Database.ROOM_FRESH_TIME = gameUser.getRoomTime();
-		Database.GAME_SERVER = gameUser.getGameServer();
-		gameUser.setRound(0);
-		// Database.SIGN_KEY = gameUser.getAuthKey();
-		GameCache.putObj(CacheKey.GAME_USER, gameUser);
-		// 保存登录过的账号到本地
-		SharedPreferences sharedData = getApplication().getSharedPreferences(
-				Constant.GAME_ACTIVITE, Context.MODE_PRIVATE);
-		Editor editor = sharedData.edit();
-		editor.putString(ACCOUNT, gameUser.getAccount());
-		editor.commit();
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				setUserInfo();
-			}
-		});
-	}
 
 	OnClickListener mOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if (mViewFlipper.getVisibility() != View.VISIBLE) {
-				switch (v.getId()) {
-					case R.id.gonggao:
-						gonggao.setClickable(false);
-						if (boolean1 == false) {
-							scrollView.setVisibility(View.GONE);
+			switch (v.getId()) {
+				case R.id.gonggao:
+					gonggao.setClickable(false);
+					if (boolean1 == false) {
+						scrollView.setVisibility(View.GONE);
+						if (autoTask != null) {
+							autoTask.stop(true);
+							autoTask = null;
+						}
+						/** 画卷收拢 */
+						autoTask = new AutoTask() {
+							@Override
+							public void run() {
+								if (i >= 1) {
+									handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_CLOSE);
+								} else {
+									PXZ = 0;
+									i = 1;
+									stop(true);
+									handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_GONE);
+								}
+							}
+						};
+						ScheduledTask.addRateTask(autoTask, 30);
+						boolean1 = true;
+					} else {
+						if (HAS_GONGGAO) {
+							gonggao.setClickable(false);
+							ggdetaiLayout.setVisibility(View.VISIBLE);
 							if (autoTask != null) {
 								autoTask.stop(true);
 								autoTask = null;
 							}
-							/** 画卷收拢 */
+							/** 画卷展开 */
 							autoTask = new AutoTask() {
 								@Override
 								public void run() {
-									if (i >= 1) {
-										handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_CLOSE);
+									if (i >= 0 && i <= 20) {
+										handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_OPEN);
 									} else {
-										PXZ = 0;
-										i = 1;
+										PXZ = PX_LAST_MST;
+										i = 20;
+										handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_VISIBLE);
 										stop(true);
-										handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_GONE);
 									}
 								}
 							};
 							ScheduledTask.addRateTask(autoTask, 30);
-							boolean1 = true;
+							boolean1 = false;
 						} else {
-							if (HAS_GONGGAO) {
-								gonggao.setClickable(false);
-								ggdetaiLayout.setVisibility(View.VISIBLE);
-								if (autoTask != null) {
-									autoTask.stop(true);
-									autoTask = null;
+							runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									DialogUtils.mesToastTip("亲，暂时没有公告哟~");
+									gonggao.setClickable(true);
 								}
-								/** 画卷展开 */
-								autoTask = new AutoTask() {
-									@Override
-									public void run() {
-										if (i >= 0 && i <= 20) {
-											handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_OPEN);
-										} else {
-											PXZ = PX_LAST_MST;
-											i = 20;
-											handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_ANNOUNCEMENT_VISIBLE);
-											stop(true);
-										}
-									}
-								};
-								ScheduledTask.addRateTask(autoTask, 30);
-								boolean1 = false;
-							} else {
-								runOnUiThread(new Runnable() {
-									@Override
-									public void run() {
-										DialogUtils.mesToastTip("亲，暂时没有公告哟~");
-										gonggao.setClickable(true);
-									}
-								});
-							}
+							});
 						}
-						break;
-					case R.id.game_login_in:// 游戏大厅
-						if (!ActivityUtils.isNetworkAvailable()) {
-							showNetWorkDialog();
-						} else {
-							GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
-							if (gameUser == null) {
-								// login(true);
-								showLoginDialog();
-							} else {
-								Intent intent = new Intent();
-								intent.setClass(LoginActivity.this, DoudizhuRoomListActivity.class);
-								startActivity(intent);
-							}
-						}
-						break;
-					case R.id.game_login_change_account:// 切换账号
-						if (!ActivityUtils.isNetworkAvailable()) {
-							showNetWorkDialog();
-						} else {
+					}
+					break;
+				case R.id.game_login_in:// 游戏大厅
+					if (!ActivityUtils.isNetworkAvailable()) {
+						showNetWorkDialog();
+					} else {
+						GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+						if (gameUser == null) {
+							// login(true);
 							showLoginDialog();
-						}
-						break;
-					case R.id.game_login_bind_account:// 绑定账号
-						if (!ActivityUtils.isNetworkAvailable()) {
-							showNetWorkDialog();
 						} else {
-							GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
-							if (gameUser == null) {
-								// login(true);
-								showLoginDialog();
-							} else {
-								if (!mAccountBindDialog.isShowing()) {
-									mAccountBindDialog.show();
-									mAccountBindDialog.initView();
-								}
+							Intent intent = new Intent();
+							intent.setClass(LoginActivity.this, DoudizhuRoomListActivity.class);
+							startActivity(intent);
+						}
+					}
+					break;
+				case R.id.game_login_change_account:// 切换账号
+					if (!ActivityUtils.isNetworkAvailable()) {
+						showNetWorkDialog();
+					} else {
+						showLoginDialog();
+					}
+					break;
+				case R.id.game_login_bind_account:// 绑定账号
+					if (!ActivityUtils.isNetworkAvailable()) {
+						showNetWorkDialog();
+					} else {
+						GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+						if (gameUser == null) {
+							// login(true);
+							showLoginDialog();
+						} else {
+							if (!mAccountBindDialog.isShowing()) {
+								mAccountBindDialog.show();
+								mAccountBindDialog.initView();
 							}
 						}
-						break;
-					case R.id.game_quick_match:// 单机
-						Intent intent = new Intent();
-						intent.setClass(LoginActivity.this, PersonnalDoudizhuActivity.class);
-						startActivity(intent);
-						break;
-					case R.id.game_quick_login:// 快速游戏
-						if (!ActivityUtils.isNetworkAvailable()) {
-							showNetWorkDialog();
+					}
+					break;
+				case R.id.game_quick_match:// 单机
+					Intent intent = new Intent();
+					intent.setClass(LoginActivity.this, PersonnalDoudizhuActivity.class);
+					startActivity(intent);
+					break;
+				case R.id.game_quick_login:// 快速游戏
+					if (!ActivityUtils.isNetworkAvailable()) {
+						showNetWorkDialog();
+					} else {
+						GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+						if (gu == null) {
+							showLoginDialog();
 						} else {
-							GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
-							if (gu == null) {
-								showLoginDialog();
-							} else {
-								FastJoinTask.fastJoin();
-							}
+							FastJoinTask.fastJoin();
 						}
-						break;
-					case R.id.update:// 升级游戏
-						if (Database.UPDATED) {
-							UpdateUtils.newVersionTip();
-						} else {
-							if (Math.abs(System.currentTimeMillis() - Constant.CLICK_TIME) >= Constant.SPACING_TIME) {
-								Constant.CLICK_TIME = System.currentTimeMillis();
-								DialogUtils.mesToastTip("您当前已经是最新版本，暂时无需更新！");
-							}
+					}
+					break;
+				case R.id.update:// 升级游戏
+					if (Database.UPDATED) {
+						UpdateUtils.newVersionTip();
+					} else {
+						if (Math.abs(System.currentTimeMillis() - Constant.CLICK_TIME) >= Constant.SPACING_TIME) {
+							Constant.CLICK_TIME = System.currentTimeMillis();
+							DialogUtils.mesToastTip("您当前已经是最新版本，暂时无需更新！");
 						}
-						break;
-					default:
-						break;
-				}
+					}
+					break;
+				default:
+					break;
 			}
 		}
 	};
-
-	/**
-	 * 登录游戏 com.lordcard.ui.LoginTask
-	 * @author Administrator <br/>
-	 *         create at 2013 2013-4-8 下午4:17:56
-	 */
-	private class LoginTask extends GenericTask {
-		@Override
-		protected TaskResult _doInBackground(TaskParams... params) {
-			try {
-				TaskParams param = null;
-				if (params.length <= 0) {
-					return TaskResult.FAILED;
-				}
-				param = params[0];
-				// 登录
-				String loginPwd = param.getString(PASSWORD);
-				if (loginPwd.length() < 30) { // 长度大于30则认为当前密码是保存的密文
-					loginPwd = EncodeUtils.MD5(loginPwd);
-				}
-				String result = HttpRequest.login(param.getString(ACCOUNT), loginPwd);
-				if (TextUtils.isEmpty(result)) {
-					return TaskResult.FAILED;
-				}
-				JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
-				if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) {
-					loginProgress.dismiss();
-					String gameUserJson = jsonResult.getMethodMessage();
-					Log.d("gameUserJson", "登录gameUserJson: " + gameUserJson);
-					GameUser gameUser = JsonHelper.fromJson(gameUserJson, GameUser.class);
-					String account = gameUser.getAccount();
-					if (!TextUtils.isEmpty(gameUser.getRelaAccount())) {
-						account = gameUser.getRelaAccount();
-					}
-					ActivityUtils.saveAccount(account, gameUser.getMd5Pwd());
-					// Database.GAME_USER_AUTH_KEY = gameUser.getAuthKey();
-					userLogin(gameUser);
-					// 获取房间更新时间
-					String roomTime = gameUser.getRoomTime();
-					if (roomTime != null) {
-						Database.ROOM_UPDATE = roomTime;
-					}
-				} else {
-					mesTip(jsonResult.getMethodMessage(), false, false);
-					return TaskResult.FAILED;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				return TaskResult.FAILED;
-			}
-			return TaskResult.OK;
-		}
-	}
-
-	/**
-	 * 注册账号 com.lordcard.ui.LoginTask
-	 * @author Administrator <br/>
-	 *         create at 2013 2013-4-8 下午4:17:56
-	 */
-	private class RegisterTask extends GenericTask {
-		@Override
-		protected TaskResult _doInBackground(TaskParams... params) {
-			try {
-				// 注册
-				String result = HttpRequest.register();
-				if (TextUtils.isEmpty(result)) {
-					return TaskResult.FAILED;
-				}
-				JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
-				if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) {
-					loginProgress.dismiss();
-					String gameUserJson = jsonResult.getMethodMessage();
-					GameUser gameUser = JsonHelper.fromJson(gameUserJson, GameUser.class);
-					// 保存注册账号和密码
-					String account = gameUser.getAccount();
-					if (!TextUtils.isEmpty(gameUser.getRelaAccount())) {
-						account = gameUser.getRelaAccount();
-					}
-					ActivityUtils.saveAccount(account, gameUser.getMd5Pwd());
-					ActivityUtils.saveAccount(account, gameUser.getMd5Pwd());
-					Log.d("saveLoginAccount", "登录界面》注册》账户：" + gameUser.getAccount() + "密码："
-							+ gameUser.getMd5Pwd());
-					// Database.GAME_USER_AUTH_KEY = gameUser.getAuthKey();
-					userLogin(gameUser);
-				} else {
-					DialogUtils.mesTip(jsonResult.getMethodMessage(), false);
-				}
-			} catch (Exception e) {
-				return TaskResult.FAILED;
-			}
-			return TaskResult.OK;
-		}
-	}
 
 	/**
 	 * 游戏公告信息
@@ -796,91 +590,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, OnTouchLi
 			});
 		} catch (Exception e) {
 		}
-	}
-	@Override
-	public boolean onDown(MotionEvent arg0) {
-		return false;
-	}
-	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-		Log.d("forTag", " onFling : ");
-		if (!isShown) {
-			if (e1.getX() - e2.getX() > 30) {// 向右滑动
-				if (mViewFlipper.getDisplayedChild() == imageId.length) {
-					mViewFlipper.setVisibility(View.GONE);
-					GameCache.putStr(LOGIN_VIEW_FLIPPER, "1");
-					// Editor editor = sharedViewfiper.edit();
-					// editor.putBoolean("flipper", true);
-					// editor.commit();
-				} else {
-					mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,
-							R.anim.push_left_in));
-					mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,
-							R.anim.push_left_out));
-					mViewFlipper.showNext();
-					if (mViewFlipper.getDisplayedChild() == imageId.length) {
-						new Thread() {
-							@Override
-							public void run() {
-								try {
-									sleep(700);
-								} catch (InterruptedException e) {
-									e.printStackTrace();
-								}
-								LoginActivity.this.runOnUiThread(new Runnable() {
-									@Override
-									public void run() {
-										mViewFlipper.setVisibility(View.GONE);
-									}
-								});
-							};
-						}.start();
-						GameCache.putStr(LOGIN_VIEW_FLIPPER, "1");
-						// Editor editor = sharedViewfiper.edit();
-						// editor.putBoolean("flipper", true);
-						// editor.commit();
-						handler.sendEmptyMessage(HANDLER_WHAT_LOGIN_RESIGSTER_USER);
-					}
-					return true;
-				}
-			} else if (e2.getX() - e1.getX() > 30) {// 向左滑动
-				if (null != mViewFlipper && View.VISIBLE == mViewFlipper.getVisibility()
-						&& mViewFlipper.getDisplayedChild() == 0) {
-					// if (mViewFlipper.getDisplayedChild() == 0) {
-					DialogUtils.toastTip("亲，已经是第一张了");
-				} else {
-					mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,
-							R.anim.push_right_in));
-					mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,
-							R.anim.push_right_out));
-					mViewFlipper.showPrevious();
-					return true;
-				}
-			}
-		}
-		return true;
-	}
-	@Override
-	public void onLongPress(MotionEvent arg0) {
-	}
-	@Override
-	public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2, float arg3) {
-		return false;
-	}
-	@Override
-	public void onShowPress(MotionEvent arg0) {
-	}
-	@Override
-	public boolean onSingleTapUp(MotionEvent arg0) {
-		return false;
-	}
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		return this.mGestureDetector.onTouchEvent(event);
-	}
-	@Override
-	public boolean onTouch(View arg0, MotionEvent event) {
-		return this.mGestureDetector.onTouchEvent(event);
 	}
 	/**
 	 * 提示没有网络

@@ -6,58 +6,24 @@ import java.util.Random;
 
 public class ClientName {
 	public static List<String> allClientNames = null;
+	public static String[] client_manNames = new String[] { "乔峰", "段誉", "虚竹", "慕容复", "郭靖", "杨康",
+			"胡斐", "令狐冲", "独孤求败", "岳不群", "杨过", "张无忌", "韦小宝", "张辽", "郭嘉", "荀彧", "贾诩", "司马懿", "关羽",
+			"张飞", "赵云", "黄忠", "魏延", "诸葛亮", "庞统", "周瑜", "陆逊", "太史慈", "曹操", "孙权", "刘备", "吕布", "武松",
+			"宋江", "卢俊义", "李逵", "燕青", "林冲", "清风", "明月", "日游神", "夜游神", "九头虫", "云里雾", "雾里云", "急如火",
+			"快如风", "千里眼", "顺风耳" };
+	public static String[] client_womanNames = new String[] { 
+			"貂禅", "赛金花", "妲己", "王昭君", "文成公主",
+			"李师师", "蔡文姬", "萧燕燕", "班昭", "薛涛", "秋瑾", "夏姬", "贾南风", "董小宛", "朱淑真", "万贞儿", "苏小小", "虞姬",
+			"李香君", "杨玉环", "冯小怜", "吕四娘", "张丽华", "潘玉奴", "洪宣娇", "卞玉京", "卓文君", "唐婉", "王聪儿", "金城公主",
+			"李季兰", "伊帕尔汗", "钟无艳", "绿珠", "武则天", "关盼盼", "顾眉生", "田倩", "卫夫人", "寇白门", "胡充华", "花见羞",
+			"徐昭佩", "陈阿娇", "黄月英", "窦漪", "侯光姬", "上官婉儿", "窦漪房",
+			"赵四小姐","西施","东施","李清照","柳如是","步非烟"};
 
 	public static List<String> getallClientNames() {
 		allClientNames = new ArrayList<String>();
-		allClientNames.add("乔峰");
-		allClientNames.add("段誉");
-		allClientNames.add("虚竹");
-		allClientNames.add("慕容复");
-		allClientNames.add("郭靖");
-		allClientNames.add("杨康");
-		allClientNames.add("胡斐");
-		allClientNames.add("令狐冲");
-		allClientNames.add("独孤求败");
-		allClientNames.add("岳不群");
-		allClientNames.add("杨过");
-		allClientNames.add("张无忌");
-		allClientNames.add("韦小宝");
-		allClientNames.add("张辽");
-		allClientNames.add("郭嘉");
-		allClientNames.add("荀彧");
-		allClientNames.add("贾诩");
-		allClientNames.add("司马懿");
-		allClientNames.add("关羽");
-		allClientNames.add("张飞");
-		allClientNames.add("赵云");
-		allClientNames.add("黄忠");
-		allClientNames.add("魏延");
-		allClientNames.add("诸葛亮");
-		allClientNames.add("庞统");
-		allClientNames.add("周瑜");
-		allClientNames.add("陆逊");
-		allClientNames.add("太史慈");
-		allClientNames.add("曹操");
-		allClientNames.add("孙权");
-		allClientNames.add("刘备");
-		allClientNames.add("吕布");
-		allClientNames.add("武松");
-		allClientNames.add("宋江");
-		allClientNames.add("卢俊义");
-		allClientNames.add("李逵");
-		allClientNames.add("燕青");
-		allClientNames.add("林冲");
-		allClientNames.add("清风");
-		allClientNames.add("明月");
-		allClientNames.add("日游神");
-		allClientNames.add("夜游神");
-		allClientNames.add("九头虫");
-		allClientNames.add("云里雾");
-		allClientNames.add("雾里云");
-		allClientNames.add("急如火");
-		allClientNames.add("快如风");
-		allClientNames.add("千里眼");
-		allClientNames.add("顺风耳");
+		for (String str : client_womanNames) {
+			allClientNames.add(str);
+		}
 		List<String> ClientNames = new ArrayList<String>();
 		for (int i = 0; i < 2; i++) {
 			int nameSize = allClientNames.size();
