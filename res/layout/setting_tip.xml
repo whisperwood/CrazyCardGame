@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/setting_tip_layout"
     android:layout_width="580dip"
-    android:layout_height="wrap_content" >
+    android:layout_height="300dip"
+    android:layout_gravity="center_vertical" >
 
     <RelativeLayout
-        android:id="@+id/setting_tip_layout"
         android:layout_width="470dp"
-        android:layout_height="240dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="90dip"
         android:layout_marginRight="17dip"
         android:background="@drawable/photo_bg" >
@@ -17,8 +18,8 @@
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:layout_alignParentTop="true"
-            android:visibility="invisible"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:visibility="invisible" >
 
             <ImageView
                 android:id="@+id/imageview_title"
@@ -36,6 +37,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/vibrate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout"
@@ -191,16 +193,21 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- <com.google.android.gms.ads.AdView -->
-        <!-- android:id="@+id/adView" -->
-        <!-- android:layout_width="wrap_content" -->
-        <!-- android:layout_height="wrap_content" -->
-        <!-- android:layout_alignParentBottom="true" -->
-        <!-- android:layout_centerHorizontal="true" -->
-        <!-- android:layout_marginBottom="15dp" -->
-        <!-- ads:adSize="BANNER" -->
-        <!-- ads:adUnitId="@string/ad_unit_id_banner" > -->
-        <!-- </com.google.android.gms.ads.AdView> -->
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/vibrate"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dip"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/ad_unit_id_banner2" >
+        </com.google.android.gms.ads.AdView>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="10dip"
+            android:layout_below="@+id/adView" />
     </RelativeLayout>
 
     <Button

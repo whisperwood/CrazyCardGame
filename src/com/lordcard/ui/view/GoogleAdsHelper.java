@@ -7,6 +7,10 @@ package com.lordcard.ui.view;
 //import com.google.android.gms.ads.AdView;
 //import com.google.android.gms.ads.InterstitialAd;
 //
+import com.beauty.lord.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import android.content.Context;
 //import android.os.CountDownTimer;
 //import android.os.Debug;
@@ -88,8 +92,8 @@ public class GoogleAdsHelper {
 //		mCountDownTimer.start();
 //	}
 	public void showBanner(View parentView) {
-//		AdView mAdView = (AdView) parentView.findViewById(R.id.adView);
-//		AdRequest adRequest = new AdRequest.Builder().build();
-//		mAdView.loadAd(adRequest);
+		AdView mAdView = (AdView) parentView.findViewById(R.id.adView);
+		AdRequest adRequest = new AdRequest.Builder().build();
+		mAdView.loadAd(adRequest);
 	}
 }

@@ -13,19 +13,16 @@ public class AudioReadDataUtils {
 	public static void playOrStopBgMusic(final Context ctx) {
 		if (AudioPlayUtils.isPlay)
 			return;
+		AudioPlayUtils.isPlay = true;
 		new Thread() {
 			@Override
 			public void run() {
-				AudioPlayUtils.isPlay = true;
-				SharedPreferences sharedPreferences = PreferenceHelper
-						.getMyPreference().getSetting();
+				SharedPreferences sharedPreferences = PreferenceHelper.getMyPreference().getSetting();
 				if (!sharedPreferences.getBoolean("bgmusic", true)) {
 					AudioPlayUtils.getInstance().stopBgMusic();
 				} else {
-					AudioManager audiomanage = (AudioManager) ctx
-							.getSystemService(Context.AUDIO_SERVICE);
-					int currentVolume = audiomanage
-							.getStreamVolume(AudioManager.STREAM_MUSIC);
+					AudioManager audiomanage = (AudioManager) ctx.getSystemService(Context.AUDIO_SERVICE);
+					int currentVolume = audiomanage.getStreamVolume(AudioManager.STREAM_MUSIC);
 					if (currentVolume > 70)
 						currentVolume = 70;
 					AudioPlayUtils.getInstance().SetVoice(

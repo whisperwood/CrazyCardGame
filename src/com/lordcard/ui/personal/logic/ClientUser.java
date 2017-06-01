@@ -7,7 +7,7 @@ public class ClientUser {
 	private int order;
 	private String name;
 	private List<Integer> cards = new ArrayList<Integer>();
-	private String gender = "0";
+	private String gender = "1";
 	private int callPoint;
 
 	public String getGender() {

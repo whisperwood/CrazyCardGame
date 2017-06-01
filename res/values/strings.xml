@@ -190,7 +190,8 @@
 	
 	    <!--Replace with your own ad unit id. ca-app-pub-3940256099942544/6300978111-->
     <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ad_unit_id_banner">ca-app-pub-6571779790787196/3006952598</string>
-    <string name="ad_unit_id_banner2">ca-app-pub-6571779790787196/4667522190</string>
-    <string name="ad_unit_id_banner3">ca-app-pub-6571779790787196/6144255390</string>
+    <string name="ad_unit_id_banner">ca-app-pub-6571779790787196/1380917795</string>
+    <string name="ad_unit_id_banner2">ca-app-pub-6571779790787196/7427451394</string>
+    <string name="ad_unit_id_banner3">ca-app-pub-6571779790787196/2857650997</string>
+    <string name="ad_unit_id_bannertest">ca-app-pub-3940256099942544/6300978111</string>
 </resources>

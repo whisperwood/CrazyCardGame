@@ -17,10 +17,9 @@
             style="?android:attr/progressBarStyleSmallInverse"
             android:layout_width="40dip"
             android:layout_height="40dip"
-            android:indeterminateDrawable="@drawable/game_wait_loading" 
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="20dip"
-            />
+            android:indeterminateDrawable="@drawable/game_wait_loading" />
     </FrameLayout>
 
     <LinearLayout
@@ -186,15 +185,15 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <!-- <com.google.android.gms.ads.AdView -->
-    <!-- android:id="@+id/adView" -->
-    <!-- android:layout_width="wrap_content" -->
-    <!-- android:layout_height="wrap_content" -->
-    <!-- android:layout_alignParentBottom="true" -->
-    <!-- android:layout_centerHorizontal="true" -->
-    <!-- ads:adSize="BANNER" -->
-    <!-- ads:adUnitId="@string/ad_unit_id_banner2" > -->
-    <!-- </com.google.android.gms.ads.AdView> -->
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/ad_unit_id_banner" >
+    </com.google.android.gms.ads.AdView>
 
     <RelativeLayout
         android:id="@+id/join_bottom_ll"

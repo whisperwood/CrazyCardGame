@@ -115,8 +115,7 @@ public class SettingDialog extends Dialog implements OnClickListener {
 			arrowBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
 					R.drawable.close, true));
 		}
-		audiomanage = (AudioManager) context
-				.getSystemService(Context.AUDIO_SERVICE);
+		audiomanage = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		int max = audiomanage.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		music.setMax(max);
 		music.setProgress(PreferenceHelper.getMyPreference().getSetting()
@@ -208,10 +207,8 @@ public class SettingDialog extends Dialog implements OnClickListener {
 				bgMusic.setBackgroundDrawable(ImageUtil.getResDrawable(
 						R.drawable.close, true));
 			}
-			if (!PreferenceHelper.getMyPreference().getSetting()
-					.getBoolean("bgmusic", true)
-					|| PreferenceHelper.getMyPreference().getSetting()
-							.getBoolean("jingyin", false)) {
+			if (!PreferenceHelper.getMyPreference().getSetting().getBoolean("bgmusic", true)
+					|| PreferenceHelper.getMyPreference().getSetting().getBoolean("jingyin", false)) {
 				AudioPlayUtils.getInstance().stopBgMusic();
 			} else {
 				if (!AudioPlayUtils.getInstance().isBgisPlaying()) {

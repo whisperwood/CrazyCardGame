@@ -35,6 +35,7 @@ import com.lordcard.common.task.base.TaskResult;
 import com.lordcard.common.upgrade.UpdateUtils;
 import com.lordcard.common.util.ActivityPool;
 import com.lordcard.common.util.ActivityUtils;
+import com.lordcard.common.util.AudioPlayUtils;
 import com.lordcard.common.util.AudioReadDataUtils;
 import com.lordcard.common.util.DialogUtils;
 import com.lordcard.common.util.ImageUtil;
@@ -190,7 +191,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 		gameNoticeTask.execute();
 		taskManager.addTask(gameNoticeTask);
 		mst.adjustView(gameBg);
-		GoogleAdsHelper.getInstance().showInterstitial();
+		GoogleAdsHelper.getInstance().showBanner(gameBg);
 	}
 	@Override
 	public void onBackPressed() {
@@ -313,6 +314,15 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 		goldTv.setText(checkBeans()); // 金豆
 		goldbean.setNum(Integer.parseInt(checkBeans()));
 		AudioReadDataUtils.playOrStopBgMusic(this);
+	}
+	
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		AudioPlayUtils.isPlay = false;
+		AudioPlayUtils.getInstance().stopBgMusic();
+		AudioPlayUtils.getInstance().stopMusic();
 	}
 	/**
 	 * 设置用户信息

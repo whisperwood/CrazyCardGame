@@ -1167,7 +1167,11 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 			info.setBackgroundDrawable(ImageUtil.getResDrawable(
 					R.drawable.calltwo, true));
 		} else if (point == 3) {
-			AudioPlayUtils.getInstance().playSound(R.raw.nan_3fen); // 叫3分 产生地主
+			if ("1".equals(gender)) {
+				AudioPlayUtils.getInstance().playSound(R.raw.nv_3fen);
+			} else {
+				AudioPlayUtils.getInstance().playSound(R.raw.nan_3fen); // 叫2分
+			}
 			calledPoint = 3;
 			Message message = new Message();
 			Grab master = new Grab();
@@ -2695,7 +2699,8 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 				// play2PassLayout.removeAllViews();
 				// play3PassLayout.removeAllViews();
 				AudioPlayUtils apu = AudioPlayUtils.getInstance();
-				String gender2 = Database.userMap.get(masterOrder).getGender();
+				//String gender2 = Database.userMap.get(masterOrder).getGender();
+				String gender2 = backData.getUsers().get(0).getGender();
 				if (ratio == 1) {
 					if ("1".equals(gender2)) {
 						apu.playMusic(false, R.raw.nv_1fen); // 别人叫1分
@@ -3017,7 +3022,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 		ActivityUtils.startScaleAnim(play1PassLayout, ctx);// 播放缩放动画
 		stopTimer(0);// 停止自己的定时器
 		startPlayTimer(getNextOrder(mySelfOrder) + 1200);
-		String gender = "0";
+		String gender = backData.getUsers().get(0).getGender();
 		if ("1".equals(gender)) {
 			AudioPlayUtils.getInstance().playSound(R.raw.nv_pass);// 不叫
 		} else {
@@ -3122,7 +3127,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 				bierenchupai = null;
 				// 检测加倍
 				checkJiaBei(typeMe, false);
-				playDiZhuCardAudio(typeMe, valueMe, "0"); // 出牌的声音
+				playDiZhuCardAudio(typeMe, valueMe, "1"); // 出牌的声音
 				// 如果是炸弹显示特效
 				PlayCardEffect.bomEffect(typeMe, doudizhuBackGround);
 				if (myCardsTouchLayout.getChildCount() > 0) {
@@ -3162,7 +3167,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 			firstChupai = true;
 			// 自己出完牌后将别人出牌清空
 			bierenchupai = null;
-			playDiZhuCardAudio(typeMe, valueMe, "0"); // 出牌的声音
+			playDiZhuCardAudio(typeMe, valueMe, "1"); // 出牌的声音
 			// 如果是炸弹显示特效
 			PlayCardEffect.bomEffect(typeMe, doudizhuBackGround);
 			if (myCardsTouchLayout.getChildCount() > 0) {
@@ -3461,7 +3466,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 			// ActivityUtils.startScaleAnim(play1PassLayout, ctx);//播放缩放动画
 		} else {
 			if (3 == ratio) { // 叫三分放在此处是防止，自己点三分的时候出现重复的叫3分声音
-				String gender = "0";
+				String gender = backData.getUsers().get(0).getGender();
 				if ("1".equals(gender)) {
 					AudioPlayUtils.getInstance().playSound(R.raw.nv_3fen);// 叫3分
 				} else {
@@ -3505,7 +3510,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 	 */
 	public int backId(int ratio, int perCallOrder) {
 		int id = 0;
-		String gender = "0";
+		String gender = backData.getUsers().get(0).getGender();
 		switch (ratio) {
 		case 0:
 			id = R.drawable.call_bujiao;
@@ -4204,7 +4209,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 		}
 		// 如果别人不要
 		if (play.getCards() == null || play.getCards().size() == 0) {
-			String gender = "0";
+			String gender = backData.getUsers().get(0).getGender();
 			if ("1".equals(gender)) {
 				AudioPlayUtils.getInstance().playSound(R.raw.nv_pass);// 不出
 			} else {
@@ -4242,7 +4247,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 			addOutPokers(play.getOrder(), carList);
 			int type = DoudizhuRule.checkpai(carList);
 			int value = DoudizhuRule.checkpaiValue(type, carList);
-			playDiZhuCardAudio(type, value, "0"); // 出牌的声音
+			playDiZhuCardAudio(type, value, "1"); // 出牌的声音
 			// 如果是炸弹显示特效
 			PlayCardEffect.bomEffect(type, doudizhuBackGround);
 			if (play.getCount() > 0) {
@@ -5583,6 +5588,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements
 		List<String> clientNames = ClientName.getallClientNames();
 		ClientUser user1 = new ClientUser();
 		user1.setOrder(1);
+		user1.setGender("1");
 		user1.setName(TextUtils.isEmpty(GameCache
 				.getStr(Constant.GAME_NAME_CACHE)) ? "武则天" : GameCache
 				.getStr(Constant.GAME_NAME_CACHE)); // 自己

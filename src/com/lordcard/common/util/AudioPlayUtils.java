@@ -24,7 +24,7 @@ public class AudioPlayUtils {
 	private MediaPlayer mediaPlayer2;
 	private SoundPool soundPool;
 	// private HashMap<Integer, Integer> soundPoolMap; //播放列表
-	public static boolean isPlay = true; // 是否播放
+	public static boolean isPlay = false; // 是否播放
 	public static boolean isGameEnd = false; // 是否是结束
 	private static boolean BgisPlaying = false; // 是否正在播放
 	private int lotIngId, lotEndId;
@@ -148,7 +148,7 @@ public class AudioPlayUtils {
 	private AudioPlayUtils() {
 		this.mediaPlayer = new MediaPlayer();
 		this.mediaPlayer2 = new MediaPlayer();
-		this.soundPool = new SoundPool(20, AudioManager.STREAM_MUSIC, 100);
+		this.soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 100);
 		lotIngId = soundPool.load(context, R.raw.lot_ing, 1);
 		lotEndId = soundPool.load(context, R.raw.lot_end, 1);
 		soundPoolMap = new HashMap<Integer, Integer>();
@@ -166,8 +166,7 @@ public class AudioPlayUtils {
 	public synchronized static AudioPlayUtils getInstance() {
 		if (mediaPlayerUtils == null) {
 			context = CrashApplication.getInstance();
-			audioManager = (AudioManager) context
-					.getSystemService(Context.AUDIO_SERVICE);
+			audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 			mediaPlayerUtils = new AudioPlayUtils();
 		}
 		return mediaPlayerUtils;
@@ -190,8 +189,7 @@ public class AudioPlayUtils {
 					mediaPlayer = MediaPlayer.create(context, resid);
 					mediaPlayer.setLooping(looping);
 					mediaPlayer.start();
-					mediaPlayer
-							.setOnCompletionListener(new OnCompletionListener() {
+					mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
 								@Override
 								public void onCompletion(MediaPlayer mp) {
 									try {
@@ -279,8 +277,7 @@ public class AudioPlayUtils {
 				mediaPlayer2 = MediaPlayer.create(context, Res);
 				mediaPlayer2.setLooping(true);
 				mediaPlayer2.start();
-				mediaPlayer2
-						.setOnCompletionListener(new OnCompletionListener() {
+				mediaPlayer2.setOnCompletionListener(new OnCompletionListener() {
 							@Override
 							public void onCompletion(MediaPlayer mp) {
 								try {
