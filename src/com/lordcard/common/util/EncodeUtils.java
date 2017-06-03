@@ -6,11 +6,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * 各种格式的编码加码工具类. 集成Commons-Codec,Commons-Lang及JDK提供的编解码方法.
+ * 各种格式的编码加码工具类.
+ * 
+ * 集成Commons-Codec,Commons-Lang及JDK提供的编解码方法.
+ * 
  */
 public class EncodeUtils {
-	private static final String DEFAULT_URL_ENCODING = "UTF-8";
 
+	private static final String DEFAULT_URL_ENCODING = "UTF-8";
 	/**
 	 * URL 解码, Encode默认为UTF-8.
 	 */
@@ -25,8 +28,7 @@ public class EncodeUtils {
 		try {
 			return URLDecoder.decode(input, encoding);
 		} catch (UnsupportedEncodingException e) {
-			throw new IllegalArgumentException(
-					"Unsupported Encoding Exception", e);
+			throw new IllegalArgumentException("Unsupported Encoding Exception", e);
 		}
 	}
 
@@ -45,11 +47,14 @@ public class EncodeUtils {
 	/**
 	 * 转码utf-8
 	 */
-	/*
-	 * public static String strDecode(String str) { try { str = new
-	 * String(str.getBytes("ISO-8859-1"), DEFAULT_URL_ENCODING); } catch
-	 * (UnsupportedEncodingException e) { e.printStackTrace(); } return str; }
-	 */
+/*	public static String strDecode(String str) {
+		try {
+			str = new String(str.getBytes("ISO-8859-1"), DEFAULT_URL_ENCODING);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return str;
+	}*/
 	/**
 	 * 转码utf-8
 	 */
@@ -61,7 +66,6 @@ public class EncodeUtils {
 		}
 		return str;
 	}
-
 	/**
 	 * 对字符串进行MD5加密
 	 * 

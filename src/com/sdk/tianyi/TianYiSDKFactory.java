@@ -7,6 +7,8 @@ import com.sdk.util.vo.PayInit;
 import com.sdk.util.vo.PayPoint;
 
 public class TianYiSDKFactory extends ISDKFactory {
+	
+
 	@Override
 	public void loadPay(PayInit payInit) {
 	}
@@ -18,10 +20,10 @@ public class TianYiSDKFactory extends ISDKFactory {
 
 	@Override
 	public void goPay(PayPoint payPoint, String paySiteTag) {
-		TYPayUtil.goPay(payPoint, paySiteTag);
+		TYPayUtil.goPay(payPoint,paySiteTag);
 	}
-
+	
 	@Override
-	public void localPay(final PayPoint point, final String paySite) {
+	public void localPay(final PayPoint point,final String paySite) {
 	}
 }

@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +46,11 @@ import com.lordcard.network.http.HttpUtils;
 import com.lordcard.ui.StoveActivity;
 
 /**
- * 物品鉴定对话框
- * 
+ *  物品鉴定对话框
  * @author Administrator
  */
 public class EnvalueDialog extends Dialog implements OnClickListener {
+
 	private Context context;
 	private LinearLayout mainLayout;
 	private Integer Typeid;
@@ -78,8 +78,7 @@ public class EnvalueDialog extends Dialog implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.goods_evaluate);
 		mainLayout = (LinearLayout) findViewById(R.id.envalues_list_layout);
-		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(
-				R.drawable.photo_bg, false));
+		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.photo_bg, false));
 		mst.adjustView(mainLayout);
 		layout(context);
 	}
@@ -109,74 +108,53 @@ public class EnvalueDialog extends Dialog implements OnClickListener {
 		evaluesView.setEnabled(false);
 		animalimgList = (GridView) findViewById(R.id.valuesgrid);
 		animalimgList.setSelector(new ColorDrawable(Color.TRANSPARENT));
-		if (Database.GOODS_EVALUE_LIST != null
-				&& Database.GOODS_EVALUE_LIST.size() > 0) {
+		if (Database.GOODS_EVALUE_LIST != null && Database.GOODS_EVALUE_LIST.size() > 0) {
 			initView();
 		} else {
 			new Thread() {
-				@Override
+
 				public void run() {
 					try {
-						String result = HttpUtils.post(HttpURL.EVALUES_IMG_URL,
-								null, true);
+						String result = HttpUtils.post(HttpURL.EVALUES_IMG_URL, null, true);
 						if (!TextUtils.isEmpty(result)) {
-							Database.GOODS_EVALUE_LIST = JsonHelper.fromJson(
-									result, new TypeToken<List<GoodsType>>() {
-									});
-							Database.currentActivity
-									.runOnUiThread(new Runnable() {
-										@Override
-										public void run() {
-											if (Database.GOODS_EVALUE_LIST != null
-													&& Database.GOODS_EVALUE_LIST
-															.size() > 0) {
-												initView();
-											}
-										}
-									});
+							Database.GOODS_EVALUE_LIST = JsonHelper.fromJson(result, new TypeToken<List<GoodsType>>() {});
+							Database.currentActivity.runOnUiThread(new Runnable() {
+
+								public void run() {
+									if (Database.GOODS_EVALUE_LIST != null && Database.GOODS_EVALUE_LIST.size() > 0) {
+										initView();
+									}
+								}
+							});
 						}
-					} catch (Exception e) {
-					}
+					} catch (Exception e) {}
 				}
 			}.start();
 		}
 		animalimgList.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					final int posision, long arg3) {
-				Typeid = Database.GOODS_EVALUE_LIST.get(posision)
-						.getCompositeType();
-				headTextView.setText(Database.GOODS_EVALUE_LIST.get(posision)
-						.getName());
-				contentView.setText(Database.GOODS_EVALUE_LIST.get(posision)
-						.getTitle());
-				Database.GOODS_EVALUE_DETAIL = JsonHelper.fromJson(
-						Database.GOODS_EVALUE_LIST.get(posision)
-								.getDescription(),
-						new TypeToken<List<GoodsDetails>>() {
-						});
+
+			public void onItemClick(AdapterView<?> arg0, View arg1, final int posision, long arg3) {
+				Typeid = Database.GOODS_EVALUE_LIST.get(posision).getCompositeType();
+				headTextView.setText(Database.GOODS_EVALUE_LIST.get(posision).getName());
+				contentView.setText(Database.GOODS_EVALUE_LIST.get(posision).getTitle());
+				Database.GOODS_EVALUE_DETAIL = JsonHelper.fromJson(Database.GOODS_EVALUE_LIST.get(posision).getDescription(), new TypeToken<List<GoodsDetails>>() {});
 				List<GoodsDetails> textList = Database.GOODS_EVALUE_DETAIL;
 				List<String> textList0 = new ArrayList<String>();
 				if (textList != null && textList.size() > 0) {
 					for (int i = 0; i < textList.size(); i++) {
 						textList0.add(textList.get(i).getText());
 					}
-					// TextAdapter textAdapter = new TextAdapter(textList);
+					//					TextAdapter textAdapter = new TextAdapter(textList);
 					textAdapter = new TextAdapter(textList);
 					evaluesView.setAdapter(textAdapter);
 				}
-				ImageUtil.setImg(
-						HttpURL.URL_PIC_ALL
-								+ Database.GOODS_EVALUE_LIST.get(posision)
-										.getPicPath(), headImage,
-						new ImageCallback() {
-							@Override
-							public void imageLoaded(Bitmap bitmap,
-									ImageView view) {
-								view.setScaleType(ScaleType.FIT_XY);
-								view.setImageBitmap(bitmap);
-							}
-						});
+				ImageUtil.setImg(HttpURL.URL_PIC_ALL + Database.GOODS_EVALUE_LIST.get(posision).getPicPath(), headImage, new ImageCallback() {
+
+					public void imageLoaded(Bitmap bitmap, ImageView view) {
+						view.setScaleType(ScaleType.FIT_XY);
+						view.setImageBitmap(bitmap);
+					}
+				});
 			}
 		});
 	}
@@ -188,33 +166,27 @@ public class EnvalueDialog extends Dialog implements OnClickListener {
 		contentView.setText(Database.GOODS_EVALUE_LIST.get(0).getTitle());
 		headTextView.setText(Database.GOODS_EVALUE_LIST.get(0).getName());
 		Typeid = Database.GOODS_EVALUE_LIST.get(0).getCompositeType();
-		ImageUtil.setImg(HttpURL.URL_PIC_ALL
-				+ Database.GOODS_EVALUE_LIST.get(0).getPicPath(), headImage,
-				new ImageCallback() {
-					@Override
-					public void imageLoaded(Bitmap bitmap, ImageView view) {
-						view.setScaleType(ScaleType.FIT_XY);
-						view.setImageBitmap(bitmap);
-					}
-				});
-		Database.GOODS_EVALUE_DETAIL = JsonHelper.fromJson(
-				Database.GOODS_EVALUE_LIST.get(0).getDescription(),
-				new TypeToken<List<GoodsDetails>>() {
-				});
+		ImageUtil.setImg(HttpURL.URL_PIC_ALL + Database.GOODS_EVALUE_LIST.get(0).getPicPath(), headImage, new ImageCallback() {
+
+			public void imageLoaded(Bitmap bitmap, ImageView view) {
+				view.setScaleType(ScaleType.FIT_XY);
+				view.setImageBitmap(bitmap);
+			}
+		});
+		Database.GOODS_EVALUE_DETAIL = JsonHelper.fromJson(Database.GOODS_EVALUE_LIST.get(0).getDescription(), new TypeToken<List<GoodsDetails>>() {});
 		List<GoodsDetails> textList = Database.GOODS_EVALUE_DETAIL;
 		List<String> textList1 = new ArrayList<String>();
 		for (int i = 0; i < textList.size(); i++) {
 			textList1.add(textList.get(i).getText());
 		}
-		// TextAdapter textAdapter = new TextAdapter(textList);
+		//		TextAdapter textAdapter = new TextAdapter(textList);
 		textAdapter = new TextAdapter(textList);
 		evaluesView.setAdapter(textAdapter);
 		int space = 8;
 		int numColumn = 97;
 		int size = Database.GOODS_EVALUE_LIST.size();
-		LayoutParams linearParams = animalimgList.getLayoutParams(); // 取控件mGrid当前的布局参数
-		linearParams.width = size
-				* (mst.adjustXIgnoreDensity(numColumn + space)) + 20;
+		LayoutParams linearParams = (LinearLayout.LayoutParams) animalimgList.getLayoutParams(); // 取控件mGrid当前的布局参数
+		linearParams.width = size * (mst.adjustXIgnoreDensity(numColumn + space)) + 20;
 		animalimgList.setLayoutParams(linearParams);
 		animalimgList.setNumColumns(size);
 		animalimgList.setColumnWidth(mst.adjustXIgnoreDensity(numColumn));
@@ -227,31 +199,31 @@ public class EnvalueDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.stove_btn:
-			MobclickAgent.onEvent(context, "宝鉴合成");
-			int page = 2;// 默认为数码合成
-			if (null != Typeid) {
-				if (Typeid.intValue() == 1 || Typeid.intValue() == 4) {
-					page = 0;
-				} else if (Typeid.intValue() == 2) {
-					page = 0;
-				} else if (Typeid.intValue() == 3) {
-					page = 2;
+			case R.id.stove_btn:
+				MobclickAgent.onEvent(context, "宝鉴合成");
+				int page = 2;//默认为数码合成
+				if (null != Typeid) {
+					if (Typeid.intValue() == 1 || Typeid.intValue() == 4) {
+						page = 0;
+					} else if (Typeid.intValue() == 2) {
+						page = 0;
+					} else if (Typeid.intValue() == 3) {
+						page = 2;
+					}
+					//mst.unRegisterView(mainLayout);
+					Bundle bundle = new Bundle();
+					bundle.putInt("page", page);
+					Intent stoveIntent = new Intent();
+					stoveIntent.setClass(context, StoveActivity.class);
+					stoveIntent.putExtras(bundle);
+					context.startActivity(stoveIntent);
 				}
-				// mst.unRegisterView(mainLayout);
-				Bundle bundle = new Bundle();
-				bundle.putInt("page", page);
-				Intent stoveIntent = new Intent();
-				stoveIntent.setClass(context, StoveActivity.class);
-				stoveIntent.putExtras(bundle);
-				context.startActivity(stoveIntent);
-			}
-			break;
-		case R.id.evalues_close:
-			dismiss();
-			break;
-		default:
-			break;
+				break;
+			case R.id.evalues_close:
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -267,6 +239,7 @@ public class EnvalueDialog extends Dialog implements OnClickListener {
 	 * 初始化物品宝鉴
 	 */
 	private class GoodsValuesAdapter extends BaseAdapter {
+
 		private List<GoodsType> gifInt;
 		private LayoutInflater mInflater;
 
@@ -275,35 +248,27 @@ public class EnvalueDialog extends Dialog implements OnClickListener {
 			this.mInflater = LayoutInflater.from(context);
 		}
 
-		@Override
 		public int getCount() {
 			return gifInt.size();
 		}
 
-		@Override
 		public Object getItem(int position) {
 			return gifInt.get(position);
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			convertView = mInflater.inflate(R.layout.goods_gif_item, null);
-			final ImageView iv = (ImageView) convertView
-					.findViewById(R.id.goodsview);
-			ImageUtil.setImg(HttpURL.URL_PIC_ALL
-					+ gifInt.get(position).getPicPath(), iv,
-					new ImageCallback() {
-						@Override
-						public void imageLoaded(final Bitmap bitmap,
-								final ImageView view) {
-							view.setImageBitmap(bitmap);
-						}
-					});
+			final ImageView iv = (ImageView) convertView.findViewById(R.id.goodsview);
+			ImageUtil.setImg(HttpURL.URL_PIC_ALL + gifInt.get(position).getPicPath(), iv, new ImageCallback() {
+
+				public void imageLoaded(final Bitmap bitmap, final ImageView view) {
+					view.setImageBitmap(bitmap);
+				}
+			});
 			return convertView;
 		}
 	}
@@ -312,6 +277,7 @@ public class EnvalueDialog extends Dialog implements OnClickListener {
 	 * 初始化物品宝鉴
 	 */
 	private class TextAdapter extends BaseAdapter {
+
 		private List<GoodsDetails> gifInt;
 		private LayoutInflater mInflater;
 
@@ -320,29 +286,24 @@ public class EnvalueDialog extends Dialog implements OnClickListener {
 			this.mInflater = LayoutInflater.from(context);
 		}
 
-		@Override
 		public int getCount() {
 			return gifInt.size();
 		}
 
-		@Override
 		public Object getItem(int position) {
 			return gifInt.get(position);
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder mViewHolder;
 			if (null == convertView) {
 				mViewHolder = new ViewHolder();
 				convertView = mInflater.inflate(R.layout.text_list_item, null);
-				mViewHolder.text = (TextView) convertView
-						.findViewById(R.id.evalues_text);
+				mViewHolder.text = (TextView) convertView.findViewById(R.id.evalues_text);
 				convertView.setTag(mViewHolder);
 			} else {
 				mViewHolder = (ViewHolder) convertView.getTag();
@@ -352,6 +313,7 @@ public class EnvalueDialog extends Dialog implements OnClickListener {
 		}
 
 		class ViewHolder {
+
 			private TextView text;// 最高奖励(普通赛制)
 		}
 	}

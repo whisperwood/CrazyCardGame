@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -28,14 +28,14 @@ import com.lordcard.network.http.HttpRequest;
  * @date 2013-5-29 下午3:04:28
  */
 public class FindPwdDialog extends Dialog implements OnClickListener {
-	// private Context context;
+	//	private Context context;
 	private EditText accountEdt, emailEdt;
 	private Button okBtn, closeBtn;
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 
 	public FindPwdDialog(Context context) {
 		super(context, R.style.dialog);
-		// this.context = context;
+		//		this.context = context;
 	}
 
 	@Override
@@ -53,12 +53,14 @@ public class FindPwdDialog extends Dialog implements OnClickListener {
 	private void layout() {
 		accountEdt = (EditText) findViewById(R.id.login_dl_account);
 		emailEdt = (EditText) findViewById(R.id.login_dl_account_pwd);
+
 		okBtn = (Button) findViewById(R.id.login_dl_login_btn);
 		okBtn.setText("确定");
 		okBtn.setOnClickListener(this);
 		closeBtn = (Button) findViewById(R.id.login_dl_close_btn);
 		closeBtn.setOnClickListener(this);
 		mst.adjustView(findViewById(R.id.gamelogin_dialog_layout));
+
 	}
 
 	@Override
@@ -105,11 +107,9 @@ public class FindPwdDialog extends Dialog implements OnClickListener {
 	 */
 	public void fetrievePwd(final String account, final String email) {
 		new Thread() {
-			@Override
 			public void run() {
 				String result = HttpRequest.fetrievePwd(account, email);
-				JsonResult jsonResult = JsonHelper.fromJson(result,
-						JsonResult.class);
+				JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 				if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) {
 					DialogUtils.mesTip(jsonResult.getMethodMessage(), false);
 				} else {

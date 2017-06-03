@@ -10,17 +10,13 @@ import com.google.gson.annotations.SerializedName;
  * @Description: 内容
  * @author shaohu
  * @date 2013-4-11 下午05:01:52
+ * 
  */
 public class ContentDetail {
-	@Expose
-	@SerializedName("id")
-	private String id;
-	@Expose
-	@SerializedName("ti")
-	private String title;
-	@Expose
-	@SerializedName("dp")
-	private String description; // 描述
+
+	@Expose @SerializedName("id") private String id;
+	@Expose @SerializedName("ti") private String title;
+	@Expose @SerializedName("dp") private String description; // 描述
 
 	/**
 	 * @return the id

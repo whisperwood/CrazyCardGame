@@ -1,7 +1,7 @@
 package com.lordcard.entity;
 
 public class GamePlaceVo {
-	private int zhidou;// 金豆
+	private int zhidou;//金豆
 	private int zhizuang;// 钻石
 	private String title;// 赛场标题
 	private String content;// 赛场说明
@@ -44,4 +44,5 @@ public class GamePlaceVo {
 	public final void setContent(String content) {
 		this.content = content;
 	}
+
 }

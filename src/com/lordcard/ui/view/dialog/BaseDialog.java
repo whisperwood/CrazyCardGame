@@ -13,128 +13,109 @@ import android.widget.Button;
 import com.lordcard.common.util.MultiScreenTool;
 import com.lordcard.ui.base.IGameView;
 
-public abstract class BaseDialog extends Dialog implements IGameView,
-		OnClickListener {
-	private static final String TAG = BaseDialog.class.getSimpleName();
+public abstract class BaseDialog extends Dialog implements IGameView, OnClickListener {
+	private static final  String TAG = BaseDialog.class.getSimpleName();
 	protected MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	protected View mainLayout = null;
 	protected Context mContext = null;
+	
 	protected Button leftButton = null;
 	protected Button rightButton = null;
 	protected Button cancelButton = null;
-
-	public BaseDialog(Context context, int style) {
+	
+	public BaseDialog(Context context,int style) {
 		super(context, style);
 		mContext = context;
 	}
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().setBackgroundDrawable(new BitmapDrawable());
 		initContentView(mContext);
 		adjustViewRectPerformance();
+		
 	}
-
-	/**
-	 * Set the dialog gravity of the window
-	 * 
-	 * @param gravity
+	
+	/**Set the dialog gravity of the window
+	 * @param gravity 
 	 */
-	public void setGravity(int gravity) {
+	public void setGravity(int gravity){
+		
 		Window window = this.getWindow();
 		window.setGravity(gravity);
 	}
-
-	/**
-	 * Set an animation for dialog when dialog show() or dismiss()
-	 * 
-	 * @param style
-	 *            the style of window @android:windowEnterAnimation and
-	 * @android:windowExitAnimation attribute
+	
+	
+	/**Set an animation for dialog when dialog show() or dismiss()
+	 * @param style the style of window @android:windowEnterAnimation and @android:windowExitAnimation attribute
 	 */
-	public void setDialogAnimation(int style) {
-		if (style == -1)
+	public void setDialogAnimation(int style){
+		if(style ==-1)
 			return;
 		Window window = this.getWindow();
 		window.setWindowAnimations(style);
 	}
-
-	/**
-	 * To Initialize Buttons On the dialog
-	 * 
-	 * @param leftBtn
-	 *            left button ,if don't need pass the value @null
-	 * @param rightBtn
-	 *            right button ,if don't need pass the value @null
-	 * @param cancelBtn
-	 *            cancel button ,if don't need pass the value @null
+	
+	/**To Initialize Buttons On the dialog
+	 * @param leftBtn  left button ,if don't need pass the value @null
+	 * @param rightBtn right button ,if don't need pass the value @null
+	 * @param cancelBtn cancel button ,if don't need pass the value @null
 	 */
-	protected void initButtons(Button leftBtn, Button rightBtn, Button cancelBtn) {
-		if (null != leftBtn) {
+	protected void initButtons(Button leftBtn,Button rightBtn,Button cancelBtn){
+		if(null != leftBtn){
 			leftButton = leftBtn;
 			leftButton.setOnClickListener(this);
 		}
-		if (null != rightBtn) {
+		
+		if(null != rightBtn){
 			rightButton = rightBtn;
 			rightButton.setOnClickListener(this);
 		}
-		if (null != cancelBtn) {
+			
+		if(null != cancelBtn){
 			cancelButton = cancelBtn;
 			cancelButton.setOnClickListener(this);
 		}
+		
 	}
-
+	
 	/**
 	 * Use MultiScreenTool tools to adjust view to adjust all screen resolutions
 	 */
-	private void adjustViewRectPerformance() {
-		if (null != mainLayout)
+	private void adjustViewRectPerformance(){
+		if(null != mainLayout)
 			mst.adjustView(mainLayout);
-		else
-			Log.w(TAG,
-					"You may init mainLayout to make better performance for  user!");
+		else 
+			Log.w(TAG, "You may init mainLayout to make better performance for  user!");
 	}
-
-	/**
-	 * Get String with params
-	 * 
-	 * @param id
-	 *            the id of string
-	 * @param params
-	 *            params params to format string
+	
+	/**Get String with params
+	 * @param id the id of string 
+	 * @param params params params to format string
 	 * @return the result after format with params
 	 */
-	public String getStringWithParams(int id, Object... params) {
+	public String getStringWithParams(int id,Object ...params){
 		String mString = mContext.getString(id);
-		return getStringWithParams(mString, params);
+		return getStringWithParams(mString,params);
 	}
-
-	/**
-	 * Get String with params
-	 * 
-	 * @param string
-	 *            String to format
-	 * @param params
-	 *            params to format string
+	
+	/**Get String with params
+	 * @param string String to format
+	 * @param params params to format string
 	 * @return the result after format with params
 	 */
-	public String getStringWithParams(String string, Object... params) {
+	public String getStringWithParams(String string,Object ...params){
 		String mString = String.format(string, params);
 		return mString;
 	}
-
 	@Override
 	public void dismiss() {
 		super.dismiss();
-		if (null != mainLayout)
+		if(null != mainLayout)
 			mst.unRegisterView(mainLayout);
 	}
-
-	/**
-	 * Initialize dialog content view,Implementation the method to create your
-	 * dialog view when need
-	 * 
+	/**Initialize dialog content view,Implementation the method to create your dialog view when need
 	 * @param context
 	 */
 	public abstract void initContentView(Context context);

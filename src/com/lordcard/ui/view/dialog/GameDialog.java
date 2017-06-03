@@ -6,8 +6,7 @@
  */
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
-
+import com.zzyddz.shui.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lordcard.common.util.MultiScreenTool;
-import com.lordcard.ui.view.GoogleAdsHelper;
 
 /**
  * com.lordcard.ui.view.dialog.AlertDialog
@@ -28,16 +26,16 @@ import com.lordcard.ui.view.GoogleAdsHelper;
  *         create at 2013 2013-3-25 下午5:32:42
  */
 public class GameDialog extends Dialog implements OnClickListener {
+
 	private Context context;
 	private TextView showText;
 	private boolean canCancel = true; // 是否允许取消
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	private RelativeLayout layout;
-	// private boolean InterceptKeyBack=false;//是否拦截返回按钮事件
-	private Button cancel, ok;
+//	private boolean InterceptKeyBack=false;//是否拦截返回按钮事件
+	private Button cancel,ok;
 
-	protected GameDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected GameDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
@@ -46,14 +44,14 @@ public class GameDialog extends Dialog implements OnClickListener {
 		super(context, R.style.dialog);
 		this.context = context;
 		this.canCancel = canCancel;
-		// this.InterceptKeyBack= InterceptKeyBack;
+//		this.InterceptKeyBack= InterceptKeyBack;
 	}
 
 	public GameDialog(Context context) {
 		super(context, R.style.dialog);
 		this.context = context;
 	}
-
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// 重写返回键
@@ -62,14 +60,12 @@ public class GameDialog extends Dialog implements OnClickListener {
 		return true;
 	}
 
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_dialog);
 		layout(context);
 		layout = (RelativeLayout) findViewById(R.id.mm_layout);
 		mst.adjustView(layout);
-		GoogleAdsHelper.getInstance().showBanner(layout);
 	}
 
 	/**
@@ -90,18 +86,18 @@ public class GameDialog extends Dialog implements OnClickListener {
 	public void onClick(View v) {
 		try {
 			switch (v.getId()) {
-			case R.id.common_cancel:
-				mst.unRegisterView(layout);
-				dismiss();
-				cancelClick();
-				break;
-			case R.id.common_ok:
-				mst.unRegisterView(layout);
-				dismiss();
-				okClick();
-				break;
-			default:
-				break;
+				case R.id.common_cancel:
+					mst.unRegisterView(layout);
+					dismiss();
+					cancelClick();
+					break;
+				case R.id.common_ok:
+					mst.unRegisterView(layout);
+					dismiss();
+					okClick();
+					break;
+				default:
+					break;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -111,28 +107,22 @@ public class GameDialog extends Dialog implements OnClickListener {
 	public void setText(String content) {
 		showText.setText(content);
 	}
-
-	public void setCancelText(String content) {
+	public void setCancelText(String content){
 		cancel.setText(content);
 	}
-
-	public void setOkText(String content) {
+	public void setOkText(String content){
 		ok.setText(content);
 	}
-
-	public void setOkButtonBg(int bgId) {
+	public void setOkButtonBg(int bgId){
 		ok.setBackgroundResource(bgId);
 	}
-
-	public void setCancelButtonBg(int bgId) {
+	public void setCancelButtonBg(int bgId){
 		cancel.setBackgroundResource(bgId);
 	}
 
 	/** 确定 */
-	public void okClick() {
-	};
+	public void okClick() {};
 
 	/** 取消 */
-	public void cancelClick() {
-	};
+	public void cancelClick() {};
 }

@@ -1,5 +1,5 @@
 /**
- */
+*/
 package com.lordcard.entity;
 
 import java.util.List;
@@ -7,11 +7,12 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 
 /**
- * @ClassName: AsstAction
- * @Description: 助手动作
- * @author shaohu
- * @date 2013-7-30 下午03:30:50
- */
+* @ClassName: AsstAction
+* @Description: 助手动作
+* @author shaohu
+* @date 2013-7-30 下午03:30:50
+* 
+*/
 public class AssistantAction {
 	/**
 	 * 按钮点击行为
@@ -21,22 +22,27 @@ public class AssistantAction {
 	 * 赠送
 	 */
 	public final static String AC_GIVE = "gv";
+
 	/**
 	 * 购买
 	 */
 	public final static String AC_BUY = "by";
+
 	/**
 	 * 跳转
 	 */
 	public final static String AC_FORWARD = "fw";
+
 	/**
 	 * 报名
 	 */
 	public final static String AC_SIGN = "sg";
+
 	/**
 	 * 加入
 	 */
 	public final static String AC_JOIN = "ji";
+
 	/**
 	 * 退出
 	 */
@@ -49,6 +55,7 @@ public class AssistantAction {
 	 * 跳转
 	 */
 	public final static String AC_SKIP = "aw";
+	
 	/**
 	 * 充值赠送
 	 */
@@ -59,7 +66,8 @@ public class AssistantAction {
 	}
 
 	/**
-	 * ac值 oc:表示点击行为,gv:表示赠送,by:表示购买,fw:跳转网页,ex:退出,dw下载,aw跳转
+	 * ac值   oc:表示点击行为,gv:表示赠送,by:表示购买,fw:跳转网页,ex:退出,dw下载,aw跳转
+
 	 */
 	@Expose
 	private String ac;
@@ -67,7 +75,8 @@ public class AssistantAction {
 	private String remark;
 	@Expose
 	private List<GoodsGet> goodsHands;
-	// 请求url
+
+	//请求url
 	@Expose
 	private String requestUrl;
 
@@ -79,8 +88,7 @@ public class AssistantAction {
 	}
 
 	/**
-	 * @param ac
-	 *            the ac to set
+	 * @param ac the ac to set
 	 */
 	public void setAc(String ac) {
 		this.ac = ac;
@@ -94,8 +102,7 @@ public class AssistantAction {
 	}
 
 	/**
-	 * @param remark
-	 *            the remark to set
+	 * @param remark the remark to set
 	 */
 	public void setRemark(String remark) {
 		this.remark = remark;
@@ -109,8 +116,7 @@ public class AssistantAction {
 	}
 
 	/**
-	 * @param goodsHands
-	 *            the goodsHands to set
+	 * @param goodsHands the goodsHands to set
 	 */
 	public void setGoodsHands(List<GoodsGet> goodsHands) {
 		this.goodsHands = goodsHands;
@@ -124,10 +130,10 @@ public class AssistantAction {
 	}
 
 	/**
-	 * @param requestUrl
-	 *            the requestUrl to set
+	 * @param requestUrl the requestUrl to set
 	 */
 	public void setRequestUrl(String requestUrl) {
 		this.requestUrl = requestUrl;
 	}
+
 }

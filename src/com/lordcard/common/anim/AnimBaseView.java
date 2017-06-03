@@ -12,6 +12,7 @@ import com.lordcard.common.util.ImageUtil;
 
 @SuppressLint("ViewConstructor")
 public class AnimBaseView extends View {
+
 	private int duration;
 	protected AnimationDrawable animationDrawable;
 
@@ -38,8 +39,7 @@ public class AnimBaseView extends View {
 	 */
 	public void loadAnimFrame(Bitmap[] frameBitmap) {
 		for (int frame = 0; frame < frameBitmap.length; frame++) {
-			animationDrawable.addFrame(new BitmapDrawable(frameBitmap[frame]),
-					duration);
+			animationDrawable.addFrame(new BitmapDrawable(frameBitmap[frame]), duration);
 		}
 		setBackgroundDrawable(animationDrawable);
 	}
@@ -51,13 +51,12 @@ public class AnimBaseView extends View {
 	// }
 	// setBackgroundDrawable(animationDrawable);
 	// }
-	@Override
+
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		animationDrawable.start();
 	}
 
-	@Override
 	protected void onAnimationEnd() {
 		super.onAnimationEnd();
 	}
@@ -68,4 +67,5 @@ public class AnimBaseView extends View {
 			ImageUtil.releaseDrawable(animationDrawable.getFrame(i));
 		}
 	}
+
 }

@@ -1,6 +1,7 @@
 package com.lordcard.ui.personal.logic;
 
 public class Number {
+
 	private int value;
 	private int pokerNumber;
 
@@ -19,4 +20,5 @@ public class Number {
 	public void setPokerNumber(int pokerNumber) {
 		this.pokerNumber = pokerNumber;
 	}
+
 }

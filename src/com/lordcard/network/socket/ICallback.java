@@ -15,5 +15,6 @@ import com.lordcard.network.cmdmgr.CmdDetail;
  *         create at 2012 2012-11-22 下午2:49:36
  */
 public interface ICallback {
-	public void messageHandler(CmdDetail cmdDetail); // 消息接收凸显
+	
+	public void messageHandler(CmdDetail cmdDetail);	//消息接收凸显
 }

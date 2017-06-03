@@ -48,4 +48,5 @@ public class GoodsTypeDetail {
 	public void setLargePicPath(String largePicPath) {
 		this.largePicPath = largePicPath;
 	}
+
 }

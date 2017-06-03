@@ -7,7 +7,9 @@ package com.lordcard.entity;
  * @Description: 物品兑换表
  * @author shaohu
  * @date 2013-4-10 上午11:51:25
+ * 
  */
+
 public class GameGoodsExchange {
 	private String id;
 	private Integer isAvailable; // 1表示使用中,0表示未使用中
@@ -41,8 +43,7 @@ public class GameGoodsExchange {
 	 * @param ordernum
 	 * @param description
 	 */
-	public GameGoodsExchange(String id, Integer isAvailable, String fromName,
-			String fromTypeId, Integer fromCount, Integer type, String typeId,
+	public GameGoodsExchange(String id, Integer isAvailable, String fromName, String fromTypeId, Integer fromCount, Integer type, String typeId,
 			String typeName, Integer count, Integer ordernum, String description) {
 		super();
 		this.id = id;
@@ -61,6 +62,7 @@ public class GameGoodsExchange {
 	/**
 	 * @return the id
 	 */
+
 	public String getId() {
 		return id;
 	}
@@ -76,6 +78,7 @@ public class GameGoodsExchange {
 	/**
 	 * @return the isAvailable
 	 */
+
 	public Integer getIsAvailable() {
 		return isAvailable;
 	}
@@ -91,6 +94,7 @@ public class GameGoodsExchange {
 	/**
 	 * @return the fromName
 	 */
+
 	public String getFromName() {
 		return fromName;
 	}
@@ -106,6 +110,7 @@ public class GameGoodsExchange {
 	/**
 	 * @return the fromTypeId
 	 */
+
 	public String getFromTypeId() {
 		return fromTypeId;
 	}
@@ -121,6 +126,7 @@ public class GameGoodsExchange {
 	/**
 	 * @return the fromCount
 	 */
+
 	public Integer getFromCount() {
 		return fromCount;
 	}
@@ -136,6 +142,7 @@ public class GameGoodsExchange {
 	/**
 	 * @return the type
 	 */
+
 	public Integer getType() {
 		return type;
 	}
@@ -151,6 +158,7 @@ public class GameGoodsExchange {
 	/**
 	 * @return the typeId
 	 */
+
 	public String getTypeId() {
 		return typeId;
 	}
@@ -166,6 +174,7 @@ public class GameGoodsExchange {
 	/**
 	 * @return the typeName
 	 */
+
 	public String getTypeName() {
 		return typeName;
 	}
@@ -181,6 +190,7 @@ public class GameGoodsExchange {
 	/**
 	 * @return the count
 	 */
+
 	public Integer getCount() {
 		return count;
 	}
@@ -196,6 +206,7 @@ public class GameGoodsExchange {
 	/**
 	 * @return the ordernum
 	 */
+
 	public Integer getOrdernum() {
 		return ordernum;
 	}
@@ -211,6 +222,7 @@ public class GameGoodsExchange {
 	/**
 	 * @return the description
 	 */
+
 	public String getDescription() {
 		return description;
 	}
@@ -222,4 +234,5 @@ public class GameGoodsExchange {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 }

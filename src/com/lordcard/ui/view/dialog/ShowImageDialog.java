@@ -1,12 +1,13 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.Window;
 
 public class ShowImageDialog extends Dialog {
+
 	public ShowImageDialog(Context context) {
 		super(context);
 		init(context);
@@ -16,8 +17,7 @@ public class ShowImageDialog extends Dialog {
 		super(context, theme);
 	}
 
-	public ShowImageDialog(Activity context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	public ShowImageDialog(Activity context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 	}
 

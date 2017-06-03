@@ -10,18 +10,15 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class JsonResult {
+
 	/** 成功 */
 	public static final String SUCCESS = "0";
 	/** 数据非法 */
 	public static final String ILLEGAL = "1";
 	/** tokenId 非法 */
 	public static final String FAIL_TOKENID = "2";
-	@Expose
-	@SerializedName("mc")
-	private String methodCode;
-	@Expose
-	@SerializedName("mm")
-	private String methodMessage;
+	@Expose @SerializedName("mc") private String methodCode;
+	@Expose @SerializedName("mm") private String methodMessage;
 
 	public String getMethodCode() {
 		return methodCode;

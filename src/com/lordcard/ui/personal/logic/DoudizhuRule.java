@@ -6,6 +6,7 @@ import java.util.List;
 import com.lordcard.entity.Poker;
 
 public class DoudizhuRule {
+
 	public static final int Danpai = 1;
 	public static final int Yidui = 2;
 	public static final int Santiao = 3;
@@ -62,13 +63,16 @@ public class DoudizhuRule {
 			}
 		}
 		return compter;
+
 	}
 
 	public static boolean IfWangzha(List<Poker> list) {
 		if (list.size() < 2)
 			return false;
+
 		return list.get(0).getValue() + list.get(1).getValue() == 33 ? true
 				: false;
+
 	}
 
 	public static int ifZhadan(List<Poker> list) {
@@ -80,18 +84,22 @@ public class DoudizhuRule {
 			}
 		}
 		return -1;
+
 	}
 
 	public static int[] GettiShi(List<Poker> Othercards, List<Poker> Mycards) {
 		int[] tishi = null;
+
 		if (Othercards.size() != 1) {
 			if (IfWangzha(Othercards)) {
 				return null;
 			}
 		}
+
 		// if(Othercards.size()>Mycards.size()){
 		// return null;
 		// }
+
 		List<Poker> now = new ArrayList<Poker>();
 		for (Poker card : Mycards) {
 			now.add(card);
@@ -99,7 +107,9 @@ public class DoudizhuRule {
 		/*
 		 * for(Card card :Othercards){ System.out.println(card.getValue()); }
 		 */
+
 		int cardType = checkpai(Othercards);
+
 		if (Mycards.size() >= Othercards.size()) {
 			switch (cardType) {
 			case Danpai:
@@ -111,10 +121,12 @@ public class DoudizhuRule {
 						return tishi;
 					}
 				}
+
 				break;
 			case Yidui:
 				tishi = new int[2];
 				int yiduivalue = Othercards.get(0).getValue();
+
 				for (int i = Mycards.size() - 1; i > 0; i--) {
 					if (yiduivalue < Mycards.get(i).getValue()) {
 						if (Mycards.get(i).getValue() == Mycards.get(i - 1)
@@ -129,6 +141,7 @@ public class DoudizhuRule {
 			case Santiao:
 				tishi = new int[3];
 				int santiaovalue = Othercards.get(0).getValue();
+
 				for (int i = Mycards.size() - 1; i > 1; i--) {
 					if (santiaovalue < Mycards.get(i).getValue()) {
 						if (Mycards.get(i).getValue() == Mycards.get(i - 1)
@@ -197,6 +210,7 @@ public class DoudizhuRule {
 									return tishi;
 								}
 							}
+
 						}
 					}
 				}
@@ -205,6 +219,7 @@ public class DoudizhuRule {
 				tishi = new int[4];
 				int zhadan = Othercards.get(0).getValue();
 				for (int i = Mycards.size() - 1; i > 2; i--) {
+
 					if (zhadan < Mycards.get(i).getValue()) {
 						if (numberCount(Mycards.get(i).getValue(), Mycards) == 4) {
 							tishi[0] = Mycards.get(i).getNumber();
@@ -214,30 +229,37 @@ public class DoudizhuRule {
 							return tishi;
 						}
 					}
+
 				}
 				// if (Mycards.get)
+
 				break;
 			case sidaiyi:
 				tishi = new int[6];
 				int max = getMaxNumber(Othercards);
 				for (int i = Mycards.size() - 1; i > 2; i--) {
+
 					if (max < Mycards.get(i).getValue()) {
 						if (numberCount(Mycards.get(i).getValue(), Mycards) == 4) {
 							tishi[0] = Mycards.get(i).getNumber();
 							tishi[1] = Mycards.get(i - 1).getNumber();
 							tishi[2] = Mycards.get(i - 2).getNumber();
 							tishi[3] = Mycards.get(i - 3).getNumber();
+
 							now.remove(Mycards.get(i));
 							now.remove(Mycards.get(i - 1));
 							now.remove(Mycards.get(i - 2));
 							tishi[4] = now.get(now.size() - 1).getNumber();
 							tishi[5] = now.get(now.size() - 2).getNumber();
+
 							return tishi;
 						}
 					}
+
 				}
 				break;
 			case sidaier:
+
 				tishi = getSiDaiErTiShi(Othercards, now);
 				if (tishi != null) {
 					return tishi;
@@ -250,6 +272,7 @@ public class DoudizhuRule {
 				}
 				break;
 			case feijidaisan:
+
 				tishi = getFeiJiDaiSanTiShi(Othercards, now);
 				if (tishi != null) {
 					return tishi;
@@ -265,6 +288,7 @@ public class DoudizhuRule {
 			case liandui:
 				tishi = new int[Othercards.size()];
 				int minPai = Othercards.get(Othercards.size() - 1).getValue();
+
 				int tishiPos = 0;
 				int lastPaiValue = -1;
 				for (int i = Mycards.size() - 1; i > 0
@@ -296,11 +320,13 @@ public class DoudizhuRule {
 						--i;
 						tishi[1] = Mycards.get(i).getNumber();
 						tishiPos = 2;
+
 					} else {
 						tishi[tishiPos++] = Mycards.get(i).getNumber();
 						--i;
 						// ++tishiPos;
 						tishi[tishiPos++] = Mycards.get(i).getNumber();
+
 					}
 					lastPaiValue = Mycards.get(i).getValue();
 				}
@@ -336,6 +362,7 @@ public class DoudizhuRule {
 					}
 				}
 				break;
+
 			}
 		}
 		int number = ifZhadan(Mycards);
@@ -356,6 +383,7 @@ public class DoudizhuRule {
 				}
 			}
 		}
+
 		return null;
 	}
 
@@ -368,12 +396,15 @@ public class DoudizhuRule {
 		if (maxValue == 0) {
 			return null;
 		}
+
 		int feijiCount = othercards.size() / 3;
+
 		List<Poker> del = new ArrayList<Poker>();
 		// int count4 = -1;
 		for (int i = myCards.size() - 1; i >= 0; --i) {
 			// if (mycards.get(i).getValue() < )
 			int sameCardCount = numberCount(myCards.get(i).getValue(), myCards);
+
 			if (sameCardCount < 3) {
 				// cards.remove(i);
 				del.add(myCards.get(i));
@@ -383,18 +414,23 @@ public class DoudizhuRule {
 				i = i - 3;
 			}
 		}
+
 		for (int i = 0; i < del.size(); i++) {
 			myCards.remove(del.get(i));
+
 		}
+
 		if (myCards.size() < feijiCount * 3) {
 			return null;
 		}
+
 		int tiShi[] = new int[feijiCount * 3];
 		int tiShiIndex = 0;
 		for (int i = myCards.size() - 1; i >= 2; i = i - 3) {
 			if (myCards.get(i).getValue() < maxValue) {
 				continue;
 			}
+
 			if (i - 3 < 0 && tiShiIndex != 0) {
 				if (tiShiIndex <= tiShi.length - 3) {
 					tiShi[tiShiIndex++] = myCards.get(i).getNumber();
@@ -416,10 +452,12 @@ public class DoudizhuRule {
 				tiShiIndex = 0;
 			}
 		}
+
 		if (tiShiIndex == tiShi.length) {
 			return tiShi;
 		}
 		return null;
+
 		// for(int i = 0;i<cards.size();i++){
 		//
 		// }
@@ -452,9 +490,11 @@ public class DoudizhuRule {
 				break;
 			}
 		}
+
 		if (i == 2) {
 			return null;
 		}
+
 		for (int j = myCards.size() - 1; j > 0; --j) {
 			if (j > i - 4 && j <= i) {
 				continue;
@@ -468,20 +508,26 @@ public class DoudizhuRule {
 				return tishi;
 			}
 		}
+
 		return null;
 	}
 
 	private static int[] getFeiJiDaiDuiTiShi(List<Poker> othercards,
 			List<Poker> myCards) {
+
 		if (myCards.size() < othercards.size()) {
 			return null;
 		}
+
 		int feiJiCount = othercards.size() / 5;
+
 		int maxValue = DoudizhuRule.checkFeijiDaidui(othercards);
 		if (maxValue == 0) {
 			return null;
 		}
+
 		List<Poker> del = new ArrayList<Poker>();
+
 		for (int i = 0; i < myCards.size(); i++) {
 			int count = numberCount(myCards.get(i).getValue(), myCards);
 			if (count == 1) {
@@ -495,12 +541,16 @@ public class DoudizhuRule {
 				i = i + 3;
 			}
 		}
+
 		for (int i = 0; i < del.size(); i++) {
+
 			myCards.remove(del.get(i));
 		}
+
 		if (myCards.size() < feiJiCount * 3) {
 			return null;
 		}
+
 		Poker tiShiPoker[] = new Poker[feiJiCount * 3];
 		int tiShiIndex = 0;
 		int i;
@@ -508,6 +558,7 @@ public class DoudizhuRule {
 			if (myCards.get(i).getValue() < maxValue) {
 				continue;
 			}
+
 			if (i - 3 < 0 && tiShiIndex != 0) {
 				if (tiShiIndex <= tiShiPoker.length - 3) {
 					tiShiPoker[tiShiIndex++] = myCards.get(i);
@@ -535,14 +586,17 @@ public class DoudizhuRule {
 		if (tiShiIndex != tiShiPoker.length) {
 			return null;
 		}
+
 		for (i = i - 3; i >= 0; --i) {
 			del.add(myCards.get(i));
 		}
 		for (int j = 0; j < del.size(); ++j) {
 			myCards.remove(del.get(j));
 		}
+
 		int duiCount = 0;
 		boolean hasCheck[] = new boolean[del.size()];
+
 		for (i = 0; i < del.size(); ++i) {
 			if (hasCheck[i]) {
 				continue;
@@ -553,6 +607,7 @@ public class DoudizhuRule {
 				}
 				if (del.get(i).getValue() == del.get(j).getValue()) {
 					if (++duiCount >= feiJiCount) {
+
 						int tiShi[] = new int[myCards.size()];
 						for (int k = 0; k < myCards.size(); ++k) {
 							tiShi[k] = myCards.get(k).getNumber();
@@ -564,8 +619,11 @@ public class DoudizhuRule {
 					break;
 				}
 			}
+
 		}
+
 		return null;
+
 	}
 
 	private static int[] getFeiJiDaiSanTiShi(List<Poker> othercards,
@@ -577,7 +635,9 @@ public class DoudizhuRule {
 		if (maxValue == 0) {
 			return null;
 		}
+
 		int feijiCount = othercards.size() / 4;
+
 		List<Poker> del = new ArrayList<Poker>();
 		// int count4 = -1;
 		for (int i = mycards.size() - 1; i >= 0; --i) {
@@ -592,12 +652,16 @@ public class DoudizhuRule {
 				i = i - 3;
 			}
 		}
+
 		for (int i = 0; i < del.size(); i++) {
 			mycards.remove(del.get(i));
+
 		}
+
 		if (mycards.size() < feijiCount * 3) {
 			return null;
 		}
+
 		int tiShi[] = new int[feijiCount * 3];
 		int tiShiIndex = 0;
 		for (int i = mycards.size() - 1; i >= 2; i = i - 3) {
@@ -628,10 +692,12 @@ public class DoudizhuRule {
 				tiShiIndex = 0;
 			}
 		}
+
 		if (tiShiIndex == tiShi.length) {
 			return tiShi;
 		}
 		return null;
+
 		// for(int i = 0;i<cards.size();i++){
 		//
 		// }
@@ -699,6 +765,7 @@ public class DoudizhuRule {
 			}
 			break;
 		}
+
 		if (cards.size() >= 7) {
 			if (pokerCount == 4 && cards.size() == 8
 					&& cards.get(0).getValue() == cards.get(1).getValue()
@@ -729,6 +796,7 @@ public class DoudizhuRule {
 			}
 		}
 		return cardStyle;
+
 	}
 
 	public static boolean checkShunpai(List<Poker> cards) {
@@ -755,6 +823,7 @@ public class DoudizhuRule {
 						|| cards.get(i).getValue() == 15) {
 					return false;
 				}
+
 				if (cards.get(i).getValue() == cards.get(i + 1).getValue())
 					count++;
 				if (i + 2 < cards.size() - 1) {
@@ -785,14 +854,18 @@ public class DoudizhuRule {
 	}
 
 	public static int checkFeijiDaisan(List<Poker> myCards) {
+
 		if (myCards.size() % 4 != 0) {
 			return 0;
 		}
+
 		List<Poker> cards = new ArrayList<Poker>();
 		for (int i = 0; i < myCards.size(); ++i) {
 			cards.add(myCards.get(i));
 		}
+
 		int feijiCount = cards.size() / 4;
+
 		List<Poker> del = new ArrayList<Poker>();
 		// int count4 = -1;
 		for (int i = 0; i < cards.size(); i++) {
@@ -805,17 +878,23 @@ public class DoudizhuRule {
 				i = i + 3;
 			}
 		}
+
 		// if(del.size()!=cards.size()/4){
 		// System.out.println("del.size()"+del.size()+"cards.size()/4"+cards.size()/4);
 		// return false;
 		// }
+
 		for (int i = 0; i < del.size(); i++) {
 			// System.out.println(del.get(i));
+
 			cards.remove(del.get(i));
+
 		}
+
 		if (cards.size() % 3 != 0 || cards.size() == 0) {
 			return 0;
 		}
+
 		int lianCount = 1;
 		int maxLianCount = 1;
 		for (int i = 0; i < cards.size() - 3; i = i + 3) {
@@ -835,6 +914,7 @@ public class DoudizhuRule {
 			return cards.get(0).getValue();
 		}
 		return 0;
+
 		// for(int i = 0;i<cards.size();i++){
 		//
 		// }
@@ -843,6 +923,7 @@ public class DoudizhuRule {
 		// }else{
 		// return false;
 		// }
+
 	}
 
 	public static int checkFeijiDaidui(List<Poker> myCards) {
@@ -853,7 +934,9 @@ public class DoudizhuRule {
 		for (int i = 0; i < myCards.size(); ++i) {
 			cards.add(myCards.get(i));
 		}
+
 		List<Poker> del = new ArrayList<Poker>();
+
 		for (int i = 0; i < cards.size(); i++) {
 			int count = numberCount(cards.get(i).getValue(), cards);
 			if (count == 1) {
@@ -871,23 +954,30 @@ public class DoudizhuRule {
 				i = i + 3;
 			}
 		}
+
 		for (int i = 0; i < del.size(); i++) {
 			// System.out.println(del.get(i));
+
 			cards.remove(del.get(i));
 		}
+
 		if (cards.size() % 3 != 0 || cards.size() / 3 < 2
 				|| cards.size() / 3 != del.size() / 2) {
 			return 0;
 		}
+
 		for (int i = 0; i < cards.size() - 3; i = i + 3) {
 			if (cards.get(i).getValue() - 1 != cards.get(i + 3).getValue()) {
 				return 0;
 			}
 		}
+
 		return cards.get(0).getValue();
+
 	}
 
 	public static boolean checkFeiji(List<Poker> cards) {
+
 		int count = 1;
 		int size = cards.size();
 		if (size % 3 == 0) {
@@ -912,11 +1002,14 @@ public class DoudizhuRule {
 			if (count >= 2) {
 				return true;
 			}
+
 		}
 		return false;
+
 	}
 
 	public static boolean checkSidai2dui(List<Poker> cards) {
+
 		if (getPokeCount(cards) == 4
 				&& cards.get(4).getValue() == cards.get(5).getValue()
 				&& cards.get(6).getValue() == cards.get(7).getValue()) {
@@ -959,6 +1052,7 @@ public class DoudizhuRule {
 			zhi[i] = poker[cards[i]].getValue();
 			// System.out.println();
 		}
+
 		for (int i = 0; i < num.length; i++) {
 			for (int j = i + 1; j < num.length; j++) {
 				if (num[i].getValue() < num[j].getValue()) {

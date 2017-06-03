@@ -7,7 +7,9 @@ import java.util.Map;
 import com.lordcard.entity.Poker;
 
 public class PlayAlone implements Serializable {
+
 	private static final long serialVersionUID = 186874763769645267L;
+
 	private String id; // 出牌人编号
 	private int count; // 剩余的牌数
 	private List<Poker> precards; // 上手牌；
@@ -18,29 +20,32 @@ public class PlayAlone implements Serializable {
 	private boolean escape; // 是否逃跑
 	private Integer nextOrder; // 下一个出牌人位置
 	private Map<Integer, String> nickMap; // 玩家名称
-	private int ratio; // 总倍数
+
+	private int ratio; //总倍数
 	private int payment = 0; // 每局支付多少 负数为输 正数为赢
 	private int unitType = 0; // 类型 积分还是豆 0 积分、1 豆
 	private double extract = 0; // 抽成
 	private int goodsCount = 0; // 物品赠送数量
 	private Integer masterOrder; // 庄家位置编号
-	private int bombRatio = 1; // 炸弹倍数(默认1)
-	private int springRatio = 1; // 春天倍数(默认1)
-	private int doubleRatio = 1; // 加倍倍数(默认1)
-	private int bean = 0; // 最新所有金豆
+
+	private int bombRatio = 1; //炸弹倍数(默认1)
+	private int springRatio = 1; //春天倍数(默认1)
+	private int doubleRatio = 1; //加倍倍数(默认1)
+	private int bean = 0; //最新所有金豆
 	// 炸弹、春天、加倍、总倍数、底数、金豆、经验、当前金豆、等级
 	private Integer iq; // 最新等级
 	private Integer intellect; // 最新经验
 	private Integer addIntellect; // 输赢经验
-	private boolean upgrade; // 是否升级了
-	private String celebratedText; // 庆祝文字
-	private String celebratedEffect; // 庆祝效果
-	private int baseRatio = 1; // 基础倍数(默认1)
-	private int callRatio = 1; // 叫分倍数(默认1)
+
+	private boolean upgrade; //是否升级了
+	private String celebratedText; //庆祝文字
+	private String celebratedEffect; //庆祝效果
+
+	private int baseRatio = 1; //基础倍数(默认1)
+	private int callRatio = 1; //叫分倍数(默认1)
 	private Integer isTitle; // 是否为称号:0=不是,1=是
 
-	public PlayAlone() {
-	}
+	public PlayAlone() {}
 
 	public List<Poker> getPrecards() {
 		return precards;

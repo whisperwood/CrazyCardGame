@@ -15,6 +15,7 @@ import com.google.gson.annotations.Expose;
  *         create at 2013 2013-1-25 上午10:53:04
  */
 public class JsonParam {
+
 	// //////////rjoin 使用//////////////////
 	@Expose
 	private String loginToken; // 游戏登录Token
@@ -46,4 +47,5 @@ public class JsonParam {
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
+
 }

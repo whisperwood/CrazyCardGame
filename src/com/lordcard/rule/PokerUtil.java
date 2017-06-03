@@ -7,8 +7,10 @@ import com.lordcard.entity.Poker;
 
 /**
  * @author yuanjielong
+ * 
  */
 public class PokerUtil {
+
 	public static Poker[] getPoker(Context context) {
 		Poker[] poker = new Poker[54];
 		try {
@@ -78,12 +80,14 @@ public class PokerUtil {
 			}
 		} catch (Exception e) {
 		}
-		return poker;
-	}
 
-	public static Poker getPokerFromNumber(int number, Context context) {
+		return poker;
+
+	}
+	
+	public static Poker getPokerFromNumber(int number,Context context){
 		Poker poker = null;
-		if (number > 0 && number < 13) {
+		if(number >0 && number <13){
 			/** 黑桃 **/
 			poker = new Poker(context);
 			poker.setStyle(CardType.HEITAO);
@@ -96,7 +100,8 @@ public class PokerUtil {
 				poker.setValue(number + 1);
 			}
 			poker.setBitpamResID(CardType.ID[number]);
-		} else if (number >= 13 && number < 26) {
+			
+		}else if(number >=13 && number <26){
 			/** 红心 **/
 			poker = new Poker(context);
 			poker.setStyle(CardType.HONGXIN);
@@ -109,7 +114,8 @@ public class PokerUtil {
 				poker.setValue(number - 13 + 1);
 			}
 			poker.setBitpamResID(CardType.ID[number]);
-		} else if (number >= 26 && number < 39) {
+			
+		}else if(number >=26 && number < 39){
 			/** 梅花 **/
 			poker = new Poker(context);
 			poker.setStyle(CardType.MEIHUA);
@@ -122,7 +128,8 @@ public class PokerUtil {
 				poker.setValue(number - 26 + 1);
 			}
 			poker.setBitpamResID(CardType.ID[number]);
-		} else if (number >= 39 && number < 52) {
+			
+		}else if(number >= 39 && number < 52){
 			/** 方块 **/
 			poker = new Poker(context);
 			poker.setStyle(CardType.FANGKUAI);
@@ -135,8 +142,9 @@ public class PokerUtil {
 				poker.setValue(number - 39 + 1);
 			}
 			poker.setBitpamResID(CardType.ID[number]);
-		} else if (number >= 52 && number < 54) {
-			/** 大小王 **/
+			
+		}else if(number >= 52 && number < 54){
+			/**大小王**/
 			poker = new Poker(context);
 			poker.setStyle(CardType.GUI);
 			poker.setNumber(number);
@@ -145,66 +153,67 @@ public class PokerUtil {
 		}
 		return poker;
 	}
-	// public static Poker[] getChoudiPoker(Context context) {
-	// Poker[] poker = new Poker[54];
-	// for (int i = 0; i < 13; i++) {
-	// Poker card = new Poker(context);
-	// card.setStyle(CardType.HEITAO);
-	// card.setNumber(i);
-	// if (i == 0) {
-	// card.setValue(i + 14);
-	// } else if (i == 1) {
-	// card.setValue(i + 14);
-	// } else {
-	// card.setValue(i + 1);
-	// }
-	// card.setBitpamResID(CardType.ID[i]);
-	// poker[i] = card;
-	// }
-	// for (int i = 13; i < 26; i++) {
-	// Poker card = new Poker(context);
-	// card.setStyle(CardType.HONGXIN);
-	// card.setNumber(i);
-	// if (i == 13) {
-	// card.setValue(i - 13 + 14);
-	// } else if (i == 14) {
-	// card.setValue(15);
-	// } else {
-	// card.setValue(i - 13 + 1);
-	// }
-	// card.setBitpamResID(CardType.ID[i]);
-	// poker[i] = card;
-	// }
-	// for (int i = 26; i < 39; i++) {
-	// Poker card = new Poker(context);
-	// card.setStyle(CardType.MEIHUA);
-	// card.setNumber(i);
-	// if (i == 26) {
-	// card.setValue(i - 26 + 14);
-	// } else if (i == 27) {
-	// card.setValue(15);
-	// } else {
-	// card.setValue(i - 26 + 1);
-	// }
-	// card.setBitpamResID(CardType.ID[i]);
-	// poker[i] = card;
-	// }
-	// for (int i = 39; i < 52; i++) {
-	// Poker card = new Poker(context);
-	// card.setStyle(CardType.FANGKUAI);
-	// card.setNumber(i);
-	// if (i == 39) {
-	// card.setValue(i - 39 + 14);
-	// } else if (i == 40) {
-	// card.setValue(15);
-	// } else {
-	// card.setValue(i - 39 + 1);
-	// }
-	// card.setBitpamResID(CardType.ID[i]);
-	// poker[i] = card;
-	// }
+	//	public static Poker[] getChoudiPoker(Context context) {
+	//		Poker[] poker = new Poker[54];
+	//		for (int i = 0; i < 13; i++) {
+	//			Poker card = new Poker(context);
+	//			card.setStyle(CardType.HEITAO);
+	//			card.setNumber(i);
+	//			if (i == 0) {
+	//				card.setValue(i + 14);
+	//			} else if (i == 1) {
+	//				card.setValue(i + 14);
+	//			} else {
+	//				card.setValue(i + 1);
+	//			}
+	//			card.setBitpamResID(CardType.ID[i]);
+	//			poker[i] = card;
+	//		}
+	//		for (int i = 13; i < 26; i++) {
+	//			Poker card = new Poker(context);
+	//			card.setStyle(CardType.HONGXIN);
+	//			card.setNumber(i);
+	//			if (i == 13) {
+	//				card.setValue(i - 13 + 14);
+	//			} else if (i == 14) {
+	//				card.setValue(15);
+	//			} else {
+	//				card.setValue(i - 13 + 1);
+	//			}
+	//			card.setBitpamResID(CardType.ID[i]);
+	//			poker[i] = card;
+	//		}
+	//		for (int i = 26; i < 39; i++) {
+	//			Poker card = new Poker(context);
+	//			card.setStyle(CardType.MEIHUA);
+	//			card.setNumber(i);
+	//			if (i == 26) {
+	//				card.setValue(i - 26 + 14);
+	//			} else if (i == 27) {
+	//				card.setValue(15);
+	//			} else {
+	//				card.setValue(i - 26 + 1);
+	//			}
+	//			card.setBitpamResID(CardType.ID[i]);
+	//			poker[i] = card;
+	//		}
+	//		for (int i = 39; i < 52; i++) {
+	//			Poker card = new Poker(context);
+	//			card.setStyle(CardType.FANGKUAI);
+	//			card.setNumber(i);
+	//			if (i == 39) {
+	//				card.setValue(i - 39 + 14);
+	//			} else if (i == 40) {
+	//				card.setValue(15);
+	//			} else {
+	//				card.setValue(i - 39 + 1);
+	//			}
+	//			card.setBitpamResID(CardType.ID[i]);
+	//			poker[i] = card;
+	//		}
 	//
-	// return poker;
+	//		return poker;
 	//
-	// }
+	//	}
+
 }

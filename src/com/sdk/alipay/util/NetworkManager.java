@@ -3,6 +3,7 @@
  * All right reserved.
  * author: shiqun.shi@alipay.com
  */
+
 package com.sdk.alipay.util;
 
 import java.io.File;
@@ -29,6 +30,7 @@ import android.net.NetworkInfo;
 
 public class NetworkManager {
 	static final String TAG = "NetworkManager";
+
 	private int connectTimeout = 30 * 1000;
 	private int readTimeout = 30 * 1000;
 	Proxy mProxy = null;
@@ -43,16 +45,13 @@ public class NetworkManager {
 	 * 检查代理，是否cnwap接入
 	 */
 	private void detectProxy() {
-		ConnectivityManager cm = (ConnectivityManager) mContext
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
-		if (ni != null && ni.isAvailable()
-				&& ni.getType() == ConnectivityManager.TYPE_MOBILE) {
+		if (ni != null && ni.isAvailable() && ni.getType() == ConnectivityManager.TYPE_MOBILE) {
 			String proxyHost = android.net.Proxy.getDefaultHost();
 			int port = android.net.Proxy.getDefaultPort();
 			if (proxyHost != null) {
-				final InetSocketAddress sa = new InetSocketAddress(proxyHost,
-						port);
+				final InetSocketAddress sa = new InetSocketAddress(proxyHost, port);
 				mProxy = new Proxy(Proxy.Type.HTTP, sa);
 			}
 		}
@@ -61,11 +60,11 @@ public class NetworkManager {
 	private void setDefaultHostnameVerifier() {
 		//
 		HostnameVerifier hv = new HostnameVerifier() {
-			@Override
 			public boolean verify(String hostname, SSLSession session) {
 				return true;
 			}
 		};
+
 		HttpsURLConnection.setDefaultHostnameVerifier(hv);
 	}
 
@@ -81,14 +80,17 @@ public class NetworkManager {
 	public String SendAndWaitResponse(String strReqData, String strUrl) {
 		//
 		detectProxy();
+
 		String strResponse = null;
 		ArrayList<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
 		pairs.add(new BasicNameValuePair("requestData", strReqData));
+
 		HttpURLConnection httpConnect = null;
 		UrlEncodedFormEntity p_entity;
 		try {
 			p_entity = new UrlEncodedFormEntity(pairs, "utf-8");
 			URL url = new URL(strUrl);
+
 			if (mProxy != null) {
 				httpConnect = (HttpURLConnection) url.openConnection(mProxy);
 			} else {
@@ -97,12 +99,14 @@ public class NetworkManager {
 			httpConnect.setConnectTimeout(connectTimeout);
 			httpConnect.setReadTimeout(readTimeout);
 			httpConnect.setDoOutput(true);
-			httpConnect.addRequestProperty("Content-type",
-					"application/x-www-form-urlencoded;charset=utf-8");
+			httpConnect.addRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
 			httpConnect.connect();
+
 			OutputStream os = httpConnect.getOutputStream();
 			p_entity.writeTo(os);
 			os.flush();
+
 			InputStream content = httpConnect.getInputStream();
 			strResponse = BaseHelper.convertStreamToString(content);
 		} catch (IOException e) {
@@ -110,6 +114,7 @@ public class NetworkManager {
 		} finally {
 			httpConnect.disconnect();
 		}
+
 		return strResponse;
 	}
 
@@ -126,8 +131,10 @@ public class NetworkManager {
 	 */
 	public boolean urlDownloadToFile(Context context, String strurl, String path) {
 		boolean bRet = false;
+
 		//
 		detectProxy();
+
 		try {
 			URL url = new URL(strurl);
 			HttpURLConnection conn = null;
@@ -139,22 +146,29 @@ public class NetworkManager {
 			conn.setConnectTimeout(connectTimeout);
 			conn.setReadTimeout(readTimeout);
 			conn.setDoInput(true);
+
 			conn.connect();
 			InputStream is = conn.getInputStream();
+
 			File file = new File(path);
 			file.createNewFile();
 			FileOutputStream fos = new FileOutputStream(file);
+
 			byte[] temp = new byte[1024];
 			int i = 0;
 			while ((i = is.read(temp)) > 0) {
 				fos.write(temp, 0, i);
 			}
+
 			fos.close();
 			is.close();
+
 			bRet = true;
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		return bRet;
 	}
 }

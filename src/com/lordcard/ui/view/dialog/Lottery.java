@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.Vector;
 
@@ -28,8 +28,10 @@ import com.lordcard.ui.interfaces.PrizeInterface;
  */
 @SuppressLint("HandlerLeak")
 public class Lottery extends RelativeLayout {
+
 	private ImageView medalImage, coverImage;
 	private RelativeLayout innerLayout;
+
 	public RelativeLayout.LayoutParams params = null;
 	public RelativeLayout.LayoutParams imageParams = null;
 	public RelativeLayout.LayoutParams innerParams = null;
@@ -39,8 +41,8 @@ public class Lottery extends RelativeLayout {
 	private String index = "middle";
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	private AutoTask autoTask;
-	// private Timer timer;
-	// private Context context;
+	//	private Timer timer;
+	//	private Context context;
 	private String imageName;
 	private Vector<PrizeInterface> obs;
 	private static final String TAG = "Medal";
@@ -50,33 +52,23 @@ public class Lottery extends RelativeLayout {
 
 	public Lottery(Context context) {
 		super(context);
-		// this.context = context;
+		//		this.context = context;
 		successor = null;
 		obs = new Vector<PrizeInterface>();
 		medalImage = new ImageView(context);
 		innerLayout = new RelativeLayout(context);
-		innerLayout.setBackgroundDrawable(ImageUtil.getResDrawable(
-				R.drawable.medal, true));
-		imageParams = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
-				android.view.ViewGroup.LayoutParams.FILL_PARENT);
-		imageParams.setMargins(mst.adjustXIgnoreDensity(2),
-				mst.adjustXIgnoreDensity(5), mst.adjustXIgnoreDensity(2),
-				mst.adjustXIgnoreDensity(2));
-		// imageParams.setMargins(2, 5, 2,2);
-		innerParams = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
-				android.view.ViewGroup.LayoutParams.FILL_PARENT);
+		innerLayout.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.medal,true));
+		imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
+		imageParams.setMargins(mst.adjustXIgnoreDensity(2), mst.adjustXIgnoreDensity(5), mst.adjustXIgnoreDensity(2), mst.adjustXIgnoreDensity(2));
+		//		imageParams.setMargins(2, 5, 2,2);
+		innerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
+
 		coverImage = new ImageView(context);
-		coverImage.setBackgroundDrawable(ImageUtil.getResDrawable(
-				R.drawable.lot_cover, true));
-		coverParams = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
-				android.view.ViewGroup.LayoutParams.FILL_PARENT);
-		coverParams.setMargins(mst.adjustXIgnoreDensity(5),
-				mst.adjustXIgnoreDensity(5), mst.adjustXIgnoreDensity(5),
-				mst.adjustXIgnoreDensity(2));
-		// coverParams.setMargins(5, 5, 5, 2);
+		coverImage.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.lot_cover,true));
+		coverParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
+		coverParams.setMargins(mst.adjustXIgnoreDensity(5), mst.adjustXIgnoreDensity(5), mst.adjustXIgnoreDensity(5), mst.adjustXIgnoreDensity(2));
+		//		coverParams.setMargins(5, 5, 5, 2);
+
 		addView(medalImage, imageParams);
 		addView(coverImage, coverParams);
 		coverImage.setVisibility(View.INVISIBLE);
@@ -92,11 +84,11 @@ public class Lottery extends RelativeLayout {
 		sendName();
 		AudioPlayUtils.getInstance().playSoundMusic(true);
 		getInnerLayout().setVisibility(View.VISIBLE);
-		// if (timer != null) {
-		// timer.cancel();
-		// timer.purge();
-		// timer = null;
-		// }
+		//		if (timer != null) {
+		//			timer.cancel();
+		//			timer.purge();
+		//			timer = null;
+		//		}
 		if (autoTask != null) {
 			autoTask.stop(true);
 		}
@@ -158,36 +150,36 @@ public class Lottery extends RelativeLayout {
 			autoTask = null;
 		}
 		autoTask = new AutoTask() {
-			@Override
 			public void run() {
 				autoTask.stop(false);
 				handler.sendEmptyMessage(0);
 			}
 		};
 		ScheduledTask.addDelayTask(autoTask, stopInSeconds);
-		// timer = new Timer();
-		// timer.schedule(new StopBeatingReminder(), stopInSeconds);
+		//		timer = new Timer();
+		//		timer.schedule(new StopBeatingReminder(), stopInSeconds);
 	}
 
-	// class StopBeatingReminder extends TimerTask {
-	// public void run() {
-	// if (timer != null) {
-	// timer.cancel();
-	// timer.purge();
-	// timer = null;
-	// }
-	// handler.sendEmptyMessage(0);
-	// }
-	// }
+	//	class StopBeatingReminder extends TimerTask {
+	//		public void run() {
+	//			if (timer != null) {
+	//				timer.cancel();
+	//				timer.purge();
+	//				timer = null;
+	//			}
+	//			handler.sendEmptyMessage(0);
+	//		}
+	//	}
+
 	/**
 	 * 关闭定时器
 	 */
 	public void stopTimer() {
-		// if (timer != null) {
-		// timer.cancel();
-		// timer.purge();
-		// timer = null;
-		// }
+		//		if (timer != null) {
+		//			timer.cancel();
+		//			timer.purge();
+		//			timer = null;
+		//		}
 		if (autoTask != null) {
 			autoTask.stop(true);
 			autoTask = null;
@@ -195,13 +187,14 @@ public class Lottery extends RelativeLayout {
 	}
 
 	private Handler handler = new Handler() {
-		@Override
+
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 0:
 				getInnerLayout().setVisibility(View.INVISIBLE);
 				getCoverImage().setVisibility(View.VISIBLE);
+
 				successor.handle(isCJ);
 				break;
 			default:
@@ -284,4 +277,5 @@ public class Lottery extends RelativeLayout {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
+
 }

@@ -1,6 +1,6 @@
 package com.lordcard.ui.payrecord;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +43,7 @@ import com.lordcard.prerecharge.PrerechargeManager.PrerechargeDialogType;
 import com.lordcard.ui.base.BaseActivity;
 
 public class PayRecordActivity extends BaseActivity {
+
 	private ListView listView;
 	private int currentItemPressItemPosition = -1;
 	public MultiScreenTool mst = MultiScreenTool.singleTonVertical();
@@ -63,6 +64,7 @@ public class PayRecordActivity extends BaseActivity {
 		mst.adjustView(view);
 		// mst.adjustView(view2);
 		findViewById(R.id.mm_back).setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				finishSelf();
@@ -72,45 +74,33 @@ public class PayRecordActivity extends BaseActivity {
 	}
 
 	private OnItemClickListener onItemClickListener = new OnItemClickListener() {
+
 		@Override
-		public void onItemClick(AdapterView<?> adapterView, View view,
-				int position, long id) {
+		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 			currentItemPressItemPosition = position;
 			RecordAdapter recordAdapter = (RecordAdapter) listView.getAdapter();
 			@SuppressWarnings("unchecked")
-			Map<String, String> payRecordOrderInfo = (Map<String, String>) recordAdapter
-					.getItem(position);
+			Map<String, String> payRecordOrderInfo = (Map<String, String>) recordAdapter.getItem(position);
 			if (null == payRecordOrderInfo)
 				return;
-			if (payRecordOrderInfo.get(PayRecordUtil.ORDER_TYPE)
-					.equalsIgnoreCase(
-							PayRecordUtil.OrderType.Order_prepay.toString())
-					&& payRecordOrderInfo.get(PayRecordUtil.PAY_STATUS)
-							.equalsIgnoreCase(
-									PayRecordUtil.RecordStatus.Record_freeze
-											.toString())) {
-				PrerechargeManager.createPrerechargeDialog(
-						PrerechargeDialogType.Dialog_record,
-						PayRecordActivity.this,
-						recordAdapter.getPayRecordOrder(position), mHandler, 0)
-						.show();
+			if (payRecordOrderInfo.get(PayRecordUtil.ORDER_TYPE).equalsIgnoreCase(PayRecordUtil.OrderType.Order_prepay.toString()) && payRecordOrderInfo.get(PayRecordUtil.PAY_STATUS).equalsIgnoreCase(PayRecordUtil.RecordStatus.Record_freeze.toString())) {
+				PrerechargeManager.createPrerechargeDialog(PrerechargeDialogType.Dialog_record, PayRecordActivity.this, recordAdapter.getPayRecordOrder(position), mHandler, 0).show();
 			}
 		}
 	};
-	@SuppressLint("HandlerLeak")
-	private Handler mHandler = new Handler() {
-		@Override
+	@SuppressLint("HandlerLeak") private Handler mHandler = new Handler() {
+
 		public void handleMessage(Message msg) {
 			int msgId = msg.what;
 			switch (msgId) {
-			case REFRESH_ORDER_RECORD_LIST:
-				refreshList();
-				break;
-			case REMOVE_ORDER_ROCORD:
-				removeListItem();
-				break;
-			default:
-				break;
+				case REFRESH_ORDER_RECORD_LIST:
+					refreshList();
+					break;
+				case REMOVE_ORDER_ROCORD:
+					removeListItem();
+					break;
+				default:
+					break;
 			}
 			super.handleMessage(msg);
 		};
@@ -131,7 +121,6 @@ public class PayRecordActivity extends BaseActivity {
 
 	/**
 	 * 查询充值记录
-	 * 
 	 * @param loginToken
 	 */
 	public void goRecord() {
@@ -141,13 +130,13 @@ public class PayRecordActivity extends BaseActivity {
 		taskManager.addTask(vacPayTask);
 	}
 
-	/** 刷新订单记录ListView **/
+	/**刷新订单记录ListView**/
 	public void refreshList() {
 		RecordAdapter recordAdapter = (RecordAdapter) listView.getAdapter();
 		recordAdapter.notifyDataSetChanged();
 	}
 
-	/** 删除订单记录 **/
+	/**删除订单记录**/
 	public void removeListItem() {
 		if (currentItemPressItemPosition == -1)
 			return;
@@ -156,17 +145,15 @@ public class PayRecordActivity extends BaseActivity {
 	}
 
 	private class VacPayTask extends GenericTask {
-		@Override
+
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
 				// 先提loginToken
-				GameUser cacheUser = (GameUser) GameCache
-						.getObj(CacheKey.GAME_USER);
+				GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 				Map<String, String> paramMap = new HashMap<String, String>();
-				paramMap.put("loginToken", cacheUser.getLoginToken());
+				paramMap.put("loginToken",cacheUser.getLoginToken());
 				// 后台生成list
-				String resultJson = HttpUtils.post(HttpURL.PAY_LOG_URL,
-						paramMap);
+				String resultJson = HttpUtils.post(HttpURL.PAY_LOG_URL, paramMap);
 				if (HttpRequest.FAIL_STATE.equals(resultJson)) {
 					DialogUtils.mesTip("查询记录失败", true);
 					return null;
@@ -174,15 +161,11 @@ public class PayRecordActivity extends BaseActivity {
 					if (null == resultJson || resultJson.trim().equals("")) {
 						DialogUtils.toastTip("无充值记录");
 					} else {
-						final List<PayRecordOrder> payRecordOrders = JsonHelper
-								.fromJson(resultJson,
-										new TypeToken<List<PayRecordOrder>>() {
-										});
+						final List<PayRecordOrder> payRecordOrders = JsonHelper.fromJson(resultJson, new TypeToken<List<PayRecordOrder>>() {});
 						runOnUiThread(new Runnable() {
-							@Override
+
 							public void run() {
-								RecordAdapter adapter = new RecordAdapter(
-										payRecordOrders);
+								RecordAdapter adapter = new RecordAdapter(payRecordOrders);
 								listView.setAdapter(adapter);
 								listView.setOnItemClickListener(onItemClickListener);
 							}
@@ -198,6 +181,7 @@ public class PayRecordActivity extends BaseActivity {
 	}
 
 	private class RecordAdapter extends BaseAdapter {
+
 		private List<Map<String, String>> payRecordOrdersInfo;
 		private List<PayRecordOrder> payRecordOrders;
 		private LayoutInflater mInflater;
@@ -212,16 +196,16 @@ public class PayRecordActivity extends BaseActivity {
 			payRecordOrders = list;
 		}
 
-		/** remove data at position **/
+		/**remove data at position**/
 		public void removeDataRecord(int position) {
-			/** 移除记录 **/
+			/**移除记录**/
 			payRecordOrdersInfo.remove(position);
 			payRecordOrders.remove(position);
-			/** 更新列表 **/
+			/**更新列表**/
 			notifyDataSetChanged();
 		}
 
-		/** 获取订单记录信息 **/
+		/**获取订单记录信息**/
 		public PayRecordOrder getPayRecordOrder(int position) {
 			return payRecordOrders.get(position);
 		}
@@ -246,49 +230,32 @@ public class PayRecordActivity extends BaseActivity {
 			ViewHolder mViewHolder;
 			if (null == convertView) {
 				mViewHolder = new ViewHolder();
-				convertView = mInflater.inflate(
-						R.layout.pay_record_listview_item, null);
-				mViewHolder.t1 = (TextView) convertView
-						.findViewById(R.id.record_data);
-				mViewHolder.t2 = (TextView) convertView
-						.findViewById(R.id.record_money);
-				mViewHolder.t3 = (TextView) convertView
-						.findViewById(R.id.record_zhidou);
-				mViewHolder.status = (ImageView) convertView
-						.findViewById(R.id.record_statu);
+				convertView = mInflater.inflate(R.layout.pay_record_listview_item, null);
+				mViewHolder.t1 = (TextView) convertView.findViewById(R.id.record_data);
+				mViewHolder.t2 = (TextView) convertView.findViewById(R.id.record_money);
+				mViewHolder.t3 = (TextView) convertView.findViewById(R.id.record_zhidou);
+				mViewHolder.status = (ImageView) convertView.findViewById(R.id.record_statu);
 				convertView.setTag(mViewHolder);
 			} else {
 				mViewHolder = (ViewHolder) convertView.getTag();
 			}
-			mViewHolder.t1.setText(payRecordOrdersInfo.get(position).get(
-					PayRecordUtil.PAY_DATE));
-			mViewHolder.t2.setText(String.valueOf(payRecordOrdersInfo.get(
-					position).get(PayRecordUtil.MONNEY)));
-			mViewHolder.t3.setText(String.valueOf(payRecordOrdersInfo.get(
-					position).get(PayRecordUtil.BEANS)));
-			if (payRecordOrdersInfo
-					.get(position)
-					.get(PayRecordUtil.PAY_STATUS)
-					.equals(PayRecordUtil.RecordStatus.Record_charge.toString())) {
-				(convertView.findViewById(R.id.reocord_item))
-						.setBackgroundResource(R.drawable.pre_recharge_item_green_bg);
-				mViewHolder.status.setBackgroundDrawable(ImageUtil
-						.getDrawableResId(R.drawable.charge_status_complete,
-								false, false));
+			mViewHolder.t1.setText(payRecordOrdersInfo.get(position).get(PayRecordUtil.PAY_DATE));
+			mViewHolder.t2.setText(String.valueOf(payRecordOrdersInfo.get(position).get(PayRecordUtil.MONNEY)));
+			mViewHolder.t3.setText(String.valueOf(payRecordOrdersInfo.get(position).get(PayRecordUtil.BEANS)));
+			if (payRecordOrdersInfo.get(position).get(PayRecordUtil.PAY_STATUS).equals(PayRecordUtil.RecordStatus.Record_charge.toString())) {
+				(convertView.findViewById(R.id.reocord_item)).setBackgroundResource(R.drawable.pre_recharge_item_green_bg);
+				mViewHolder.status.setBackgroundDrawable(ImageUtil.getDrawableResId(R.drawable.charge_status_complete, false, false));
 			} else {
-				(convertView.findViewById(R.id.reocord_item))
-						.setBackgroundResource(R.drawable.pre_recharge_item_bg);
-				mViewHolder.status.setBackgroundDrawable(ImageUtil
-						.getDrawableResId(R.drawable.charge_status_freeze,
-								false, false));
+				(convertView.findViewById(R.id.reocord_item)).setBackgroundResource(R.drawable.pre_recharge_item_bg);
+				mViewHolder.status.setBackgroundDrawable(ImageUtil.getDrawableResId(R.drawable.charge_status_freeze, false, false));
 			}
-			convertView.findViewById(R.id.reocord_item)
-					.setPadding(10, 0, 10, 0);
+			convertView.findViewById(R.id.reocord_item).setPadding(10, 0, 10, 0);
 			return convertView;
 		}
 	}
 
 	class ViewHolder {
+
 		TextView t1, t2, t3;
 		ImageView status;
 	}

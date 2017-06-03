@@ -8,39 +8,44 @@ import com.lordcard.constant.Constant;
 
 /**
  * 心跳管理
- * 
- * @ClassName: HBMgr
+ * @ClassName: HBMgr   
  * @date 2013-9-16 下午3:23:22
  */
 public class HBMgr {
-	private static long lastTime; // 最后一次心跳时间
+
+	private static long lastTime; //最后一次心跳时间
 	private static AutoTask hbTask;
 	private static GameClient gameClient;
 
 	public static void startHb(GameClient client) {
 		if (!SocketConfig.isOpenHB)
-			return; // 不开启心跳直接退出
+			return; //不开启心跳直接退出
+
 		stopHB();
 		Log.d(Constant.LOG_TAG, "开启心跳  startTask");
 		lastTime = System.currentTimeMillis();
 		gameClient = client;
+
 		hbTask = new AutoTask() {
-			@Override
 			public void run() {
 				try {
-					// 游戏时退出当前界面
+					//游戏时退出当前界面
 					if (lastTime == 0)
 						return;
+
 					long now = System.currentTimeMillis();
 					long btime = now - lastTime;
+
 					if (btime > SocketConfig.HB_TIME) {
 						Log.d(Constant.LOG_TAG, lastTime + " | " + btime);
 						sendHb();
 					}
-					// //当前socket已关闭了。则自动重连
-					// if(gameClient != null && !gameClient.isConnected()){
-					// gameClient.waitTimeOut();
-					// }
+
+					//					//当前socket已关闭了。则自动重连
+					//					if(gameClient != null && !gameClient.isConnected()){
+					//						gameClient.waitTimeOut();
+					//					}
+
 					if (btime > SocketConfig.WAIT_TIME_OUT) {
 						if (gameClient != null) {
 							gameClient.waitTimeOut();
@@ -56,9 +61,8 @@ public class HBMgr {
 
 	/**
 	 * 更新心跳时间
-	 * 
-	 * @Title: refreshHB
-	 * @param
+	 * @Title: refreshHB  
+	 * @param 
 	 * @return void
 	 * @throws
 	 */

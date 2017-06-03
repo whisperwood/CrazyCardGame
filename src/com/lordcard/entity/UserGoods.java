@@ -12,17 +12,13 @@ import com.google.gson.annotations.SerializedName;
  * @Description: 用户物品
  * @author shaohu
  * @date 2013-4-11 下午03:01:09
+ * 
  */
 public class UserGoods {
-	@Expose
-	@SerializedName("di")
-	private Integer display; // 1表示文本显示,2表示图片显示区
-	@Expose
-	@SerializedName("dg")
-	private List<Goods> goods; // 用户物品数量表
-	@Expose
-	@SerializedName("dt")
-	private GoodsType goodsType; // 物品类型信息
+
+	@Expose @SerializedName("di") private Integer display; // 1表示文本显示,2表示图片显示区
+	@Expose @SerializedName("dg") private List<Goods> goods; // 用户物品数量表
+	@Expose @SerializedName("dt") private GoodsType goodsType; // 物品类型信息
 
 	/**
 	 * @return the display

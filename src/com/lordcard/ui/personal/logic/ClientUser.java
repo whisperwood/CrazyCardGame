@@ -9,7 +9,7 @@ public class ClientUser {
 	private List<Integer> cards = new ArrayList<Integer>();
 	private String gender = "0";
 	private int callPoint;
-
+	
 	public String getGender() {
 		return gender;
 	}
@@ -49,4 +49,7 @@ public class ClientUser {
 	public void setCards(List<Integer> cards) {
 		this.cards = cards;
 	}
+
+
+
 }

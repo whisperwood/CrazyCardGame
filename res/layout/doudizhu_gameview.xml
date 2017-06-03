@@ -13,10 +13,10 @@
 
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="95dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/game_desk_1" />
+            android:background="@drawable/game_desk" />
 
         <!-- 比赛场文字提示 start -->
 
@@ -102,13 +102,12 @@
 
         <ImageView
             android:id="@+id/image_new_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="98dp"
             android:background="@drawable/new1"
-            android:scaleType="fitCenter"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <com.lordcard.ui.view.RecordPorkerView
             android:id="@+id/jipaiqi_record_view"
@@ -131,7 +130,7 @@
         <LinearLayout
             android:id="@+id/self_pic_layout"
             android:layout_width="wrap_content"
-            android:layout_height="180dp"
+            android:layout_height="170dp"
             android:layout_alignParentBottom="true"
             android:background="@null"
             android:clickable="false"
@@ -673,7 +672,7 @@
             android:layout_toLeftOf="@+id/top_right_head"
             android:background="@drawable/time"
             android:gravity="center"
-            android:text="15sp"
+            android:text="15"
             android:textColor="#BD0B0B"
             android:visibility="gone" />
         <!-- 玩家自己的定时器   start -->
@@ -842,9 +841,9 @@
                 android:layout_height="@dimen/beishu_height"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="50dp"
-                android:background="@drawable/mainpage_pay_bg"
                 android:enabled="false"
-                android:visibility="invisible" />
+                android:visibility="invisible" 
+                android:background="@drawable/mainpage_pay_bg" />
             <!-- 倍数 -->
 
             <LinearLayout
@@ -997,8 +996,8 @@
             android:layout_below="@+id/beishu"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:text="倒计时：50分钟"
             android:textColor="#6e0101"
+            android:text="倒计时：50分钟"
             android:visibility="gone" />
         <!-- 顶部底牌  start -->
 
@@ -1050,7 +1049,7 @@
             android:textSize="12dp"
             android:visibility="gone" />
 
-        <!-- 金豆图片   start -->
+        <!--金豆图片   start -->
 
         <ImageView
             android:layout_width="51px"
@@ -1059,7 +1058,7 @@
             android:layout_marginTop="335px"
             android:src="@drawable/zhidou"
             android:visibility="gone" />
-        <!-- 金豆图片   end -->
+        <!--金豆图片   end -->
 
 
         <!-- 出牌区    不出  出牌  提示 start -->
@@ -1783,10 +1782,9 @@
 
         <ImageView
             android:id="@+id/game_gilr_items"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="43dp"
+            android:layout_height="35dp"
             android:layout_marginLeft="-7dp"
-            android:scaleType="fitCenter"
             android:background="@drawable/left_to_right" />
     </LinearLayout>
 

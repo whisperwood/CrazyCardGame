@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * @Description: 指南标题
  * @author shaohu
  * @date 2013-4-11 下午05:00:16
+ * 
  */
 public class ContentTitle {
 	@Expose
@@ -74,4 +75,5 @@ public class ContentTitle {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 }

@@ -44,4 +44,5 @@ public class SignVo {
 	public void setSign(boolean isSign) {
 		this.isSign = isSign;
 	}
+
 }

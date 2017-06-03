@@ -17,14 +17,13 @@
             style="@style/login_wh"
             android:layout_height="230dp"
             android:layout_centerVertical="true"
-            android:background="@drawable/katong"
-            android:visibility="gone" >
+            android:background="@drawable/katong" >
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/login_bg"
             style="@style/login_wh2"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/game_login_in_margin_left"
             android:layout_toRightOf="@+id/katong"
             android:background="@drawable/mmbg" >
@@ -103,8 +102,7 @@
                 android:layout_below="@+id/game_login_rl"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/game_login_btn_bg"
-                android:visibility="invisible" />
+                android:background="@drawable/game_login_btn_bg" />
 
             <Button
                 android:id="@+id/game_quick_match"
@@ -112,8 +110,7 @@
                 android:layout_below="@+id/game_quick_login"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/game_join_match_bg"
-                android:visibility="visible" />
+                android:background="@drawable/game_join_match_bg" />
 
             <Button
                 android:id="@+id/game_quick_login"
@@ -121,18 +118,8 @@
                 android:layout_below="@+id/game_login_in"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/game_quick_login_bg"
-                android:visibility="invisible" />
+                android:background="@drawable/game_quick_login_bg" />
         </RelativeLayout>
-
-        <ImageButton
-            android:id="@+id/game_set"
-            android:layout_width="@dimen/beishu_height"
-            android:layout_height="@dimen/beishu_height"
-            android:layout_alignTop="@+id/login_bg"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/login_bg"
-            android:background="@drawable/game_setting_bg" />
     </RelativeLayout>
 
     <Button
@@ -162,7 +149,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:background="@drawable/announceet_top"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <!-- 公告栏 -->
 

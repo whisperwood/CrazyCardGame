@@ -1,6 +1,6 @@
 package com.lordcard.network.task;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 import android.content.Context;
 
 import com.lordcard.common.exception.CrashApplication;
@@ -13,23 +13,18 @@ import com.lordcard.entity.GameUser;
 import com.lordcard.network.cmdmgr.CmdUtils;
 import com.lordcard.network.http.GameCache;
 
-/**
- * 请求排名记录线程
- * 
+/**请求排名记录线程
  * @author Administrator
  */
 public class GetRankTask extends GenericTask {
-	Context context = CrashApplication.getInstance();
-
-	@Override
+	Context context=CrashApplication.getInstance();
 	protected TaskResult _doInBackground(TaskParams... params) {
 		try {
 			GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 			CmdUtils.sendGetRankCmd(gu.getLoginToken());
 			return TaskResult.OK;
 		} catch (Exception e) {
-			DialogUtils.mesTip(context.getString(R.string.link_server_fail),
-					true);
+			DialogUtils.mesTip(context.getString(R.string.link_server_fail), true);
 			return TaskResult.FAILED;
 		}
 	}

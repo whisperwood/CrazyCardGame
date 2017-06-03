@@ -11,6 +11,7 @@ import android.annotation.SuppressLint;
  */
 @SuppressLint("SimpleDateFormat")
 public class DateUtil {
+
 	public static String DEFAULT_PATTERN = "yyyy-MM-dd";
 	public static String DIR_PATTERN = "yyyy/MM/dd/";
 	public static String TIMESTAMP_PATTERN = "yyyy-MM-dd HH:mm:ss";
@@ -65,6 +66,7 @@ public class DateUtil {
 	 * 转换为完整格式(yyyy-MM-dd HH:mm:ss)的日期字符串
 	 * 
 	 * @param date
+	 * 
 	 * @return
 	 */
 	public static String formatTimesTampDate(Date date) {
@@ -80,10 +82,10 @@ public class DateUtil {
 	public static String formatTimesDate(Date date) {
 		return formatDateByFormat(date, TIMES_PATTERN);
 	}
-
+	
 	public static String getTimesDate() {
 		return formatDateByFormat(new Date(), TIMES_PATTERN);
-	}
+	} 
 
 	/**
 	 * 转换为时分秒格式(HH:mm:ss)的日期字符串
@@ -287,15 +289,12 @@ public class DateUtil {
 	 * @author
 	 */
 	public static Long diffDateTime(Date date, Date date1) {
-		return (getMillis(date) - getMillis(date1)) / 1000;
+		return (Long) ((getMillis(date) - getMillis(date1)) / 1000);
 	}
-
-	/**
-	 * 获取系统当前日期(格式：yyyy-MM-dd)
-	 * 
+	/**获取系统当前日期(格式：yyyy-MM-dd)
 	 * @return
 	 */
-	public static String getNowDate() {
+	public static String getNowDate(){
 		return formatDateByFormat(new Date(), DEFAULT_PATTERN);
 	}
 }

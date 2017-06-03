@@ -1,6 +1,6 @@
 //package com.lordcard.net.socket;
 //
-//import com.crazy.shui.R;
+//import com.zzyddz.shui.R;
 //
 //import java.net.InetSocketAddress;
 //import java.util.Date;
@@ -425,4 +425,4 @@
 //	public void setCallback(ICallback cbl) {// 2.2
 //		this.callback = cbl;
 //	}
-// }
+//}

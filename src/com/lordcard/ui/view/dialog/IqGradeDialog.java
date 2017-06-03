@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.List;
 import java.util.Map;
@@ -43,6 +43,7 @@ import com.lordcard.network.http.HttpRequest;
 import com.lordcard.network.http.HttpURL;
 
 public class IqGradeDialog extends Dialog {
+
 	private Context context;
 	private ListView mListView;
 	private RelativeLayout mainLayout;
@@ -81,10 +82,10 @@ public class IqGradeDialog extends Dialog {
 			zhiLiPb.setMax(100);
 			float step = cacheUser.getNextIntellect() / 100f;
 			zhiLiPb.setProgress(Math.round(cacheUser.getIntellect() / step));
-			zhiliTv.setText("" + cacheUser.getIntellect() + "/"
-					+ cacheUser.getNextIntellect());
+			zhiliTv.setText("" + cacheUser.getIntellect() + "/" + cacheUser.getNextIntellect());
 		}
 		backBtn.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				dismiss();
@@ -120,6 +121,7 @@ public class IqGradeDialog extends Dialog {
 	 * @author Administrator
 	 */
 	class GameIqAcync extends AsyncTask<Void, Void, Void> {
+
 		@Override
 		protected Void doInBackground(Void... params) {
 			Database.IQ_DATA = HttpRequest.getGameIq();
@@ -136,6 +138,7 @@ public class IqGradeDialog extends Dialog {
 	}
 
 	class ScrollAdapter extends BaseAdapter {
+
 		List<GameIQ> data;
 		Context context;
 		private LayoutInflater layoutInflater = null;
@@ -171,23 +174,15 @@ public class IqGradeDialog extends Dialog {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final ViewHolder mViewHolder;
 			if (null == convertView) {
-				convertView = layoutInflater.inflate(
-						R.layout.iq_grade_list_item, null);
+				convertView = layoutInflater.inflate(R.layout.iq_grade_list_item, null);
 				mViewHolder = new ViewHolder();
-				mViewHolder.bgRl = (RelativeLayout) convertView
-						.findViewById(R.id.igli_bg_rl);
-				mViewHolder.dunpaiRl = (RelativeLayout) convertView
-						.findViewById(R.id.igli_dunpai_rl);
-				mViewHolder.manIv = (ImageView) convertView
-						.findViewById(R.id.igli_man_iv);
-				mViewHolder.titleTv = (TextView) convertView
-						.findViewById(R.id.igli_title_tv);
-				mViewHolder.explanationTv = (TextView) convertView
-						.findViewById(R.id.igli_explanation_tv);
-				mViewHolder.explanationTv2 = (TextView) convertView
-						.findViewById(R.id.igli_explanation_tv2);
-				mViewHolder.zhishangTv = (TextView) convertView
-						.findViewById(R.id.igli_zhishang_tv);
+				mViewHolder.bgRl = (RelativeLayout) convertView.findViewById(R.id.igli_bg_rl);
+				mViewHolder.dunpaiRl = (RelativeLayout) convertView.findViewById(R.id.igli_dunpai_rl);
+				mViewHolder.manIv = (ImageView) convertView.findViewById(R.id.igli_man_iv);
+				mViewHolder.titleTv = (TextView) convertView.findViewById(R.id.igli_title_tv);
+				mViewHolder.explanationTv = (TextView) convertView.findViewById(R.id.igli_explanation_tv);
+				mViewHolder.explanationTv2 = (TextView) convertView.findViewById(R.id.igli_explanation_tv2);
+				mViewHolder.zhishangTv = (TextView) convertView.findViewById(R.id.igli_zhishang_tv);
 				convertView.setTag(mViewHolder);
 			} else {
 				mViewHolder = (ViewHolder) convertView.getTag();
@@ -196,57 +191,38 @@ public class IqGradeDialog extends Dialog {
 			Log.i("myGrade", " positions=" + position);
 			if (null != mGrade) {
 				if (inIq == mGrade.getIq()) {// 当前自己的IQ级别
-					mViewHolder.bgRl
-							.setBackgroundResource(R.drawable.iq_grade_list_item_bg);
+					mViewHolder.bgRl.setBackgroundResource(R.drawable.iq_grade_list_item_bg);
 					mViewHolder.zhishangTv.setTextColor(Color.WHITE);
 				} else {
 					mViewHolder.bgRl.setBackgroundColor(Color.TRANSPARENT);
-					mViewHolder.zhishangTv.setTextColor(android.graphics.Color
-							.parseColor("#ffad7e65"));
+					mViewHolder.zhishangTv.setTextColor(android.graphics.Color.parseColor("#ffad7e65"));
 				}
-				mViewHolder.titleTv
-						.setText(TextUtils.isEmpty(mGrade.getTitle()) ? ""
-								: mGrade.getTitle());
-				mViewHolder.explanationTv.setText(TextUtils.isEmpty(mGrade
-						.getTitleDesc()) ? "" : mGrade.getTitleDesc());
-				mViewHolder.explanationTv2.setText(TextUtils.isEmpty(mGrade
-						.getTitlePerson()) ? "" : mGrade.getTitlePerson());
+				mViewHolder.titleTv.setText(TextUtils.isEmpty(mGrade.getTitle()) ? "" : mGrade.getTitle());
+				mViewHolder.explanationTv.setText(TextUtils.isEmpty(mGrade.getTitleDesc()) ? "" : mGrade.getTitleDesc());
+				mViewHolder.explanationTv2.setText(TextUtils.isEmpty(mGrade.getTitlePerson()) ? "" : mGrade.getTitlePerson());
 				mViewHolder.zhishangTv.setText("等级:" + mGrade.getIq());
 				try {
-					Map<String, String> dpMap = JsonHelper.fromJson(
-							mGrade.getLevelImg(),
-							new TypeToken<Map<String, String>>() {
-							});
+					Map<String, String> dpMap = JsonHelper.fromJson(mGrade.getLevelImg(), new TypeToken<Map<String, String>>() {});
 					for (Entry<String, String> entry : dpMap.entrySet()) {
-						final int count = TextUtils.isEmpty(entry.getKey()) ? 0
-								: Integer.parseInt(entry.getKey());
+						final int count = TextUtils.isEmpty(entry.getKey()) ? 0 : Integer.parseInt(entry.getKey());
 						String path = entry.getValue();// 图片链接
 						if (!TextUtils.isEmpty(path)) {
-							ImageUtil.setImgs(HttpURL.URL_PIC_ALL + path,
-									mViewHolder.dunpaiRl,
-									new ImageGroupCallback() {
-										@Override
-										public void imageLoaded(Bitmap bitmap,
-												ViewGroup view) {
-											view.removeAllViews();
-											if (null != bitmap) {
-												for (int i = 0; i < count; i++) {
-													ImageView img = new ImageView(
-															context);
-													img.setBackgroundDrawable(new BitmapDrawable(
-															bitmap));
-													RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-															mst.adjustXIgnoreDensity(DP_WIDTH),
-															mst.adjustYIgnoreDensity(DP_HEIGHT));
-													params.leftMargin = mst
-															.adjustXIgnoreDensity(DP_WIDTH
-																	* i);
-													img.setLayoutParams(params);
-													view.addView(img);
-												}
-											}
+							ImageUtil.setImgs(HttpURL.URL_PIC_ALL + path, mViewHolder.dunpaiRl, new ImageGroupCallback() {
+
+								public void imageLoaded(Bitmap bitmap, ViewGroup view) {
+									view.removeAllViews();
+									if (null != bitmap) {
+										for (int i = 0; i < count; i++) {
+											ImageView img = new ImageView(context);
+											img.setBackgroundDrawable(new BitmapDrawable(bitmap));
+											RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(mst.adjustXIgnoreDensity(DP_WIDTH), mst.adjustYIgnoreDensity(DP_HEIGHT));
+											params.leftMargin = mst.adjustXIgnoreDensity(DP_WIDTH * i);
+											img.setLayoutParams(params);
+											view.addView(img);
 										}
-									});
+									}
+								}
+							});
 						}
 						break;
 					}
@@ -265,18 +241,13 @@ public class IqGradeDialog extends Dialog {
 		 * @param mGrade
 		 */
 		private void setHeadImg(ViewHolder mViewHolder, GameIQ mGrade) {
-			if (null != mGrade.getTitleImgList()
-					&& mGrade.getTitleImgList().size() >= 2
-					&& !TextUtils.isEmpty(mGrade.getTitleImgList().get(0))
-					&& !TextUtils.isEmpty(mGrade.getTitleImgList().get(1))) {
-				String path = HttpURL.URL_PIC_ALL
-						+ mGrade.getTitleImgList().get(1);
+			if (null != mGrade.getTitleImgList() && mGrade.getTitleImgList().size() >= 2 && !TextUtils.isEmpty(mGrade.getTitleImgList().get(0)) && !TextUtils.isEmpty(mGrade.getTitleImgList().get(1))) {
+				String path = HttpURL.URL_PIC_ALL + mGrade.getTitleImgList().get(1);
 				if (inIq >= mGrade.getIq()) {// 达到过的等级
-					path = HttpURL.URL_PIC_ALL
-							+ mGrade.getTitleImgList().get(0);
+					path = HttpURL.URL_PIC_ALL + mGrade.getTitleImgList().get(0);
 				}
 				ImageUtil.setImg(path, mViewHolder.manIv, new ImageCallback() {
-					@Override
+
 					public void imageLoaded(Bitmap bitmap, ImageView view) {
 						if (null != bitmap) {
 							view.setImageBitmap(bitmap);
@@ -287,17 +258,16 @@ public class IqGradeDialog extends Dialog {
 				if (myGrade >= mGrade.getIq()) {// 达到过的等级
 					mViewHolder.manIv.setImageResource(R.drawable.img_iq_title);
 				} else {
-					mViewHolder.manIv
-							.setImageResource(R.drawable.img_iq_title_);
+					mViewHolder.manIv.setImageResource(R.drawable.img_iq_title_);
 				}
 			}
 		}
 
 		class ViewHolder {
+
 			private RelativeLayout bgRl, dunpaiRl;// item背景
 			private ImageView manIv;// 人物头像
-			private TextView titleTv, explanationTv, explanationTv2,
-					zhishangTv;// 等级名称，说明,说明2,等级值
+			private TextView titleTv, explanationTv, explanationTv2, zhishangTv;// 等级名称，说明,说明2,等级值
 		}
 	}
 }

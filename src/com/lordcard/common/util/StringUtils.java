@@ -6,12 +6,12 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public class StringUtils {
+	
 	/**
-	 * 字符串压缩
-	 * 
-	 * @param str
-	 * @return
-	 */
+	* 字符串压缩
+	* @param str
+	* @return
+	*/
 	public static String compress(String str) {
 		try {
 			if (str == null || str.length() == 0) {
@@ -40,8 +40,7 @@ public class StringUtils {
 				return str;
 			}
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			ByteArrayInputStream in = new ByteArrayInputStream(
-					str.getBytes("ISO-8859-1"));
+			ByteArrayInputStream in = new ByteArrayInputStream(str.getBytes("ISO-8859-1"));
 			GZIPInputStream gunzip = new GZIPInputStream(in);
 			byte[] buffer = new byte[256];
 			int n;
@@ -53,4 +52,5 @@ public class StringUtils {
 		}
 		return str;
 	}
+
 }

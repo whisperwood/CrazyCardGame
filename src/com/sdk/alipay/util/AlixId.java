@@ -3,6 +3,7 @@
  * All right reserved.
  * author: shiqun.shi@alipay.com
  */
+
 package com.sdk.alipay.util;
 
 public final class AlixId {
@@ -23,9 +24,12 @@ final class AlixDefine {
 	public static final String charset = "charset";
 	public static final String sign_type = "sign_type";
 	public static final String sign = "sign";
+
 	public static final String URL = "URL";
 	public static final String split = "&";
+
 	public static final String AlixPay = "AlixPay";
+
 	public static final String action = "action";
 	public static final String actionUpdate = "update";
 	public static final String data = "data";

@@ -9,6 +9,7 @@ import com.lordcard.common.task.GenericTask;
  *         create at 2013 2013-2-5 下午4:10:50
  */
 public interface TaskListener {
+
 	String getName();
 
 	/**

@@ -27,6 +27,7 @@ public class SortPriz {
 	@Expose
 	@SerializedName("mj")
 	private String myJiang;
+
 	@Expose
 	@SerializedName("s")
 	private List<GameUser> userList;
@@ -78,4 +79,5 @@ public class SortPriz {
 	public void setUserList(List<GameUser> userList) {
 		this.userList = userList;
 	}
+
 }

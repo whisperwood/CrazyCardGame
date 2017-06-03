@@ -18,21 +18,12 @@ import com.google.gson.annotations.SerializedName;
  *         create at 2013 2013-1-17 下午04:40:10
  */
 public class GameHallView {
-	@Expose
-	@SerializedName("l")
-	private String loginToken; // 游戏内部登录Token
-	@Expose
-	@SerializedName("g")
-	private GameHall gameHall; // 大厅基本数据
-	@Expose
-	@SerializedName("gr")
-	private List<Room> gameRoomList; // 大厅房间数据
-	@Expose
-	@SerializedName("fr")
-	private List<Room> fastRoomList;// 普通赛制房间数据
-	@Expose
-	@SerializedName("sr")
-	private List<Room> sortRoomList;// 符合赛制房间数据
+
+	@Expose @SerializedName("l") private String loginToken; // 游戏内部登录Token
+	@Expose @SerializedName("g") private GameHall gameHall; // 大厅基本数据
+	@Expose @SerializedName("gr") private List<Room> gameRoomList; // 大厅房间数据
+	@Expose @SerializedName("fr") private List<Room> fastRoomList;// 普通赛制房间数据
+	@Expose @SerializedName("sr") private List<Room> sortRoomList;// 符合赛制房间数据
 
 	public String getLoginToken() {
 		return loginToken;

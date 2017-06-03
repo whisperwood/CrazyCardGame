@@ -10,8 +10,10 @@ import com.google.gson.annotations.SerializedName;
  * @Description: 物品类型数据
  * @author shaohu
  * @date 2013-4-11 上午10:46:50
+ * 
  */
 public class GoodsType {
+
 	@Expose
 	@SerializedName("i")
 	private String id; //
@@ -33,14 +35,16 @@ public class GoodsType {
 	@Expose
 	@SerializedName("ct")
 	private Integer compositeType; // 合成类型
+
 	private Integer orderNum; // 排序
 	@Expose
 	@SerializedName("dp")
 	private String description; // 描述
 	private Integer display; // 控制物品栏中物品展示方式 1:文本展示,2:图片展示
+
 	@Expose
 	@SerializedName("ps")
-	private Integer propsSign; // 是否为道具(0=非道具，1=道具)
+	private Integer propsSign; //是否为道具(0=非道具，1=道具)
 
 	public Integer getPropsSign() {
 		return propsSign;

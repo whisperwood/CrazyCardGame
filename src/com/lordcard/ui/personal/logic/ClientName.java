@@ -59,6 +59,7 @@ public class ClientName {
 		allClientNames.add("千里眼");
 		allClientNames.add("顺风耳");
 		List<String> ClientNames = new ArrayList<String>();
+
 		for (int i = 0; i < 2; i++) {
 			int nameSize = allClientNames.size();
 			Random rd = new Random();
@@ -66,6 +67,7 @@ public class ClientName {
 			ClientNames.add(allClientNames.get(index));
 			allClientNames.remove(index);
 		}
+
 		return ClientNames;
 	}
 }

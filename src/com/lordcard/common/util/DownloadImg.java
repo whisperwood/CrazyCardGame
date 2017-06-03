@@ -11,11 +11,12 @@ import java.net.URL;
 import android.content.Context;
 
 public class DownloadImg {
+
 	public static File download(Context context, String imageUrl) {
-		// Bitmap bitmap = null;
+//		Bitmap bitmap = null;
 		if (imageUrl == null)
 			return null;
-		// String imagePath = "";
+//		String imagePath = "";
 		String fileName = "";
 		if (imageUrl != null && imageUrl.length() != 0) {
 			try {
@@ -25,14 +26,13 @@ public class DownloadImg {
 				e.printStackTrace();
 			}
 		}
-		// imagePath = context.getCacheDir() + "/" + fileName;
+//		imagePath = context.getCacheDir() + "/" + fileName;
 		File file = new File(context.getCacheDir(), fileName);
 		if (!file.exists() && !file.isDirectory()) {
 			try {
 				byte[] data = readInputStream(getRequest(imageUrl));
 				saveFileFromBytes(data, file);
-			} catch (Exception e) {
-			}
+			} catch (Exception e) {}
 			return file;
 		} else {
 			return file;
@@ -63,8 +63,7 @@ public class DownloadImg {
 		return bytes;
 	}
 
-	public static void saveFileFromBytes(byte[] b, File outputFile)
-			throws Exception {
+	public static void saveFileFromBytes(byte[] b, File outputFile) throws Exception {
 		BufferedOutputStream stream = null;
 		FileOutputStream fstream = new FileOutputStream(outputFile);
 		stream = new BufferedOutputStream(fstream);

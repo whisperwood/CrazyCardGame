@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.lordcard.constant.Database;
 
 public class NotifiyActivity extends Activity {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

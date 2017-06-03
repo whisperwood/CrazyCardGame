@@ -7,16 +7,15 @@ import android.content.SharedPreferences.Editor;
 import com.lordcard.common.exception.CrashApplication;
 
 public class PreferenceHelper {
+
 	private static PreferenceHelper my = null;
 	private static SharedPreferences setting = null;
 	private static Editor editor = null;
 
-	public PreferenceHelper() {
-	}
+	public PreferenceHelper() {}
 
 	public static void create(Context context2) {
-		setting = context2
-				.getSharedPreferences("Setting", Context.MODE_PRIVATE);
+		setting = context2.getSharedPreferences("Setting", Context.MODE_PRIVATE);
 		editor = setting.edit();
 	}
 

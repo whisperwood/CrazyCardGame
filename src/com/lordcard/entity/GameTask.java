@@ -10,35 +10,19 @@ import com.google.gson.annotations.SerializedName;
  *         create at 2012 2012-11-6 下午4:18:43
  */
 public class GameTask {
+
 	/**
 	 * 0:默认 1:邀请码，2：输入手机号码，3：完善个人资料，4：邀请好友下载，5：排行榜送金豆，6：其他活动,7:同步通讯录 8:应用下载,9:充值
 	 */
-	public static final int[] TASK_TYPE = new int[] { 0, 1, 2, 3, 4, 5, 6, 7,
-			8, 9 };
-	@Expose
-	@SerializedName("u")
-	private String userId;
-	@Expose
-	@SerializedName("lt")
-	private String loginToken;
-	@Expose
-	@SerializedName("m")
-	private String mcId; // android/ios
-	@Expose
-	@SerializedName("vs")
-	private String version; // apk版本
-	@Expose
-	@SerializedName("t")
-	private int type; // 活动任务类型
-	@Expose
-	@SerializedName("c")
-	private int child; // 子类
-	@Expose
-	@SerializedName("v")
-	private String value; // 活动内容
-	@Expose
-	@SerializedName("ct")
-	private int count; // 赠送的豆
+	public static final int[] TASK_TYPE = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	@Expose @SerializedName("u") private String userId;
+	@Expose @SerializedName("lt") private String loginToken;
+	@Expose @SerializedName("m") private String mcId; // android/ios
+	@Expose @SerializedName("vs") private String version; // apk版本
+	@Expose @SerializedName("t") private int type; // 活动任务类型
+	@Expose @SerializedName("c") private int child; // 子类
+	@Expose @SerializedName("v") private String value; // 活动内容
+	@Expose @SerializedName("ct") private int count; // 赠送的豆
 
 	public String getUserId() {
 		return userId;

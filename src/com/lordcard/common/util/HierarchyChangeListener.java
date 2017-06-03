@@ -3,8 +3,7 @@ package com.lordcard.common.util;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HierarchyChangeListener implements
-		ViewGroup.OnHierarchyChangeListener {
+public class HierarchyChangeListener implements ViewGroup.OnHierarchyChangeListener {
 	MultiScreenTool mst = null;
 
 	public HierarchyChangeListener(MultiScreenTool mst) {
@@ -20,8 +19,9 @@ public class HierarchyChangeListener implements
 
 	@Override
 	public void onChildViewRemoved(View parent, View child) {
-		// if (child != null) {
-		// //mst.unRegisterView(child);
-		// }
+		//		if (child != null) {
+		//			//mst.unRegisterView(child);
+		//		}
 	}
+
 }

@@ -6,8 +6,7 @@ import com.lordcard.entity.Poker;
 
 public interface Strategy {
 	public int check();
-
 	public int getPoint();
-
-	public List<Poker> handler();
+	public List<Poker> handler(); 
+	
 }

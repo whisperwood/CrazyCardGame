@@ -10,8 +10,10 @@ import com.google.gson.annotations.SerializedName;
  * @Description: 物品
  * @author shaohu
  * @date 2013-4-11 下午03:02:24
+ * 
  */
 public class Goods {
+
 	@Expose
 	@SerializedName("ti")
 	private String typeId; // 物品id
@@ -20,7 +22,7 @@ public class Goods {
 	private String name; // 物品名称
 	@Expose
 	@SerializedName("tc")
-	private int couponNum = 0; // 物品数量
+	private int couponNum=0; // 物品数量
 	@Expose
 	@SerializedName("tp")
 	private String picPath;
@@ -84,4 +86,5 @@ public class Goods {
 	public void setPicPath(String picPath) {
 		this.picPath = picPath;
 	}
+
 }

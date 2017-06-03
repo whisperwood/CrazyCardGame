@@ -23,13 +23,16 @@ import com.sdk.util.vo.PayPoint;
  * 支付监听
  * 
  * @author Administrator
+ * 
  */
 @SuppressWarnings("rawtypes")
 public class IAPListener implements OnSMSPurchaseListener {
+
 	private IAPHandler iapHandler;
+	
 	private PayInit payInit;
 	private String payTo;
-	private PayPoint payPoint; // 当前充值的计费点
+	private PayPoint payPoint;		//当前充值的计费点
 
 	public IAPListener(IAPHandler iapHandler, PayInit payInit) {
 		this.iapHandler = iapHandler;
@@ -38,7 +41,6 @@ public class IAPListener implements OnSMSPurchaseListener {
 
 	/**
 	 * 初始化完成
-	 * 
 	 * @see mm.purchasesdk.OnPurchaseListener#onInitFinish(int)
 	 */
 	@Override
@@ -56,14 +58,14 @@ public class IAPListener implements OnSMSPurchaseListener {
 	 */
 	@Override
 	public void onBillingFinish(int code, HashMap returnObj) {
-		if (code == PurchaseCode.ORDER_OK
-				|| (code == PurchaseCode.ORDER_OK_TIMEOUT)) {
+		
+		if (code == PurchaseCode.ORDER_OK || (code == PurchaseCode.ORDER_OK_TIMEOUT)) {
 			billingFinishCallBack(returnObj);
 		} else {
-			// if (iapHandler.context instanceof MMPayActivity) {
-			// } else {
-			// MMDialog.finishGameAcitivity();
-			// }
+			//			if (iapHandler.context instanceof MMPayActivity) {
+			//			} else {
+			//				MMDialog.finishGameAcitivity();
+			//			}
 			MMSMSConfig.PAY_ORDER = null;
 		}
 	}
@@ -72,56 +74,52 @@ public class IAPListener implements OnSMSPurchaseListener {
 	 * 成功后回调
 	 */
 	public void billingFinishCallBack(HashMap returnObj) {
-		if (PaySite.OFF_LINE.equals(this.payTo)) { // 本地账户充值
+		if(PaySite.OFF_LINE.equals(this.payTo)){	//本地账户充值
 			OFFLinePay.goPay(payPoint.getMoney());
 			return;
 		}
+		
 		if (returnObj != null) {
-			String payCode = (String) returnObj
-					.get(OnSMSPurchaseListener.PAYCODE);
-			String tradeID = (String) returnObj
-					.get(OnSMSPurchaseListener.TRADEID);
+			String payCode = (String) returnObj.get(OnSMSPurchaseListener.PAYCODE);
+			String tradeID = (String) returnObj.get(OnSMSPurchaseListener.TRADEID);
 			Log.d("pay_result", payCode + "|" + tradeID);
 			ThreadPool.startWork(new Runnable() {
-				@Override
+
 				public void run() {
 					try {
 						if (MMSMSConfig.PAY_ORDER != null) {
-							if (Database.chargingProcessDia != null
-									&& Database.chargingProcessDia.isShowing()) {
+							if(Database.chargingProcessDia != null && Database.chargingProcessDia.isShowing())
+							{
 								Database.chargingProcessDia.dismiss();
 							}
-							// 订单充值完成
+							//订单充值完成
 							Map<String, String> paramMap = new HashMap<String, String>();
-							paramMap.put("orderNo", MMSMSConfig.PAY_ORDER); // 订单号
-							paramMap.put("status", "1"); // 成功
+							paramMap.put("orderNo", MMSMSConfig.PAY_ORDER); //订单号
+							paramMap.put("status", "1"); //成功
 							String callBack = payInit.getCallBack();
 							if (TextUtils.isEmpty(callBack)) {
 								return;
 							}
-							String result = HttpRequest.payCallBack(callBack,
-									paramMap);
+	
+							String result = HttpRequest.payCallBack(callBack, paramMap);
 							if (result.equals(HttpRequest.SUCCESS_STATE)) {
 								MMSMSConfig.PAY_ORDER = null;
 								if (iapHandler != null) {
-									// 成功后同步用户物品
+									//成功后同步用户物品
 									HttpRequest.getGameUserGoods(false);
-									Message message = iapHandler
-											.obtainMessage(IAPHandler.SUCCESS);
+									Message message = iapHandler.obtainMessage(IAPHandler.SUCCESS);
 									message.obj = "充值成功";
 									message.sendToTarget();
 								}
 							} else if (result.equals(HttpRequest.FAIL_STATE)) {
 								if (iapHandler != null) {
-									Message message = iapHandler
-											.obtainMessage(IAPHandler.FAIL);
+									Message message = iapHandler.obtainMessage(IAPHandler.FAIL);
 									message.obj = "充值失败";
 									message.sendToTarget();
 								}
 							} else if (result.equals(HttpRequest.TOKEN_ILLEGAL)) {
 								if (iapHandler != null) {
-									Message message = iapHandler
-											.obtainMessage(IAPHandler.FAIL_TOKENID);
+									Message message = iapHandler.obtainMessage(IAPHandler.FAIL_TOKENID);
 									message.obj = "充值失败，无效的tokenid";
 									message.sendToTarget();
 								}
@@ -140,14 +138,17 @@ public class IAPListener implements OnSMSPurchaseListener {
 		return payTo;
 	}
 
+	
 	public void setPayTo(String payTo) {
 		this.payTo = payTo;
 	}
 
+	
 	public PayPoint getPayPoint() {
 		return payPoint;
 	}
 
+	
 	public void setPayPoint(PayPoint payPoint) {
 		this.payPoint = payPoint;
 	}

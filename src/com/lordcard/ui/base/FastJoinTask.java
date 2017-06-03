@@ -9,7 +9,8 @@ import com.lordcard.entity.Room;
 import com.lordcard.ui.dizhu.DoudizhuMainGameActivity;
 
 public class FastJoinTask {
-	// private static ProgressDialog waitDialog;
+
+//	private static ProgressDialog waitDialog;
 	public static void fastJoin() {
 		try {
 			Room room = new Room();
@@ -18,12 +19,10 @@ public class FastJoinTask {
 			Bundle bundle = new Bundle();
 			bundle.putInt("type", Constant.FASTJOIN_TYPE);
 			Intent intent = new Intent();
-			intent.setClass(Database.currentActivity,
-					DoudizhuMainGameActivity.class);
+			intent.setClass(Database.currentActivity, DoudizhuMainGameActivity.class);
 			intent.putExtras(bundle);
 			Database.currentActivity.startActivity(intent);
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 	}
 
 	public static void joinRoom(Room room) {
@@ -33,11 +32,9 @@ public class FastJoinTask {
 			Database.JOIN_ROOM_RATIO = room.getRatio();
 			Database.JOIN_ROOM_BASEPOINT = room.getBasePoint();
 			Intent intent = new Intent();
-			intent.setClass(Database.currentActivity,
-					DoudizhuMainGameActivity.class);
+			intent.setClass(Database.currentActivity, DoudizhuMainGameActivity.class);
 			Database.currentActivity.startActivity(intent);
-		} catch (Exception e) {
-		} finally {
+		} catch (Exception e) {} finally {
 		}
 	}
 }

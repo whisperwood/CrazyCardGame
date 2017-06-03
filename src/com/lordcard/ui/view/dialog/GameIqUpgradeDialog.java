@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.Map;
 
@@ -20,39 +20,39 @@ import com.lordcard.common.util.MultiScreenTool;
 
 /**
  * IQ升级提示对话框
- * 
  * @author Administrator
+ *
  */
 public class GameIqUpgradeDialog extends Dialog implements OnClickListener {
+
 	private Context context;
-	private TextView contentTv;// 内容Tv
-	private ImageView headIv;// 头像Iv
+	private TextView  contentTv;//内容Tv
+	private ImageView headIv;//头像Iv
 	private Button helpBtn, acceptBtn;
 	private Handler handler;
-	private Map<String, String> headPath;
+	private Map<String,String> headPath;
 	private boolean isDiZhu;
 	private String gender;
 	private String content;
-	private int what;// 用于发送消息
+	private int what;//用于发送消息
 	// 适应多屏幕的工具
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
+
 
 	public GameIqUpgradeDialog(Context context) {
 		super(context, R.style.dialog);
 		this.context = context;
 	}
 
-	public GameIqUpgradeDialog(Context context, Handler handler,
-			String content, String gender, boolean isDiZhu,
-			Map<String, String> headPath, int what) {
+	public GameIqUpgradeDialog(Context context, Handler handler, String content,String gender,boolean isDiZhu,Map<String,String> headPath,int what) {
 		super(context, R.style.dialog);
 		this.context = context;
 		this.handler = handler;
-		this.headPath = headPath;
-		this.isDiZhu = isDiZhu;
-		this.gender = gender;
-		this.content = content;
-		this.what = what;
+		this.headPath=headPath;
+		this.isDiZhu=isDiZhu;
+		this.gender=gender;
+		this.content=content;
+		this.what=what;
 	}
 
 	@Override
@@ -70,11 +70,10 @@ public class GameIqUpgradeDialog extends Dialog implements OnClickListener {
 	private void layout(final Context context) {
 		mst.adjustView(findViewById(R.id.giud_layout));
 		contentTv = (TextView) findViewById(R.id.giud_content_text);
-		contentTv.setText("" + content);
+		contentTv.setText(""+content);
 		headIv = (ImageView) findViewById(R.id.giud_head_iv);
-		if (!TextUtils.isEmpty(gender) && null != headPath) {
-			ActivityUtils.setHead(context, headIv, gender, isDiZhu, headPath,
-					false);// 设置头像
+		if(!TextUtils.isEmpty(gender) && null != headPath){
+			ActivityUtils.setHead(context,headIv, gender, isDiZhu, headPath,false);//设置头像
 		}
 		helpBtn = (Button) findViewById(R.id.giud_help);
 		helpBtn.setOnClickListener(this);
@@ -89,10 +88,10 @@ public class GameIqUpgradeDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.giud_help:// 帮助
+		case R.id.giud_help://帮助
 			handler.sendEmptyMessage(what);
 			break;
-		case R.id.giud_accept:// 接受
+		case R.id.giud_accept://接受
 			dismiss();
 			break;
 		default:

@@ -6,6 +6,7 @@ import java.util.List;
 import com.lordcard.entity.Poker;
 
 public class PokerOfOneValue {
+
 	private int value;
 	private List<Poker> pokers = new ArrayList<Poker>();
 
@@ -83,6 +84,7 @@ public class PokerOfOneValue {
 		for (Poker p : pokers) {
 			p.setUsed(true);
 		}
+
 	}
 
 	public List<Poker> getPokerIgnoreUsedState(int num) {

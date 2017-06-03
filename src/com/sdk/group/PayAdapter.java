@@ -1,6 +1,6 @@
 package com.sdk.group;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.List;
 
@@ -19,12 +19,14 @@ import com.sdk.tianyi.util.TYPayUtil;
 import com.sdk.util.vo.PayPoint;
 import com.sdk.vac.util.VACPayUtil;
 
+
 public class PayAdapter extends BaseAdapter {
+
 	private LayoutInflater mInflater;
 	private List<PayPoint> pointlist;
 	private String paySite;
 
-	public PayAdapter(Context context, List<PayPoint> pointlist, String paySite) {
+	public PayAdapter(Context context, List<PayPoint> pointlist,String paySite) {
 		this.mInflater = LayoutInflater.from(context);
 		this.pointlist = pointlist;
 		this.paySite = paySite;
@@ -50,33 +52,35 @@ public class PayAdapter extends BaseAdapter {
 		ViewHolder holder;
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = mInflater
-					.inflate(R.layout.pay_ab_listview_item, null);
-			holder.guideItem = (Button) convertView
-					.findViewById(R.id.ab_item_btn);
+			convertView = mInflater.inflate(R.layout.pay_ab_listview_item, null);
+			holder.guideItem = (Button) convertView.findViewById(R.id.ab_item_btn);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		
 		PayPoint point = pointlist.get(position);
-		holder.guideItem
-				.setText(point.getName() + "=" + point.getMoney() + "元");
+		holder.guideItem.setText(point.getName()+"="+point.getMoney()+"元");
 		holder.guideItem.setOnClickListener(new OnClickListener() {
-			@Override
+
 			public void onClick(View v) {
 				DialogUtils.mesToastTip("支付组件加载中，请稍候...");
 				String simType = ActivityUtils.getSimType();
-				if (Constant.SIM_UNICOM.equals(simType)) {
-					VACPayUtil.goPay(pointlist.get(position), paySite);
-				} else if (Constant.SIM_TELE.equals(simType)) {
-					TYPayUtil.goPay(pointlist.get(position), paySite);
+				if(Constant.SIM_UNICOM.equals(simType)){
+					VACPayUtil.goPay(pointlist.get(position),paySite);
+				}else if(Constant.SIM_TELE.equals(simType)){
+					TYPayUtil.goPay(pointlist.get(position),paySite);
 				}
+				
 			}
 		});
 		return convertView;
 	}
-
+	
 	public class ViewHolder {
 		public Button guideItem;
 	}
 }
+
+
+

@@ -1,56 +1,64 @@
 /**
- */
+*/
 package com.lordcard.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * @ClassName: GameAsistantContent
- * @Description: 游戏助理消息
- * @author
- * @date 2013-8-1 下午03:52:39
- */
+* @ClassName: GameAsistantContent
+* @Description: 游戏助理消息
+* @author 
+* @date 2013-8-1 下午03:52:39
+* 
+*/
 public class GameAsistantContent {
+
 	@Expose
 	@SerializedName("id")
 	private Long id;
-	// 助手图标
+	//助手图标
 	@Expose
 	@SerializedName("ai")
 	private String asstIcon;
-	// 助手小图标
+	//助手小图标
 	@Expose
 	@SerializedName("si")
 	private String smallIcon;
-	// 显示方式 2：图片,1:文本,3消息
+
+	//显示方式 2：图片,1:文本,3消息
 	@Expose
 	@SerializedName("di")
 	private Integer display;
-	// 消息内容
+	//消息内容
 	@Expose
 	@SerializedName("ct")
 	private String content;
-	// 消息按钮json
+	//消息按钮json
 	@Expose
 	@SerializedName("ba")
 	private String btnAc;
-	// 消息优先级
+	//消息优先级
 	@Expose
 	@SerializedName("lv")
 	private Integer level;
+
 	@Expose
 	@SerializedName("vt")
-	private String validTime; // 有效期
+	private String validTime; //有效期
+
 	@Expose
 	@SerializedName("bi")
 	private String bind;
+	
 	@Expose
 	@SerializedName("ti")
-	private String title;// 标题
+	private String title;//标题
+	
 	@Expose
 	@SerializedName("pt")
-	private String pushTime;// 推送时间间隔
+	private String pushTime;//推送时间间隔
+	
 	/**
 	 * 类型
 	 */
@@ -63,7 +71,7 @@ public class GameAsistantContent {
 	@Expose
 	@SerializedName("od")
 	private Integer order;
-
+	
 	public Integer getOrder() {
 		return order;
 	}
@@ -71,6 +79,7 @@ public class GameAsistantContent {
 	public void setOrder(Integer order) {
 		this.order = order;
 	}
+
 
 	public Integer getType() {
 		return type;
@@ -143,8 +152,7 @@ public class GameAsistantContent {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -158,8 +166,7 @@ public class GameAsistantContent {
 	}
 
 	/**
-	 * @param asstIcon
-	 *            the asstIcon to set
+	 * @param asstIcon the asstIcon to set
 	 */
 	public void setAsstIcon(String asstIcon) {
 		this.asstIcon = asstIcon;
@@ -173,8 +180,7 @@ public class GameAsistantContent {
 	}
 
 	/**
-	 * @param display
-	 *            the display to set
+	 * @param display the display to set
 	 */
 	public void setDisplay(Integer display) {
 		this.display = display;
@@ -188,8 +194,7 @@ public class GameAsistantContent {
 	}
 
 	/**
-	 * @param content
-	 *            the content to set
+	 * @param content the content to set
 	 */
 	public void setContent(String content) {
 		this.content = content;
@@ -203,8 +208,7 @@ public class GameAsistantContent {
 	}
 
 	/**
-	 * @param btnAc
-	 *            the btnAc to set
+	 * @param btnAc the btnAc to set
 	 */
 	public void setBtnAc(String btnAc) {
 		this.btnAc = btnAc;
@@ -217,4 +221,5 @@ public class GameAsistantContent {
 	public void setSmallIcon(String smallIcon) {
 		this.smallIcon = smallIcon;
 	}
+
 }

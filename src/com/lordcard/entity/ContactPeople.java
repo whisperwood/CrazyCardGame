@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
  *         create at 2013 2013-3-19 下午12:10:01
  */
 public class ContactPeople {
+
 	private int index;
 	private String name = null;
 	private String number = null;
@@ -16,6 +17,7 @@ public class ContactPeople {
 	private String sort_key = null;
 	private String sortName = null;
 	private Drawable photo = null;
+	
 	private boolean checkdownload = false;
 
 	public boolean isCheckdownload() {
@@ -41,7 +43,6 @@ public class ContactPeople {
 	public void setSort_key(String sort_key) {
 		this.sort_key = sort_key;
 	}
-
 	public String getSort_Name() {
 		return sortName;
 	}
@@ -49,7 +50,6 @@ public class ContactPeople {
 	public void setSort_Name(String sortName) {
 		this.sortName = sortName;
 	}
-
 	public String getNumber() {
 		return number;
 	}
@@ -81,4 +81,5 @@ public class ContactPeople {
 	public void setIndex(int index) {
 		this.index = index;
 	}
+
 }

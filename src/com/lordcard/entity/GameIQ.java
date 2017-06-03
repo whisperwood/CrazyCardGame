@@ -9,25 +9,14 @@ import com.google.gson.reflect.TypeToken;
 import com.lordcard.common.util.JsonHelper;
 
 public class GameIQ implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	@Expose
-	@SerializedName("iq")
-	private Integer iq = 0; // 等级等级
-	@Expose
-	@SerializedName("tl")
-	private String title; // 称号
-	@Expose
-	@SerializedName("ti")
-	private String titleImg; // 称号图标
-	@Expose
-	@SerializedName("td")
-	private String titleDesc; // 称号描述
-	@Expose
-	@SerializedName("tp")
-	private String titlePerson; // 称号关联人物
-	@Expose
-	@SerializedName("li")
-	private String levelImg; // 等级图标
+	@Expose @SerializedName("iq") private Integer iq = 0; // 等级等级
+	@Expose @SerializedName("tl") private String title; // 称号
+	@Expose @SerializedName("ti") private String titleImg; // 称号图标
+	@Expose @SerializedName("td") private String titleDesc; // 称号描述
+	@Expose @SerializedName("tp") private String titlePerson; // 称号关联人物
+	@Expose @SerializedName("li") private String levelImg; // 等级图标
 
 	public final Integer getIq() {
 		return iq;
@@ -51,8 +40,7 @@ public class GameIQ implements Serializable {
 
 	public final List<String> getTitleImgList() {
 		try {
-			return JsonHelper.fromJson(titleImg, new TypeToken<List<String>>() {
-			});
+			return JsonHelper.fromJson(titleImg, new TypeToken<List<String>>() {});
 		} catch (Exception e) {
 			return null;
 		}

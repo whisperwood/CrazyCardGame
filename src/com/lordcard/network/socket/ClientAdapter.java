@@ -1,6 +1,7 @@
 package com.lordcard.network.socket;
 
 public class ClientAdapter {
+
 	private GameClient gameClient;
 	private SocketClient socketClient;
 
@@ -33,9 +34,8 @@ public class ClientAdapter {
 
 	/**
 	 * Socket异常
-	 * 
-	 * @Title: socketException
-	 * @param
+	 * @Title: socketException  
+	 * @param 
 	 * @return void
 	 * @throws
 	 */
@@ -49,9 +49,8 @@ public class ClientAdapter {
 
 	/**
 	 * socket关闭时的处理
-	 * 
-	 * @Title: socketClosed
-	 * @param
+	 * @Title: socketClosed  
+	 * @param 
 	 * @return void
 	 * @throws
 	 */
@@ -63,9 +62,8 @@ public class ClientAdapter {
 
 	/**
 	 * 接收消息处理
-	 * 
-	 * @Title: messageReceived
-	 * @param @param msg 收到的消息
+	 * @Title: messageReceived  
+	 * @param @param msg	收到的消息
 	 * @return void
 	 * @throws
 	 */
@@ -79,8 +77,7 @@ public class ClientAdapter {
 
 	/**
 	 * 发送消息
-	 * 
-	 * @Title: sendMsg
+	 * @Title: sendMsg  
 	 * @param @param msg
 	 * @return void
 	 * @throws
@@ -93,9 +90,8 @@ public class ClientAdapter {
 
 	/**
 	 * 主动关闭的操作
-	 * 
-	 * @Title: close
-	 * @param
+	 * @Title: close  
+	 * @param 
 	 * @return void
 	 * @throws
 	 */
@@ -107,9 +103,9 @@ public class ClientAdapter {
 	}
 
 	public void unRegisterAdapter() {
-		// socketClient.setClientAdapter(null);
+//		socketClient.setClientAdapter(null);
 		socketClient = null;
-		// client.setClientAdapter(null);
+//		client.setClientAdapter(null);
 		gameClient = null;
 	}
 

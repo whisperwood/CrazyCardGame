@@ -50,6 +50,7 @@ import com.lordcard.network.cmdmgr.CmdUtils;
  *         create at 2013 2013-2-21 下午3:35:12
  */
 public class HttpRequest {
+
 	public static final String SUCCESS_STATE = "0"; // 成功状态
 	public static final String SENSITIVE_WORDS = "-10";// 敏感字符
 	public static final String FAIL_STATE = "1"; // 失败状态
@@ -79,9 +80,7 @@ public class HttpRequest {
 
 	/**
 	 * 获取服务器IP
-	 * 
-	 * @param getCache
-	 *            是否直接获取缓存
+	 * @param getCache 是否直接获取缓存
 	 * @return
 	 */
 	public static void getCacheServer(boolean getCache) {
@@ -91,8 +90,7 @@ public class HttpRequest {
 		if (getCache) {
 			try {
 				String cacheKey = HttpUtils.getCacheKey(url, paramMap);
-				JsonResult jsonResult = JsonHelper.fromJson(
-						GameCache.getStr(cacheKey), JsonResult.class);
+				JsonResult jsonResult = JsonHelper.fromJson(GameCache.getStr(cacheKey), JsonResult.class);
 				if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) {
 					String gameServer = jsonResult.getMethodMessage();
 					Database.GAME_SERVER = gameServer;
@@ -100,16 +98,17 @@ public class HttpRequest {
 			} catch (Exception e) {
 			}
 		}
-		if (TextUtils.isEmpty(Database.GAME_SERVER)) {
+		
+		if(TextUtils.isEmpty(Database.GAME_SERVER)){
 			Database.GAME_SERVER = ConfigUtil.getCfg("fast.game.ip");
 		}
+		
 		ThreadPool.startWork(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
 					String result = HttpUtils.post(url, paramMap, true);
-					JsonResult jsonResult = JsonHelper.fromJson(result,
-							JsonResult.class);
+					JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 					if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) {
 						String gameServer = jsonResult.getMethodMessage();
 						Database.GAME_SERVER = gameServer;
@@ -160,31 +159,29 @@ public class HttpRequest {
 			GameUser gameUser = JsonHelper.fromJson(result, GameUser.class);
 			if (null == gameUser) {
 				Log.e("debugs", "HttpRequest--获取用户信息---Database.USER  为空");
-			} else {
+			}else{
 				gameUser.setAuthKey(gu.getAuthKey());
 				gu = gameUser;
-				GameCache.putObj(CacheKey.GAME_USER, gu);
+				GameCache.putObj(CacheKey.GAME_USER,gu);
 			}
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 		return gu;
 	}
 
 	/**
 	 * 登录具体游戏
 	 * 
-	 * @param loadRoom
-	 *            是否加载房间信息
+	 * @param loadRoom  是否加载房间信息
 	 * @return 成功:返回大厅房间信息 失败：1
 	 */
 	public static String loginGame(boolean loadRoom) {
 		GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 		String url = HttpURL.HTTP_PATH + "game/user/loginGame.sc";
 		Map<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("loginToken", gu.getLoginToken());
+		paramMap.put("loginToken",gu.getLoginToken());
 		paramMap.put("gameType", String.valueOf(Database.GAME_TYPE));
 		paramMap.put("loadRoom", String.valueOf(loadRoom));
-		return HttpUtils.post(url, paramMap, false);
+		return HttpUtils.post(url, paramMap,false);
 	}
 
 	/**
@@ -197,8 +194,8 @@ public class HttpRequest {
 			String url = HttpURL.HTTP_PATH + "game/user/updateCustomer.sc"; // 修改资料的url
 			Map<String, String> param = new HashMap<String, String>();
 			param.put("gameUserJson", JsonHelper.toJson(gameUser));
-			param.put("loginToken", gu.getLoginToken());
-			// param.put("signKey", Database.SIGN_KEY);
+			param.put("loginToken",gu.getLoginToken());
+//			param.put("signKey", Database.SIGN_KEY);
 			param.put("signKey", gu.getAuthKey());
 			resultJson = HttpUtils.post(url, param);
 		} catch (Exception e) {
@@ -208,9 +205,9 @@ public class HttpRequest {
 	}
 
 	/**
-	 * 房间信息是否有更新 map.put("ut", updateTime); //更新时间 map.put("ty",
-	 * updateRoomType); //更新房间类型 游戏中房间房间更新类型
-	 * all:更新所有房间,gen:普通房间,rk:复合赛房间,fast:快速赛房间[多个逗号分隔]
+	 * 房间信息是否有更新
+	 * map.put("ut", updateTime); //更新时间 map.put("ty", updateRoomType); //更新房间类型
+	 * 游戏中房间房间更新类型 all:更新所有房间,gen:普通房间,rk:复合赛房间,fast:快速赛房间[多个逗号分隔]
 	 * 
 	 * @return
 	 */
@@ -220,11 +217,8 @@ public class HttpRequest {
 		try {
 			String url = HttpURL.HTTP_PATH + "game/cnofig/getUdConfig.sc"; // 获取房间列表更新信息的url
 			resultJson = HttpUtils.post(url, null);
-			if (!TextUtils.isEmpty(resultJson.trim())
-					&& !HttpRequest.FAIL_STATE.equals(resultJson.trim())) {
-				map = JsonHelper.fromJson(resultJson.trim(),
-						new TypeToken<Map<String, String>>() {
-						});
+			if (!TextUtils.isEmpty(resultJson.trim()) && !HttpRequest.FAIL_STATE.equals(resultJson.trim())) {
+				map = JsonHelper.fromJson(resultJson.trim(), new TypeToken<Map<String, String>>() {});
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -247,11 +241,8 @@ public class HttpRequest {
 			param.put("gameType", String.valueOf(Database.GAME_TYPE));
 			resultJson = HttpUtils.post(url, param);
 			Log.i("hallResult", roomType + ":::::::::::: " + resultJson);
-			if (!TextUtils.isEmpty(resultJson.trim())
-					&& !HttpRequest.FAIL_STATE.equals(resultJson.trim())) {
-				roomList = JsonHelper.fromJson(resultJson.trim(),
-						new TypeToken<List<Room>>() {
-						});
+			if (!TextUtils.isEmpty(resultJson.trim()) && !HttpRequest.FAIL_STATE.equals(resultJson.trim())) {
+				roomList = JsonHelper.fromJson(resultJson.trim(), new TypeToken<List<Room>>() {});
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -275,7 +266,7 @@ public class HttpRequest {
 			gameUserGoods = JsonHelper.fromJson(result, GameUserGoods.class);
 			if (gameUserGoods != null && gu != null) {
 				gu.setBean(gameUserGoods.getBean());
-				GameCache.putObj(CacheKey.GAME_USER, gu);
+				GameCache.putObj(CacheKey.GAME_USER,gu);
 			}
 			return gameUserGoods;
 		} catch (Exception e) {
@@ -289,15 +280,14 @@ public class HttpRequest {
 	 * 
 	 * @param callback
 	 */
-	public static String updatePassWord(String account, String newPwd,
-			String oldPwd) {
+	public static String updatePassWord(String account, String newPwd, String oldPwd) {
 		String url = HttpURL.HTTP_PATH + "game/user/updateCustemerPwd.sc";
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("oldPwd", EncodeUtils.MD5(oldPwd));
 		paramMap.put("newPwd", EncodeUtils.MD5(newPwd));
 		GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
-		paramMap.put("loginToken", gu.getLoginToken());
-		// paramMap.put("signKey", Database.SIGN_KEY);
+		paramMap.put("loginToken",gu.getLoginToken());
+//		paramMap.put("signKey", Database.SIGN_KEY);
 		paramMap.put("signKey", gu.getAuthKey());
 		return HttpUtils.post(url, paramMap);
 	}
@@ -343,8 +333,7 @@ public class HttpRequest {
 	 * @param ratio
 	 * @return
 	 */
-	public static String createRoom(int limitGroupNum, int ratio,
-			boolean isBeforeCheck) {
+	public static String createRoom(int limitGroupNum, int ratio, boolean isBeforeCheck) {
 		Room room = new Room();
 		room.setRatio(ratio);
 		room.setLimitGroupNum(limitGroupNum);
@@ -362,7 +351,7 @@ public class HttpRequest {
 		param.put("postCmd", createDetail.toJson());
 		param.put("isBeforeCheck", String.valueOf(isBeforeCheck));
 		param.put("loginToken", gu.getLoginToken());
-		// param.put("signKey", Database.SIGN_KEY);
+//		param.put("signKey", Database.SIGN_KEY);
 		param.put("signKey", gu.getAuthKey());
 		String result = HttpUtils.post(HttpURL.HTTP_PATH + uri, param);
 		return result;
@@ -492,16 +481,15 @@ public class HttpRequest {
 		paramMap.put("loginToken", gu.getLoginToken());
 		return HttpUtils.post(url, paramMap, true);
 	}
-
+	
 	/**
 	 * 加载游戏公告
-	 * 
-	 * @Title: loadGameNotice
-	 * @param
+	 * @Title: loadGameNotice  
+	 * @param 
 	 * @return void
 	 * @throws
 	 */
-	public static void loadGameNotice() {
+	public static void loadGameNotice(){
 		String result = HttpUtils.post(HttpURL.GAME_NOTICE_URL, null, true);
 		if (TextUtils.isEmpty(result)) {
 			return;
@@ -532,40 +520,40 @@ public class HttpRequest {
 		String url = HttpURL.HTTP_PATH + "game/gmasst/getAsstAction.sc";
 		GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 		paramMap.put("loginToken", gu.getLoginToken());
-		// paramMap.put("signKey", Database.SIGN_KEY);
+//		paramMap.put("signKey", Database.SIGN_KEY);
 		paramMap.put("signKey", gu.getAuthKey());
 		return HttpUtils.post(url, paramMap);
 	}
 
-	// /**
-	// * 后台控制支付配置
-	// *
-	// * @return
-	// */
-	// public static void getConfig(String payType) {
-	// Map<String, String> paramMap = null;
-	// if (payType != null) {
-	// paramMap = new HashMap<String, String>();
-	// paramMap.put("payType", payType);
-	// }
-	// String url = HttpURL.HTTP_PATH + "game/cnofig/getConfig.sc";
-	// String callBack = HttpUtils.post(url, paramMap, true);
-	// Database.CONFIG_MAP = JsonHelper.fromJson(callBack, new
-	// TypeToken<Map<String, String>>() {});
-	// if (Database.CONFIG_MAP != null) {
-	// String socketTime = Database.CONFIG_MAP.get("socket_relink_time");
-	// try {
-	// if(!TextUtils.isEmpty(socketTime)){
-	// int socketWait = Integer.parseInt(socketTime);
-	// if (socketWait > 1000) {
-	// SocketConfig.WAIT_TIME_OUT = socketWait;
-	// }
-	// }
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// }
+//	/**
+//	 * 后台控制支付配置
+//	 * 
+//	 * @return
+//	 */
+//	public static void getConfig(String payType) {
+//		Map<String, String> paramMap = null;
+//		if (payType != null) {
+//			paramMap = new HashMap<String, String>();
+//			paramMap.put("payType", payType);
+//		}
+//		String url = HttpURL.HTTP_PATH + "game/cnofig/getConfig.sc";
+//		String callBack = HttpUtils.post(url, paramMap, true);
+//		Database.CONFIG_MAP = JsonHelper.fromJson(callBack, new TypeToken<Map<String, String>>() {});
+//		if (Database.CONFIG_MAP != null) {
+//			String socketTime = Database.CONFIG_MAP.get("socket_relink_time");
+//			try {
+//				if(!TextUtils.isEmpty(socketTime)){
+//					int socketWait = Integer.parseInt(socketTime);
+//					if (socketWait > 1000) {
+//						SocketConfig.WAIT_TIME_OUT = socketWait;
+//					}
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+
 	/**
 	 * 获取发短信后，获取金豆是否成功
 	 * 
@@ -575,14 +563,13 @@ public class HttpRequest {
 	public static String getdou(Map<String, String> paramMap) {
 		String url = HttpURL.HTTP_PATH + "/game/tele/sendSmsSuccess.sc";
 		GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
-		// paramMap.put("signKey", Database.SIGN_KEY);
+//		paramMap.put("signKey", Database.SIGN_KEY);
 		paramMap.put("signKey", gu.getAuthKey());
 		return HttpUtils.post(url, paramMap);
 	}
 
 	/**
 	 * 获取支付金额
-	 * 
 	 * @param money
 	 * @return
 	 */
@@ -598,8 +585,8 @@ public class HttpRequest {
 	 */
 	public static String addPayOrder(String payUrl, Map<String, String> paramMap) {
 		GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
-		paramMap.put("loginToken", gu.getLoginToken()); // 金豆
-		// paramMap.put("signKey", Database.SIGN_KEY);
+		paramMap.put("loginToken", gu.getLoginToken()); //金豆
+//		paramMap.put("signKey", Database.SIGN_KEY);
 		paramMap.put("signKey", gu.getAuthKey());
 		return HttpUtils.post(payUrl, paramMap);
 	}
@@ -609,11 +596,10 @@ public class HttpRequest {
 	 * 
 	 * @return
 	 */
-	public static String payCallBack(String callBackUrl,
-			Map<String, String> paramMap) {
+	public static String payCallBack(String callBackUrl, Map<String, String> paramMap) {
 		GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
-		paramMap.put("loginToken", gu.getLoginToken()); // 金豆
-		// paramMap.put("signKey", Database.SIGN_KEY);
+		paramMap.put("loginToken", gu.getLoginToken()); //金豆
+//		paramMap.put("signKey", Database.SIGN_KEY);
 		paramMap.put("signKey", gu.getAuthKey());
 		return HttpUtils.post(callBackUrl, paramMap);
 	}
@@ -639,17 +625,15 @@ public class HttpRequest {
 			param.put("loginToken", gu.getLoginToken());
 			param.put("presentType", String.valueOf(presentType));
 			String result = HttpUtils.post(url, param);
-			JsonResult jsonResult = JsonHelper.fromJson(result,
-					JsonResult.class);
+			JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 			if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) { // 成功
 				long sendBean = Long.parseLong(jsonResult.getMethodMessage());
 				Database.SEND_BEAN = sendBean;
 				gu.setBean(gu.getBean() + sendBean);
-				GameCache.putObj(CacheKey.GAME_USER, gu);
+				GameCache.putObj(CacheKey.GAME_USER,gu);
 				return sendBean;
 			}
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 		return 0;
 	}
 
@@ -702,10 +686,9 @@ public class HttpRequest {
 	 *            首页商城开关 1 ,apk下载类型 2
 	 * @param callback
 	 */
-	public static void openApiSwith(final String type,
-			final HttpCallback callback) {
+	public static void openApiSwith(final String type, final HttpCallback callback) {
 		new Thread() {
-			@Override
+
 			public void run() {
 				try {
 					String result = getApiSwitch(type);
@@ -722,8 +705,7 @@ public class HttpRequest {
 		try {
 			String url = HttpURL.HTTP_PATH + "game/common/apiSwitch.sc";
 			result = HttpUtils.get(url + "?type=" + type);
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 		return result;
 	}
 
@@ -756,8 +738,7 @@ public class HttpRequest {
 			param.put("type", "net");
 			HttpUtils.post(url, param);
 			return true;
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 		return false;
 	}
 
@@ -788,11 +769,9 @@ public class HttpRequest {
 			pageNo = (pageNo <= 0) ? 1 : pageNo;
 			paramMap.put("pageNo", String.valueOf(pageNo));
 			String result = HttpUtils.post(url, paramMap);
-			JsonResult jsonResult = JsonHelper.fromJson(result,
-					JsonResult.class);
+			JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 			if (HttpRequest.SUCCESS_STATE.equals(jsonResult.getMethodCode())) {
-				PageQueryResult queryResult = JsonHelper.fromJson(
-						jsonResult.getMethodMessage(), PageQueryResult.class);
+				PageQueryResult queryResult = JsonHelper.fromJson(jsonResult.getMethodMessage(), PageQueryResult.class);
 				return queryResult;
 			} else {
 				DialogUtils.mesTip(jsonResult.getMethodMessage(), false);
@@ -813,30 +792,27 @@ public class HttpRequest {
 			String url = HttpURL.HTTP_PATH + "gm/help/submitAsk.sc";
 			Map<String, String> paramMap = new HashMap<String, String>();
 			GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
-			// paramMap.put("authKey", Database.SIGN_KEY);
+//			paramMap.put("authKey", Database.SIGN_KEY);
 			paramMap.put("authKey", gu.getAuthKey());
 			paramMap.put("question", question);
 			paramMap.put("account", gu.getAccount());
 			String result = HttpUtils.post(url, paramMap);
-			JsonResult jsonResult = JsonHelper.fromJson(result,
-					JsonResult.class);
+			JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 			if (HttpRequest.SUCCESS_STATE.equals(jsonResult.getMethodCode())) {// 成功
 				return true;
 			} else {
 				DialogUtils.mesTip(jsonResult.getMethodMessage(), false);
 			}
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 		return false;
 	}
 
 	/**
 	 * 回调请求
 	 */
-	public static void postCallback(final String url,
-			final Map<String, String> paramMap, final HttpCallback callback) {
+	public static void postCallback(final String url, final Map<String, String> paramMap, final HttpCallback callback) {
 		new Thread() {
-			@Override
+
 			public void run() {
 				try {
 					String result = HttpUtils.post(url, paramMap);
@@ -852,19 +828,15 @@ public class HttpRequest {
 	 * 游戏加入等待页面消息
 	 */
 	public static void loadJoinRoomTip() {
-		if (Database.JOIN_NOTICE_LIST != null
-				&& Database.JOIN_NOTICE_LIST.size() > 0)
+		if (Database.JOIN_NOTICE_LIST != null && Database.JOIN_NOTICE_LIST.size() > 0)
 			return;
 		ThreadPool.startWork(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
-					String url = HttpURL.HTTP_PATH
-							+ "game/common/getGameTipMes.sc";
+					String url = HttpURL.HTTP_PATH + "game/common/getGameTipMes.sc";
 					String result = HttpUtils.post(url, null, true);
-					Database.JOIN_NOTICE_LIST = JsonHelper.fromJson(result,
-							new TypeToken<List<NoticesVo>>() {
-							});
+					Database.JOIN_NOTICE_LIST = JsonHelper.fromJson(result, new TypeToken<List<NoticesVo>>() {});
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -907,8 +879,7 @@ public class HttpRequest {
 	public static Map<String, String> getInterByProNames() {
 		String url = HttpURL.UG_URL + "getInterByProNames.do"; // 应用激活条件
 		Map<String, String> param = new HashMap<String, String>();
-		param.put("proNames",
-				"activate_effective_count,activate_effective_time"); // 应用ID
+		param.put("proNames", "activate_effective_count,activate_effective_time"); // 应用ID
 		String resultJson = HttpUtils.post(url, param);
 		try {
 			JSONObject result = new JSONObject(resultJson);
@@ -917,16 +888,12 @@ public class HttpRequest {
 				Map<String, String> resultMap = new HashMap<String, String>();
 				JSONArray array = new JSONArray(result.getString("jsonArray"));
 				for (int i = 0; i < array.length(); i++) {
-					Map<String, String> map = JsonHelper.fromJson(
-							array.getString(i),
-							new TypeToken<Map<String, String>>() {
-							});
+					Map<String, String> map = JsonHelper.fromJson(array.getString(i), new TypeToken<Map<String, String>>() {});
 					resultMap.putAll(map);
 				}
 				return resultMap;
 			}
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 		return null;
 	}
 
@@ -1003,8 +970,7 @@ public class HttpRequest {
 	 */
 	public static String isSignUp(String roomCode) {
 		try {
-			String url = HttpURL.HTTP_PATH
-					+ "/game/playtype/checkusersignup.sc";
+			String url = HttpURL.HTTP_PATH + "/game/playtype/checkusersignup.sc";
 			Map<String, String> param = new HashMap<String, String>();
 			GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 			param.put("roomCode", roomCode);
@@ -1025,8 +991,7 @@ public class HttpRequest {
 	 */
 	public static String getFuheRank(String roomCode) {
 		try {
-			String url = HttpURL.HTTP_PATH
-					+ "/game/scoretrade/getlatestscoretraderank.sc";
+			String url = HttpURL.HTTP_PATH + "/game/scoretrade/getlatestscoretraderank.sc";
 			GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 			Map<String, String> param = new HashMap<String, String>();
 			param.put("roomCode", roomCode);
@@ -1066,42 +1031,37 @@ public class HttpRequest {
 		rMap.put("loginToken", gu.getLoginToken());
 		return HttpUtils.post(url, rMap, true);
 	}
-
 	/**
 	 * 获取配置数据
-	 * 
 	 * @param playNo
 	 * @return
 	 */
 	public static void getComSettingDate() {
 		try {
-			HashMap<String, String> settingMap = new HashMap<String, String>();
+			HashMap<String,String> settingMap = new HashMap<String,String>();
 			Object allKey = GameCache.getObj(CacheKey.ALL_SETTING_KEY);
-			if (allKey == null) {
-				GameCache.putObj(CacheKey.ALL_SETTING_KEY, settingMap);
+			if(allKey == null){
+				GameCache.putObj(CacheKey.ALL_SETTING_KEY,settingMap);
 			}
+		
 			String url = HttpURL.HTTP_PATH + "game/common/getComConf.d";
 			Object obj = GameCache.getObj(CacheKey.GAME_USER);
-			if (obj == null)
-				return;
-			GameUser gu = (GameUser) obj;
+			if(obj == null) return;
+			
+			GameUser gu = (GameUser)obj;
 			Map<String, String> rMap = new HashMap<String, String>();
 			rMap.put("loginToken", gu.getLoginToken());
-			String result = HttpUtils.post(url, rMap, true);
-			if (!TextUtils.isEmpty(result)) {
-				result = new String(result.getBytes("ISO-8859-1"),
-						Constant.CHAR);
-				JsonResult jsonresult = JsonHelper.fromJson(result,
-						JsonResult.class);
-				if (JsonResult.SUCCESS.equals(jsonresult.getMethodCode())) {
+			String result = HttpUtils.post(url, rMap,true);
+			if(!TextUtils.isEmpty(result)){
+				result = new String(result.getBytes("ISO-8859-1"), Constant.CHAR);
+				JsonResult jsonresult = JsonHelper.fromJson(result, JsonResult.class);
+				if(JsonResult.SUCCESS.equals(jsonresult.getMethodCode())){
 					String value = jsonresult.getMethodMessage();
 					try {
 						if (!TextUtils.isEmpty(value)) {
-							TypeToken<HashMap<String, String>> typeToken = new TypeToken<HashMap<String, String>>() {
-							};
+							TypeToken<HashMap<String,String>> typeToken = new TypeToken<HashMap<String,String>>() {};
 							settingMap = JsonHelper.fromJson(value, typeToken);
-							GameCache.putObj(CacheKey.ALL_SETTING_KEY,
-									settingMap);
+							GameCache.putObj(CacheKey.ALL_SETTING_KEY,settingMap);
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -1111,10 +1071,9 @@ public class HttpRequest {
 		} catch (Exception e) {
 		}
 	}
-
+	
 	/**
 	 * 获取各界面提示内容信息
-	 * 
 	 * @return
 	 */
 	public static String getTextViewMessageDate() {
@@ -1131,17 +1090,16 @@ public class HttpRequest {
 		String url = HttpURL.HTTP_PATH + "game/gameiq/getAllTitle.sc";
 		String result = HttpUtils.post(url, null, true);
 		try {
-			return JsonHelper.fromJson(result, new TypeToken<List<GameIQ>>() {
-			});
+			return JsonHelper.fromJson(result, new TypeToken<List<GameIQ>>() {});
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-
+	
 	/**
-	 * 退赛 （参数 ： code:房间编号, hallCode：房间大厅编号,account:账号，signKey:安全校验码）
-	 * 
+	 *退赛
+	 * （参数 ： code:房间编号, hallCode：房间大厅编号,account:账号，signKey:安全校验码）
 	 * @param roomCode
 	 * @return
 	 */
@@ -1152,37 +1110,33 @@ public class HttpRequest {
 		rMap.put("code", roomCode);
 		rMap.put("hallCode", String.valueOf(Database.GAME_TYPE));
 		rMap.put("account", gu.getAccount());
-		// rMap.put("signKey", Database.GAME_USER_AUTH_KEY);
+//		rMap.put("signKey", Database.GAME_USER_AUTH_KEY);
 		rMap.put("signKey", gu.getAuthKey());
 		return HttpUtils.post(url, rMap, true);
 	}
-
+	
 	/**
 	 * 载渠道对应的配置
-	 * 
-	 * @Title: loadChannelCfg
+	 * @Title: loadChannelCfg  
 	 * @param @param channelId
 	 * @param @return
 	 * @return ChannelCfg
 	 * @throws
 	 */
-	public static ChannelCfg loadChannelCfg(String channelId) {
+	public static ChannelCfg loadChannelCfg(String channelId){
 		try {
 			String url = HttpURL.HTTP_PATH + "game/cnofig/loadChannelCfg.d";
 			Map<String, String> rMap = new HashMap<String, String>();
-			rMap.put("channelid", channelId);
+			rMap.put("channelid",channelId);
 			rMap.put("game", Constant.GAME);
-			String result = HttpUtils.post(url, rMap, false);
-			JsonResult jsonResult = JsonHelper.fromJson(result,
-					JsonResult.class);
-			if (jsonResult != null
-					&& JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) { // 正确的返回数据
-				ChannelCfg cfg = JsonHelper.fromJson(
-						jsonResult.getMethodMessage(), ChannelCfg.class);
+			String result = HttpUtils.post(url, rMap,false);
+			JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
+			if (jsonResult != null && JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) { //正确的返回数据
+				ChannelCfg cfg = JsonHelper.fromJson(jsonResult.getMethodMessage(),ChannelCfg.class);
 				return cfg;
 			}
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
+		
 		return null;
 	}
 }

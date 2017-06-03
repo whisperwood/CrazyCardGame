@@ -3,6 +3,7 @@ package com.lordcard.entity;
 import com.google.gson.annotations.Expose;
 
 public class ReturnPing {
+
 	@Expose
 	private String account; // 账号
 	@Expose
@@ -83,4 +84,5 @@ public class ReturnPing {
 	public final void setCommandCode(Integer commandCode) {
 		this.commandCode = commandCode;
 	}
+
 }

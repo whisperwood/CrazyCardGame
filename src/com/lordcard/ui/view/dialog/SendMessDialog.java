@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,12 +10,12 @@ import com.lordcard.common.util.ImageUtil;
 import com.lordcard.common.util.MultiScreenTool;
 
 public class SendMessDialog extends Dialog {
+
 	// private Context context;
 	private RelativeLayout mainLayout;
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 
-	protected SendMessDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected SendMessDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		// this.context = context;
 		// layout(context);
@@ -36,13 +36,13 @@ public class SendMessDialog extends Dialog {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liaotian_menu);
 		mainLayout = (RelativeLayout) findViewById(R.id.liaotian_layout);
-		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(
-				R.drawable.liaotian_bj_1, true));
+		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.liaotian_bj_1,true));
 		// layout(context);
 		mst.adjustView(mainLayout);
 	}
 
 	public void setDismiss() {
+
 	}
 
 	/**
@@ -188,10 +188,12 @@ public class SendMessDialog extends Dialog {
 	// }
 	// });
 	// }
+
 	@Override
 	public void dismiss() {
 		mst.unRegisterView(mainLayout);
 		super.dismiss();
 		ImageUtil.releaseDrawable(mainLayout.getBackground());
 	}
+
 }

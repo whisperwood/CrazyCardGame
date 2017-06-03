@@ -10,18 +10,11 @@ import com.google.gson.annotations.SerializedName;
  *         create at 2013 2013-1-17 下午03:19:00
  */
 public class GameHall {
-	@Expose
-	@SerializedName("n")
-	private String name; // 大厅名称
-	@Expose
-	@SerializedName("r")
-	private String res; // 相关资源(json格式存储)
-	@Expose
-	@SerializedName("u")
-	private String resUrl; // 相关资源下载目录
-	@Expose
-	@SerializedName("v")
-	private int version; // 大厅版本号 版本号 有变化代表大厅数据有更改，前台需要更新
+
+	@Expose @SerializedName("n") private String name; // 大厅名称
+	@Expose @SerializedName("r") private String res; // 相关资源(json格式存储)
+	@Expose @SerializedName("u") private String resUrl; // 相关资源下载目录
+	@Expose @SerializedName("v") private int version; // 大厅版本号 版本号 有变化代表大厅数据有更改，前台需要更新
 
 	public String getName() {
 		return name;

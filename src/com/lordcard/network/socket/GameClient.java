@@ -1,6 +1,7 @@
 package com.lordcard.network.socket;
 
 public interface GameClient {
+
 	public abstract void connectFail();
 
 	public abstract boolean isConnected();
@@ -9,9 +10,8 @@ public interface GameClient {
 
 	/**
 	 * Socket异常
-	 * 
-	 * @Title: socketException
-	 * @param
+	 * @Title: socketException  
+	 * @param 
 	 * @return void
 	 * @throws
 	 */
@@ -19,9 +19,8 @@ public interface GameClient {
 
 	/**
 	 * socket关闭时的处理
-	 * 
-	 * @Title: socketClosed
-	 * @param
+	 * @Title: socketClosed  
+	 * @param 
 	 * @return void
 	 * @throws
 	 */
@@ -29,8 +28,7 @@ public interface GameClient {
 
 	/**
 	 * 发送消息
-	 * 
-	 * @Title: sendMsg
+	 * @Title: sendMsg  
 	 * @param @param msg
 	 * @return void
 	 * @throws
@@ -39,13 +37,12 @@ public interface GameClient {
 
 	/**
 	 * 接收消息处理
-	 * 
-	 * @Title: messageReceived
-	 * @param @param msg 收到的消息
+	 * @Title: messageReceived  
+	 * @param @param msg	收到的消息
 	 * @return void
 	 * @throws
 	 */
 	public abstract void messageReceived(String msg);
-
+	
 	public abstract int status();
 }

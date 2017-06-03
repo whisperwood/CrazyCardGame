@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +29,18 @@ import com.google.gson.reflect.TypeToken;
 import com.lordcard.common.util.JsonHelper;
 import com.lordcard.common.util.MultiScreenTool;
 import com.lordcard.constant.CacheKey;
+import com.lordcard.constant.Database;
 import com.lordcard.entity.SignVo;
 import com.lordcard.network.http.GameCache;
 import com.lordcard.ui.view.AlignLeftGallery;
 import com.sdk.constant.SDKConfig;
+import com.sdk.constant.SDKConstant;
 import com.sdk.jd.sms.util.JDSMSPayUtil;
 import com.sdk.util.PaySite;
 import com.sdk.util.PayTipUtils;
 import com.sdk.util.PayUtils;
+import com.sdk.util.RechargeUtils;
+import com.sdk.util.SDKFactory;
 import com.sdk.util.vo.PayPoint;
 import com.umeng.analytics.MobclickAgent;
 
@@ -48,14 +52,11 @@ import com.umeng.analytics.MobclickAgent;
  * @author zhenggang
  * @date 2013-5-9 下午6:16:39
  */
-public class SignDialog extends Dialog implements
-		android.view.View.OnClickListener {
+public class SignDialog extends Dialog implements android.view.View.OnClickListener {
+
 	private String day[] = { "1天", "2天", "3天", "4天", "5天+" };
-	private String signGoldTvKey[] = { "sign_one_day", "sign_two_day",
-			"sign_three_day", "sign_four_day", "sign_five_day" };
-	private int signGoldIcon[] = { R.drawable.species02_ico,
-			R.drawable.species03_ico, R.drawable.species04_ico,
-			R.drawable.bean_ico, R.drawable.bean_ico };
+	private String signGoldTvKey[] = { "sign_one_day", "sign_two_day", "sign_three_day", "sign_four_day", "sign_five_day" };
+	private int signGoldIcon[] = { R.drawable.species02_ico, R.drawable.species03_ico, R.drawable.species04_ico, R.drawable.bean_ico, R.drawable.bean_ico };
 	private boolean isSign[] = { false, false, false, false, false };
 	private Context context;
 	private AlignLeftGallery mGallery;
@@ -71,8 +72,7 @@ public class SignDialog extends Dialog implements
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	private RelativeLayout layout;
 
-	public SignDialog(final Context context, int theme, int signCount,
-			boolean signSuccess) {
+	public SignDialog(final Context context, int theme, int signCount, boolean signSuccess) {
 		super(context, theme);
 		this.context = context;
 		signList = new ArrayList<SignVo>();
@@ -82,7 +82,6 @@ public class SignDialog extends Dialog implements
 		initData();
 	}
 
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sign_dialog);
@@ -100,41 +99,35 @@ public class SignDialog extends Dialog implements
 		mGalleryAdapter = new GalleryAdapter(context, signList);
 		mGallery.setAdapter(mGalleryAdapter);
 		if (signSuccess) {
-			showText.setText("您已经连续登录" + signList.get(signCount).getDay()
-					+ ",将获得" + signContent.get(signCount));
+			showText.setText("您已经连续登录" + signList.get(signCount).getDay() + ",将获得" + signContent.get(signCount));
 			Toast.makeText(context, "恭喜您成功签到！", 500).show();
 		}
 		String msgTip = context.getString(R.string.sign_msg);
-		// if (SDKConfig.SIGN_MONEY == null) {
-		// SDKConfig.SIGN_MONEY = "2";
-		// }
+//		if (SDKConfig.SIGN_MONEY == null) {
+//			SDKConfig.SIGN_MONEY = "2";
+//		}
 		PayPoint payPoint = PayUtils.getPaySitePoint(PaySite.SIGN_IN);
-		if (payPoint != null) {
-			msgTip = msgTip.replace("{buybean}",
-					String.valueOf(payPoint.getMoney()));
+		if(payPoint != null){
+			msgTip = msgTip.replace("{buybean}",String.valueOf(payPoint.getMoney()));
 			TextView tv = ((TextView) findViewById(R.id.sign_dialog_text3_tv));
 			tv.setText(msgTip);
 		}
+		
 	}
 
 	private void initData() {
 		for (int i = 0; i < 5; i++) {
 			String signReward1 = "";
-			String result = GameCache
-					.getStr(CacheKey.KEY_TEXT_VIEW_MESSAGE_DATA);
+			String result = GameCache.getStr(CacheKey.KEY_TEXT_VIEW_MESSAGE_DATA);
 			Map<String, String> TaskMenuMap = null;
 			if (!TextUtils.isEmpty(result)) {
-				TaskMenuMap = JsonHelper.fromJson(result,
-						new TypeToken<Map<String, String>>() {
-						});
+				TaskMenuMap = JsonHelper.fromJson(result, new TypeToken<Map<String, String>>() {});
 			}
-			if (null != TaskMenuMap
-					&& TaskMenuMap.containsKey(signGoldTvKey[i])) {
+			if (null != TaskMenuMap && TaskMenuMap.containsKey(signGoldTvKey[i])) {
 				signReward1 = TaskMenuMap.get(signGoldTvKey[i]);
 				signReward1 = TextUtils.isEmpty(signReward1) ? "" : signReward1;
 			}
-			signList.add(new SignVo(day[i], signGoldIcon[i], signReward1,
-					isSign[i]));
+			signList.add(new SignVo(day[i], signGoldIcon[i], signReward1, isSign[i]));
 			signContent.add(signReward1);
 		}
 		setSignCount(signCount);
@@ -149,6 +142,7 @@ public class SignDialog extends Dialog implements
 	}
 
 	public class MyGallery extends Gallery {
+
 		public MyGallery(Context context, AttributeSet attrs, int defStyle) {
 			super(context, attrs, defStyle);
 		}
@@ -162,8 +156,7 @@ public class SignDialog extends Dialog implements
 		}
 
 		@Override
-		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-				float velocityY) {
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 			if (velocityX > 0) {
 				super.onKeyDown(KeyEvent.KEYCODE_DPAD_LEFT, null);
 			} else {
@@ -174,6 +167,7 @@ public class SignDialog extends Dialog implements
 	}
 
 	private class GalleryAdapter extends BaseAdapter {
+
 		private List<SignVo> mSignList;
 		private LayoutInflater mInflater;
 
@@ -203,16 +197,11 @@ public class SignDialog extends Dialog implements
 			if (convertView == null) {
 				holder = new ViewHolder();
 				convertView = mInflater.inflate(R.layout.gallery_item, null);
-				holder.img1 = (ImageView) convertView
-						.findViewById(R.id.gallery_item_img1);
-				holder.img2 = (ImageView) convertView
-						.findViewById(R.id.gallery_item_img2);
-				holder.transparent_img = (ImageView) convertView
-						.findViewById(R.id.gallery_item_transparent_iv);
-				holder.tv1 = (TextView) convertView
-						.findViewById(R.id.gallery_item_tv1);
-				holder.tv2 = (TextView) convertView
-						.findViewById(R.id.gallery_item_tv2);
+				holder.img1 = (ImageView) convertView.findViewById(R.id.gallery_item_img1);
+				holder.img2 = (ImageView) convertView.findViewById(R.id.gallery_item_img2);
+				holder.transparent_img = (ImageView) convertView.findViewById(R.id.gallery_item_transparent_iv);
+				holder.tv1 = (TextView) convertView.findViewById(R.id.gallery_item_tv1);
+				holder.tv2 = (TextView) convertView.findViewById(R.id.gallery_item_tv2);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
@@ -234,6 +223,7 @@ public class SignDialog extends Dialog implements
 		}
 
 		class ViewHolder {
+
 			ImageView img1, img2, transparent_img;
 			TextView tv1, tv2;
 		}
@@ -242,28 +232,28 @@ public class SignDialog extends Dialog implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.sign_dialog_back_btn:
-			mst.unRegisterView(layout);
-			dismiss();
-			break;
-		case R.id.sign_dialog_ok_btn:
-			// 进入充值界面
-			MobclickAgent.onEvent(context, "签到充值");
-			SDKConfig.SIGN_DIALOG = true;
-			JDSMSPayUtil.setContext(context);
-			// 点金快速支付暂时固定5元
-			// SDKFactory.fastPay(Integer.parseInt(SDKConfig.SIGN_MONEY),
-			// SDKConstant.SIGN);
-			PayTipUtils.showTip(0, PaySite.SIGN_IN); // 配置的提示方式
-			mst.unRegisterView(layout);
-			dismiss();
-			break;
-		case R.id.dialog_close_btn:
-			mst.unRegisterView(layout);
-			dismiss();
-			break;
-		default:
-			break;
+			case R.id.sign_dialog_back_btn:
+				mst.unRegisterView(layout);
+				dismiss();
+				break;
+			case R.id.sign_dialog_ok_btn:
+				// 进入充值界面
+				MobclickAgent.onEvent(context, "签到充值");
+				SDKConfig.SIGN_DIALOG = true;
+				JDSMSPayUtil.setContext(context);
+				//点金快速支付暂时固定5元
+//				SDKFactory.fastPay(Integer.parseInt(SDKConfig.SIGN_MONEY), SDKConstant.SIGN);
+				PayTipUtils.showTip(0,PaySite.SIGN_IN); //配置的提示方式
+				
+				mst.unRegisterView(layout);
+				dismiss();
+				break;
+			case R.id.dialog_close_btn:
+				mst.unRegisterView(layout);
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 }

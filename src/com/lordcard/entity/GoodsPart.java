@@ -10,8 +10,10 @@ import com.google.gson.annotations.SerializedName;
  * @Description: TODO
  * @author shaohu
  * @date 2013-4-10 下午03:39:50
+ * 
  */
 public class GoodsPart {
+
 	@Expose
 	@SerializedName("fn")
 	private String fromName; // 名称
@@ -20,10 +22,10 @@ public class GoodsPart {
 	private String fromTypeId; // 物品类型id
 	@Expose
 	@SerializedName("fc")
-	private Integer fromCount = 0; // 数量
+	private Integer fromCount=0; // 数量
 	@Expose
 	@SerializedName("ut")
-	private String unit = ""; // 单位
+	private String unit = ""; //单位  
 
 	public String getUnit() {
 		return unit;
@@ -77,4 +79,5 @@ public class GoodsPart {
 	public void setFromCount(Integer fromCount) {
 		this.fromCount = fromCount;
 	}
+
 }

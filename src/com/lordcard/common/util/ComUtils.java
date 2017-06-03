@@ -8,15 +8,16 @@ import java.util.UUID;
 
 import android.annotation.SuppressLint;
 
-/**
- * @Title: CommonUtil.java
- * @Package: com.game.common.util
- * @Description: 公用方法工具类
- * @author: yinhongbiao
- * @date: 2011-11-25
- * @version V1.0
+/**    
+ * @Title:	CommonUtil.java 
+ * @Package:	com.game.common.util 
+ * @Description:	公用方法工具类
+ * @author:		yinhongbiao 
+ * @date:	2011-11-25
+ * @version V1.0 
  */
 public class ComUtils {
+
 	/**
 	 * 随机获取UUID字符串(无中划线)
 	 * 
@@ -24,9 +25,7 @@ public class ComUtils {
 	 */
 	public synchronized static String getUUID() {
 		String uuid = UUID.randomUUID().toString();
-		return uuid.substring(0, 8) + uuid.substring(9, 13)
-				+ uuid.substring(14, 18) + uuid.substring(19, 23)
-				+ uuid.substring(24);
+		return uuid.substring(0, 8) + uuid.substring(9, 13) + uuid.substring(14, 18) + uuid.substring(19, 23) + uuid.substring(24);
 	}
 
 	/**
@@ -39,7 +38,6 @@ public class ComUtils {
 
 	/**
 	 * 产生多个不重复的随机数
-	 * 
 	 * @throws
 	 */
 	public static int[] randomNums(int total) {
@@ -70,7 +68,6 @@ public class ComUtils {
 
 	/**
 	 * 获取随机编号
-	 * 
 	 * @return
 	 */
 	@SuppressLint("SimpleDateFormat")

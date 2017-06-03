@@ -15,6 +15,7 @@ public class FillDiZhuData {
 	 * 手中的所有牌的数组
 	 */
 	Map<Integer, PokerOfOneValue> pokers = new HashMap<Integer, PokerOfOneValue>();
+
 	/**
 	 * 散牌，是指在其他类型中没出现的牌，2和王不会出现在此队列
 	 */
@@ -26,13 +27,17 @@ public class FillDiZhuData {
 	Map<Integer, PokerOfOnePlay> sanZhang = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> siZhang = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> zhaDan = new HashMap<Integer, PokerOfOnePlay>();
+
 	Map<Integer, Map<Integer, PokerOfOnePlay>> feiJi = new HashMap<Integer, Map<Integer, PokerOfOnePlay>>();
+
 	Map<Integer, PokerOfOnePlay> feiJi2 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> feiJi3 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> feiJi4 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> feiJi5 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> feiJi6 = new HashMap<Integer, PokerOfOnePlay>();
+
 	Map<Integer, Map<Integer, PokerOfOnePlay>> lianDui = new HashMap<Integer, Map<Integer, PokerOfOnePlay>>();
+
 	Map<Integer, PokerOfOnePlay> lianDui3 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> lianDui4 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> lianDui5 = new HashMap<Integer, PokerOfOnePlay>();
@@ -41,7 +46,9 @@ public class FillDiZhuData {
 	Map<Integer, PokerOfOnePlay> lianDui8 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> lianDui9 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> lianDui10 = new HashMap<Integer, PokerOfOnePlay>();
+
 	Map<Integer, Map<Integer, PokerOfOnePlay>> shunZi = new HashMap<Integer, Map<Integer, PokerOfOnePlay>>();
+
 	Map<Integer, PokerOfOnePlay> shunZi5 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> shunZi6 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> shunZi7 = new HashMap<Integer, PokerOfOnePlay>();
@@ -67,6 +74,7 @@ public class FillDiZhuData {
 	 * 策略集合
 	 */
 	List<Strategy> strategys = new ArrayList<Strategy>();
+
 	/**
 	 * 地主,我顺序和otherCard牌主顺序
 	 */
@@ -136,7 +144,9 @@ public class FillDiZhuData {
 	}
 
 	private List<Poker> nowPlayingAttachment = null;
+
 	private boolean isInitiative;
+
 	private boolean hasPlayOneSanPai = false;// 打牌伙伴只剩下一张牌，同时地主不止一张牌的情况下，我要打一张散牌，看看伙伴能不能过，如果不能过，下一把我就只管打自己的牌，不再打散牌，此开关检查是否是第一次打散牌
 
 	public boolean isInitiative() {
@@ -205,16 +215,20 @@ public class FillDiZhuData {
 	 * 把poker中的牌添加到各个牌型的数组中
 	 */
 	private void fillPokerList() {
+
 		sanPai.clear();
+
 		duiZi.clear();
 		sanZhang.clear();
 		siZhang.clear();
 		zhaDan.clear();
+
 		feiJi2.clear();
 		feiJi3.clear();
 		feiJi4.clear();
 		feiJi5.clear();
 		feiJi6.clear();
+
 		lianDui3.clear();
 		lianDui4.clear();
 		lianDui5.clear();
@@ -223,6 +237,7 @@ public class FillDiZhuData {
 		lianDui8.clear();
 		lianDui9.clear();
 		lianDui10.clear();
+
 		shunZi5.clear();
 		shunZi6.clear();
 		shunZi7.clear();
@@ -231,11 +246,14 @@ public class FillDiZhuData {
 		shunZi10.clear();
 		shunZi11.clear();
 		shunZi12.clear();
+
 		clearUsedState();
 		// 添加三张，四张和炸弹，并且设置了那些对子被使用了
 		addSanZhangAndSiZhangAndZhadan();
+
 		// 添加连对
 		// printUsedState();
+
 		// 添加飞机
 		addFeiJi();
 		// 添加顺子并且设置了那些对子被使用了
@@ -246,7 +264,9 @@ public class FillDiZhuData {
 		addDuiZi();
 		// 将没有被使用的单牌添加到散牌列表，并清楚使用状态
 		addSanPai();
+
 		clearUsedState();
+
 		printAllPokerList();
 	}
 
@@ -254,6 +274,7 @@ public class FillDiZhuData {
 	 * 打印所欲的牌型数组
 	 */
 	private void printAllPokerList() {
+
 		Map<String, Map<Integer, PokerOfOnePlay>> allPokerList = new HashMap<String, Map<Integer, PokerOfOnePlay>>();
 		// 所有的牌型都加入一个数组，主要是为了打印方便
 		allPokerList.put("散牌", sanPai);
@@ -282,10 +303,10 @@ public class FillDiZhuData {
 		allPokerList.put("顺子10", shunZi10);
 		allPokerList.put("顺子11", shunZi11);
 		allPokerList.put("顺子12", shunZi12);
-		// System.out.print("all pokers: ");
+		//System.out.print("all pokers: ");
 		for (PokerOfOneValue poov : this.pokers.values()) {
 			for (Poker p : poov.getPokers()) {
-				// System.out.print(" " + p.getValue());
+				//System.out.print(" " + p.getValue());
 			}
 		}
 		Iterator<String> iter = allPokerList.keySet().iterator();
@@ -295,7 +316,9 @@ public class FillDiZhuData {
 			if (poops.size() == 0) {
 				continue;
 			}
+
 		}
+
 	}
 
 	/**
@@ -307,12 +330,13 @@ public class FillDiZhuData {
 			if (!pokers.containsKey(i)) {
 				continue;
 			}
+
 			PokerOfOneValue v = pokers.get(i);
-			PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(),
-					DoudizhuRule.Danpai);
+			PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(), DoudizhuRule.Danpai);
 			poop.add(v);
 			sanPai.put(v.getValue(), poop);
 		}
+
 	}
 
 	/**
@@ -321,32 +345,32 @@ public class FillDiZhuData {
 	private void addDuiZi() {
 		for (PokerOfOneValue v : pokers.values()) {
 			if (v.getUnusedNum() >= 2) {
-				PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(),
-						DoudizhuRule.Yidui);
+				PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(), DoudizhuRule.Yidui);
 				poop.add(v);
 				duiZi.put(v.getValue(), poop);
 			}
 		}
-	}
 
+	}
 	/**
 	 * 检查pokers中的顺子，并添加到shunzi数组
 	 */
+
 	private void addShunZi() {
 		for (int i = 3; i <= 10; ++i) {
-			if (!(pokers.containsKey(i) && pokers.containsKey(i + 1)
-					&& pokers.containsKey(i + 2) && pokers.containsKey(i + 3))) {
+			if (!(pokers.containsKey(i) && pokers.containsKey(i + 1) && pokers.containsKey(i + 2) && pokers.containsKey(i + 3))) {
 				continue;
 			}
+
 			for (int lianNum = 5; lianNum <= 12; ++lianNum) {
 				int maxValue = i + lianNum - 1;
 				if (maxValue > 14) {
 					break;
 				}
+
 				if (pokers.containsKey(maxValue)) {
 					// 多对
-					PokerOfOnePlay poop = new PokerOfOnePlay(maxValue,
-							DoudizhuRule.shunzi);
+					PokerOfOnePlay poop = new PokerOfOnePlay(maxValue, DoudizhuRule.shunzi);
 					for (int j = i; j <= maxValue; ++j) {
 						poop.add(pokers.get(j));
 						// pokers.get(j).setUsedState(true);//设置已经使用状态，主要是给监测单牌使用
@@ -364,9 +388,7 @@ public class FillDiZhuData {
 	 */
 	private void addLianDui() {
 		for (int i = 3; i < 14; ++i) {
-			if (!(pokers.containsKey(i) && pokers.get(i).PokerNum() >= 2
-					&& pokers.containsKey(i + 1) && pokers.get(i + 1)
-					.PokerNum() >= 2)) {
+			if (!(pokers.containsKey(i) && pokers.get(i).PokerNum() >= 2 && pokers.containsKey(i + 1) && pokers.get(i + 1).PokerNum() >= 2)) {
 				continue;
 			}
 			for (int lianNum = 3; lianNum <= 10; ++lianNum) {
@@ -374,27 +396,28 @@ public class FillDiZhuData {
 				if (maxValue > 14) {
 					break;
 				}
-				if (pokers.containsKey(maxValue)
-						&& pokers.get(maxValue).PokerNum() >= 2) {
-					PokerOfOnePlay poop = new PokerOfOnePlay(maxValue,
-							DoudizhuRule.liandui);
+				if (pokers.containsKey(maxValue) && pokers.get(maxValue).PokerNum() >= 2) {
+					PokerOfOnePlay poop = new PokerOfOnePlay(maxValue, DoudizhuRule.liandui);
 					for (int j = i; j <= maxValue; ++j) {
 						poop.add(pokers.get(j));
 					}
 					lianDui.get(lianNum).put(maxValue, poop);
+
 				} else {
 					break;
 				}
 			}
+
 		}
+
 	}
 
 	private void addSanZhang() {
 		for (PokerOfOneValue poov : this.getPokers().values()) {
 			// 添加三张
+
 			if (poov.PokerNum() >= 3) {
-				PokerOfOnePlay poop = new PokerOfOnePlay(poov.getValue(),
-						DoudizhuRule.Santiao);
+				PokerOfOnePlay poop = new PokerOfOnePlay(poov.getValue(), DoudizhuRule.Santiao);
 				poop.add(poov);
 				sanZhang.put(poov.getValue(), poop);
 				// 设置已经使用标志（为了后面判断散牌和对子）
@@ -409,17 +432,16 @@ public class FillDiZhuData {
 	private void addSanZhangAndSiZhangAndZhadan() {
 		for (PokerOfOneValue poov : this.getPokers().values()) {
 			if (poov.PokerNum() == 4) {
-				PokerOfOnePlay poop = new PokerOfOnePlay(poov.getValue(),
-						DoudizhuRule.zhadan);
+				PokerOfOnePlay poop = new PokerOfOnePlay(poov.getValue(), DoudizhuRule.zhadan);
 				poop.add(poov);
 				zhaDan.put(poov.getValue(), poop);
-				PokerOfOnePlay poop2 = new PokerOfOnePlay(poov.getValue(),
-						DoudizhuRule.siZhang);
+				PokerOfOnePlay poop2 = new PokerOfOnePlay(poov.getValue(), DoudizhuRule.siZhang);
 				poop2.add(poov);
 				siZhang.put(poov.getValue(), poop2);
 				// 设置已经使用标志（为了后面判断散牌和对子）
 				continue;
 			}
+
 		}
 		// 添加王炸
 		if (pokers.containsKey(16) && pokers.containsKey(17)) {
@@ -431,27 +453,29 @@ public class FillDiZhuData {
 	}
 
 	private void addFeiJi() {
+
 		for (int i = 3; i < 14; ++i) {
 			if (!(pokers.containsKey(i)) || pokers.get(i).PokerNum() < 3) {
 				continue;
 			}
+
 			for (int lianNum = 2; lianNum <= 6; ++lianNum) {
 				int maxValue = i + lianNum - 1;
 				if (maxValue > 14) {
 					break;
 				}
-				if (pokers.containsKey(maxValue)
-						&& pokers.get(maxValue).PokerNum() == 3) {
-					PokerOfOnePlay poop = new PokerOfOnePlay(maxValue,
-							DoudizhuRule.feiji);
+				if (pokers.containsKey(maxValue) && pokers.get(maxValue).PokerNum() == 3) {
+					PokerOfOnePlay poop = new PokerOfOnePlay(maxValue, DoudizhuRule.feiji);
 					for (int j = i; j <= maxValue; ++j) {
 						poop.add(pokers.get(j));
+
 					}
 					feiJi.get(lianNum).put(maxValue, poop);
 				} else {
 					break;
 				}
 			}
+
 		}
 	}
 
@@ -467,8 +491,10 @@ public class FillDiZhuData {
 	}
 
 	private void printUsedState() {
+
 		for (PokerOfOneValue poov : this.getPokers().values()) {
 			for (Poker p : poov.getPokers()) {
+
 			}
 			System.out.println();
 		}
@@ -494,6 +520,7 @@ public class FillDiZhuData {
 		int type = DoudizhuRule.checkpai(checkPoker);
 		// 对手牌最大
 		int otherMaxValue = DoudizhuRule.getMaxNumber(checkPoker);
+
 		switch (type) {
 		case DoudizhuRule.Danpai:
 			play = sanPai;
@@ -525,8 +552,10 @@ public class FillDiZhuData {
 			play = siZhang;
 			attachmentCount = 2;
 			takeSanPai = false;
+
 			break;
 		case DoudizhuRule.feiji:
+
 			play = feiJi.get(checkPoker.size() / 3);
 			break;
 		case DoudizhuRule.feijidaisan:
@@ -540,6 +569,7 @@ public class FillDiZhuData {
 			break;
 		case DoudizhuRule.liandui:
 			play = lianDui.get(checkPoker.size() / 2);
+
 			break;
 		case DoudizhuRule.shunzi:
 			play = shunZi.get(checkPoker.size());
@@ -562,11 +592,14 @@ public class FillDiZhuData {
 					if (play1 == null || play1.size() == 0) {
 						continue;
 					}
+
 					// 设置该手牌为已使用
+
 					setUsedState(play1, true);
 					nowPlaying = play1;
 					if (attachmentCount > 0) {
 						play2 = getAttachment(attachmentCount, takeSanPai);
+
 						if (play2 == null) {
 							setUsedState(play1, false);
 							continue;
@@ -575,7 +608,9 @@ public class FillDiZhuData {
 					}
 					printPokers(play1, play2);
 					// 开始使用策略器进行处理
-					// System.out.println("总得分：" + point);
+
+					//System.out.println("总得分：" + point);
+
 					if (play1 != null) {
 						setUsedState(play1, false);
 					}
@@ -584,10 +619,12 @@ public class FillDiZhuData {
 					}
 					if (play1 != null) {
 						ret.addAll(play1);
+
 					}
 					if (play2 != null) {
 						ret.addAll(play2);
 					}
+
 				}
 				if (ret != null && ret.size() > 0) {
 					return ret;
@@ -598,6 +635,7 @@ public class FillDiZhuData {
 			}
 		}
 		return null;
+
 	}
 
 	/**
@@ -609,18 +647,21 @@ public class FillDiZhuData {
 	 *            第二手牌 一般是带的散牌或者对牌
 	 */
 	private void printPokers(List<Poker> play1, List<Poker> play2) {
-		// System.out.print("一手牌:");
+		//System.out.print("一手牌:");
 		if (play1 != null) {
 			for (int i = 0; i < play1.size(); ++i) {
-				// System.out.print(play1.get(i).getValue() + " ");
+				//System.out.print(play1.get(i).getValue() + " ");
 			}
 		}
+
 		if (play2 != null) {
 			for (int i = 0; i < play2.size(); ++i) {
-				// System.out.print(play2.get(i).getValue() + " ");
+				//System.out.print(play2.get(i).getValue() + " ");
 			}
 		}
 	}
+
+
 
 	/**
 	 * 取三张或者四张或者飞机带的牌
@@ -636,6 +677,7 @@ public class FillDiZhuData {
 			// 带散牌
 			int i = 0;
 			for (; i < poops.length; ++i) {
+
 				PokerOfOnePlay poop = (PokerOfOnePlay) poops[i];
 				if (poop.getMaxValue() > 14) {
 					continue;
@@ -647,11 +689,13 @@ public class FillDiZhuData {
 				ret.add(ps.get(0));
 				ps.get(0).setUsed(true);
 				usedList.add(ps.get(0));
+
 				if (--attachmentCount <= 0) {
 					this.setUsedState(usedList, false);
 					return ret;
 				}
 			}
+
 			poops = duiZi.values().toArray();
 			Poker dui = null;
 			// 在对子中取单牌
@@ -675,11 +719,14 @@ public class FillDiZhuData {
 				ret.add(dui);
 				dui.setUsed(true);
 				usedList.add(dui);
+
 				if (--attachmentCount == 0) {
 					this.setUsedState(usedList, false);
 					return ret;
 				}
+
 			}
+
 			// this.setUsedState(ret, true);
 			// 从pokers队列中取数据
 			for (i = 3; i < 18; ++i) {
@@ -702,6 +749,7 @@ public class FillDiZhuData {
 					this.setUsedState(usedList, false);
 					return ret;
 				}
+
 				p = poov.getOneUnusedPoker();
 				if (p != null) {
 					ret.add(p);
@@ -709,10 +757,12 @@ public class FillDiZhuData {
 				} else {
 					continue;
 				}
+
 				if (--attachmentCount == 0) {
 					this.setUsedState(usedList, false);
 					return ret;
 				}
+
 			}
 		} else {
 			// 带对
@@ -763,6 +813,7 @@ public class FillDiZhuData {
 		for (Poker p : play1) {
 			p.setUsed(isUsed);
 		}
+
 	}
 
 	/**
@@ -1058,6 +1109,7 @@ public class FillDiZhuData {
 		}
 		fillPokerList();
 		this.pokerNum = ps.size();
+
 	}
 
 	/**
@@ -1072,12 +1124,10 @@ public class FillDiZhuData {
 		int two = Integer.parseInt(ConfigUtils.get("rule.robot.bigPai.two"));
 		int a = Integer.parseInt(ConfigUtils.get("rule.robot.bigPai.a"));
 		int k = Integer.parseInt(ConfigUtils.get("rule.robot.bigPai.k"));
-		int lianDui = Integer.parseInt(ConfigUtils
-				.get("rule.robot.bigPai.lianDui"));
-		int feiJi = Integer
-				.parseInt(ConfigUtils.get("rule.robot.bigPai.feiJi"));
-		int bigSanZhang = Integer.parseInt(ConfigUtils
-				.get("rule.robot.bigPai.bigSanZhang"));
+		int lianDui = Integer.parseInt(ConfigUtils.get("rule.robot.bigPai.lianDui"));
+		int feiJi = Integer.parseInt(ConfigUtils.get("rule.robot.bigPai.feiJi"));
+		int bigSanZhang = Integer.parseInt(ConfigUtils.get("rule.robot.bigPai.bigSanZhang"));
+
 		int score = 0;
 		// 炸弹计分
 		score += zhaDan * this.zhaDan.size();
@@ -1114,17 +1164,21 @@ public class FillDiZhuData {
 		}
 		// 有飞机 计分
 		score += feiJi * this.feiJi2.size();
+
 		// 连对计分
 		score += lianDui * this.lianDui3.size();
-		// System.out.println("--------poker scoreing-----------");
+
+		//System.out.println("--------poker scoreing-----------");
+
 		this.printAllPokerList();
-		// System.out.println("--------score " + score + "------------");
+
+		//System.out.println("--------score " + score + "------------");
+
 		return score;
 	}
 
 	/**
 	 * 取出当前未打出的所有牌，按照value值从大到小排列
-	 * 
 	 * @return 所有牌的队列
 	 */
 	private List<Poker> getAllPokers() {

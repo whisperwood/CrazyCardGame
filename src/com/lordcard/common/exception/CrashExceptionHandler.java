@@ -33,18 +33,21 @@ import com.umeng.analytics.MobclickAgent;
 
 /**
  * UncaughtException处理类,当程序发生Uncaught异常的时候,有该类来接管程序,并记录发送错误报告.
+ * 
  * common.exception.CrashExceptionHandler
  * 
  * @author Administrator <br/>
  *         create at 2012 2012-12-15 下午12:00:47
  */
 public class CrashExceptionHandler implements UncaughtExceptionHandler {
+
 	// 排除的异常信息
 	private static List<String> errorList = new ArrayList<String>();
 	static {
 		errorList.add("viewnotattachedtowindowmanager");
 		errorList.add("atandroid.widget.gridview.onmeasure");
 	}
+
 	// 系统默认的UncaughtException处理类
 	private Thread.UncaughtExceptionHandler defaultHandler;
 	// CrashExceptionHandler实例
@@ -54,8 +57,7 @@ public class CrashExceptionHandler implements UncaughtExceptionHandler {
 	// 用来存储设备信息和异常信息
 	private Map<String, String> infos = new HashMap<String, String>();
 
-	private CrashExceptionHandler() {
-	}
+	private CrashExceptionHandler() {}
 
 	/** 获取CrashExceptionHandler实例 ,单例模式 */
 	public static CrashExceptionHandler getInstance() {
@@ -75,7 +77,6 @@ public class CrashExceptionHandler implements UncaughtExceptionHandler {
 		Thread.setDefaultUncaughtExceptionHandler(this);
 	}
 
-	@Override
 	public void uncaughtException(Thread thread, Throwable ex) {
 		if (!handleException(ex) && defaultHandler != null) {
 			// 如果用户没有处理则让系统默认的异常处理器来处理
@@ -98,10 +99,11 @@ public class CrashExceptionHandler implements UncaughtExceptionHandler {
 	 * @return true:如果处理了该异常信息;否则返回false.
 	 */
 	private boolean handleException(final Throwable ex) {
+
 		if (ex == null) {
 			return false;
 		}
-		LogUtil.err("很抱歉,程序出现异常,即将退出.", ex);
+		LogUtil.err("很抱歉,程序出现异常,即将退出.",ex);
 		// 收集设备参数信息
 		collectDeviceInfo(ctx);
 		// 保存日志文件
@@ -117,11 +119,9 @@ public class CrashExceptionHandler implements UncaughtExceptionHandler {
 	public void collectDeviceInfo(Context ctx) {
 		try {
 			PackageManager pm = ctx.getPackageManager();
-			PackageInfo pi = pm.getPackageInfo(ctx.getPackageName(),
-					PackageManager.GET_ACTIVITIES);
+			PackageInfo pi = pm.getPackageInfo(ctx.getPackageName(), PackageManager.GET_ACTIVITIES);
 			if (pi != null) {
-				String versionName = pi.versionName == null ? "null"
-						: pi.versionName;
+				String versionName = pi.versionName == null ? "null" : pi.versionName;
 				String versionCode = pi.versionCode + "";
 				infos.put("versionName", versionName);
 				infos.put("versionCode", versionCode);
@@ -146,17 +146,21 @@ public class CrashExceptionHandler implements UncaughtExceptionHandler {
 	 */
 	private void saveCrashInfo2File(Throwable ex) {
 		String time = DateUtil.formatTimesTampDate(new Date());
+
 		ExceptionVO ep = new ExceptionVO();
+
 		StringBuffer sb = new StringBuffer();
 		for (Map.Entry<String, String> entry : infos.entrySet()) {
 			String key = entry.getKey();
 			String value = entry.getValue();
 			sb.append(key + "=" + value + "\n");
 		}
+
 		ep.setApkVCode(infos.get("versionCode"));
 		ep.setApkVName(infos.get("versionName"));
 		ep.setPhoneInfo(sb.toString());
 		ep.setTime(time);
+
 		Writer writer = new StringWriter();
 		PrintWriter printWriter = new PrintWriter(writer);
 		ex.printStackTrace(printWriter);
@@ -172,6 +176,7 @@ public class CrashExceptionHandler implements UncaughtExceptionHandler {
 		try {
 			String causeMsg = ep.getCause();
 			Log.e("error", causeMsg);
+
 			boolean isExtends = false;
 			for (String error : errorList) {
 				if (causeMsg.trim().replace(" ", "").indexOf(error) != -1) {
@@ -179,20 +184,23 @@ public class CrashExceptionHandler implements UncaughtExceptionHandler {
 					break;
 				}
 			}
+
 			final ExceptionVO upExcep = ep;
 			new Thread() {
-				@Override
 				public void run() {
 					HttpRequest.uploadException(upExcep);
 				};
 			}.start();
+
 			if (!isExtends) {
-				String errorMsg = ActivityUtils.getVersionName() + " || "
-						+ ep.getCause();
+				String errorMsg = ActivityUtils.getVersionName() + " || " + ep.getCause();
 				MobclickAgent.reportError(Database.currentActivity, errorMsg);
+				
 			}
+
 		} catch (Exception e) {
 			Log.e(Constant.LOG_TAG, "an error occured while writing file...", e);
 		}
 	}
+
 }

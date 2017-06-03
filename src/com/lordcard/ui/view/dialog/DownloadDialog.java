@@ -6,7 +6,7 @@
  */
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.List;
 
@@ -32,21 +32,20 @@ import com.lordcard.network.http.HttpURL;
  *         create at 2013 2013-3-25 下午5:32:42
  */
 public class DownloadDialog extends Dialog implements OnClickListener {
+
 	private Context context;
 	private TextView showText;
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	private LinearLayout layout;
 	private String text;
 	private List<String> list;
-
-	public DownloadDialog(Context context, String text, List<String> list) {
+	public DownloadDialog(Context context,String text,List<String> list) {
 		super(context, R.style.dialog);
 		this.context = context;
-		this.text = text;
-		this.list = list;
+		this.text=text;
+		this.list=list;
 	}
 
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.download_dialog);
@@ -60,6 +59,7 @@ public class DownloadDialog extends Dialog implements OnClickListener {
 		mst.adjustView(layout);
 	}
 
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -70,7 +70,7 @@ public class DownloadDialog extends Dialog implements OnClickListener {
 		case R.id.single_common_ok:
 			DialogUtils.toastTip("你物品正在下载到物品囊");
 			for (int i = 0; i < list.size(); i++) {
-				ImageUtil.downMMImg(HttpURL.URL_PIC_ALL + list.get(i), null);
+				ImageUtil.downMMImg(HttpURL.URL_PIC_ALL + list.get(i),null);
 			}
 			dismiss();
 			break;
@@ -83,7 +83,8 @@ public class DownloadDialog extends Dialog implements OnClickListener {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// 重写返回键
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			dismiss();
+				dismiss();
+
 		}
 		return true;
 	}

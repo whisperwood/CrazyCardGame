@@ -7,13 +7,14 @@ import com.lordcard.network.http.HttpRequest;
 import com.lordcard.network.socket.ICallback;
 
 public class ClientCmdMgr {
-	private static long seq = 1; // 消息序列号 一直递增
+
+	private static long seq = 1; //消息序列号  一直递增
+
 	private static Client client = null;
 
 	/**
 	 * 建立连接
-	 * 
-	 * @Title: start
+	 * @Title: start  
 	 * @param @param ip
 	 * @param @param port
 	 * @return void
@@ -21,16 +22,20 @@ public class ClientCmdMgr {
 	 */
 	public static boolean startClient(ICallback callback) {
 		try {
-			// HttpSynch.synchGameServer();
+//			HttpSynch.synchGameServer();
 			HttpRequest.getCacheServer(true);
+			
 			String server = Database.GAME_SERVER;
 			if (TextUtils.isEmpty(server))
 				return false;
+
 			String[] ipPort = server.split(":");
 			if (ipPort.length != 2)
 				return false;
+
 			String ip = ipPort[0];
 			int port = Integer.parseInt(ipPort[1]);
+
 			boolean isNewClient = false;
 			if (client == null) {
 				isNewClient = true;
@@ -38,6 +43,7 @@ public class ClientCmdMgr {
 				client.destory();
 				isNewClient = true;
 			}
+
 			if (isNewClient) {
 				client = new Client(ip, port);
 			}
@@ -54,9 +60,8 @@ public class ClientCmdMgr {
 
 	/**
 	 * Client 结束(退出游戏界面)
-	 * 
-	 * @Title: destory
-	 * @param
+	 * @Title: destory  
+	 * @param 
 	 * @return void
 	 * @throws
 	 */
@@ -69,9 +74,8 @@ public class ClientCmdMgr {
 
 	/**
 	 * 设置Client状态
-	 * 
-	 * @Title: setClientStatus
-	 * @param
+	 * @Title: setClientStatus  
+	 * @param 
 	 * @return void
 	 * @throws
 	 */
@@ -83,9 +87,8 @@ public class ClientCmdMgr {
 
 	/**
 	 * 重连次数归零
-	 * 
-	 * @Title: resetRelinkCount
-	 * @param
+	 * @Title: resetRelinkCount  
+	 * @param 
 	 * @return void
 	 * @throws
 	 */
@@ -95,8 +98,7 @@ public class ClientCmdMgr {
 
 	/**
 	 * 发送消息
-	 * 
-	 * @Title: sendCmd
+	 * @Title: sendCmd  
 	 * @param @param detail
 	 * @return void
 	 * @throws
@@ -109,9 +111,8 @@ public class ClientCmdMgr {
 
 	/**
 	 * 一局结束
-	 * 
-	 * @Title: gameOver
-	 * @param
+	 * @Title: gameOver  
+	 * @param 
 	 * @return void
 	 * @throws
 	 */

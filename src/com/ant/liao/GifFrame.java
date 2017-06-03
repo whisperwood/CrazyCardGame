@@ -5,11 +5,8 @@ import android.graphics.Bitmap;
 public class GifFrame {
 	/**
 	 * 构造函数
-	 * 
-	 * @param im
-	 *            图片
-	 * @param del
-	 *            延时
+	 * @param im 图片
+	 * @param del 延时
 	 */
 	public GifFrame(Bitmap im, int del) {
 		image = im;
@@ -21,12 +18,13 @@ public class GifFrame {
 		delay = del;
 	}
 
-	/** 图片 */
+	/**图片*/
 	public Bitmap image;
-	/** 延时 */
+	/**延时*/
 	public int delay;
-	/** 当图片存成文件时的文件名 */
+	/**当图片存成文件时的文件名*/
 	public String imageName = null;
-	/** 下一帧 */
+
+	/**下一帧*/
 	public GifFrame nextFrame = null;
 }

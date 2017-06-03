@@ -9,7 +9,9 @@ import com.google.gson.annotations.SerializedName;
  * 踢拉
  */
 public class TiLa implements Serializable {
+
 	private static final long serialVersionUID = -6421585395387451465L;
+
 	@Expose
 	@SerializedName("i")
 	private String id; // 玩家ID
@@ -83,4 +85,5 @@ public class TiLa implements Serializable {
 		return "TiLa [id=" + id + ", ratio=" + ratio + ", nextOrder="
 				+ nextOrder + ", nextCan=" + nextCan + "]";
 	}
+
 }

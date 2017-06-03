@@ -14,4 +14,5 @@ public interface HttpCallback {
 	 * @param obj
 	 */
 	public void onFailed(Object... obj);
+
 }

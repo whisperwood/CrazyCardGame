@@ -21,6 +21,7 @@ import com.lordcard.ui.dizhu.DoudizhuRoomListActivity;
 
 public class PackageReceiver extends BroadcastReceiver {
 	static PackageManager packageManager;
+
 	private static PackageReceiver mReceiver = new PackageReceiver();
 	private static IntentFilter mIntentFilter;
 
@@ -43,15 +44,12 @@ public class PackageReceiver extends BroadcastReceiver {
 		String action = intent.getAction();
 		if (action.equals("android.intent.action.PACKAGE_ADDED")
 				&& Database.currentActivity.getLocalClassName().equals(
-						DoudizhuRoomListActivity.class.getName())
-				&& Database.ASSISTANT_DW) {
-			Database.ASSISTANT_DW = false;
+						DoudizhuRoomListActivity.class.getName())&&Database.ASSISTANT_DW) {
+			Database.ASSISTANT_DW=false;
 			String packageName = intent.getDataString();
-			Toast.makeText(context, "安装了：" + packageName, Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(context, "安装了：" + packageName, Toast.LENGTH_LONG).show();
 			GenericTask downloadSoftTask = new DownloadSoftTask();
-			downloadSoftTask.setFeedback(TaskFeedback
-					.getInstance(TaskFeedback.DIALOG_MODE));
+			downloadSoftTask.setFeedback(TaskFeedback.getInstance(TaskFeedback.DIALOG_MODE));
 			TaskParams params = new TaskParams();
 			params.put("softPN", packageName);
 			downloadSoftTask.execute(params);
@@ -61,32 +59,40 @@ public class PackageReceiver extends BroadcastReceiver {
 			String packageName = str.substring(str.indexOf(":") + 1);
 			for (int j = 0; j < Database.packageNames.size(); j++) {
 				String packageNameServer = Database.packageNames.get(j);
+
 				if (packageNameServer.equals(packageName)) {
-					Intent startIntent = context.getPackageManager()
-							.getLaunchIntentForPackage(packageName);
+					Intent startIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
 					context.startActivity(startIntent);
 					// int count = sharedata.getInt(packageName, 0);
 					// if (count == 1) {
 					// 提交手机号码
 					GenericTask downloadSoftTask = new DownloadSoftTask();
-					downloadSoftTask.setFeedback(TaskFeedback
-							.getInstance(TaskFeedback.DIALOG_MODE));
+					downloadSoftTask.setFeedback(TaskFeedback.getInstance(TaskFeedback.DIALOG_MODE));
 					TaskParams params = new TaskParams();
 					params.put("softPN", packageName);
 					downloadSoftTask.execute(params);
 					// }
+
 				}
 			}
+
 		} else if (Intent.ACTION_PACKAGE_REMOVED.equals(action)) {
 			// Toast.makeText(context, "有应用被删除", Toast.LENGTH_LONG).show();
-		} else if (Intent.ACTION_PACKAGE_CHANGED.equals(action)) {
+		}
+
+		else if (Intent.ACTION_PACKAGE_CHANGED.equals(action)) {
 			// Toast.makeText(context, "有应用被改变", Toast.LENGTH_LONG).show();
 		}
+
 		if (Intent.ACTION_PACKAGE_REPLACED.equals(action)) {
 			// Toast.makeText(context, "有应用被替换", Toast.LENGTH_LONG).show();
-		} else if (Intent.ACTION_PACKAGE_RESTARTED.equals(action)) {
+		}
+
+		else if (Intent.ACTION_PACKAGE_RESTARTED.equals(action)) {
 			// Toast.makeText(context, "有应用被重启", Toast.LENGTH_LONG).show();
-		} else if (Intent.ACTION_PACKAGE_INSTALL.equals(action)) {
+		}
+
+		else if (Intent.ACTION_PACKAGE_INSTALL.equals(action)) {
 			// Toast.makeText(context, "有应用被安装", Toast.LENGTH_LONG).show();
 		}
 	}
@@ -102,11 +108,11 @@ public class PackageReceiver extends BroadcastReceiver {
 	// super.handleMessage(msg);
 	// }
 	// };
+
 	/**
 	 * 应用下载
 	 */
 	private class DownloadSoftTask extends GenericTask {
-		@Override
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
 				TaskParams param = null;
@@ -114,34 +120,26 @@ public class PackageReceiver extends BroadcastReceiver {
 					return TaskResult.FAILED;
 				}
 				param = params[0];
-				String result = HttpRequest.downSoftTask(param
-						.getString("softPN"));
+
+				String result = HttpRequest.downSoftTask(param.getString("softPN"));
+
 				if (HttpRequest.FAIL_STATE.equals(result)) { // 失败
 					DialogUtils.mesTip("软件下载失败，请稍候在试!", false);
 				} else if (HttpRequest.TOKEN_ILLEGAL.equals(result)) { // 用户登录Token过期
 					DialogUtils.reLogin(Database.currentActivity);
 				} else {
-					final GameTask resultTask = JsonHelper.fromJson(result,
-							GameTask.class);
+					final GameTask resultTask = JsonHelper.fromJson(result, GameTask.class);
 					Database.currentActivity.runOnUiThread(new Runnable() {
-						@Override
 						public void run() {
-							if (CmdUtils.SUCCESS_CODE.equals(resultTask
-									.getValue())) {// 成功
-								Toast.makeText(
-										Database.currentActivity,
-										"恭喜您，获得下载应用赠送的" + resultTask.getCount()
-												+ " 金豆!", Toast.LENGTH_LONG)
-										.show();
-							} else if (CmdUtils.FAIL_CODE.equals(resultTask
-									.getValue())) { // 失败
-								Toast.makeText(Database.currentActivity,
-										"获取下载应用赠送金豆失败!", Toast.LENGTH_LONG)
-										.show();
+							if (CmdUtils.SUCCESS_CODE.equals(resultTask.getValue())) {// 成功
+								Toast.makeText(Database.currentActivity, "恭喜您，获得下载应用赠送的" + resultTask.getCount() + " 金豆!", Toast.LENGTH_LONG).show();
+							} else if (CmdUtils.FAIL_CODE.equals(resultTask.getValue())) { // 失败
+								Toast.makeText(Database.currentActivity, "获取下载应用赠送金豆失败!", Toast.LENGTH_LONG).show();
 							}
 						}
 					});
 				}
+
 			} catch (Exception e) {
 			}
 			return TaskResult.OK;

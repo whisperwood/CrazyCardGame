@@ -5,13 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 联通沃商店支付
- * 
  * @author Administrator
+ *
  */
 public class EGameOrder {
-	@Expose
-	@SerializedName("o")
-	private String orderNo; // 服务器产生的订单号
+	
+	@Expose @SerializedName("o") private String orderNo;			//服务器产生的订单号
 
 	public String getOrderNo() {
 		return orderNo;

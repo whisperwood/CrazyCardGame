@@ -12,6 +12,7 @@ import com.google.gson.annotations.SerializedName;
  * @Description: 物品兑换vo
  * @author shaohu
  * @date 2013-4-10 下午03:36:03
+ * 
  */
 public class GoodsExchange {
 	@Expose
@@ -38,6 +39,7 @@ public class GoodsExchange {
 
 	// @Expose @SerializedName("dp") private Integer display; //控制物品栏中物品展示方式
 	// 1:文本展示,2:图片展示
+
 	/**
 	 * @return the typeId
 	 */
@@ -148,4 +150,5 @@ public class GoodsExchange {
 	// public void setDisplay(Integer display) {
 	// this.display = display;
 	// }
+
 }

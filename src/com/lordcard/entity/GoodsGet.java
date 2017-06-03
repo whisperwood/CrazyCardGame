@@ -3,18 +3,19 @@ package com.lordcard.entity;
 import com.google.gson.annotations.Expose;
 
 /**
- * @ClassName: GoodsHand
- * @Description: 物品赠送
- * @author shaohu
- * @date 2013-7-30 下午03:46:19
- */
+* @ClassName: GoodsHand
+* @Description: 物品赠送
+* @author shaohu
+* @date 2013-7-30 下午03:46:19
+* 
+*/
 public class GoodsGet {
 	@Expose
-	private String name;// 物品名称
+	private String name;//物品名称
 	@Expose
-	private String goodCode;// 物品编码
+	private String goodCode;//物品编码
 	@Expose
-	private Integer count; // 数量
+	private Integer count; //数量
 
 	/**
 	 * @return the name
@@ -24,8 +25,7 @@ public class GoodsGet {
 	}
 
 	/**
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -39,8 +39,7 @@ public class GoodsGet {
 	}
 
 	/**
-	 * @param goodCode
-	 *            the goodCode to set
+	 * @param goodCode the goodCode to set
 	 */
 	public void setGoodCode(String goodCode) {
 		this.goodCode = goodCode;
@@ -54,10 +53,10 @@ public class GoodsGet {
 	}
 
 	/**
-	 * @param count
-	 *            the count to set
+	 * @param count the count to set
 	 */
 	public void setCount(Integer count) {
 		this.count = count;
 	}
+
 }

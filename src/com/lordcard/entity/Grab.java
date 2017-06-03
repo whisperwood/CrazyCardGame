@@ -6,6 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Grab implements Serializable {
+
 	private static final long serialVersionUID = 5260974564438078143L;
 	/**
 	 * id : 地主的ID ratio:叫的分数 lastcards: 地主底牌
@@ -65,4 +66,5 @@ public class Grab implements Serializable {
 	public void setNextOrder(Integer nextOrder) {
 		this.nextOrder = nextOrder;
 	}
+
 }

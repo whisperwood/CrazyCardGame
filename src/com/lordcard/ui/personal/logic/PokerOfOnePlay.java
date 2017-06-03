@@ -6,6 +6,7 @@ import java.util.List;
 import com.lordcard.entity.Poker;
 
 public class PokerOfOnePlay {
+
 	int type;
 	private List<PokerOfOneValue> pokers = new ArrayList<PokerOfOneValue>();
 	private int maxValue;
@@ -44,7 +45,7 @@ public class PokerOfOnePlay {
 		pokers.add(poov);
 	}
 
-	public List<Poker> getOnePlay() {
+	public List<Poker> getOnePlay( ) {
 		List<Poker> ret = new ArrayList<Poker>();
 		switch (type) {
 		case DoudizhuRule.Danpai:
@@ -98,6 +99,7 @@ public class PokerOfOnePlay {
 				ret.addAll(p);
 			}
 			return ret;
+
 		case DoudizhuRule.liandui:
 			for (PokerOfOneValue poov : pokers) {
 				List<Poker> p = poov.getUnusedPoker(2);
@@ -165,6 +167,7 @@ public class PokerOfOnePlay {
 				ret.addAll(p);
 			}
 			return ret;
+
 		case DoudizhuRule.liandui:
 			for (PokerOfOneValue poov : pokers) {
 				List<Poker> p = poov.getPokerIgnoreUsedState(2);
@@ -177,4 +180,5 @@ public class PokerOfOnePlay {
 		}
 		return new ArrayList<Poker>();
 	}
+
 }

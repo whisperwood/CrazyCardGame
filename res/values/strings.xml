@@ -2,7 +2,7 @@
 	<item type="id" name="view_tag_id"></item>
     <!-- 相关提示信息 -->
     <string name="desc">abc</string>
-    <string name="app_name">疯狂斗地主</string>
+    <string name="app_name">掌中游斗地主</string>
     <string name="net_interrupt">网络连接异常,请稍候再试</string>
     <string name="gs_update">游戏服务器临时维护，请重新进入</string>
     <string name="net_timeout">网络连接超时</string>
@@ -187,10 +187,4 @@
    	<string name="sms_type_yd">0</string><!-- 计费方式 移动 不可修改 -->
    	<string name="sms_type_dx">1</string><!-- 计费方式 电信 不可修改-->
 	<string name="sms_type">0</string><!-- 计费方式 0 移动 1 电信 -->
-	
-	    <!--Replace with your own ad unit id. ca-app-pub-3940256099942544/6300978111-->
-    <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ad_unit_id_banner">ca-app-pub-6571779790787196/3006952598</string>
-    <string name="ad_unit_id_banner2">ca-app-pub-6571779790787196/4667522190</string>
-    <string name="ad_unit_id_banner3">ca-app-pub-6571779790787196/6144255390</string>
 </resources>

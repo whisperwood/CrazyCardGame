@@ -6,6 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class PayPicType {
+
 	@Expose
 	@SerializedName("pic")
 	private String picUrl; // 出牌人编号
@@ -28,4 +29,5 @@ public class PayPicType {
 	public void setVerson(int verson) {
 		this.verson = verson;
 	}
+
 }

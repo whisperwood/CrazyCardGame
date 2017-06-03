@@ -7,8 +7,10 @@ import com.lordcard.entity.Poker;
 
 /**
  * @author yuanjielong
+ * 
  */
 public class PokerUtil {
+
 	public static Poker[] getPoker() {
 		Poker[] poker = new Poker[54];
 		try {
@@ -74,7 +76,9 @@ public class PokerUtil {
 		} catch (Exception e) {
 			// Log.i("eden", "--------Poker getPoker NullPointerException");
 		}
+
 		return poker;
+
 	}
 
 	public static Poker[] getChoudiPoker() {
@@ -131,22 +135,19 @@ public class PokerUtil {
 			}
 			poker[i] = card;
 		}
+
 		return poker;
+
 	}
 
 	/**
 	 * 给出对应类型的牌所在的map
-	 * 
-	 * @param ddzData
-	 *            斗地主数据结构
-	 * @param cardNum
-	 *            牌数量
-	 * @param cardType
-	 *            牌类型
+	 * @param ddzData 斗地主数据结构
+	 * @param cardNum 牌数量
+	 * @param cardType 牌类型
 	 * @return
 	 */
-	public static Map<Integer, PokerOfOnePlay> whichArray(
-			DouDiZhuLogic ddzData, int cardNum, int cardType) {
+	public static Map<Integer, PokerOfOnePlay> whichArray(DouDiZhuLogic ddzData, int cardNum, int cardType) {
 		Map<Integer, PokerOfOnePlay> play = null;
 		switch (cardType) {
 		case DoudizhuRule.Danpai:
@@ -186,4 +187,5 @@ public class PokerUtil {
 		}
 		return play;
 	}
+
 }

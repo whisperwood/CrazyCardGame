@@ -13,42 +13,53 @@ import android.os.Environment;
 /**
  * @hide
  * @author liao
+ *
  */
 @SuppressWarnings("unused")
 public class GifDecoder extends Thread {
-	/** 状态：正在解码中 */
+
+	/**状态：正在解码中*/
 	public static final int STATUS_PARSING = 0;
-	/** 状态：图片格式错误 */
+	/**状态：图片格式错误*/
 	public static final int STATUS_FORMAT_ERROR = 1;
-	/** 状态：打开失败 */
+	/**状态：打开失败*/
 	public static final int STATUS_OPEN_ERROR = 2;
-	/** 状态：解码成功 */
+	/**状态：解码成功*/
 	public static final int STATUS_FINISH = -1;
+
 	private InputStream in;
 	private int status;
+
 	public int width; // full image width
 	public int height; // full image height
 	private boolean gctFlag; // global color table used
 	private int gctSize; // size of global color table
 	private int loopCount = 1; // iterations; 0 = repeat forever
+
 	private int[] gct; // global color table
 	private int[] lct; // local color table
 	private int[] act; // active color table
+
 	private int bgIndex; // background color index
 	private int bgColor; // background color
 	private int lastBgColor; // previous bg color
 	private int pixelAspect; // pixel aspect ratio
+
 	private boolean lctFlag; // local color table flag
 	private boolean interlace; // interlace flag
 	private int lctSize; // local color table size
+
 	private int ix, iy, iw, ih; // current image rectangle
 	private int lrx, lry, lrw, lrh;
 	private Bitmap image; // current frame
 	private Bitmap lastImage; // previous frame
 	private GifFrame currentFrame = null;
+
 	private boolean isShow = false;
+
 	private byte[] block = new byte[256]; // current data block
 	private int blockSize = 0; // block size
+
 	// last graphic control extension info
 	private int dispose = 0;
 	// 0=no action; 1=leave in place; 2=restore to bg; 3=restore to prev
@@ -56,37 +67,43 @@ public class GifDecoder extends Thread {
 	private boolean transparency = false; // use transparent color
 	private int delay = 0; // delay in milliseconds
 	private int transIndex; // transparent color index
+
 	private static final int MaxStackSize = 4096;
 	// max decoder pixel stack size
+
 	// LZW decoder working arrays
 	private short[] prefix;
 	private byte[] suffix;
 	private byte[] pixelStack;
 	private byte[] pixels;
+
 	private GifFrame gifFrame; // frames read from current file
 	private int frameCount;
+
 	private GifAction action = null;
+
 	private byte[] gifData = null;
-	/** 图片缓存的路径 */
+	/**图片缓存的路径*/
 	private String imagePath = null;
-	/** 是否要缓存图片 */
+	/**是否要缓存图片*/
 	private boolean cacheImage = false;
 
 	public GifDecoder(GifAction action) {
 		this.action = action;
 	}
 
-	// public GifDecoder(byte[] data,GifAction act){
-	// gifData = data;
-	// action = act;
-	//
-	// }
-	//
-	// public GifDecoder(InputStream is,GifAction act){
-	// in = is;
-	// action = act;
-	//
-	// }
+	//	public GifDecoder(byte[] data,GifAction act){
+	//		gifData = data;
+	//		action = act;
+	//		  
+	//	}
+	//	
+	//	public GifDecoder(InputStream is,GifAction act){
+	//		in = is;
+	//		action = act;
+	//		
+	//	}
+
 	public void setGifImage(byte[] data) {
 		gifData = data;
 	}
@@ -97,13 +114,10 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 设置是否要缓存图片<br>
-	 * 当设置要缓存图片时，解码出来的图片会直接写到文件中，而不保留在内存中，缓存时如果有Sd卡，会直接缓存到sd卡中，
-	 * 如果没有则会缓存到当前apk下的文件目录中<br>
+	 * 当设置要缓存图片时，解码出来的图片会直接写到文件中，而不保留在内存中，缓存时如果有Sd卡，会直接缓存到sd卡中，如果没有则会缓存到当前apk下的文件目录中<br>
 	 * <b>如果创建缓存目录失败，会自动切换为不缓存</b><br>
 	 * 默认不缓存
-	 * 
-	 * @param cache
-	 *            是否要缓存，true要缓存
+	 * @param cache 是否要缓存，true要缓存
 	 * @param context
 	 */
 	public void setCacheImage(boolean cache, Context context) {
@@ -111,13 +125,10 @@ public class GifDecoder extends Thread {
 		try {
 			if (cacheImage) {
 				boolean f = true;
-				if (Environment.getExternalStorageState().equals(
-						Environment.MEDIA_MOUNTED)) {
-					imagePath = android.os.Environment
-							.getExternalStorageDirectory().getPath()
-							+ File.separator
-							+ "gifView_tmp_dir"
-							+ File.separator + getDir();
+
+				if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+					imagePath = android.os.Environment.getExternalStorageDirectory().getPath() + File.separator + "gifView_tmp_dir" + File.separator
+							+ getDir();
 					if (!createDir(imagePath)) {
 						f = true;
 					} else {
@@ -126,9 +137,9 @@ public class GifDecoder extends Thread {
 				} else {
 					f = true;
 				}
+
 				if (f) {
-					imagePath = context.getFilesDir().getAbsolutePath()
-							+ File.separator + getDir();
+					imagePath = context.getFilesDir().getAbsolutePath() + File.separator + getDir();
 					if (!createDir(imagePath))
 						cacheImage = false;
 				}
@@ -148,6 +159,7 @@ public class GifDecoder extends Thread {
 				myFilePath.delete();
 			}
 		} catch (Exception e) {
+
 		}
 	}
 
@@ -189,9 +201,11 @@ public class GifDecoder extends Thread {
 			File file = new File(path);
 			if (!file.exists()) {
 				ret = file.mkdirs();
+
 			} else
 				ret = true;
 		} catch (Exception e) {
+
 			ret = false;
 		}
 		return ret;
@@ -200,14 +214,13 @@ public class GifDecoder extends Thread {
 	private void saveImage(Bitmap image, String name) {
 		try {
 			File f = new File(imagePath + File.separator + name + ".png");
-			FileOutputStream fos = new FileOutputStream(imagePath
-					+ File.separator + getDir() + ".png");
+			FileOutputStream fos = new FileOutputStream(imagePath + File.separator + getDir() + ".png");
 			image.compress(Bitmap.CompressFormat.PNG, 100, fos);
 		} catch (Exception ex) {
+
 		}
 	}
 
-	@Override
 	public void run() {
 		if (in != null) {
 			readStream();
@@ -247,7 +260,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 当前状态
-	 * 
 	 * @return
 	 */
 	public int getStatus() {
@@ -256,7 +268,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 解码是否成功，成功返回true
-	 * 
 	 * @return 成功返回true，否则返回false
 	 */
 	public boolean parseOk() {
@@ -265,9 +276,7 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取某帧的延时时间
-	 * 
-	 * @param n
-	 *            第几帧
+	 * @param n 第几帧 
 	 * @return 延时时间，毫秒
 	 */
 	public int getDelay(int n) {
@@ -283,7 +292,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取所有帧的延时时间
-	 * 
 	 * @return
 	 */
 	public int[] getDelays() {
@@ -300,7 +308,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取总帧 数
-	 * 
 	 * @return 图片的总帧数
 	 */
 	public int getFrameCount() {
@@ -309,7 +316,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取第一帧图片
-	 * 
 	 * @return
 	 */
 	public Bitmap getImage() {
@@ -352,6 +358,7 @@ public class GifDecoder extends Thread {
 				}
 			}
 		}
+
 		// copy each source line to the appropriate place in the destination
 		int pass = 1;
 		int inc = 8;
@@ -388,7 +395,7 @@ public class GifDecoder extends Thread {
 				int sx = i * iw; // start of line in source
 				while (dx < dlim) {
 					// map color and insert in destination
-					int index = (pixels[sx++]) & 0xff;
+					int index = ((int) pixels[sx++]) & 0xff;
 					int c = act[index];
 					if (c != 0) {
 						dest[dx] = c;
@@ -397,14 +404,13 @@ public class GifDecoder extends Thread {
 				}
 			}
 		}
+
 		image = Bitmap.createBitmap(dest, width, height, Config.ARGB_4444);
 	}
 
 	/**
 	 * 取第几帧的图片
-	 * 
-	 * @param n
-	 *            帧数
+	 * @param n 帧数
 	 * @return 可画的图片，如果没有此帧或者出错，返回null
 	 */
 	public Bitmap getFrameImage(int n) {
@@ -417,7 +423,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取当前帧图片
-	 * 
 	 * @hide
 	 * @return 当前帧可画的图片
 	 */
@@ -427,10 +432,8 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取第几帧，每帧包含了可画的图片和延时时间
-	 * 
 	 * @hide
-	 * @param n
-	 *            帧数
+	 * @param n 帧数
 	 * @return
 	 */
 	public GifFrame getFrame(int n) {
@@ -449,7 +452,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 重置，进行本操作后，会直接到第一帧
-	 * 
 	 * @hide
 	 */
 	public void reset() {
@@ -458,7 +460,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 下一帧，进行本操作后，通过getCurrentFrame得到的是下一帧
-	 * 
 	 * @hide
 	 * @return 返回下一帧
 	 */
@@ -472,23 +473,21 @@ public class GifDecoder extends Thread {
 			if (status == STATUS_PARSING) {
 				if (currentFrame.nextFrame != null)
 					currentFrame = currentFrame.nextFrame;
-				// currentFrame = gifFrame;
+				//currentFrame = gifFrame;
 			} else {
 				currentFrame = currentFrame.nextFrame;
 				if (currentFrame == null) {
 					currentFrame = gifFrame;
 				}
 			}
-			// if(cacheImage){
-			// Log.d("===", "cache");
-			// try{
-			// currentFrame.image = BitmapFactory.decodeFile(imagePath +
-			// File.separator +
-			// currentFrame.imageName);
-			// }catch(Exception ex){
-			// ex.printStackTrace();
-			// }
-			// }
+			//			if(cacheImage){
+			//			    Log.d("===", "cache");
+			//			    try{
+			//			        currentFrame.image = BitmapFactory.decodeFile(imagePath + File.separator + currentFrame.imageName);
+			//			    }catch(Exception ex){
+			//			        ex.printStackTrace();
+			//			    }
+			//			}
 			return currentFrame;
 		}
 	}
@@ -518,6 +517,7 @@ public class GifDecoder extends Thread {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
 		} else {
 			status = STATUS_OPEN_ERROR;
 			action.parseOk(false, -1);
@@ -529,6 +529,7 @@ public class GifDecoder extends Thread {
 		int NullCode = -1;
 		int npix = iw * ih;
 		int available, clear, code_mask, code_size, end_of_information, in_code, old_code, bits, code, count, i, datum, data_size, first, top, bi, pi;
+
 		if ((pixels == null) || (pixels.length < npix)) {
 			pixels = new byte[npix]; // allocate new pixel array
 		}
@@ -553,6 +554,7 @@ public class GifDecoder extends Thread {
 			prefix[code] = 0;
 			suffix[code] = (byte) code;
 		}
+
 		// Decode GIF pixel stream.
 		datum = bits = count = first = top = pi = bi = 0;
 		for (i = 0; i < npix;) {
@@ -567,7 +569,7 @@ public class GifDecoder extends Thread {
 						}
 						bi = 0;
 					}
-					datum += ((block[bi]) & 0xff) << bits;
+					datum += (((int) block[bi]) & 0xff) << bits;
 					bits += 8;
 					bi++;
 					count--;
@@ -577,6 +579,7 @@ public class GifDecoder extends Thread {
 				code = datum & code_mask;
 				datum >>= code_size;
 				bits -= code_size;
+
 				// Interpret the code
 				if ((code > available) || (code == end_of_information)) {
 					break;
@@ -604,7 +607,7 @@ public class GifDecoder extends Thread {
 					pixelStack[top++] = suffix[code];
 					code = prefix[code];
 				}
-				first = (suffix[code]) & 0xff;
+				first = ((int) suffix[code]) & 0xff;
 				// Add a new string to the string table,
 				if (available >= MaxStackSize) {
 					break;
@@ -613,13 +616,13 @@ public class GifDecoder extends Thread {
 				prefix[available] = (short) old_code;
 				suffix[available] = (byte) first;
 				available++;
-				if (((available & code_mask) == 0)
-						&& (available < MaxStackSize)) {
+				if (((available & code_mask) == 0) && (available < MaxStackSize)) {
 					code_size++;
 					code_mask += available;
 				}
 				old_code = in_code;
 			}
+
 			// Pop a pixel off the pixel stack.
 			top--;
 			pixels[pi++] = pixelStack[top];
@@ -645,6 +648,7 @@ public class GifDecoder extends Thread {
 	private int read() {
 		int curByte = 0;
 		try {
+
 			curByte = in.read();
 		} catch (Exception e) {
 			status = STATUS_FORMAT_ERROR;
@@ -692,9 +696,9 @@ public class GifDecoder extends Thread {
 			int i = 0;
 			int j = 0;
 			while (i < ncolors) {
-				int r = (c[j++]) & 0xff;
-				int g = (c[j++]) & 0xff;
-				int b = (c[j++]) & 0xff;
+				int r = ((int) c[j++]) & 0xff;
+				int g = ((int) c[j++]) & 0xff;
+				int b = ((int) c[j++]) & 0xff;
 				tab[i++] = 0xff000000 | (r << 16) | (g << 8) | b;
 			}
 		}
@@ -811,13 +815,13 @@ public class GifDecoder extends Thread {
 		frameCount++;
 		// create new image to receive frame data
 		image = Bitmap.createBitmap(width, height, Config.ARGB_4444);
+
 		// createImage(width, height);
 		setPixels(); // transfer pixel data to image
 		if (gifFrame == null) {
 			if (cacheImage) {
 				String name = getDir();
-				gifFrame = new GifFrame(imagePath + File.separator + name
-						+ ".png", delay);
+				gifFrame = new GifFrame(imagePath + File.separator + name + ".png", delay);
 				saveImage(image, name);
 			} else {
 				gifFrame = new GifFrame(image, delay);
@@ -830,8 +834,7 @@ public class GifDecoder extends Thread {
 			}
 			if (cacheImage) {
 				String name = getDir();
-				f.nextFrame = new GifFrame(imagePath + File.separator + name
-						+ ".png", delay);
+				f.nextFrame = new GifFrame(imagePath + File.separator + name + ".png", delay);
 				saveImage(image, name);
 			} else {
 				f.nextFrame = new GifFrame(image, delay);
@@ -865,8 +868,8 @@ public class GifDecoder extends Thread {
 			readBlock();
 			if (block[0] == 1) {
 				// loop count sub-block
-				int b1 = (block[1]) & 0xff;
-				int b2 = (block[2]) & 0xff;
+				int b1 = ((int) block[1]) & 0xff;
+				int b2 = ((int) block[2]) & 0xff;
 				loopCount = (b2 << 8) | b1;
 			}
 		} while ((blockSize > 0) && !err());

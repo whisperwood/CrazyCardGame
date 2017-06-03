@@ -10,132 +10,59 @@ import com.google.gson.annotations.SerializedName;
  * 登录游戏的用户信息
  */
 public class GameUser implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Expose
-	@SerializedName("a")
-	private String account; // 游戏账号
-	@Expose
-	@SerializedName("ra")
-	private String relaAccount; // 关联账号
-	@Expose
-	@SerializedName("n")
-	private String nickname; // 昵称
-	@Expose
-	@SerializedName("t")
-	private int type; // 玩家类型 0：一般玩家 1：机器人
-	@Expose
-	@SerializedName("b")
-	private Long bean = 0l; // 金豆
-	@Expose
-	@SerializedName("gs")
-	private String gameServer; // 所在游戏服务器
-	@Expose
-	@SerializedName("cn")
-	private String cusName; // 姓名
-	@Expose
-	@SerializedName("p")
-	private String userPwd; // 账户密码
-	@Expose
-	@SerializedName("mp")
-	private String md5Pwd; // 加密密码
+	@Expose @SerializedName("a") private String account; // 游戏账号
+	@Expose @SerializedName("ra") private String relaAccount; // 关联账号
+	@Expose @SerializedName("n") private String nickname; // 昵称
+	@Expose @SerializedName("t") private int type; // 玩家类型 0：一般玩家 1：机器人
+	@Expose @SerializedName("b") private Long bean=0l; //金豆
+	@Expose @SerializedName("gs") private String gameServer; // 所在游戏服务器
+	@Expose @SerializedName("cn") private String cusName; // 姓名
+	@Expose @SerializedName("p") private String userPwd; // 账户密码
+	@Expose @SerializedName("mp") private String md5Pwd; // 加密密码
 	private String confirmPwd;
-	@Expose
-	@SerializedName("gd")
-	private String gender; // 性别 0保密1女2男
-	@Expose
-	@SerializedName("pn")
-	private String phoneNum; // 联系号码
-	@Expose
-	@SerializedName("e")
-	private String email; // email
-	@Expose
-	@SerializedName("iup")
-	private String isUpdatedPwd; // 是否修改过密码0未修改过1已经修改过
-	@Expose
-	@SerializedName("cd")
-	private String createDate; // 创建时间
-	@Expose
-	@SerializedName("ud")
-	private String updateDate; // 更新时间
-	@Expose
-	@SerializedName("hi")
-	private String headImage; // 头像
-	@Expose
-	@SerializedName("so")
-	private Integer sortOrder; // 用户排名
-	@Expose
-	@SerializedName("ak")
-	private String authKey; // 安全验证签名密钥
-	@Expose
-	@SerializedName("rt")
-	private String roomTime; // 房间更新时间
+	@Expose @SerializedName("gd") private String gender; // 性别 0保密1女2男
+	@Expose @SerializedName("pn") private String phoneNum; // 联系号码
+	@Expose @SerializedName("e") private String email; // email
+	@Expose @SerializedName("iup") private String isUpdatedPwd; // 是否修改过密码0未修改过1已经修改过
+	@Expose @SerializedName("cd") private String createDate; // 创建时间
+	@Expose @SerializedName("ud") private String updateDate; // 更新时间
+	@Expose @SerializedName("hi") private String headImage; // 头像
+	@Expose @SerializedName("so") private Integer sortOrder; // 用户排名
+	@Expose @SerializedName("ak") private String authKey; // 安全验证签名密钥
+	@Expose @SerializedName("rt") private String roomTime; // 房间更新时间
 	// 已经赢[钻石挖矿场使用]
-	@Expose
-	@SerializedName("hw")
-	private Integer hasWin = 0;
+	@Expose @SerializedName("hw") private Integer hasWin = 0;
 	// 记牌器剩余有效时间(s)
-	@Expose
-	@SerializedName("jt")
-	private int jiPaiQiTime;
+	@Expose @SerializedName("jt") private int jiPaiQiTime;
 	// 需要赢
-	@Expose
-	@SerializedName("nw")
-	private Integer needWin = 0;
+	@Expose @SerializedName("nw") private Integer needWin = 0;
 	/**
 	 * 比赛剩余秒数
 	 */
-	@Expose
-	@SerializedName("ot")
-	private Long overTime;
-	@Expose
-	@SerializedName("lt")
-	private String loginToken; // 游戏内部登录Token
-	@Expose
-	@SerializedName("gt")
-	private Integer gameType; // 当前玩的游戏类型 1：斗地主 2：麻将 3：锄大地
-	@Expose
-	@SerializedName("ir")
-	private boolean isPlay = false; // 是否参加比赛 true:已参加 false:未参加
-	@Expose
-	@SerializedName("rn")
-	private String roomName; // 房间名称
-	@Expose
-	private int round; // 轮次
-	@Expose
-	private int level; // 比赛阶段 1:预赛 2:决赛
-	@Expose
-	private Integer rank; // 用户排名
-	@Expose
-	private Long cred = (long) 0; // 用户积分
-	@Expose
-	@SerializedName("iq")
-	private Integer iq = 0; // 等级等级
-	@Expose
-	@SerializedName("ii")
-	private Map<String, String> iqImg; // 等级头像图标(0女地主,1男地主,2女农民,3男农民)
-	@Expose
-	@SerializedName("tl")
-	private String title; // 称号
-	@Expose
-	@SerializedName("in")
-	private Integer intellect; // 当前经验
-	@Expose
-	@SerializedName("ni")
-	private Integer nextIntellect; // 达到下一级等级所需经验
-	@Expose
-	@SerializedName("li")
-	private Map<String, String> levelImg; // 等级图标(key:count,value:imagePath)
+	@Expose @SerializedName("ot") private Long overTime;
+	@Expose @SerializedName("lt") private String loginToken; // 游戏内部登录Token
+	@Expose @SerializedName("gt") private Integer gameType; // 当前玩的游戏类型 1：斗地主 2：麻将 3：锄大地
+	@Expose @SerializedName("ir") private boolean isPlay = false; // 是否参加比赛 true:已参加 false:未参加
+	@Expose @SerializedName("rn") private String roomName; // 房间名称
+	@Expose private int round; // 轮次
+	@Expose private int level; // 比赛阶段 1:预赛 2:决赛
+	@Expose private Integer rank; // 用户排名
+	@Expose private Long cred = (long) 0; // 用户积分
+	@Expose @SerializedName("iq") private Integer iq = 0; // 等级等级
+	@Expose @SerializedName("ii") private Map<String, String> iqImg; // 等级头像图标(0女地主,1男地主,2女农民,3男农民)
+	@Expose @SerializedName("tl") private String title; // 称号
+	@Expose @SerializedName("in") private Integer intellect; // 当前经验
+	@Expose @SerializedName("ni") private Integer nextIntellect; // 达到下一级等级所需经验
+	@Expose @SerializedName("li") private Map<String, String> levelImg; // 等级图标(key:count,value:imagePath)
 	// 钻石的数量
-	@Expose
-	@SerializedName("dis")
-	private Long diamSum = (long) 0;
+	@Expose @SerializedName("dis") private Long diamSum = (long) 0;
 	// 无记牌器时的提示文本
-	@Expose
-	@SerializedName("tpm")
-	private String tipMes;
+	@Expose @SerializedName("tpm") private String tipMes;
 
 	public String getTipMes() {
 		return tipMes;
@@ -145,8 +72,7 @@ public class GameUser implements Serializable {
 		this.tipMes = tipMes;
 	}
 
-	public GameUser() {
-	}
+	public GameUser() {}
 
 	public String getGameServer() {
 		return gameServer;
@@ -385,6 +311,7 @@ public class GameUser implements Serializable {
 	}
 
 	public final void setRoomName(String roomName) {
+		
 		this.roomName = roomName;
 	}
 

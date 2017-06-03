@@ -6,8 +6,10 @@ import java.util.List;
 import com.lordcard.entity.Poker;
 
 public class PokerOfOnePlay {
+
 	int type;
 	private int maxValue;
+
 	private List<PokerOfOneValue> pokers = new ArrayList<PokerOfOneValue>();
 
 	public PokerOfOnePlay(int maxValue, int paiType) {
@@ -67,8 +69,7 @@ public class PokerOfOnePlay {
 		case DoudizhuRule.zhadan:
 			if (pokers.size() == 1 && pokers.get(0).getUnusedNum() == 4) {
 				return pokers.get(0).getUnusedPoker(4);
-			} else if (pokers.size() == 2 && pokers.get(0).getUnusedNum() == 1
-					&& pokers.get(1).getUnusedNum() == 1) {
+			} else if (pokers.size() == 2 && pokers.get(0).getUnusedNum() == 1 && pokers.get(1).getUnusedNum() == 1) {
 				ret.add(pokers.get(0).getOneUnusedPoker());
 				ret.add(pokers.get(1).getOneUnusedPoker());
 				return ret;
@@ -97,6 +98,7 @@ public class PokerOfOnePlay {
 				ret.addAll(p);
 			}
 			return ret;
+
 		case DoudizhuRule.liandui:
 			for (PokerOfOneValue poov : pokers) {
 				List<Poker> p = poov.getUnusedPoker(2);
@@ -134,8 +136,7 @@ public class PokerOfOnePlay {
 		case DoudizhuRule.zhadan:
 			if (pokers.size() == 1 && pokers.get(0).PokerNum() == 4) {
 				return pokers.get(0).getPokerIgnoreUsedState(4);
-			} else if (pokers.size() == 2 && pokers.get(0).PokerNum() == 1
-					&& pokers.get(1).PokerNum() == 1) {
+			} else if (pokers.size() == 2 && pokers.get(0).PokerNum() == 1 && pokers.get(1).PokerNum() == 1) {
 				ret.add(pokers.get(0).getPokers().get(0));
 				ret.add(pokers.get(1).getPokers().get(0));
 				return ret;
@@ -164,6 +165,7 @@ public class PokerOfOnePlay {
 				ret.addAll(p);
 			}
 			return ret;
+
 		case DoudizhuRule.liandui:
 			for (PokerOfOneValue poov : pokers) {
 				List<Poker> p = poov.getPokerIgnoreUsedState(2);
@@ -176,4 +178,5 @@ public class PokerOfOnePlay {
 		}
 		return new ArrayList<Poker>();
 	}
+
 }

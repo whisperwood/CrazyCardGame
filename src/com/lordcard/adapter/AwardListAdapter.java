@@ -1,6 +1,7 @@
 package com.lordcard.adapter;
 
-import com.crazy.shui.R;
+
+import com.zzyddz.shui.R;
 
 import java.util.List;
 
@@ -20,12 +21,14 @@ import com.lordcard.entity.AwardVo;
  * @author Administrator
  */
 public class AwardListAdapter extends BaseAdapter {
-	// private Context context = null;
+
+//	private Context context = null;
 	private LayoutInflater layoutInflater = null;
 	private List<AwardVo> awardList;
 
 	public AwardListAdapter(Context context, List<AwardVo> awardList) {
-		// this.context = context;
+
+//		this.context = context;
 		this.layoutInflater = LayoutInflater.from(context);
 		this.awardList = awardList;
 	}
@@ -54,18 +57,15 @@ public class AwardListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = layoutInflater
-					.inflate(R.layout.award_list_item, null);
+			convertView = layoutInflater.inflate(R.layout.award_list_item, null);
 			holder = new ViewHolder();
 			holder.noTv = (TextView) convertView.findViewById(R.id.ali_no_tv);
-			holder.nameTv = (TextView) convertView
-					.findViewById(R.id.ali_name_tv);
-			holder.integralTv = (TextView) convertView
-					.findViewById(R.id.ali_integral_tv);
-			holder.prizeTv = (TextView) convertView
-					.findViewById(R.id.ali_prize_tv);
+			holder.nameTv = (TextView) convertView.findViewById(R.id.ali_name_tv);
+			holder.integralTv = (TextView) convertView.findViewById(R.id.ali_integral_tv);
+			holder.prizeTv = (TextView) convertView.findViewById(R.id.ali_prize_tv);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -75,8 +75,7 @@ public class AwardListAdapter extends BaseAdapter {
 		holder.nameTv.setText("" + awardVo.getName());
 		holder.integralTv.setText("" + awardVo.getIntegral());
 		holder.prizeTv.setText("" + awardVo.getPrize());
-		Log.i("convertView", "" + awardVo.getNo() + "" + awardVo.getName() + ""
-				+ awardVo.getIntegral() + "" + awardVo.getPrize());
+		Log.i("convertView", "" + awardVo.getNo() + "" + awardVo.getName() + "" + awardVo.getIntegral() + "" + awardVo.getPrize());
 		return convertView;
 	}
 }

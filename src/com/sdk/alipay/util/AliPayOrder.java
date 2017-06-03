@@ -3,6 +3,7 @@ package com.sdk.alipay.util;
 import com.google.gson.annotations.Expose;
 
 public class AliPayOrder {
+
 	@Expose
 	private String partner; // 支付宝合作商家ID
 	@Expose
@@ -84,4 +85,5 @@ public class AliPayOrder {
 	public void setRsaPublic(String rsaPublic) {
 		this.rsaPublic = rsaPublic;
 	}
+
 }

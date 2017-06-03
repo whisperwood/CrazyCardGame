@@ -9,20 +9,12 @@ public class RoomSignup {
 	/**
 	 * [{"signUp":"1","hallCode":"1","roomCode":"1"},{"signUp":"0","hallCode":
 	 * "1","roomCode":"2"}] signUp=0未报名，1已报名
-	 */
-	@Expose
-	@SerializedName("hc")
-	private String hallCode;
-	@Expose
-	@SerializedName("rc")
-	private String roomCode;
-	@Expose
-	@SerializedName("su")
-	private String signUp;
-	@Expose
-	@SerializedName("st")
-	private Long stopTime;
-	private boolean isClick;// 是否请求
+	 * */
+	@Expose @SerializedName("hc") private String	hallCode;
+	@Expose @SerializedName("rc") private String	roomCode;
+	@Expose @SerializedName("su") private String	signUp;
+	@Expose @SerializedName("st") private Long		stopTime;
+	private boolean isClick;//是否请求
 
 	public String getSignUp() {
 		return signUp;
@@ -63,4 +55,5 @@ public class RoomSignup {
 	public final void setClick(boolean isClick) {
 		this.isClick = isClick;
 	}
+	
 }

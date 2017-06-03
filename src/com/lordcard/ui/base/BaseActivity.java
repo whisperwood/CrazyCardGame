@@ -6,11 +6,15 @@
  */
 package com.lordcard.ui.base;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -27,8 +31,10 @@ import com.lordcard.common.util.ImageUtil;
 import com.lordcard.common.util.MultiScreenTool;
 import com.lordcard.constant.Constant;
 import com.lordcard.constant.Database;
+import com.lordcard.network.base.ThreadPool;
 import com.lordcard.network.cmdmgr.ClientCmdMgr;
 import com.lordcard.network.http.GameHttpTask;
+import com.lordcard.network.http.HttpRequest;
 import com.lordcard.ui.StartActivity;
 import com.lordcard.ui.dizhu.DoudizhuMainGameActivity;
 import com.sdk.util.SDKFactory;
@@ -41,12 +47,11 @@ import com.umeng.analytics.MobclickAgent;
  *         create at 2012 2012-11-7 下午10:27:50
  */
 public class BaseActivity extends Activity {
+
 	protected TaskManager taskManager = new TaskManager();
-	protected Feedback feedback = TaskFeedback
-			.getInstance(TaskFeedback.DIALOG_MODE);
+	protected Feedback feedback = TaskFeedback.getInstance(TaskFeedback.DIALOG_MODE);
 	protected MultiScreenTool mst = null;
 
-	@Override
 	@SuppressWarnings("rawtypes")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,58 +82,57 @@ public class BaseActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
-		case KeyEvent.KEYCODE_VOLUME_DOWN:// 游戏音量减小
-			AudioPlayUtils.getInstance().lowerVoice();
-			return true;
-		case KeyEvent.KEYCODE_VOLUME_UP:// 游戏音量增大
-			AudioPlayUtils.getInstance().raiseVoice();
-			return true;
-		default:
-			break;
+			case KeyEvent.KEYCODE_VOLUME_DOWN://游戏音量减小
+				AudioPlayUtils.getInstance().lowerVoice();
+				return true;
+			case KeyEvent.KEYCODE_VOLUME_UP://游戏音量增大
+				AudioPlayUtils.getInstance().raiseVoice();
+				return true;
+			default:
+				break;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
 
-	// private void activite() {
-	// ThreadPool.startWork(new Runnable() {
-	//
-	// public void run() {
-	// String batchId = ChannelUtils.getBatchId();
-	// if (TextUtils.isEmpty(batchId))
-	// return; // 没有批次号 则直接返回
-	// final SharedPreferences preferences =
-	// getApplication().getSharedPreferences(Constant.GAME_ACTIVITE,
-	// Context.MODE_PRIVATE);
-	// boolean is_activite = preferences.getBoolean("is_activite", false);
-	// if (!is_activite) { // 未激活
-	// String result = HttpRequest.activateFromFront(batchId);
-	// if ("0".equals(result) || "6".equals(result)) {// 激活成功 或 已注册
-	// Editor editor = preferences.edit();
-	// editor.putBoolean("is_activite", true); // 已激活
-	// editor.commit();
-	// }
-	// }
-	// }
-	// });
-	// }
+//	private void activite() {
+//		ThreadPool.startWork(new Runnable() {
+//
+//			public void run() {
+//				String batchId = ChannelUtils.getBatchId();
+//				if (TextUtils.isEmpty(batchId))
+//					return; // 没有批次号 则直接返回
+//				final SharedPreferences preferences = getApplication().getSharedPreferences(Constant.GAME_ACTIVITE, Context.MODE_PRIVATE);
+//				boolean is_activite = preferences.getBoolean("is_activite", false);
+//				if (!is_activite) { // 未激活
+//					String result = HttpRequest.activateFromFront(batchId);
+//					if ("0".equals(result) || "6".equals(result)) {// 激活成功 或 已注册
+//						Editor editor = preferences.edit();
+//						editor.putBoolean("is_activite", true); // 已激活
+//						editor.commit();
+//					}
+//				}
+//			}
+//		});
+//	}
+
 	@Override
 	protected void onStart() {
 		super.onStart();
 		Database.currentActivity = this;
 		Class<?> clazz = this.getClass();
 		if (!clazz.equals(StartActivity.class)) {// 是否是启动页面
-			if (!ActivityUtils.isGameView() && !ActivityUtils.isPayView()) { // 非游戏界面,和支付界面
+			if (!ActivityUtils.isGameView() && !ActivityUtils.isPayView()) { //非游戏界面,和支付界面
 				ClientCmdMgr.closeClient();
 				// 检查网络情况(非游戏界面，游戏界面交给游戏内部处理 )
 				if (!ActivityUtils.isNetworkAvailable()) {
-					// 所有的无网络请求都转到登录界面处理
+					//所有的无网络请求都转到登录界面处理
 					if (!clazz.equals(SDKFactory.getLoginView())) {
 						Intent intent = new Intent();
 						intent.setClass(this, SDKFactory.getLoginView());
 						startActivity(intent);
 					}
 				} else {
-					// 有网时检查相关初始配置是否存在
+					//有网时检查相关初始配置是否存在
 					GameHttpTask.checkInitCfg();
 				}
 			}
@@ -136,7 +140,7 @@ public class BaseActivity extends Activity {
 		}
 		// 有新版本 提示下载
 		if (Database.HAS_NEW_VERSION) {
-			boolean isWifiOpen = ActivityUtils.isOpenWifi();// wifi是否打开
+			boolean isWifiOpen = ActivityUtils.isOpenWifi();//wifi是否打开
 			if (isWifiOpen) {
 				Database.UPDATED_STYLE = true;
 				Database.HAS_NEW_VERSION = false;
@@ -151,7 +155,6 @@ public class BaseActivity extends Activity {
 		}
 	}
 
-	@Override
 	public void onResume() {
 		super.onResume();
 		Database.currentActivity = this;
@@ -166,13 +169,10 @@ public class BaseActivity extends Activity {
 			Database.SCREEN_HEIGHT = dm.widthPixels;
 		}
 		try {
-			MobclickAgent.onResume(this, ChannelUtils.getUappKey(),
-					ChannelUtils.getUChannel());
-		} catch (Exception e) {
-		}
+			MobclickAgent.onResume(this, ChannelUtils.getUappKey(), ChannelUtils.getUChannel());
+		} catch (Exception e) {}
 	}
 
-	@Override
 	public void onPause() {
 		super.onPause();
 		MobclickAgent.onPause(this);
@@ -186,7 +186,7 @@ public class BaseActivity extends Activity {
 		taskManager = null;
 		feedback = null;
 		mst = null;
-		if (!ActivityUtils.isGameView()) { // 非游戏界面
+		if (!ActivityUtils.isGameView()) { //非游戏界面
 			if (Database.userMap != null) {
 				Database.userMap.clear();
 			}

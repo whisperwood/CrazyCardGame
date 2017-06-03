@@ -1,10 +1,9 @@
 package com.lordcard.ui;
-
-interface MatchHander {
-	boolean compare(int a, int b);
-}
-
+interface MatchHander{  
+    boolean compare(int a,int b);  
+} 
 public class Match {
+
 	/**
 	 * 09. * 百分之多少之内匹配错误可以接受 10. * a与ab匹配为百分之50的错误率。 11. * @param percent
 	 * 设置匹配百分比 12. * @param src 字符串1 13. * @param dest 字符串2 14. * @param hander
@@ -43,6 +42,7 @@ public class Match {
 	 */
 	public static boolean match(double percent, String src, String dest) {
 		return match(percent, src, dest, new MatchHander() {
+
 			@Override
 			public boolean compare(int a, int b) {
 				return a == b;
@@ -56,6 +56,7 @@ public class Match {
 	 */
 	public static boolean match(int errorNum, String src, String dest) {
 		return match(errorNum, src, dest, new MatchHander() {
+
 			@Override
 			public boolean compare(int a, int b) {
 				return a == b;
@@ -89,4 +90,5 @@ public class Match {
 		}
 		return score;
 	}
+
 }

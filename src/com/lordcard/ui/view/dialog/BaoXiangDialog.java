@@ -6,7 +6,7 @@
  */
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -25,14 +25,14 @@ import com.lordcard.common.util.MultiScreenTool;
  *         create at 2013 2013-3-25 下午5:32:42
  */
 public class BaoXiangDialog extends Dialog implements OnClickListener {
+
 	private Context context;
 	private TextView showText;
 	private boolean canCancel = true; // 是否允许取消
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	private RelativeLayout layout;
 
-	protected BaoXiangDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected BaoXiangDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
@@ -48,7 +48,6 @@ public class BaoXiangDialog extends Dialog implements OnClickListener {
 		this.context = context;
 	}
 
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.baoxiang_dialog);
@@ -94,10 +93,8 @@ public class BaoXiangDialog extends Dialog implements OnClickListener {
 	}
 
 	/** 确定 */
-	public void okClick() {
-	};
+	public void okClick() {};
 
 	/** 取消 */
-	public void cancelClick() {
-	};
+	public void cancelClick() {};
 }

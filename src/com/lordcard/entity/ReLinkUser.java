@@ -5,31 +5,30 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 重连的用户信息
- * 
- * @ClassName: ReLinkUser
- * @Description: TODO
- * @author yinhongbiao
+ * @ClassName: ReLinkUser   
+ * @Description: TODO 
+ * @author yinhongbiao   
  * @date 2013-6-26 下午08:03:50
  */
 public class ReLinkUser {
+
 	@Expose
 	@SerializedName("o")
-	private int order; // 顺序
+	private int order; //顺序
 	@Expose
 	@SerializedName("cc")
-	private int cardCount; // 剩余的牌数量
+	private int cardCount; //剩余的牌数量
 	@Expose
 	@SerializedName("u")
-	private GameUser gameUser; // 玩家信息
+	private GameUser gameUser; //玩家信息
 	@Expose
 	@SerializedName("a")
-	private int isAuto; // 是否拖管 0否 1:是
+	private int isAuto; //是否拖管 0否 1:是
 	@Expose
 	@SerializedName("r")
 	private int ratio = 1; // 加倍的倍数 (1:不加倍,2:加2倍,4:加4倍)
 
-	public ReLinkUser() {
-	}
+	public ReLinkUser() {}
 
 	public int getOrder() {
 		return order;

@@ -9,8 +9,9 @@ import com.google.gson.annotations.Expose;
  * @Description: 奖励
  * @author shaohu
  * @date 2013-6-14 下午03:40:42
+ * 
  */
-public class PrizeGoods {
+public class PrizeGoods  {
 	/**
 	 * 物品编码
 	 */
@@ -21,11 +22,13 @@ public class PrizeGoods {
 	 */
 	@Expose
 	private Integer count;
+
 	/**
 	 * 物品名称
 	 */
 	@Expose
 	private String goodsName;
+
 	/**
 	 * 物品单位
 	 */

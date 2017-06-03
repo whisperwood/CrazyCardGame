@@ -1,6 +1,6 @@
 package com.lordcard.ui;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.List;
 
@@ -22,11 +22,7 @@ import com.sdk.util.SDKFactory;
 
 public class GameGuideView extends Activity implements OnGestureListener {
 	/** Called when the activity is first created. */
-	private int[] imageId = new int[] {/*
-										 * R.drawable.login_guide1,R.drawable.
-										 * login_guide2,R.drawable .login_guide3
-										 * xs_del
-										 */};
+	private int[] imageId = new int[] {/*R.drawable.login_guide1,R.drawable.login_guide2,R.drawable.login_guide3 xs_del*/};
 	private List<ImageView> points;
 	ViewFlipper mViewFlipper;
 	private GestureDetector mGestureDetector = null;;
@@ -36,37 +32,32 @@ public class GameGuideView extends Activity implements OnGestureListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.firstguide);
+
 		mViewFlipper = (ViewFlipper) findViewById(R.id.viewflipper);
 		// 生成GestureDetector对象，用于检测手势事件
 		mGestureDetector = new GestureDetector(this);
 		// 添加用于切换的图片;
+
 		for (int i = 0; i < imageId.length; i++) {
 			ImageView mImageView = new ImageView(this);
-			mImageView.setBackgroundDrawable(ImageUtil.getResDrawable(
-					imageId[i], false));
-			mImageView.setLayoutParams(new LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+			mImageView.setBackgroundDrawable(ImageUtil.getResDrawable(imageId[i],false));
+			mImageView.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 			mViewFlipper.addView(mImageView);
 		}
 	}
 
-	@Override
 	public boolean onDown(MotionEvent arg0) {
 		return false;
 	}
 
-	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 		if (e1.getX() - e2.getX() > 120) {// 向右滑动
 			if (mViewFlipper.getDisplayedChild() == imageId.length - 1) {
 				mViewFlipper.stopFlipping();
 				goToLogin();
 			} else {
-				mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,
-						R.anim.push_left_in));
-				mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,
-						R.anim.push_left_out));
+				mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_in));
+				mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_out));
 				mViewFlipper.showNext();
 			}
 		} else if (e2.getX() - e1.getX() > 120) {// 向左滑动
@@ -74,31 +65,22 @@ public class GameGuideView extends Activity implements OnGestureListener {
 				mViewFlipper.stopFlipping();
 				Toast.makeText(this, "亲，已经是第一张了", 500).show();
 			} else {
-				mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,
-						R.anim.push_right_in));
-				mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,
-						R.anim.push_right_out));
+				mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_right_in));
+				mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_right_out));
 				mViewFlipper.showPrevious();
 			}
 		}
 		return true;
 	}
 
-	@Override
-	public void onLongPress(MotionEvent e) {
-	}
+	public void onLongPress(MotionEvent e) {}
 
-	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 		return false;
 	}
 
-	@Override
-	public void onShowPress(MotionEvent e) {
-	}
+	public void onShowPress(MotionEvent e) {}
 
-	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
 		return false;
 	}
@@ -116,4 +98,5 @@ public class GameGuideView extends Activity implements OnGestureListener {
 		startActivity(intent);
 		finish();
 	}
+
 }

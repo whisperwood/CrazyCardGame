@@ -6,7 +6,8 @@
  */
 package com.lordcard.common.upgrade;
 
-import com.crazy.shui.R;
+
+import com.zzyddz.shui.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,8 +43,8 @@ import com.lordcard.ui.StartActivity;
 import com.lordcard.ui.dizhu.DoudizhuMainGameActivity;
 
 /**
- * 升级更新服务 com.lordcard.common.upgrade.UpdateService
- * 
+ * 升级更新服务
+ * com.lordcard.common.upgrade.UpdateService
  * @author Administrator <br/>
  *         create at 2013 2013-4-1 下午3:41:01
  */
@@ -55,6 +56,7 @@ public class UpdateService extends Service {
 	private File file;
 	private Context ctx;
 	long fileSize = -1; // 文件大小
+
 	int downFileSize = 0;
 	int progress = 0;
 	private final IBinder binder = new MyBinder();
@@ -65,12 +67,10 @@ public class UpdateService extends Service {
 		}
 	}
 
-	@Override
 	public IBinder onBind(Intent intent) {
 		return binder;
 	}
 
-	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 		ctx = getApplicationContext();
@@ -94,40 +94,38 @@ public class UpdateService extends Service {
 	 * 下载新版本
 	 */
 	public void downLoadNewVesion() {
-		String notimsg = ctx.getResources().getString(R.string.app_name)
-				+ UPVersion.versionName + "正在下载更新";
+		String notimsg = ctx.getResources().getString(R.string.app_name) + UPVersion.versionName + "正在下载更新";
 		notification = new Notification();
 		notification.icon = R.drawable.icon;
 		notification.tickerText = notimsg;
+
 		// 放置在"正在运行"栏目中
 		notification.flags = Notification.FLAG_ONGOING_EVENT;
-		notification.contentView = new RemoteViews(ctx.getPackageName(),
-				R.layout.download_notify);
-		notification.contentView.setProgressBar(R.id.download_progressBar, 100,
-				0, false);
+		notification.contentView = new RemoteViews(ctx.getPackageName(), R.layout.download_notify);
+		notification.contentView.setProgressBar(R.id.download_progressBar, 100, 0, false);
+
 		new Thread() {
-			@Override
 			public void run() {
 				file = downFile(HttpURL.CONFIG_SER + UPVersion.apkName); // 文件下载
+
 				if (file != null && file.exists() && downFileSize == fileSize) { // 下载成功
 					notification.flags = Notification.FLAG_AUTO_CANCEL;
+
 					Intent finishIntent = ActivityUtils.getInstallIntent(file);
-					notification.contentView.setTextViewText(
-							R.id.download_textView, "下载成功,点击安装。");
-					notification.contentView.setProgressBar(
-							R.id.download_progressBar, 100, 100, false);
+					notification.contentView.setTextViewText(R.id.download_textView, "下载成功,点击安装。");
+					notification.contentView.setProgressBar(R.id.download_progressBar, 100, 100, false);
 					notification.defaults = Notification.DEFAULT_SOUND; // 设置铃声
-					notification.contentIntent = PendingIntent.getActivity(ctx,
-							0, finishIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+					notification.contentIntent = PendingIntent.getActivity(ctx, 0, finishIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 					notificationManager.notify(NOTIFICATION_ID, notification);
 					ctx.startActivity(finishIntent);
 					stopService(finishIntent);
+
 				} else { // 下载失败
 					notification.flags = Notification.FLAG_AUTO_CANCEL;
-					notification.contentView.setTextViewText(
-							R.id.download_textView, "下载失败");
+					notification.contentView.setTextViewText(R.id.download_textView, "下载失败");
 					notificationManager.notify(NOTIFICATION_ID, notification);
 					Database.UPDATEING = false;
+
 				}
 			};
 		}.start();
@@ -138,33 +136,28 @@ public class UpdateService extends Service {
 	 */
 	public void downLoadBackstage() {
 		new Thread() {
-			@Override
 			public void run() {
 				file = downAPK(HttpURL.CONFIG_SER + UPVersion.apkName); // 文件下载
 				if (file != null && file.exists() && downFileSize == fileSize) { // 下载成功
-					// DialogUtils.mesToastTip("后台下载成功！");
-					SharedPreferences sharedData = CrashApplication
-							.getInstance().getSharedPreferences(
-									Constant.UPDATECODE, Context.MODE_PRIVATE);
+//					DialogUtils.mesToastTip("后台下载成功！");
+					SharedPreferences sharedData = CrashApplication.getInstance().getSharedPreferences(Constant.UPDATECODE, Context.MODE_PRIVATE);
 					Editor editor = sharedData.edit();
 					editor.putInt(Constant.SAVECODE, UPVersion.versionCode);
 					editor.commit();
-					if (null != Database.currentActivity) {
+					if(null != Database.currentActivity){
 						Database.currentActivity.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								if (null != Database.currentActivity
-										&& !DoudizhuMainGameActivity.class
-												.toString()
-												.equals(Database.currentActivity
-														.getClass().toString())) {
+								if(null != Database.currentActivity 
+										&& !DoudizhuMainGameActivity.class.toString().equals(Database.currentActivity.getClass().toString())){
 									UpdateUtils.newVersionTip();
 								}
+								
 							}
 						});
 					}
 				} else { // 下载失败
-					// DialogUtils.mesToastTip("后台下载失败！");
+//					DialogUtils.mesToastTip("后台下载失败！");
 					Database.UPDATEING = false;
 				}
 			};
@@ -186,25 +179,23 @@ public class UpdateService extends Service {
 			InputStream is = entity.getContent();
 			FileOutputStream fileOutputStream = null;
 			if (is != null) {
-				boolean sdCardExist = Environment.getExternalStorageState()
-						.equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+				boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 				if (sdCardExist) { // 下载到sd卡
-					file = new File(Environment.getExternalStorageDirectory(),
-							UPVersion.apkName);
+					file = new File(Environment.getExternalStorageDirectory(), UPVersion.apkName);
 					if (file.exists()) {
 						file.delete();
-						downFileSize = 0;// 防止超过200%情况
+						downFileSize = 0;//防止超过200%情况
 					}
 					ActivityUtils.createFile(file);
+
 					fileOutputStream = new FileOutputStream(file);
 				} else { // 下载到手机内存
 					file = ctx.getFileStreamPath(UPVersion.apkName);
 					if (file.exists()) {
 						file.delete();
-						downFileSize = 0;// 防止超过200%情况
+						downFileSize = 0;//防止超过200%情况
 					}
-					fileOutputStream = ctx.openFileOutput(UPVersion.apkName,
-							Context.MODE_WORLD_READABLE);
+					fileOutputStream = ctx.openFileOutput(UPVersion.apkName, Context.MODE_WORLD_READABLE);
 				}
 				int tempProgress = -1;
 				byte[] buf = new byte[1024];
@@ -214,25 +205,18 @@ public class UpdateService extends Service {
 					// 下载进度
 					progress = (int) (downFileSize * 100.0 / fileSize);
 					fileOutputStream.write(buf, 0, ch);
+
 					if (downFileSize == fileSize) {
 						// 下载完成
 					} else if (tempProgress != progress) {
 						// 下载进度发生改变，则发送Message
 						Intent taskIt = new Intent();
 						taskIt.setClass(UpdateService.this, StartActivity.class);
-						notification.contentIntent = PendingIntent.getActivity(
-								UpdateService.this, 0, taskIt,
-								PendingIntent.FLAG_UPDATE_CURRENT);
-						notification.contentView
-								.setProgressBar(R.id.download_progressBar, 100,
-										progress, false);
-						notification.contentView.setTextViewText(
-								R.id.download_textView, "进度" + progress + "%");
-						// notification.setLatestEventInfo(UpdateService.this,
-						// "点击查看", "点击查看详细内容",
-						// notification.contentIntent);
-						notificationManager.notify(NOTIFICATION_ID,
-								notification);
+						notification.contentIntent = PendingIntent.getActivity(UpdateService.this, 0, taskIt, PendingIntent.FLAG_UPDATE_CURRENT);
+						notification.contentView.setProgressBar(R.id.download_progressBar, 100, progress, false);
+						notification.contentView.setTextViewText(R.id.download_textView, "进度" + progress + "%");
+						//						notification.setLatestEventInfo(UpdateService.this, "点击查看", "点击查看详细内容", notification.contentIntent);
+						notificationManager.notify(NOTIFICATION_ID, notification);
 						tempProgress = progress;
 					}
 				}
@@ -261,26 +245,28 @@ public class UpdateService extends Service {
 			InputStream is = entity.getContent();
 			FileOutputStream fileOutputStream = null;
 			if (is != null) {
-				boolean sdCardExist = Environment.getExternalStorageState()
-						.equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+
+				boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 				if (sdCardExist) { // 下载到sd卡
-					file = new File(Environment.getExternalStorageDirectory(),
-							UPVersion.apkName);
+					file = new File(Environment.getExternalStorageDirectory(), UPVersion.apkName);
+
 					if (file.exists()) {
 						file.delete();
-						downFileSize = 0;// 防止超过200%情况
+						downFileSize = 0;//防止超过200%情况
 					}
 					ActivityUtils.createFile(file);
+
 					fileOutputStream = new FileOutputStream(file);
 				} else { // 下载到手机内存
 					file = ctx.getFileStreamPath(UPVersion.apkName);
 					if (file.exists()) {
 						file.delete();
-						downFileSize = 0;// 防止超过200%情况
+						downFileSize = 0;//防止超过200%情况
 					}
-					fileOutputStream = ctx.openFileOutput(UPVersion.apkName,
-							Context.MODE_WORLD_READABLE);
+					fileOutputStream = ctx.openFileOutput(UPVersion.apkName, Context.MODE_WORLD_READABLE);
+
 				}
+
 				int tempProgress = -1;
 				byte[] buf = new byte[1024];
 				int ch = 0;
@@ -289,6 +275,7 @@ public class UpdateService extends Service {
 					// 下载进度
 					progress = (int) (downFileSize * 100.0 / fileSize);
 					fileOutputStream.write(buf, 0, ch);
+
 					if (downFileSize == fileSize) {
 						// 下载完成
 					} else if (tempProgress != progress) {
@@ -305,4 +292,5 @@ public class UpdateService extends Service {
 		}
 		return file;
 	}
+
 }

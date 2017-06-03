@@ -1,30 +1,39 @@
 package com.lordcard.entity;
 
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * 增加经验后，返回给用户的数据 包括升级时赠送的物品显示
+ * 增加经验后，返回给用户的数据
+ * 包括升级时赠送的物品显示
  */
 public class GameIQUpgrade {
+
 	@Expose
 	@SerializedName("iq")
 	private Integer iq; // 等级等级
+
 	@Expose
 	@SerializedName("in")
 	private Integer intellect; // 当前经验
+
 	@Expose
 	@SerializedName("ni")
 	private Integer nextIntellect; // 达到下一级等级所需经验
+
 	@Expose
 	@SerializedName("up")
 	private boolean upgrade; // 是否升级了
+
 	@Expose
 	@SerializedName("it")
 	private Integer isTitle; // 是否为称号:0=不是,1=是
+
 	@Expose
 	@SerializedName("ce")
 	private String celebratedText; // 庆祝文字
+
 	@Expose
 	@SerializedName("ee")
 	private String celebratedEffect; // 庆祝效果
@@ -84,4 +93,5 @@ public class GameIQUpgrade {
 	public void setCelebratedEffect(String celebratedEffect) {
 		this.celebratedEffect = celebratedEffect;
 	}
+
 }

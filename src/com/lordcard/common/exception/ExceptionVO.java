@@ -16,6 +16,7 @@ import com.google.gson.annotations.SerializedName;
  *         create at 2012 2012-12-15 下午12:25:51
  */
 public class ExceptionVO {
+
 	@Expose
 	@SerializedName("t")
 	private String time; // 异常时间
@@ -71,4 +72,5 @@ public class ExceptionVO {
 	public void setApkVCode(String apkVCode) {
 		this.apkVCode = apkVCode;
 	}
+
 }

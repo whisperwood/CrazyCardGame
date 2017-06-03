@@ -7,6 +7,7 @@ package com.lordcard.common.task.base;
  *         create at 2013 2013-2-5 下午3:29:16
  */
 public interface Feedback {
+
 	public void isCancel(boolean isCancel);
 
 	public boolean hasCancel();

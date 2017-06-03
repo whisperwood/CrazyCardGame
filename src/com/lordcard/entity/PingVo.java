@@ -1,13 +1,13 @@
 package com.lordcard.entity;
 
 public class PingVo {
-	/** 报文顺序号 */
+	/**报文顺序号*/
 	private int icmp_seq;
-	/** 生存时间 */
+	/**生存时间*/
 	private int ttl;
-	/** 往返时间 */
+	/**往返时间*/
 	private float time;
-	/** IP地址 */
+	/**IP地址*/
 	private String ip;
 
 	public final int getIcmp_seq() {
@@ -41,4 +41,5 @@ public class PingVo {
 	public final void setIp(String ip) {
 		this.ip = ip;
 	}
+
 }

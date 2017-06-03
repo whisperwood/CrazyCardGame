@@ -1,6 +1,7 @@
 package com.lordcard.common.util;
 
-import com.crazy.shui.R;
+
+import com.zzyddz.shui.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -34,6 +35,7 @@ import com.sdk.util.SDKFactory;
 import com.umeng.analytics.MobclickAgent;
 
 public class DialogUtils {
+
 	/** Toast提示消息 */
 	public static void toastTip(String msg) {
 		toastTip(msg, Toast.LENGTH_SHORT, 0);
@@ -58,16 +60,13 @@ public class DialogUtils {
 	 * @return void
 	 * @throws
 	 */
-	public static void toastTip(final String msg, final int showTime,
-			final int align) {
+	public static void toastTip(final String msg, final int showTime, final int align) {
 		try {
 			Database.currentActivity.runOnUiThread(new Runnable() {
-				@Override
+
 				public void run() {
 					MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
-					View toastRoot = Database.currentActivity
-							.getLayoutInflater().inflate(
-									R.layout.my_text_toast, null);
+					View toastRoot = Database.currentActivity.getLayoutInflater().inflate(R.layout.my_text_toast, null);
 					toastRoot.getBackground().setAlpha(85);// 0~255透明度值
 					Toast toast = new Toast(CrashApplication.getInstance());
 					if (showTime > 0) {
@@ -75,8 +74,7 @@ public class DialogUtils {
 					}
 					mst.adjustView(toastRoot);
 					toast.setView(toastRoot);
-					TextView tv = (TextView) toastRoot
-							.findViewById(R.id.TextViewInfo);
+					TextView tv = (TextView) toastRoot.findViewById(R.id.TextViewInfo);
 					mst.adjustView(tv);
 					if (!TextUtils.isEmpty(msg)) {
 						tv.setText(Html.fromHtml(msg));
@@ -87,8 +85,7 @@ public class DialogUtils {
 					}
 				}
 			});
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 	}
 
 	/** 提示对话框 */
@@ -97,15 +94,13 @@ public class DialogUtils {
 	}
 
 	/** 提示对话框 */
-	public static void mesTip(final String msg, final boolean showCancel,
-			final boolean isFinish) {
+	public static void mesTip(final String msg, final boolean showCancel, final boolean isFinish) {
 		Database.currentActivity.runOnUiThread(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, showCancel) {
-						@Override
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, showCancel) {
+
 						public void okClick() {
 							if (isFinish) {
 								ActivityUtils.finishAcitivity();
@@ -126,12 +121,11 @@ public class DialogUtils {
 	/** 开宝箱 */
 	public static void baoxiangTip(final String msg, final boolean isFinish) {
 		Database.currentActivity.runOnUiThread(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
-					BaoXiangDialog baoXiangDialog = new BaoXiangDialog(
-							Database.currentActivity) {
-						@Override
+					BaoXiangDialog baoXiangDialog = new BaoXiangDialog(Database.currentActivity) {
+
 						public void okClick() {
 							if (isFinish) {
 								ActivityUtils.finishAcitivity();
@@ -140,8 +134,7 @@ public class DialogUtils {
 					};
 					baoXiangDialog.show();
 					baoXiangDialog.setText(msg);
-				} catch (Exception e) {
-				}
+				} catch (Exception e) {}
 			}
 		});
 	}
@@ -149,20 +142,18 @@ public class DialogUtils {
 	/** 单个确定提示 */
 	public static void mesTipSingle(final String msg, final boolean isFinish) {
 		Database.currentActivity.runOnUiThread(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
-					SingleDialog gameDialog = new SingleDialog(
-							Database.currentActivity, isFinish) {
-						@Override
+					SingleDialog gameDialog = new SingleDialog(Database.currentActivity, isFinish) {
+
 						public void okClick() {
 							dismiss();
 						}
 					};
 					gameDialog.show();
 					gameDialog.setText(msg);
-				} catch (Exception e) {
-				}
+				} catch (Exception e) {}
 			}
 		});
 	}
@@ -170,20 +161,18 @@ public class DialogUtils {
 	/** 登录失败 */
 	public static void loginFail() {
 		Database.currentActivity.runOnUiThread(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, false) {
-						@Override
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, false) {
+
 						public void okClick() {
 							ActivityUtils.finishAcitivity();
 						}
 					};
 					gameDialog.show();
 					gameDialog.setText("登录失败，请稍候再试！");
-				} catch (Exception e) {
-				}
+				} catch (Exception e) {}
 			}
 		});
 	}
@@ -191,12 +180,11 @@ public class DialogUtils {
 	/** 重新登录游戏 */
 	public static void reLogin(final Activity act) {
 		Database.currentActivity.runOnUiThread(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, false) {
-						@Override
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, false) {
+
 						public void okClick() {
 							GameCache.remove(CacheKey.GAME_USER);
 							Intent in = new Intent();
@@ -207,8 +195,7 @@ public class DialogUtils {
 					};
 					gameDialog.show();
 					gameDialog.setText("用户信息过期，请重新登录！");
-				} catch (Exception e) {
-				}
+				} catch (Exception e) {}
 			}
 		});
 	}
@@ -219,25 +206,21 @@ public class DialogUtils {
 
 	public static void receiveAward() {
 		Database.currentActivity.runOnUiThread(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity) {
-						@Override
+					GameDialog gameDialog = new GameDialog(Database.currentActivity) {
+
 						public void okClick() {
 							Intent in = new Intent();
-							in.setClass(Database.currentActivity,
-									TaskMenuActivity.class);
+							in.setClass(Database.currentActivity, TaskMenuActivity.class);
 							in.putExtra("award", true);
 							Database.currentActivity.startActivity(in);
 						}
 					};
 					gameDialog.show();
-					gameDialog.setText(Database.currentActivity.getText(
-							R.string.award).toString());
-				} catch (Exception e) {
-				}
+					gameDialog.setText(Database.currentActivity.getText(R.string.award).toString());
+				} catch (Exception e) {}
 			}
 		});
 	}
@@ -249,21 +232,18 @@ public class DialogUtils {
 	 *            string.xml资源文件提示信息id
 	 */
 	public static void netFailTip(int tipMsgId) {
-		final String msg = Database.currentActivity.getResources().getString(
-				tipMsgId);
+		final String msg = Database.currentActivity.getResources().getString(tipMsgId);
 		final Activity act = Database.currentActivity;
 		act.runOnUiThread(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, false) {
-						@Override
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, false) {
+
 						public void okClick() {
 							Intent intent = new Intent();
 							if (Database.GAME_TYPE == Constant.GAME_TYPE_DIZHU) { // 斗地主
-								intent.setClass(act,
-										DoudizhuRoomListActivity.class);
+								intent.setClass(act, DoudizhuRoomListActivity.class);
 							}
 							act.startActivity(intent);
 							ActivityUtils.finishAcitivity();
@@ -271,8 +251,7 @@ public class DialogUtils {
 					};
 					gameDialog.show();
 					gameDialog.setText(msg);
-				} catch (Exception e) {
-				}
+				} catch (Exception e) {}
 			}
 		});
 	}
@@ -285,21 +264,18 @@ public class DialogUtils {
 	 */
 	public static void exitGame(final Context context) {
 		Database.currentActivity.runOnUiThread(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity) {
-						@Override
+					GameDialog gameDialog = new GameDialog(Database.currentActivity) {
+
 						public void okClick() {
 							CmdUtils.exitGame();
 							MobclickAgent.onEvent(context, "确认退出游戏中");
-							GameUser gu = (GameUser) GameCache
-									.getObj(CacheKey.GAME_USER);
+							GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 							// 记录逃跑日志
 							if (gu != null) {
-								MobclickAgent.onEvent(context,
-										"逃跑:" + gu.getAccount());
+								MobclickAgent.onEvent(context, "逃跑:" + gu.getAccount());
 								gu.setRound(0);
 								GameCache.putObj(CacheKey.GAME_USER, gu);
 							}
@@ -307,7 +283,6 @@ public class DialogUtils {
 							ActivityUtils.finishAcitivity();
 						}
 
-						@Override
 						public void cancelClick() {
 							dismiss();
 						};
@@ -319,8 +294,7 @@ public class DialogUtils {
 					} else {
 						gameDialog.setText("是否返回游戏大厅？");
 					}
-				} catch (Exception e) {
-				}
+				} catch (Exception e) {}
 			}
 		});
 	}
@@ -328,8 +302,7 @@ public class DialogUtils {
 	/**
 	 * 加载提示
 	 */
-	public static ProgressDialog getWaitProgressDialog(Context context,
-			String msg) {
+	public static ProgressDialog getWaitProgressDialog(Context context, String msg) {
 		ProgressDialog dialog = new ProgressDialog(context, R.style.tsdialog);
 		dialog.setMessage(msg);
 		dialog.setProgress(ProgressDialog.STYLE_SPINNER);
@@ -342,16 +315,13 @@ public class DialogUtils {
 		window.setAttributes(lp);
 		return dialog;
 	}
-
 	/**
 	 * 充值提示
-	 * 
 	 * @param context
 	 * @param msg
 	 * @return
 	 */
-	public static ProgressDialog getChargingProgressDialog(Context context,
-			String msg) {
+	public static ProgressDialog getChargingProgressDialog(Context context, String msg) {
 		ProgressDialog dialog = new ProgressDialog(context, R.style.tsdialog);
 		dialog.setMessage(msg);
 		dialog.setProgress(ProgressDialog.STYLE_SPINNER);
@@ -364,28 +334,24 @@ public class DialogUtils {
 		window.setAttributes(lp);
 		return dialog;
 	}
-
 	public static void quitGameTip() {
 		Database.currentActivity.runOnUiThread(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, false) {
-						@Override
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, false) {
+
 						public void okClick() {
 							ClientCmdMgr.closeClient();
 							Intent intent = new Intent();
-							intent.setClass(Database.currentActivity,
-									DoudizhuRoomListActivity.class);
+							intent.setClass(Database.currentActivity, DoudizhuRoomListActivity.class);
 							Database.currentActivity.startActivity(intent);
 							ActivityUtils.finishAcitivity();
 						}
 					};
 					gameDialog.show();
 					gameDialog.setText("其他游戏玩家已退出,请退出后重新进入");
-				} catch (Exception e) {
-				}
+				} catch (Exception e) {}
 			}
 		});
 	}
@@ -395,24 +361,21 @@ public class DialogUtils {
 	 */
 	public static void alipayFail(final String msg) {
 		Database.currentActivity.runOnUiThread(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, false) {
-						@Override
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, false) {
+
 						public void okClick() {
 							Intent intent = new Intent();
-							intent.setClass(Database.currentActivity,
-									TaskMenuActivity.class);
+							intent.setClass(Database.currentActivity, TaskMenuActivity.class);
 							Database.currentActivity.startActivity(intent);
 							ActivityUtils.finishAcitivity();
 						}
 					};
 					gameDialog.show();
 					gameDialog.setText(msg);
-				} catch (Exception e) {
-				}
+				} catch (Exception e) {}
 			}
 		});
 	}
@@ -425,17 +388,14 @@ public class DialogUtils {
 	 */
 	public static GameDialog getNetWorkDialog() {
 		GameDialog gameDialog = new GameDialog(Database.currentActivity) {
-			@Override
+
 			public void okClick() {
 				// Settings.ACTION_WIRELESS_SETTINGS 移动网络(2G/3G)
-				Database.currentActivity.startActivity(new Intent(
-						Settings.ACTION_SETTINGS)); // 进入手机中的wifi网络设置界面
+				Database.currentActivity.startActivity(new Intent(Settings.ACTION_SETTINGS)); // 进入手机中的wifi网络设置界面
 			}
 
-			@Override
 			public void cancelClick() {
-				if (!Database.currentActivity.getClass().equals(
-						LoginActivity.class)) {
+				if (!Database.currentActivity.getClass().equals(LoginActivity.class)) {
 					ActivityPool.exitApp();
 				}
 			}
@@ -448,33 +408,30 @@ public class DialogUtils {
 		gameDialog.setCancelButtonBg(R.drawable.select_btn_bg);
 		return gameDialog;
 	}
-
+	
+	
 	/** 网络缓慢提示 */
 	public static void netSlowTip() {
 		Database.currentActivity.runOnUiThread(new Runnable() {
-			@Override
+
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity) {
-						@Override
+					GameDialog gameDialog = new GameDialog(Database.currentActivity) {
+
 						public void okClick() {
 							dismiss();
 						}
 
-						@Override
 						public void cancelClick() {
 							dismiss();
-							MobclickAgent.onEvent(Database.currentActivity,
-									"网慢慢进入单机游戏");
+							MobclickAgent.onEvent(Database.currentActivity, "网慢慢进入单机游戏");
 							Intent intent = new Intent();
-							intent.setClass(Database.currentActivity,
-									PersonnalDoudizhuActivity.class);
+							intent.setClass(Database.currentActivity, PersonnalDoudizhuActivity.class);
 							Database.currentActivity.startActivity(intent);
 						}
 					};
-					String msg = Database.currentActivity
-							.getString(R.string.link_server_fail);
+					
+					String msg = Database.currentActivity.getString(R.string.link_server_fail);
 					gameDialog.show();
 					gameDialog.setText(msg);
 					gameDialog.setOkText("确   定");

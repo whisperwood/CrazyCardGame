@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.List;
 import java.util.Map;
@@ -40,6 +40,7 @@ import com.umeng.analytics.MobclickAgent;
  * @author Administrator
  */
 public class SignMatchDialog extends Dialog implements OnClickListener {
+
 	private Context context;
 	private ListView rankListView;
 	private TextView content;
@@ -55,15 +56,12 @@ public class SignMatchDialog extends Dialog implements OnClickListener {
 	private Handler mHandler;
 	private List<GameScoreTradeRank> gstList;
 
-	protected SignMatchDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected SignMatchDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
 
-	public SignMatchDialog(Context context, int theme,
-			GameRoomRuleDetail gameHallView, boolean isFuhe, Room room,
-			int position, Handler mHandler) {
+	public SignMatchDialog(Context context, int theme, GameRoomRuleDetail gameHallView, boolean isFuhe, Room room, int position, Handler mHandler) {
 		super(context, theme);
 		this.context = context;
 		this.gameHallView = gameHallView;
@@ -83,6 +81,7 @@ public class SignMatchDialog extends Dialog implements OnClickListener {
 	}
 
 	public void setDismiss() {
+
 	}
 
 	/**
@@ -102,8 +101,10 @@ public class SignMatchDialog extends Dialog implements OnClickListener {
 		rankListView = (ListView) findViewById(R.id.sign_rank_list);
 		SignRankAdapter valueAdapter = new SignRankAdapter(testList);
 		rankListView.setAdapter(valueAdapter);
+
 		content = (TextView) findViewById(R.id.sign_dialog_content);
 		content.setText(gameHallView.getRoomDetail());
+
 		backButton = (Button) findViewById(R.id.sign_rank_detail_btn);
 		if (isFuhe) {
 			backButton.setText("排名");
@@ -111,8 +112,10 @@ public class SignMatchDialog extends Dialog implements OnClickListener {
 			backButton.setText("返回");
 		}
 		backButton.setOnClickListener(this);
+
 		signButton = (Button) findViewById(R.id.sign_rank_ok_btn);
 		signButton.setOnClickListener(this);
+
 		closeBtn = (Button) findViewById(R.id.dialog_close_btn);
 		closeBtn.setOnClickListener(this);
 	}
@@ -130,39 +133,35 @@ public class SignMatchDialog extends Dialog implements OnClickListener {
 			if (isFuhe) {// 复合赛制
 				// 显示排名信息
 				new Thread(new Runnable() {
+
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
 						try {
-							String rank = HttpRequest.getFuheRank(room
-									.getCode());
+
+							String rank = HttpRequest.getFuheRank(room.getCode());
 							if (rank != null) {
-								gstList = JsonHelper
-										.fromJson(
-												rank,
-												new TypeToken<List<GameScoreTradeRank>>() {
-												});
+								gstList = JsonHelper.fromJson(rank, new TypeToken<List<GameScoreTradeRank>>() {
+								});
 							}
 						} catch (Exception e) {
 							// TODO: handle exception
 						}
 						if (gstList != null) {
-							Database.currentActivity
-									.runOnUiThread(new Runnable() {
-										@Override
-										public void run() {
-											MatchRankDialog mrdDialog = new MatchRankDialog(
-													context, R.style.dialog,
-													gstList);
-											mrdDialog.show();
-										}
-									});
+							Database.currentActivity.runOnUiThread(new Runnable() {
+								public void run() {
+									MatchRankDialog mrdDialog = new MatchRankDialog(context, R.style.dialog, gstList);
+									mrdDialog.show();
+								}
+							});
 						} else {
 							DialogUtils.mesTip("获取排名失败！", false);
 							dismiss();
 						}
+
 					}
 				}).start();
+
 			} else {
 				dismiss();
 			}
@@ -213,28 +212,24 @@ public class SignMatchDialog extends Dialog implements OnClickListener {
 			this.mInflater = LayoutInflater.from(context);
 		}
 
-		@Override
 		public int getCount() {
 			return gifInt.size();
 		}
 
-		@Override
 		public Object getItem(int position) {
 			return gifInt.get(position);
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			convertView = mInflater.inflate(R.layout.match_list_item, null);
 			TextView tv = (TextView) convertView.findViewById(R.id.match_text);
-			tv.setText(gifInt.get(position).get("rankText") + " : "
-					+ gifInt.get(position).get("prizeText"));
+			tv.setText(gifInt.get(position).get("rankText") + " : " + gifInt.get(position).get("prizeText"));
 			return convertView;
 		}
+
 	}
 }

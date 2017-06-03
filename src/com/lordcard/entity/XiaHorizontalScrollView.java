@@ -10,11 +10,12 @@ import android.widget.HorizontalScrollView;
 
 /**
  * 回弹效果的横向scroolview
- */
+ * */
 @SuppressLint("HandlerLeak")
 public class XiaHorizontalScrollView extends HorizontalScrollView {
-	// private static final String TAG = XiaHorizontalScrollView.class
-	// .getName();
+
+//	 private static final String TAG = XiaHorizontalScrollView.class
+//	   .getName();
 	// context
 	Context mContext;
 	// the child View
@@ -30,8 +31,7 @@ public class XiaHorizontalScrollView extends HorizontalScrollView {
 		super(context, attrs);
 	}
 
-	public XiaHorizontalScrollView(Context context, AttributeSet attrs,
-			int defStyle) {
+	public XiaHorizontalScrollView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
@@ -68,26 +68,26 @@ public class XiaHorizontalScrollView extends HorizontalScrollView {
 	private void commonOnTouchEvent(MotionEvent ev) {
 		int action = ev.getAction();
 		switch (action) {
-		case MotionEvent.ACTION_UP:
-			if (mChildView.getScrollX() != 0) {
-				handleStop = true;
-				startAnimation();
-			}
-			break;
-		case MotionEvent.ACTION_MOVE:
-			float nowX = ev.getX();
-			int deltaX = (int) (touchX - nowX);
-			touchX = nowX;
-			if (isEdge()) {
-				int offset = mChildView.getScrollX();
-				if (offset < MAX_SCROLL_HEIGHT && offset > -MAX_SCROLL_HEIGHT) {
-					mChildView.scrollBy((int) (deltaX * SCROLL_DRAG), 0);
-					handleStop = false;
+			case MotionEvent.ACTION_UP:
+				if (mChildView.getScrollX() != 0) {
+					handleStop = true;
+					startAnimation();
 				}
-			}
-			break;
-		default:
-			break;
+				break;
+			case MotionEvent.ACTION_MOVE:
+				float nowX = ev.getX();
+				int deltaX = (int) (touchX - nowX);
+				touchX = nowX;
+				if (isEdge()) {
+					int offset = mChildView.getScrollX();
+					if (offset < MAX_SCROLL_HEIGHT && offset > -MAX_SCROLL_HEIGHT) {
+						mChildView.scrollBy((int) (deltaX * SCROLL_DRAG), 0);
+						handleStop = false;
+					}
+				}
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -116,7 +116,7 @@ public class XiaHorizontalScrollView extends HorizontalScrollView {
 
 	private float childScrollX = 0;
 	Handler resetChildViewPositionHandler = new Handler() {
-		@Override
+
 		public void handleMessage(android.os.Message msg) {
 			childScrollX = mChildView.getScrollX();
 			if (childScrollX != 0 && handleStop) {

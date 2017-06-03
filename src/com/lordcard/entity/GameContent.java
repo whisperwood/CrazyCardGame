@@ -7,7 +7,9 @@ package com.lordcard.entity;
  * @Description: 内容
  * @author shaohu
  * @date 2013-4-10 上午11:43:32
+ * 
  */
+
 public class GameContent {
 	private String id;
 	private String title;
@@ -28,8 +30,7 @@ public class GameContent {
 	 * @param ordernum
 	 * @param description
 	 */
-	public GameContent(String id, String title, Integer type, Integer display,
-			Integer ordernum, String description) {
+	public GameContent(String id, String title, Integer type, Integer display, Integer ordernum, String description) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -42,6 +43,7 @@ public class GameContent {
 	/**
 	 * @return the id
 	 */
+
 	public String getId() {
 		return id;
 	}
@@ -57,6 +59,7 @@ public class GameContent {
 	/**
 	 * @return the title
 	 */
+
 	public String getTitle() {
 		return title;
 	}
@@ -72,6 +75,7 @@ public class GameContent {
 	/**
 	 * @return the type
 	 */
+
 	public Integer getType() {
 		return type;
 	}
@@ -87,6 +91,7 @@ public class GameContent {
 	/**
 	 * @return the display
 	 */
+
 	public Integer getDisplay() {
 		return display;
 	}
@@ -117,6 +122,7 @@ public class GameContent {
 	/**
 	 * @return the description
 	 */
+
 	public String getDescription() {
 		return description;
 	}
@@ -128,4 +134,5 @@ public class GameContent {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 }

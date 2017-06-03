@@ -15,6 +15,7 @@ import com.google.gson.annotations.Expose;
  *         create at 2013 2013-1-8 上午11:23:41
  */
 public class DownSoft {
+
 	@Expose
 	private int id;
 	@Expose
@@ -85,4 +86,5 @@ public class DownSoft {
 	public void setApkName(String apkName) {
 		this.apkName = apkName;
 	}
+
 }

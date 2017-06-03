@@ -9,8 +9,10 @@ import org.json.JSONException;
  * 暂未使用，待观察是否今后需要此类
  * 
  * @author lds
+ * 
  */
 public class TaskParams {
+
 	private HashMap<String, Object> params = null;
 
 	public TaskParams() {
@@ -30,12 +32,11 @@ public class TaskParams {
 		return params.get(key);
 	}
 
-	public void clearParams() {
-		if (params != null) {
+	public void clearParams(){
+		if(params != null){
 			params.clear();
 		}
 	}
-
 	/**
 	 * Get the boolean value associated with a key.
 	 * 
@@ -48,15 +49,10 @@ public class TaskParams {
 	 */
 	public boolean getBoolean(String key) throws HttpException {
 		Object object = get(key);
-		if (object == null)
+		if(object == null) return false;
+		if (object.equals(Boolean.FALSE) || (object instanceof String && ((String) object).equalsIgnoreCase("false"))) {
 			return false;
-		if (object.equals(Boolean.FALSE)
-				|| (object instanceof String && ((String) object)
-						.equalsIgnoreCase("false"))) {
-			return false;
-		} else if (object.equals(Boolean.TRUE)
-				|| (object instanceof String && ((String) object)
-						.equalsIgnoreCase("true"))) {
+		} else if (object.equals(Boolean.TRUE) || (object instanceof String && ((String) object).equalsIgnoreCase("true"))) {
 			return true;
 		}
 		throw new HttpException(key + " is not a Boolean.");
@@ -75,8 +71,7 @@ public class TaskParams {
 	public double getDouble(String key) throws HttpException {
 		Object object = get(key);
 		try {
-			return object instanceof Number ? ((Number) object).doubleValue()
-					: Double.parseDouble((String) object);
+			return object instanceof Number ? ((Number) object).doubleValue() : Double.parseDouble((String) object);
 		} catch (Exception e) {
 			throw new HttpException(key + " is not a number.");
 		}
@@ -95,8 +90,7 @@ public class TaskParams {
 	public int getInt(String key) throws HttpException {
 		Object object = get(key);
 		try {
-			return object instanceof Number ? ((Number) object).intValue()
-					: Integer.parseInt((String) object);
+			return object instanceof Number ? ((Number) object).intValue() : Integer.parseInt((String) object);
 		} catch (Exception e) {
 			throw new HttpException(key + " is not an int.");
 		}
@@ -126,4 +120,5 @@ public class TaskParams {
 	public boolean has(String key) {
 		return this.params.containsKey(key);
 	}
+
 }

@@ -7,8 +7,10 @@ package com.lordcard.entity;
  * @Description: 物品类型
  * @author shaohu
  * @date 2013-4-10 上午11:22:16
+ * 
  */
 public class GameGoodsType {
+
 	private String id; //
 	private String name; // 物品名称
 	private Integer type; // 物品类型1表示虚拟物品 2表示实物物品
@@ -32,8 +34,7 @@ public class GameGoodsType {
 	 * @param description
 	 * @param display
 	 */
-	public GameGoodsType(String id, String name, Integer type, String picPath,
-			String title, Integer orderNum, String description, Integer display) {
+	public GameGoodsType(String id, String name, Integer type, String picPath, String title, Integer orderNum, String description, Integer display) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -115,4 +116,5 @@ public class GameGoodsType {
 	public void setDisplay(Integer display) {
 		this.display = display;
 	}
+
 }

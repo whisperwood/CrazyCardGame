@@ -1,6 +1,6 @@
 package com.lordcard.ui.view;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.io.File;
 import java.util.HashMap;
@@ -65,6 +65,7 @@ import com.sdk.util.PayTipUtils;
 import com.sdk.util.SDKFactory;
 
 public class Assistant extends RelativeLayout implements OnClickListener {
+
 	private Context context;
 	private AssistantListview listView;
 	ListView view;
@@ -75,46 +76,40 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 	private Handler centreHandler;
 	private ProgressDialog progressDialog;
 	private AssistantBtnContent btnContent;
-	public static List<HashMap<String, Object>> GAME_ASSISTANT;// 缓存游戏助理未处理的消息（有处理不用）
+	public static List<HashMap<String, Object>> GAME_ASSISTANT;//缓存游戏助理未处理的消息（有处理不用）
 	private List<HashMap<String, Object>> game_assistant;
-	private LinearLayout xiaomei;// 小美女图标
+	private LinearLayout xiaomei;//小美女图标
 	private View group;
-	private LinearLayout left;// 分别为消息内容和大美女图标
+	private LinearLayout left;//分别为消息内容和大美女图标
 	RelativeLayout begin;
 	private TextView zhezhao, zhezhao2;
 	private Button closeBtn;
-	// private ImageView xiaomeiImg;
+//	private ImageView xiaomeiImg;
 	private List<String> listMessage;
 	private int listNum, btxNum;
 	public static String ASSID, BTNCODE;
 	MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 
-	public Assistant(final Context context, final Handler centreHandler,
-			AssistantBtnContent btnContent,
-			List<HashMap<String, Object>> game_assistant, LinearLayout layout,
-			ImageView xiaomeiImg) {
+	public Assistant(final Context context, final Handler centreHandler, AssistantBtnContent btnContent, List<HashMap<String, Object>> game_assistant, LinearLayout layout, ImageView xiaomeiImg) {
 		super(context);
 		this.context = context;
 		this.btnContent = btnContent;
 		this.game_assistant = game_assistant;
 		this.xiaomei = layout;
-		// this.xiaomeiImg = xiaomeiImg;
+//		this.xiaomeiImg = xiaomeiImg;
 		this.centreHandler = centreHandler;
-		if (Database.currentActivity.getLocalClassName().equals(
-				DoudizhuRoomListActivity.class.getName())) {
+		if (Database.currentActivity.getLocalClassName().equals(DoudizhuRoomListActivity.class.getName())) {
 			GAME_ASSISTANT = game_assistant;
 		}
 		listNum = 0;
 		btxNum = 0;
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		group = inflater.inflate(R.layout.assistant_view, null);
-		progressDialog = DialogUtils.getWaitProgressDialog(
-				Database.currentActivity, "请稍后.....");
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		group=inflater.inflate(R.layout.assistant_view,null);
+		progressDialog = DialogUtils.getWaitProgressDialog(Database.currentActivity, "请稍后.....");
 		progressDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+
 			@Override
-			public boolean onKey(DialogInterface dialog, int keyCode,
-					KeyEvent event) {
+			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
 				// TODO Auto-generated method stub
 				if (keyCode == KeyEvent.KEYCODE_BACK) {
 					zhezhao.setVisibility(View.GONE);
@@ -125,31 +120,29 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 		});
 		initView();
 		ASSHANDLER = new Handler() {
-			@Override
+
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
 				switch (msg.what) {
-				case 1:
-					// 打开应用包
-					String path = msg.getData().getString("APKpath");
-					Intent finishIntent = ActivityUtils
-							.getInstallIntent(new File(path));
-					Database.currentActivity.startActivity(finishIntent);
-					break;
-				case 2:
-					// 动画显示
-					if (Database.currentActivity.getClass().equals(
-							DoudizhuRoomListActivity.class)) {
-						// Database.ASSCLOSE=false;//放在这里和定时器有点冲突 不能实时
-						Database.ADD_DATA_CENTRE = true;// 默认可以加入消息中心，如果Assistant中处理过消息这不可加入消息中心
-					}
-					AnimUtils.startAnimationsInLeft(left, 400);
-					AnimUtils.startAnimationsInBottom(begin, 400, 0);
-					zhezhao.setVisibility(View.VISIBLE);
-					break;
-				case 3:
-					assistantDismiss();
-					break;
+					case 1:
+						// 打开应用包
+						String path = msg.getData().getString("APKpath");
+						Intent finishIntent = ActivityUtils.getInstallIntent(new File(path));
+						Database.currentActivity.startActivity(finishIntent);
+						break;
+					case 2:
+						// 动画显示
+						if (Database.currentActivity.getClass().equals(DoudizhuRoomListActivity.class)) {
+//						Database.ASSCLOSE=false;//放在这里和定时器有点冲突 不能实时
+							Database.ADD_DATA_CENTRE = true;//默认可以加入消息中心，如果Assistant中处理过消息这不可加入消息中心
+						}
+						AnimUtils.startAnimationsInLeft(left, 400);
+						AnimUtils.startAnimationsInBottom(begin, 400, 0);
+						zhezhao.setVisibility(View.VISIBLE);
+						break;
+					case 3:
+						assistantDismiss();
+						break;
 				}
 			}
 		};
@@ -170,38 +163,21 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 		zhezhao = (TextView) group.findViewById(R.id.menu_transparent_tv2);
 		zhezhao2 = (TextView) group.findViewById(R.id.menu_transparent_tv4);
 		// title为文本或图片:1文本,2:图片,3消息
-		if (Integer
-				.valueOf(
-						Double.valueOf(
-								game_assistant.get(0)
-										.get(AssistantBean.AS_DISPLAY)
-										.toString()).intValue()).toString()
-				.equals("1")) {
+		if (Integer.valueOf(Double.valueOf(game_assistant.get(0).get(AssistantBean.AS_DISPLAY).toString()).intValue()).toString().equals("1")) {
 			titleText.setVisibility(View.VISIBLE);
-			titleText.setText((CharSequence) game_assistant.get(0).get(
-					AssistantBean.AS_CONTENT));
-		} else if (Integer
-				.valueOf(
-						Double.valueOf(
-								game_assistant.get(0)
-										.get(AssistantBean.AS_DISPLAY)
-										.toString()).intValue()).toString()
-				.equals("2")) {
+			titleText.setText((CharSequence) game_assistant.get(0).get(AssistantBean.AS_CONTENT));
+		} else if (Integer.valueOf(Double.valueOf(game_assistant.get(0).get(AssistantBean.AS_DISPLAY).toString()).intValue()).toString().equals("2")) {
 			titleImage.setVisibility(View.VISIBLE);
-			String path2 = HttpURL.URL_PIC_ALL
-					+ game_assistant.get(0).get(AssistantBean.AS_CONTENT)
-							.toString();
+			String path2 = HttpURL.URL_PIC_ALL + game_assistant.get(0).get(AssistantBean.AS_CONTENT).toString();
 			ImageUtil.setImg(path2, titleImage, new ImageCallback() {
-				@Override
+
 				public void imageLoaded(Bitmap bitmap, ImageView view) {
 					view.setScaleType(ScaleType.FIT_XY);
 					view.setImageBitmap(bitmap);
-					// 大美女图标
-					String path = HttpURL.URL_PIC_ALL
-							+ game_assistant.get(0).get(AssistantBean.AS_ICON)
-									.toString();
+					//大美女图标
+					String path = HttpURL.URL_PIC_ALL + game_assistant.get(0).get(AssistantBean.AS_ICON).toString();
 					ImageUtil.setImg(path, MMicon, new ImageCallback() {
-						@Override
+
 						public void imageLoaded(Bitmap bitmap, ImageView view) {
 							view.setScaleType(ScaleType.FIT_XY);
 							view.setImageBitmap(bitmap);
@@ -213,11 +189,7 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 				}
 			});
 		} else {
-			listMessage = JsonHelper.fromJson(
-					String.valueOf(game_assistant.get(0).get(
-							AssistantBean.AS_CONTENT)),
-					new TypeToken<List<String>>() {
-					});
+			listMessage = JsonHelper.fromJson(String.valueOf(game_assistant.get(0).get(AssistantBean.AS_CONTENT)), new TypeToken<List<String>>() {});
 			titleText.setVisibility(View.VISIBLE);
 			titleText.setText(listMessage.get(0));
 		}
@@ -226,48 +198,31 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 			listView.setVisibility(View.GONE);
 			gridView.setVisibility(View.VISIBLE);
 			gridView.setNumColumns(btnContent.getAsstBtns().size());
-			gridView.setAdapter(new HorizontalAdapter(Database.currentActivity,
-					btnContent.getAsstBtns()));
+			gridView.setAdapter(new HorizontalAdapter(Database.currentActivity, btnContent.getAsstBtns()));
 		} else {
-			// 一个按钮 25dp 40px 高
+			//一个按钮 25dp 40px 高
 			gridView.setVisibility(View.GONE);
-			VerticalAdapter adapter = new VerticalAdapter(context,
-					btnContent.getAsstBtns());
+			VerticalAdapter adapter = new VerticalAdapter(context, btnContent.getAsstBtns());
 			listView.setAdapter(adapter);
 			View item = adapter.getView(0, null, listView);
 			item.measure(0, 0);
-			int px = item.getMeasuredHeight(); // 获取listview item的高度
-			// Toast.makeText(Database.currentActivity, "px"+px,
-			// Toast.LENGTH_LONG).show();
+			int px = item.getMeasuredHeight(); //获取listview item的高度
+			//				Toast.makeText(Database.currentActivity, "px"+px, Toast.LENGTH_LONG).show();
 			ViewGroup.LayoutParams params = listView.getLayoutParams();
 			listView.setDividerHeight(mst.adjustYIgnoreDensity(20));
 			if (btnContent.getAsstBtns().size() == 1) {
-				params.height = mst.adjustYIgnoreDensity((btnContent
-						.getAsstBtns().size()) * 20)
-						+ px
-						* (btnContent.getAsstBtns().size());
+				params.height = mst.adjustYIgnoreDensity((btnContent.getAsstBtns().size()) * 20) + px * (btnContent.getAsstBtns().size());
 			} else {
-				params.height = mst.adjustYIgnoreDensity((btnContent
-						.getAsstBtns().size() - 1) * 20)
-						+ px
-						* (btnContent.getAsstBtns().size());
+				params.height = mst.adjustYIgnoreDensity((btnContent.getAsstBtns().size() - 1) * 20) + px * (btnContent.getAsstBtns().size());
 			}
 			listView.setLayoutParams(params);
 			listView.setVisibility(View.VISIBLE);
 		}
-		if (!Integer
-				.valueOf(
-						Double.valueOf(
-								game_assistant.get(0)
-										.get(AssistantBean.AS_DISPLAY)
-										.toString()).intValue()).toString()
-				.equals("2")) {
-			// 大美女图标
-			String path = HttpURL.URL_PIC_ALL
-					+ game_assistant.get(0).get(AssistantBean.AS_ICON)
-							.toString();
+		if (!Integer.valueOf(Double.valueOf(game_assistant.get(0).get(AssistantBean.AS_DISPLAY).toString()).intValue()).toString().equals("2")) {
+			//大美女图标
+			String path = HttpURL.URL_PIC_ALL + game_assistant.get(0).get(AssistantBean.AS_ICON).toString();
 			ImageUtil.setImg(path, MMicon, new ImageCallback() {
-				@Override
+
 				public void imageLoaded(Bitmap bitmap, ImageView view) {
 					view.setScaleType(ScaleType.FIT_XY);
 					view.setImageBitmap(bitmap);
@@ -277,53 +232,45 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 				}
 			});
 		}
-		// //小美女图标
-		// String path3 = HttpURL.URL_PIC_ALL +
-		// game_assistant.get(0).get(AssistantBean.AS_SMALL_ICON).toString();
-		// ImageUtil.setImg(path3, xiaomeiImg, new ImageCallback() {
-		// public void imageLoaded(Bitmap bitmap, ImageView view) {
-		// view.setScaleType(ScaleType.FIT_XY);
-		// view.setImageBitmap(bitmap);
-		//
-		// }
-		// });
+		//		//小美女图标
+		//		String path3 = HttpURL.URL_PIC_ALL + game_assistant.get(0).get(AssistantBean.AS_SMALL_ICON).toString();
+		//		ImageUtil.setImg(path3, xiaomeiImg, new ImageCallback() {
+		//			public void imageLoaded(Bitmap bitmap, ImageView view) {
+		//				view.setScaleType(ScaleType.FIT_XY);
+		//				view.setImageBitmap(bitmap);
+		//			
+		//			}
+		//		});
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.as_close:
-			closeBtn.setClickable(false);
-			AnimUtils.startAnimationsOutLeft(left, 400);
-			AnimUtils.startAnimationsOutBttom(begin, 400, 0, 850, true);
-			zhezhao.setVisibility(View.GONE);
-			AnimUtils.startAnimationsInLeft(xiaomei, 400);
-			Database.ASSCLOSE = true;
-			// 点击关闭存入消息中心
-			if (Database.ADD_DATA_CENTRE
-					&& Assistant.GAME_ASSISTANT != null
-					&& Database.currentActivity.getClass().equals(
-							DoudizhuRoomListActivity.class)) {
-				String json = JsonHelper.toJson(Assistant.GAME_ASSISTANT);
-				ContentValues values = new ContentValues();
-				values.put(
-						DataCentreBean.DATA_ID,
-						Integer.parseInt(Assistant.GAME_ASSISTANT.get(0)
-								.get(AssistantBean.AS_ID).toString()));
-				values.put(DataCentreBean.DATA_CONTENT, json);
-				values.put(DataCentreBean.DATA_RACE, DataCentreBean.RACE_AS);
-				values.put(DataCentreBean.DATA_CLICK, "0");
-				String[] id = { Assistant.GAME_ASSISTANT.get(0)
-						.get(AssistantBean.AS_ID).toString().toString() };
-				DataCentreBean.getInstance().save(LoginActivity.dbHelper,
-						values, id);
-			}
-		default:
-			break;
+			case R.id.as_close:
+				closeBtn.setClickable(false);
+				AnimUtils.startAnimationsOutLeft(left, 400);
+				AnimUtils.startAnimationsOutBttom(begin, 400, 0, 850, true);
+				zhezhao.setVisibility(View.GONE);
+				AnimUtils.startAnimationsInLeft(xiaomei, 400);
+				Database.ASSCLOSE = true;
+				//点击关闭存入消息中心
+				if (Database.ADD_DATA_CENTRE && Assistant.GAME_ASSISTANT != null && Database.currentActivity.getClass().equals(DoudizhuRoomListActivity.class)) {
+					String json = JsonHelper.toJson(Assistant.GAME_ASSISTANT);
+					ContentValues values = new ContentValues();
+					values.put(DataCentreBean.DATA_ID, Integer.parseInt(Assistant.GAME_ASSISTANT.get(0).get(AssistantBean.AS_ID).toString()));
+					values.put(DataCentreBean.DATA_CONTENT, json);
+					values.put(DataCentreBean.DATA_RACE, DataCentreBean.RACE_AS);
+					values.put(DataCentreBean.DATA_CLICK, "0");
+					String[] id = { Assistant.GAME_ASSISTANT.get(0).get(AssistantBean.AS_ID).toString().toString() };
+					DataCentreBean.getInstance().save(LoginActivity.dbHelper, values, id);
+				}
+			default:
+				break;
 		}
 	}
 
 	public class VerticalAdapter extends BaseAdapter {
+
 		private LayoutInflater mInflater;
 		private List<AssistantBtn> datalist;
 
@@ -348,13 +295,11 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 		}
 
 		@Override
-		public View getView(final int position, View convertView,
-				ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
 				holder = new ViewHolder();
-				convertView = mInflater.inflate(R.layout.assistant_view_item_h,
-						null);
+				convertView = mInflater.inflate(R.layout.assistant_view_item_h, null);
 				holder.guideItem = (Button) convertView.findViewById(R.id.btn);
 				convertView.setTag(holder);
 			} else {
@@ -362,6 +307,7 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 			}
 			holder.guideItem.setText(datalist.get(position).getBtnText());
 			holder.guideItem.setOnClickListener(new OnClickListener() {
+
 				@Override
 				public void onClick(View v) {
 					progressDialog.show();
@@ -375,10 +321,12 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 	}
 
 	public class ViewHolder {
+
 		public Button guideItem;
 	}
 
 	public class HorizontalAdapter extends BaseAdapter {
+
 		private LayoutInflater mInflater;
 		private List<AssistantBtn> datalist;
 
@@ -403,37 +351,27 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 		}
 
 		@Override
-		public View getView(final int position, View convertView,
-				ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
 				holder = new ViewHolder();
-				convertView = mInflater.inflate(R.layout.assistant_view_item_s,
-						null);
-				holder.guideItem = (Button) convertView
-						.findViewById(R.id.btnv2);
+				convertView = mInflater.inflate(R.layout.assistant_view_item_s, null);
+				holder.guideItem = (Button) convertView.findViewById(R.id.btnv2);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			// String btntex=datalist.get(position).getBtnText();
-			final String[] btnTex = datalist.get(position).getBtnText()
-					.split(",");
+			//				String btntex=datalist.get(position).getBtnText();
+			final String[] btnTex = datalist.get(position).getBtnText().split(",");
 			if (btnTex[0] == null) {
 				btnTex[0] = "确定";
 			}
 			holder.guideItem.setText(btnTex[0]);
 			holder.guideItem.setOnClickListener(new OnClickListener() {
+
 				@Override
 				public void onClick(View v) {
-					if (Integer
-							.valueOf(
-									Double.valueOf(
-											game_assistant
-													.get(0)
-													.get(AssistantBean.AS_DISPLAY)
-													.toString()).intValue())
-							.toString().equals("3")) {
+					if (Integer.valueOf(Double.valueOf(game_assistant.get(0).get(AssistantBean.AS_DISPLAY).toString()).intValue()).toString().equals("3")) {
 						if (listNum < listMessage.size() - 1) {
 							listNum++;
 							btxNum++;
@@ -461,177 +399,114 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 		}
 	}
 
-	// st:0是成功1是失败 11是已经存在不可再次购买5是没有足够的金豆
-	// mn:后台配置充值金额 ms:各种提示
+	//st:0是成功1是失败 11是已经存在不可再次购买5是没有足够的金豆 
+	// mn:后台配置充值金额  ms:各种提示   
 	public void dealAction(final int position) {
 		new Thread(new Runnable() {
+
 			@Override
 			public void run() {
 				try {
+					
 					Map<String, String> paramMap = new HashMap<String, String>();
-					paramMap.put(
-							"asstId",
-							Integer.valueOf(
-									Double.valueOf(
-											game_assistant.get(0)
-													.get(AssistantBean.AS_ID)
-													.toString()).intValue())
-									.toString());
-					paramMap.put("code", btnContent.getAsstBtns().get(position)
-							.getCode());
-					paramMap.put("payType", "-1"); // 不存在的type
-													// 让后台根据需要充值的金豆直接生成金额
-					paramMap.put("joinCode", (String) game_assistant.get(0)
-							.get(AssistantBean.AS_JOINCODE));
+					paramMap.put("asstId", Integer.valueOf(Double.valueOf(game_assistant.get(0).get(AssistantBean.AS_ID).toString()).intValue()).toString());
+					paramMap.put("code", btnContent.getAsstBtns().get(position).getCode());
+					paramMap.put("payType","-1");		//不存在的type 让后台根据需要充值的金豆直接生成金额
+					paramMap.put("joinCode", (String) game_assistant.get(0).get(AssistantBean.AS_JOINCODE));
 					final String resultJson = HttpRequest.clickBtn(paramMap);
 					Database.currentActivity.runOnUiThread(new Runnable() {
+
 						@Override
 						public void run() {
 							progressDialog.dismiss();
-							if (!TextUtils.isEmpty(resultJson)
-									&& !resultJson.equals("1")) {
-								final Map<String, String> result = JsonHelper
-										.fromJson(
-												resultJson,
-												new TypeToken<Map<String, String>>() {
-												});
+							if (!TextUtils.isEmpty(resultJson) && !resultJson.equals("1")) {
+								final Map<String, String> result = JsonHelper.fromJson(resultJson, new TypeToken<Map<String, String>>() {});
 								if (result != null) {
 									tisp(result.get("ms"));
 									if (result.get("st").equals("1")) {
 										assistantDismiss();
 										return;
 									}
-									if (result.containsKey("iq")
-											&& !TextUtils.isEmpty(result
-													.get("iq"))) {
+									if (result.containsKey("iq") && !TextUtils.isEmpty(result.get("iq"))) {
 										Log.d("Bean", "" + result.get("iq"));
-										final GameIQUpgrade mGameIQUpgrade = JsonHelper
-												.fromJson(result.get("iq"),
-														GameIQUpgrade.class);
-										if (null != mGameIQUpgrade
-												&& mGameIQUpgrade.isUpgrade()) {
+										final GameIQUpgrade mGameIQUpgrade = JsonHelper.fromJson(result.get("iq"), GameIQUpgrade.class);
+										if (null != mGameIQUpgrade && mGameIQUpgrade.isUpgrade()) {
 											AutoTask goOutTask = new AutoTask() {
-												@Override
+
 												public void run() {
 													Message msg = new Message();
 													Bundle b = new Bundle();
-													b.putString(
-															"getCelebratedText",
-															mGameIQUpgrade
-																	.getCelebratedText());
+													b.putString("getCelebratedText", mGameIQUpgrade.getCelebratedText());
 													msg.what = DoudizhuRoomListActivity.HANDLER_WHAT_ROOM_LIST_SHOW_IQ_GRADE_MIN;
 													msg.setData(b);
-													centreHandler
-															.sendMessage(msg);
+													centreHandler.sendMessage(msg);
 												}
 											};
-											ScheduledTask.addDelayTask(
-													goOutTask, 500);
-											int isTitle = mGameIQUpgrade
-													.getIsTitle() == null ? 0
-													: mGameIQUpgrade
-															.getIsTitle();
+											ScheduledTask.addDelayTask(goOutTask, 500);
+											int isTitle = mGameIQUpgrade.getIsTitle() == null ? 0 : mGameIQUpgrade.getIsTitle();
 											if (1 == isTitle) {
 												AutoTask goOutTask1 = new AutoTask() {
-													@Override
+
 													public void run() {
-														centreHandler
-																.sendEmptyMessage(DoudizhuRoomListActivity.HANDLER_WHAT_ROOM_LIST_SHOW_IQ_GRADE_MAX);
+														centreHandler.sendEmptyMessage(DoudizhuRoomListActivity.HANDLER_WHAT_ROOM_LIST_SHOW_IQ_GRADE_MAX);
 													}
 												};
-												ScheduledTask.addDelayTask(
-														goOutTask1, 1);
+												ScheduledTask.addDelayTask(goOutTask1, 1);
 											}
 										}
-										if (null != mGameIQUpgrade
-												&& 0 != mGameIQUpgrade
-														.getIntellect()
-												&& 0 != mGameIQUpgrade
-														.getNextIntellect()) {
-											centreHandler
-													.sendEmptyMessage(DoudizhuRoomListActivity.HANDLER_WHAT_ROOM_LIST_SET_IQ_GRADE_PG);
+										if (null != mGameIQUpgrade && 0 != mGameIQUpgrade.getIntellect() && 0 != mGameIQUpgrade.getNextIntellect()) {
+											centreHandler.sendEmptyMessage(DoudizhuRoomListActivity.HANDLER_WHAT_ROOM_LIST_SET_IQ_GRADE_PG);
 										}
 									}
-									if (result.get("ac").equals(
-											AssistantAction.AC_ONCLICK)) {
+									if (result.get("ac").equals(AssistantAction.AC_ONCLICK)) {
 										assistantDismiss();
-									} else if (result.get("ac").equals(
-											AssistantAction.AC_GIVE)) {
+									} else if (result.get("ac").equals(AssistantAction.AC_GIVE)) {
 										assistantDismiss();
-									} else if (result.get("ac").equals(
-											AssistantAction.AC_PAY)) {
+									} else if (result.get("ac").equals(AssistantAction.AC_PAY)) {
 										if (result.get("st").equals("1")) {
 											assistantDismiss();
 										} else if (result.get("st").equals("0")) {
 											// 充值两万金豆送美女图鉴
 											zhezhao2.setVisibility(View.GONE);
-											SDKConfig.SIGN_PAY_CODE = result
-													.get("pc");
-											Database.currentActivity
-													.runOnUiThread(new Runnable() {
-														@Override
-														public void run() {
-															try {
-																ASSID = String
-																		.valueOf(Double
-																				.valueOf(
-																						String.valueOf(game_assistant
-																								.get(0)
-																								.get(AssistantBean.AS_ID)))
-																				.intValue());
-																BTNCODE = btnContent
-																		.getAsstBtns()
-																		.get(position)
-																		.getCode();
-																// SDKFactory.fastPay(Integer.parseInt(result.get("mn")),
-																// SDKConstant.ASST);
-																JDSMSPayUtil
-																		.setContext(context);
-																PayTipUtils
-																		.showTip(
-																				Integer.parseInt(result
-																						.get("mn")),
-																				PaySite.GAME_HELP_CLICK); // 配置的提示方式
-															} catch (Exception e) {
-																// TODO: handle
-																// exception
-															} finally {
-																assistantDismiss();
-															}
-														}
-													});
-										} else if (result.get("st")
-												.equals("11")) {
+											SDKConfig.SIGN_PAY_CODE = result.get("pc");
+											Database.currentActivity.runOnUiThread(new Runnable() {
+
+												public void run() {
+													try {
+														ASSID = String.valueOf(Double.valueOf(String.valueOf(game_assistant.get(0).get(AssistantBean.AS_ID))).intValue());
+														BTNCODE = btnContent.getAsstBtns().get(position).getCode();
+														
+//														SDKFactory.fastPay(Integer.parseInt(result.get("mn")), SDKConstant.ASST);
+														JDSMSPayUtil.setContext(context);
+														PayTipUtils.showTip(Integer.parseInt(result.get("mn")),PaySite.GAME_HELP_CLICK); //配置的提示方式
+													} catch (Exception e) {
+														// TODO: handle exception
+													} finally {
+														assistantDismiss();
+													}
+												}
+											});
+										} else if (result.get("st").equals("11")) {
 											zhezhao2.setVisibility(View.GONE);
 											assistantDismiss();
 										}
-									} else if (result.get("ac").equals(
-											AssistantAction.AC_BUY)) {
+									} else if (result.get("ac").equals(AssistantAction.AC_BUY)) {
 										if (result.get("st").equals("11")) {
 											// 已有物品
 											zhezhao2.setVisibility(View.GONE);
 										} else if (result.get("st").equals("5")) {
-											// 金豆不足 提示充值
+											//金豆不足 提示充值
 											zhezhao2.setVisibility(View.GONE);
-											SDKConfig.SIGN_PAY_CODE = result
-													.get("pc");
-											// chonzhi(result.get("mn"),
-											// SDKConstant.ASST);
+											SDKConfig.SIGN_PAY_CODE = result.get("pc");
+//											chonzhi(result.get("mn"), SDKConstant.ASST);
 											JDSMSPayUtil.setContext(context);
-											PayTipUtils.showTip(
-													Integer.parseInt(result
-															.get("mn")),
-													PaySite.GAME_HELP_CLICK); // 配置的提示方式
+											PayTipUtils.showTip(Integer.parseInt(result.get("mn")),PaySite.GAME_HELP_CLICK); //配置的提示方式
 										} else if (result.get("st").equals("0")) {
 											// 购买物品成功
 											assistantDismiss();
 											// 购买物品成功且下载图片
-											if (!result.get("pics").trim()
-													.equals("")) {
-												List<String> list = JsonHelper.fromJson(
-														result.get("pics"),
-														new TypeToken<List<String>>() {
-														});
+											if (!result.get("pics").trim().equals("")) {
+												List<String> list = JsonHelper.fromJson(result.get("pics"), new TypeToken<List<String>>() {});
 												String text = null;
 												if (ActivityUtils.isOpenWifi()) {
 													text = "当前为wifi环境,请放心下载";
@@ -641,43 +516,34 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 												downloadPic(text, list);
 											}
 										}
-									} else if (result.get("ac").equals(
-											AssistantAction.AC_FORWARD)) {
+									} else if (result.get("ac").equals(AssistantAction.AC_FORWARD)) {
 										// 跳转网页
 										if (result.get("st").equals("0")) {
 											assistantDismiss();
 											goWeb(result.get("url"));
 										}
-									} else if (result.get("ac").equals(
-											AssistantAction.AC_DOWN)) {
+									} else if (result.get("ac").equals(AssistantAction.AC_DOWN)) {
 										// 下载应用
 										if (result.get("st").equals("0")) {
 											assistantDismiss();
 											download(result.get("url"));
 										}
-									} else if (result.get("ac").equals(
-											AssistantAction.AC_SKIP)) {
+									} else if (result.get("ac").equals(AssistantAction.AC_SKIP)) {
 										// 跳转游戏界面
 										if (result.get("st").equals("0")) {
 											assistantDismiss();
-											goActivity(result.get("af"),
-													Integer.valueOf(result
-															.get("page")));
+											goActivity(result.get("af"), Integer.valueOf(result.get("page")));
 										}
-									} else if (result.get("ac").equals(
-											AssistantAction.AC_EXIT)) {
-									} else if (result.get("ac").equals(
-											AssistantAction.AC_SIGN)) {
+									} else if (result.get("ac").equals(AssistantAction.AC_EXIT)) {} else if (result.get("ac").equals(AssistantAction.AC_SIGN)) {
 										assistantDismiss();
-										// 不报名
+										//不报名
 									} else if (result.get("ac").equals("oc")) {
 										assistantDismiss();
 									}
 								}
 							} else {
 								AnimUtils.startAnimationsOutLeft(left, 400);
-								AnimUtils.startAnimationsOutBttom(begin, 400,
-										0, 850, true);
+								AnimUtils.startAnimationsOutBttom(begin, 400, 0, 850, true);
 								zhezhao.setVisibility(View.GONE);
 								DialogUtils.toastTip("游戏助理获取数据失败");
 								Database.ASSCLOSE = true;
@@ -698,7 +564,6 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 
 	/**
 	 * 后台返回提示
-	 * 
 	 * @param tis
 	 */
 	public void tisp(String tis) {
@@ -711,7 +576,6 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 
 	/**
 	 * 跳转网页
-	 * 
 	 * @param url
 	 */
 	public void goWeb(String url) {
@@ -726,7 +590,6 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 
 	/**
 	 * 跳转游戏页面
-	 * 
 	 * @param ClassName
 	 */
 	public void goActivity(String name, int code) {
@@ -749,7 +612,6 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 
 	/**
 	 * 下载应用
-	 * 
 	 * @param url
 	 */
 	public void download(final String url) {
@@ -757,47 +619,43 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 		final String url2 = url.replace(apkName, "");
 		if (!ActivityUtils.isOpenWifi()) {
 			GameDialog gameDialog = new GameDialog(Database.currentActivity) {
-				@Override
+
 				public void okClick() {
-					Toast.makeText(Database.currentActivity, "应用正在下载中...",
-							Toast.LENGTH_SHORT).show();
-					UpdateUtils.downApkAssistant(Database.currentActivity,
-							"精品", url2, apkName, ASSHANDLER);
+					Toast.makeText(Database.currentActivity, "应用正在下载中...", Toast.LENGTH_SHORT).show();
+					UpdateUtils.downApkAssistant(Database.currentActivity, "精品", url2, apkName, ASSHANDLER);
 				}
 			};
 			gameDialog.show();
 			gameDialog.setText("你当前网络环境是在非wifi下，请问是否继续下载？");
 		} else {
-			Toast.makeText(Database.currentActivity, "应用正在下载中...",
-					Toast.LENGTH_SHORT).show();
-			UpdateUtils.downApkAssistant(Database.currentActivity, "精品", url2,
-					apkName, ASSHANDLER);
+			Toast.makeText(Database.currentActivity, "应用正在下载中...", Toast.LENGTH_SHORT).show();
+			UpdateUtils.downApkAssistant(Database.currentActivity, "精品", url2, apkName, ASSHANDLER);
 		}
 	}
 
-	// /**
-	// * 充值框
-	// */
-	// public void chonzhi(final String money, final String place) {
-	// Database.currentActivity.runOnUiThread(new Runnable() {
-	//
-	// public void run() {
-	// FastPayDialog dialog = new FastPayDialog(Database.currentActivity, money,
-	// place);
-	// dialog.show();
-	// }
-	// });
-	// }
+//	/**
+//	 * 充值框
+//	 */
+//	public void chonzhi(final String money, final String place) {
+//		Database.currentActivity.runOnUiThread(new Runnable() {
+//
+//			public void run() {
+//				FastPayDialog dialog = new FastPayDialog(Database.currentActivity, money, place);
+//				dialog.show();
+//			}
+//		});
+//	}
+
 	/**
 	 * 下载图框
 	 */
 	public void downloadPic(final String text, final List<String> list) {
 		Database.currentActivity.runOnUiThread(new Runnable() {
+
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				DownloadDialog dialog = new DownloadDialog(
-						Database.currentActivity, text, list);
+				DownloadDialog dialog = new DownloadDialog(Database.currentActivity, text, list);
 				dialog.show();
 			}
 		});
@@ -810,10 +668,10 @@ public class Assistant extends RelativeLayout implements OnClickListener {
 		AnimUtils.startAnimationsOutLeft(left, 400);
 		AnimUtils.startAnimationsOutBttom(begin, 400, 0, 850, true);
 		zhezhao.setVisibility(View.GONE);
-		Database.ADD_DATA_CENTRE = false;// 不可加入消息中心
+		Database.ADD_DATA_CENTRE = false;//不可加入消息中心
 		GAME_ASSISTANT = null;
 		Database.ASSCLOSE = true;
-		// 处理消息中心的删除按钮
+		//处理消息中心的删除按钮
 		if (centreHandler != null) {
 			Message msg = new Message();
 			msg.what = 1;

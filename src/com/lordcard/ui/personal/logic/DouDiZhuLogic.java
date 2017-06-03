@@ -13,6 +13,8 @@ import com.lordcard.ui.personal.logic.strategy.impl.StrategySanPai;
 import com.lordcard.ui.personal.logic.strategy.impl.StrategyWinBack;
 import com.lordcard.ui.personal.logic.strategy.interfaces.Strategy;
 
+
+
 @SuppressWarnings("unused")
 public class DouDiZhuLogic {
 	/**
@@ -30,13 +32,17 @@ public class DouDiZhuLogic {
 	Map<Integer, PokerOfOnePlay> sanZhang = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> siZhang = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> zhaDan = new HashMap<Integer, PokerOfOnePlay>();
+
 	Map<Integer, Map<Integer, PokerOfOnePlay>> feiJi = new HashMap<Integer, Map<Integer, PokerOfOnePlay>>();
+
 	Map<Integer, PokerOfOnePlay> feiJi2 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> feiJi3 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> feiJi4 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> feiJi5 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> feiJi6 = new HashMap<Integer, PokerOfOnePlay>();
+
 	Map<Integer, Map<Integer, PokerOfOnePlay>> lianDui = new HashMap<Integer, Map<Integer, PokerOfOnePlay>>();
+
 	Map<Integer, PokerOfOnePlay> lianDui3 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> lianDui4 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> lianDui5 = new HashMap<Integer, PokerOfOnePlay>();
@@ -45,7 +51,9 @@ public class DouDiZhuLogic {
 	Map<Integer, PokerOfOnePlay> lianDui8 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> lianDui9 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> lianDui10 = new HashMap<Integer, PokerOfOnePlay>();
+
 	Map<Integer, Map<Integer, PokerOfOnePlay>> shunZi = new HashMap<Integer, Map<Integer, PokerOfOnePlay>>();
+
 	Map<Integer, PokerOfOnePlay> shunZi5 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> shunZi6 = new HashMap<Integer, PokerOfOnePlay>();
 	Map<Integer, PokerOfOnePlay> shunZi7 = new HashMap<Integer, PokerOfOnePlay>();
@@ -71,6 +79,7 @@ public class DouDiZhuLogic {
 	 * 策略集合
 	 */
 	List<Strategy> strategys = new ArrayList<Strategy>();
+
 	/**
 	 * 地主,我顺序和otherCard牌主顺序
 	 */
@@ -140,9 +149,10 @@ public class DouDiZhuLogic {
 	}
 
 	private List<Poker> nowPlayingAttachment = null;
+
 	private boolean isInitiative;
-	private boolean isFirstPlay = false; // 队友报单，地主出个单，考虑放一手
-	private boolean isFirstPlaydui = false; // 队友报dui，地主出个dui，考虑放一手
+	private boolean isFirstPlay = false; //队友报单，地主出个单，考虑放一手
+	private boolean isFirstPlaydui = false; //队友报dui，地主出个dui，考虑放一手
 	private boolean hasPlayOneSanPai = false;// 打牌伙伴只剩下一张牌，同时地主不止一张牌的情况下，我要打一张散牌，看看伙伴能不能过，如果不能过，下一把我就只管打自己的牌，不再打散牌，此开关检查是否是第一次打散牌
 
 	public boolean isInitiative() {
@@ -193,11 +203,13 @@ public class DouDiZhuLogic {
 		shunZi.put(10, shunZi10);
 		shunZi.put(11, shunZi11);
 		shunZi.put(12, shunZi12);
+
 		// 添加策略
 		strategys.add(new StrategyLessSanPai(this));
 		strategys.add(new StrategySanPai(this));
 		strategys.add(new StrategyWinBack(this));
 		strategys.add(new StrategyBigPoker(this));
+
 		// 所有牌加入到pokers里面
 		for (int i = ps.size() - 1; i >= 0; --i) {
 			int value = ps.get(i).getValue();
@@ -218,16 +230,20 @@ public class DouDiZhuLogic {
 	 * 把poker中的牌添加到各个牌型的数组中
 	 */
 	private void fillPokerList() {
+
 		sanPai.clear();
+
 		duiZi.clear();
 		sanZhang.clear();
 		siZhang.clear();
 		zhaDan.clear();
+
 		feiJi2.clear();
 		feiJi3.clear();
 		feiJi4.clear();
 		feiJi5.clear();
 		feiJi6.clear();
+
 		lianDui3.clear();
 		lianDui4.clear();
 		lianDui5.clear();
@@ -236,6 +252,7 @@ public class DouDiZhuLogic {
 		lianDui8.clear();
 		lianDui9.clear();
 		lianDui10.clear();
+
 		shunZi5.clear();
 		shunZi6.clear();
 		shunZi7.clear();
@@ -244,11 +261,14 @@ public class DouDiZhuLogic {
 		shunZi10.clear();
 		shunZi11.clear();
 		shunZi12.clear();
+
 		clearUsedState();
 		// 添加三张，四张和炸弹，并且设置了那些对子被使用了
 		addSanZhangAndSiZhangAndZhadan();
+
 		// 添加连对
 		// printUsedState();
+
 		// 添加飞机
 		addFeiJi();
 		// 添加顺子并且设置了那些对子被使用了
@@ -259,7 +279,9 @@ public class DouDiZhuLogic {
 		addDuiZi();
 		// 将没有被使用的单牌添加到散牌列表，并清楚使用状态
 		addSanPai();
+
 		clearUsedState();
+
 		printAllPokerList();
 	}
 
@@ -267,6 +289,7 @@ public class DouDiZhuLogic {
 	 * 打印所欲的牌型数组
 	 */
 	private void printAllPokerList() {
+
 		Map<String, Map<Integer, PokerOfOnePlay>> allPokerList = new HashMap<String, Map<Integer, PokerOfOnePlay>>();
 		// 所有的牌型都加入一个数组，主要是为了打印方便
 		allPokerList.put("散牌", sanPai);
@@ -295,10 +318,10 @@ public class DouDiZhuLogic {
 		allPokerList.put("顺子10", shunZi10);
 		allPokerList.put("顺子11", shunZi11);
 		allPokerList.put("顺子12", shunZi12);
-		// System.out.print("all pokers: ");
+		//System.out.print("all pokers: ");
 		for (PokerOfOneValue poov : this.pokers.values()) {
 			for (Poker p : poov.getPokers()) {
-				// System.out.print(" " + p.getValue());
+				//System.out.print(" " + p.getValue());
 			}
 		}
 		Iterator<String> iter = allPokerList.keySet().iterator();
@@ -308,7 +331,9 @@ public class DouDiZhuLogic {
 			if (poops.size() == 0) {
 				continue;
 			}
+
 		}
+
 	}
 
 	/**
@@ -323,9 +348,9 @@ public class DouDiZhuLogic {
 			if (i != 15 && pokers.get(i).getUnusedNum() != 1) {
 				continue;
 			}
+
 			PokerOfOneValue v = pokers.get(i);
-			PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(),
-					DoudizhuRule.Danpai);
+			PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(), DoudizhuRule.Danpai);
 			poop.add(v);
 			sanPai.put(v.getValue(), poop);
 		}
@@ -338,34 +363,31 @@ public class DouDiZhuLogic {
 		if (allSan > 3) {
 			if (pokers.containsKey(16)) {
 				PokerOfOneValue v = pokers.get(16);
-				PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(),
-						DoudizhuRule.Danpai);
+				PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(), DoudizhuRule.Danpai);
 				poop.add(v);
 				sanPai.put(v.getValue(), poop);
 			}
 			if (pokers.containsKey(17)) {
 				PokerOfOneValue v = pokers.get(17);
-				PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(),
-						DoudizhuRule.Danpai);
+				PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(), DoudizhuRule.Danpai);
 				poop.add(v);
 				sanPai.put(v.getValue(), poop);
 			}
 		} else {
 			if (pokers.containsKey(16) && !pokers.containsKey(17)) {
 				PokerOfOneValue v = pokers.get(16);
-				PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(),
-						DoudizhuRule.Danpai);
+				PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(), DoudizhuRule.Danpai);
 				poop.add(v);
 				sanPai.put(v.getValue(), poop);
 			}
 			if (!pokers.containsKey(16) && pokers.containsKey(17)) {
 				PokerOfOneValue v = pokers.get(17);
-				PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(),
-						DoudizhuRule.Danpai);
+				PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(), DoudizhuRule.Danpai);
 				poop.add(v);
 				sanPai.put(v.getValue(), poop);
 			}
 		}
+
 	}
 
 	/**
@@ -374,23 +396,24 @@ public class DouDiZhuLogic {
 	private void addDuiZi() {
 		for (PokerOfOneValue v : pokers.values()) {
 			if (v.getUnusedNum() == 2) {
-				PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(),
-						DoudizhuRule.Yidui);
+				PokerOfOnePlay poop = new PokerOfOnePlay(v.getValue(), DoudizhuRule.Yidui);
 				poop.add(v);
 				duiZi.put(v.getValue(), poop);
 			}
 		}
+
 	}
 
 	/**
 	 * 检查pokers中的顺子，并添加到shunzi数组
 	 */
+
 	private void addShunZi() {
 		for (int i = 3; i <= 10; ++i) {
-			if (!(pokers.containsKey(i) && pokers.containsKey(i + 1)
-					&& pokers.containsKey(i + 2) && pokers.containsKey(i + 3))) {
+			if (!(pokers.containsKey(i) && pokers.containsKey(i + 1) && pokers.containsKey(i + 2) && pokers.containsKey(i + 3))) {
 				continue;
 			}
+
 			for (int lianNum = 5; lianNum <= 12; ++lianNum) {
 				int maxValue = i + lianNum - 1;
 				int shunzhongdui = 0;
@@ -398,9 +421,9 @@ public class DouDiZhuLogic {
 				if (maxValue > 14) {
 					break;
 				}
+
 				for (int painum = i; painum <= maxValue; ++painum) {
-					if (pokers.containsKey(painum)
-							&& pokers.get(painum).PokerNum() >= 3) {
+					if (pokers.containsKey(painum) && pokers.get(painum).PokerNum() >= 3) {
 						shunzhongsan++;
 					}
 				}
@@ -408,18 +431,17 @@ public class DouDiZhuLogic {
 					break;
 				}
 				for (int painum = i; painum <= maxValue; ++painum) {
-					if (pokers.containsKey(painum)
-							&& pokers.get(painum).PokerNum() >= 2) {
+					if (pokers.containsKey(painum) && pokers.get(painum).PokerNum() >= 2) {
 						shunzhongdui++;
 					}
 				}
 				if (shunzhongdui > (lianNum / 2)) {
 					break;
 				}
+
 				if (pokers.containsKey(maxValue)) {
 					// 多对
-					PokerOfOnePlay poop = new PokerOfOnePlay(maxValue,
-							DoudizhuRule.shunzi);
+					PokerOfOnePlay poop = new PokerOfOnePlay(maxValue, DoudizhuRule.shunzi);
 					for (int j = i; j <= maxValue; ++j) {
 						poop.add(pokers.get(j));
 						// pokers.get(j).setUsedState(true);//设置已经使用状态，主要是给监测单牌使用
@@ -438,13 +460,10 @@ public class DouDiZhuLogic {
 	 */
 	private void addLianDui() {
 		for (int i = 3; i < 14; ++i) {
-			if (!(pokers.containsKey(i) && pokers.get(i).PokerNum() >= 2
-					&& pokers.containsKey(i + 1) && pokers.get(i + 1)
-					.PokerNum() >= 2)) {
+			if (!(pokers.containsKey(i) && pokers.get(i).PokerNum() >= 2 && pokers.containsKey(i + 1) && pokers.get(i + 1).PokerNum() >= 2)) {
 				continue;
 			}
-			if ((pokers.containsKey(i) && pokers.get(i).PokerNum() == 4 || pokers
-					.containsKey(i + 1) && pokers.get(i + 1).PokerNum() == 4)) {
+			if ((pokers.containsKey(i) && pokers.get(i).PokerNum() == 4 || pokers.containsKey(i + 1) && pokers.get(i + 1).PokerNum() == 4)) {
 				continue;
 			}
 			for (int lianNum = 3; lianNum <= 10; ++lianNum) {
@@ -452,36 +471,36 @@ public class DouDiZhuLogic {
 				if (maxValue > 14) {
 					break;
 				}
-				if (pokers.containsKey(maxValue)
-						&& pokers.get(maxValue).PokerNum() == 4) {
+				if (pokers.containsKey(maxValue) && pokers.get(maxValue).PokerNum() == 4) {
 					continue;
 				}
-				if (pokers.containsKey(maxValue)
-						&& pokers.get(maxValue).PokerNum() >= 2) {
+				if (pokers.containsKey(maxValue) && pokers.get(maxValue).PokerNum() >= 2) {
 					// 多对
-					PokerOfOnePlay poop = new PokerOfOnePlay(maxValue,
-							DoudizhuRule.liandui);
+					PokerOfOnePlay poop = new PokerOfOnePlay(maxValue, DoudizhuRule.liandui);
 					for (int j = i; j <= maxValue; ++j) {
 						poop.add(pokers.get(j));
 						// pokers.get(j).setUsedState(true);
 					}
 					this.setUsedState(poop.getOnePlayIgnoreUsedState(), true);
 					lianDui.get(lianNum).put(maxValue, poop);
+
 				} else {
 					break;
 				}
 			}
+
 		}
+
 	}
 
 	private void addSanZhang() {
 		for (PokerOfOneValue poov : this.getPokers().values()) {
 			// 添加三张
-			// if (poov.PokerNum() == 3 && poov.getUnusedNum() == 3) {
-			// hujr：如果使用上面方法，会出现三张被连对、飞机占用而不出手的情况，所以改用下方
+			//if (poov.PokerNum() == 3 && poov.getUnusedNum() == 3) {
+
+			//hujr：如果使用上面方法，会出现三张被连对、飞机占用而不出手的情况，所以改用下方
 			if (poov.PokerNum() == 3) {
-				PokerOfOnePlay poop = new PokerOfOnePlay(poov.getValue(),
-						DoudizhuRule.Santiao);
+				PokerOfOnePlay poop = new PokerOfOnePlay(poov.getValue(), DoudizhuRule.Santiao);
 				poop.add(poov);
 				sanZhang.put(poov.getValue(), poop);
 				// 设置已经使用标志（为了后面判断散牌和对子）
@@ -499,12 +518,11 @@ public class DouDiZhuLogic {
 	private void addSanZhangAndSiZhangAndZhadan() {
 		for (PokerOfOneValue poov : this.getPokers().values()) {
 			if (poov.PokerNum() == 4) {
-				PokerOfOnePlay poop = new PokerOfOnePlay(poov.getValue(),
-						DoudizhuRule.zhadan);
+				PokerOfOnePlay poop = new PokerOfOnePlay(poov.getValue(), DoudizhuRule.zhadan);
 				poop.add(poov);
 				zhaDan.put(poov.getValue(), poop);
-				PokerOfOnePlay poop2 = new PokerOfOnePlay(poov.getValue(),
-						DoudizhuRule.siZhang);
+
+				PokerOfOnePlay poop2 = new PokerOfOnePlay(poov.getValue(), DoudizhuRule.siZhang);
 				poop2.add(poov);
 				siZhang.put(poov.getValue(), poop2);
 				// 设置已经使用标志（为了后面判断散牌和对子）
@@ -513,6 +531,7 @@ public class DouDiZhuLogic {
 				}
 				continue;
 			}
+
 		}
 		// 添加王炸
 		if (pokers.containsKey(16) && pokers.containsKey(17)) {
@@ -524,22 +543,23 @@ public class DouDiZhuLogic {
 	}
 
 	private void addFeiJi() {
+
 		for (int i = 3; i < 14; ++i) {
 			if (!(pokers.containsKey(i)) || pokers.get(i).PokerNum() < 3) {
 				continue;
 			}
+
 			for (int lianNum = 2; lianNum <= 6; ++lianNum) {
 				int maxValue = i + lianNum - 1;
 				if (maxValue > 14) {
 					break;
 				}
-				if (pokers.containsKey(maxValue)
-						&& pokers.get(maxValue).PokerNum() == 3) {
+				if (pokers.containsKey(maxValue) && pokers.get(maxValue).PokerNum() == 3) {
 					// 多对
-					PokerOfOnePlay poop = new PokerOfOnePlay(maxValue,
-							DoudizhuRule.feiji);
+					PokerOfOnePlay poop = new PokerOfOnePlay(maxValue, DoudizhuRule.feiji);
 					for (int j = i; j <= maxValue; ++j) {
 						poop.add(pokers.get(j));
+
 					}
 					this.setUsedState(poop.getOnePlayIgnoreUsedState(), true);
 					feiJi.get(lianNum).put(maxValue, poop);
@@ -547,6 +567,7 @@ public class DouDiZhuLogic {
 					break;
 				}
 			}
+
 		}
 	}
 
@@ -576,15 +597,18 @@ public class DouDiZhuLogic {
 	// //System.out.println();
 	// }
 	// }
+
 	private void printUsedState() {
-		// System.out.println("UsedState:");
+
+		//		System.out.println("UsedState:");
 		for (PokerOfOneValue poov : this.getPokers().values()) {
-			// System.out.println("    poov.getValue() == " + poov.getValue()
-			// + ":::");
+			//			System.out.println("    poov.getValue() == " + poov.getValue()
+			//+ ":::");
 			for (Poker p : poov.getPokers()) {
-				// System.out.println("         p.getValue() == " + p.getValue()
-				// + "; p.getStyle()==" + p.getStyle() + ";p.UsedState=="
-				// + p.isUsed());
+
+				//				System.out.println("         p.getValue() == " + p.getValue()
+				//+ "; p.getStyle()==" + p.getStyle() + ";p.UsedState=="
+				//+ p.isUsed());
 			}
 			System.out.println();
 		}
@@ -604,6 +628,7 @@ public class DouDiZhuLogic {
 			return getInitiativeTiShi();
 		}
 		this.isInitiative = false;
+
 		// printUsedState();
 		clearUsedState();
 		// printUsedState();
@@ -617,6 +642,7 @@ public class DouDiZhuLogic {
 		int type = DoudizhuRule.checkpai(otherPokers);
 		// 对手牌最大
 		int otherMaxValue = DoudizhuRule.getMaxNumber(otherPokers);
+
 		switch (type) {
 		case DoudizhuRule.Danpai:
 			play = sanPai;
@@ -648,8 +674,10 @@ public class DouDiZhuLogic {
 			play = siZhang;
 			attachmentCount = 2;
 			takeSanPai = false;
+
 			break;
 		case DoudizhuRule.feiji:
+
 			play = feiJi.get(otherPokers.size() / 3);
 			break;
 		case DoudizhuRule.feijidaisan:
@@ -663,6 +691,7 @@ public class DouDiZhuLogic {
 			break;
 		case DoudizhuRule.liandui:
 			play = lianDui.get(otherPokers.size() / 2);
+
 			break;
 		case DoudizhuRule.shunzi:
 			play = shunZi.get(otherPokers.size());
@@ -671,7 +700,8 @@ public class DouDiZhuLogic {
 		if (play == null) {
 			return null;
 		}
-		List<Poker> ret = new ArrayList<Poker>();// 要打的牌
+
+		List<Poker> ret = new ArrayList<Poker>();//要打的牌
 		List<Poker> rest = new ArrayList<Poker>();
 		int oldPoint = 0;
 		int point = 0;
@@ -717,18 +747,17 @@ public class DouDiZhuLogic {
 		if (mineorder != dzorder && preorder == dzorder && isdzBaodui) {
 			isBaoPai = true;
 		}
+
 		if (mineorder == dzorder && preorder == sorder && this.otherCount == 1) {
 			isBaoPai = true;
 		}
 		if (mineorder == dzorder && preorder == sorder && this.otherCount == 2) {
 			isBaoPai = true;
 		}
-		if (mineorder == dzorder && preorder != sorder && this.otherCount == 1
-				&& ispmBaodan) {
+		if (mineorder == dzorder && preorder != sorder && this.otherCount == 1 && ispmBaodan) {
 			isBaoPai = true;
 		}
-		if (mineorder == dzorder && preorder != sorder && this.otherCount == 2
-				&& ispmBaodui) {
+		if (mineorder == dzorder && preorder != sorder && this.otherCount == 2 && ispmBaodui) {
 			isBaoPai = true;
 		}
 		int duipaiNum = 0;
@@ -736,11 +765,13 @@ public class DouDiZhuLogic {
 		int danpaiNum = 0;
 		int minValue = 13;
 		int minDui = 12;
+
 		for (PokerOfOnePlay poop : this.getSanPai().values()) {
 			if (poop.getOnePlay().size() != 0 && poop.getMaxValue() < minValue) {
 				++sanpaiNum;
 			}
 		}
+
 		for (PokerOfOnePlay poop : this.getDuiZi().values()) {
 			if (poop.getOnePlay().size() != 0 && poop.getMaxValue() < minDui) {
 				++duipaiNum;
@@ -749,6 +780,7 @@ public class DouDiZhuLogic {
 		if (sanPai.containsKey(16) || sanPai.containsKey(17)) {
 			--sanpaiNum;
 		}
+
 		for (PokerOfOnePlay poop : this.getSanZhang().values()) {
 			if (poop.getOnePlay().size() != 0) {
 				if (sanpaiNum > 0) {
@@ -756,8 +788,10 @@ public class DouDiZhuLogic {
 				} else {
 					--duipaiNum;
 				}
+
 			}
 		}
+
 		for (PokerOfOnePlay poop : this.getZhaDan().values()) {
 			if (poop.getOnePlay().size() != 0) {
 				if (sanpaiNum > 0) {
@@ -765,14 +799,17 @@ public class DouDiZhuLogic {
 				} else {
 					--duipaiNum;
 				}
+
 			}
 		}
 		danpaiNum = duipaiNum + sanpaiNum;
+
 		if (type == DoudizhuRule.wangzha) {
 			return null;
 		}
+
 		clearUsedState();
-		// 无论谁的牌，如果管上后没牌了就打
+		//无论谁的牌，如果管上后没牌了就打
 		List<Poker> myPokers = new ArrayList<Poker>();
 		for (PokerOfOneValue poov : this.getPokers().values()) {
 			for (Poker p : poov.getPokers()) {
@@ -785,15 +822,17 @@ public class DouDiZhuLogic {
 					return myPokers;
 				}
 			}
+
 		}
 		if (play != zhaDan && myPokers != null && myPokers.size() > 0) {
-			if (DoudizhuRule.checkpai(myPokers) == DoudizhuRule.zhadan
-					|| DoudizhuRule.checkpai(myPokers) == DoudizhuRule.wangzha) {
+			if (DoudizhuRule.checkpai(myPokers) == DoudizhuRule.zhadan || DoudizhuRule.checkpai(myPokers) == DoudizhuRule.wangzha) {
 				return myPokers;
 			}
 		}
+
 		clearUsedState();
 		// 出牌后只剩下一手牌
+
 		for (int i = otherMaxValue + 1; i < 18; ++i) {
 			if (!play.containsKey(i)) {
 				continue;
@@ -805,17 +844,21 @@ public class DouDiZhuLogic {
 				if (play1 == null || play1.size() == 0) {
 					continue;
 				}
+
 				setUsedState(play1, true);
 				nowPlaying = play1;
 				if (attachmentCount > 0) {
 					play2 = getAttachment(attachmentCount, takeSanPai);
+
 					if (play2 == null) {
 						setUsedState(play1, false);
 						continue;
 					}
 					setUsedState(play2, true);
 				}
+
 				List<Poker> ps = new ArrayList<Poker>();
+
 				for (PokerOfOneValue poov : this.getPokers().values()) {
 					for (Poker p : poov.getPokers()) {
 						if (!p.isUsed()) {
@@ -823,10 +866,12 @@ public class DouDiZhuLogic {
 						}
 					}
 				}
+
 				if (ps.size() != 0 && DoudizhuRule.checkpai(ps) != 0) {
 					printPokers(play1, play2);
 					if (play1 != null) {
 						ret.addAll(play1);
+
 					}
 					if (play2 != null) {
 						ret.addAll(play2);
@@ -848,13 +893,16 @@ public class DouDiZhuLogic {
 								return ret;
 							}
 						}
+
 					}
 					if (play2 == null) {
 						setUsedState(play1, false);
 					}
 				}
+
 			}
 		}
+
 		clearUsedState();
 		if (play != zhaDan) {
 			if (ret == null || ret.size() == 0) {
@@ -866,6 +914,7 @@ public class DouDiZhuLogic {
 						if (play1 == null || play1.size() == 0) {
 							continue;
 						}
+
 						setUsedState(play1, true);
 						List<Poker> ps = new ArrayList<Poker>();
 						for (PokerOfOneValue poov : this.getPokers().values()) {
@@ -875,23 +924,28 @@ public class DouDiZhuLogic {
 								}
 							}
 						}
+
 						if (DoudizhuRule.checkpai(ps) != 0) {
 							printPokers(play1, play2);
 							if (play1 != null) {
 								ret.addAll(play1);
+
 							}
 							if (ret != null && ret.size() > 0) {
 								return ret;
 							}
 							setUsedState(play1, false);
 						}
+
 					}
 				}
+
 			}
 		}
 		// 如果是地主报单了
 		clearUsedState();
 		if (mineorder != dzorder.intValue() && isdzBaodan) {
+
 			if (sanpaiNum < 1 && type == DoudizhuRule.zhadan) {
 				for (int i = otherMaxValue + 1; i < 18; ++i) {
 					if (zhaDan.containsKey(i)) {
@@ -901,6 +955,7 @@ public class DouDiZhuLogic {
 						}
 					}
 				}
+
 			}
 			if (sanpaiNum <= 0 && type != DoudizhuRule.zhadan) {
 				for (int i = 3; i < 18; ++i) {
@@ -912,7 +967,9 @@ public class DouDiZhuLogic {
 						}
 					}
 				}
+
 			}
+
 			if (type == DoudizhuRule.Danpai) {
 				for (int i = 3; i < 18; ++i) {
 					// 如果有炸弹，并且手中的牌少于10个单牌少于2个则可以打炸弹
@@ -925,18 +982,19 @@ public class DouDiZhuLogic {
 				}
 				if (preorder == dzorder) {
 					for (int i = 17; i > otherMaxValue; i--) {
-						if (!this.pokers.containsKey(i)
-								|| this.pokers.get(i).PokerNum() < 1) {
+						if (!this.pokers.containsKey(i) || this.pokers.get(i).PokerNum() < 1) {
 							continue;
 						}
 						if (this.pokers.containsKey(i) && zhaDan.containsKey(i)) {
 							continue;
 						}
+
 						ret = this.pokers.get(i).getPokerIgnoreUsedState(1);
 						if (ret != null && ret.size() > 0) {
 							return ret;
 						}
 					}
+
 					if (ret == null || ret.size() == 0) {
 						for (int i = 3; i < 18; ++i) {
 							// 如果有炸弹，并且手中的牌少于10个单牌少于2个则可以打炸弹
@@ -968,14 +1026,13 @@ public class DouDiZhuLogic {
 							if (isMax(otherPokers)) {
 								return null;
 							}
-							if (!this.pokers.containsKey(i)
-									|| this.pokers.get(i).PokerNum() < 1) {
+							if (!this.pokers.containsKey(i) || this.pokers.get(i).PokerNum() < 1) {
 								continue;
 							}
-							if (this.pokers.containsKey(i)
-									&& zhaDan.containsKey(i)) {
+							if (this.pokers.containsKey(i) && zhaDan.containsKey(i)) {
 								continue;
 							}
+
 							ret = this.pokers.get(i).getPokerIgnoreUsedState(1);
 							if (ret.size() > 0 && ret != null) {
 								return ret;
@@ -993,6 +1050,7 @@ public class DouDiZhuLogic {
 						}
 						if (isBaoPai) {
 						}
+
 						for (int i = otherMaxValue + 1; i < 18; ++i) {
 							// 如果有炸弹，并且手中的牌少于10个单牌少于2个则可以打炸弹
 							if (sanPai.containsKey(i) && sanpaiNum < 1) {
@@ -1002,14 +1060,17 @@ public class DouDiZhuLogic {
 								}
 							}
 						}
+
 					}
+
 				}
+
 			}
 			if (type == DoudizhuRule.Yidui) {
 				if (preorder == dzorder) {
 					for (int i = 17; i > otherMaxValue; --i) {
-						if (!this.pokers.containsKey(i)
-								|| this.pokers.get(i).PokerNum() < 2) {
+
+						if (!this.pokers.containsKey(i) || this.pokers.get(i).PokerNum() < 2) {
 							continue;
 						}
 						if (this.pokers.containsKey(i) && zhaDan.containsKey(i)) {
@@ -1019,6 +1080,7 @@ public class DouDiZhuLogic {
 						if (ret != null && ret.size() > 0) {
 							return ret;
 						}
+
 					}
 					if (ret == null || ret.size() == 0) {
 						for (int i = 3; i < 18; ++i) {
@@ -1028,8 +1090,7 @@ public class DouDiZhuLogic {
 								if (ret.size() > 0 && ret != null) {
 									return ret;
 								}
-							} else if (zhaDan.containsKey(i)
-									&& zhaDan.size() > 1) {
+							} else if (zhaDan.containsKey(i) && zhaDan.size() > 1) {
 								ret = zhaDan.get(i).getOnePlay();
 								if (ret != null && ret.size() > 0) {
 									return ret;
@@ -1038,7 +1099,7 @@ public class DouDiZhuLogic {
 						}
 					}
 				} else {
-					if (preorder == sorder) {// 队友在上手打对
+					if (preorder == sorder) {//队友在上手打对
 						int maxSan = 0;
 						for (PokerOfOnePlay poop : this.getSanPai().values()) {
 							if (poop.getOnePlay().size() != 0) {
@@ -1052,13 +1113,16 @@ public class DouDiZhuLogic {
 								if (sanpaiNum > 0) {
 									--maxSan;
 								}
+
 							}
 						}
+
 						for (PokerOfOnePlay poop : this.getZhaDan().values()) {
 							if (poop.getOnePlay().size() != 0) {
 								if (sanpaiNum > 0) {
 									--maxSan;
 								}
+
 							}
 						}
 						for (int i = otherMaxValue + 1; i < 18; i++) {
@@ -1069,6 +1133,7 @@ public class DouDiZhuLogic {
 								}
 							}
 						}
+
 						if (ret == null || ret.size() == 0) {
 							for (int i = 3; i < 18; ++i) {
 								// 如果有炸弹，并且手中的牌少于10个单牌少于2个则可以打炸弹
@@ -1080,7 +1145,8 @@ public class DouDiZhuLogic {
 								}
 							}
 						}
-					} else {// 队友在打对地主不要
+
+					} else {//队友在打对地主不要
 						for (int i = 3; i < 18; ++i) {
 							// 如果有炸弹，并且手中的牌少于10个单牌少于2个则可以打炸弹
 							if (zhaDan.containsKey(i) && sanpaiNum < 1) {
@@ -1089,7 +1155,9 @@ public class DouDiZhuLogic {
 									return ret;
 								}
 							}
+
 						}
+
 						if (ispmBaodan) {
 							for (int i = 3; i < 18; ++i) {
 								// 如果有炸弹，并且手中的牌少于10个单牌少于2个则可以打炸弹
@@ -1099,17 +1167,20 @@ public class DouDiZhuLogic {
 										return ret;
 									}
 								}
+
 							}
 						}
+
 					}
 				}
+
 			}
+
 		}
 		clearUsedState();
 		// 如果是地主报对了
 		if (mineorder != dzorder.intValue() && isdzBaodui) {
-			if (preorder == dzorder && danpaiNum <= 1
-					&& type == DoudizhuRule.zhadan) {
+			if (preorder == dzorder && danpaiNum <= 1 && type == DoudizhuRule.zhadan) {
 				for (int i = otherMaxValue + 1; i < 18; ++i) {
 					// 如果有炸弹，并且手中的牌少于10个单牌少于2个则可以打炸弹
 					if (zhaDan.containsKey(i)) {
@@ -1119,9 +1190,9 @@ public class DouDiZhuLogic {
 						}
 					}
 				}
+
 			}
-			if (preorder == dzorder && sanpaiNum < 0
-					&& type != DoudizhuRule.zhadan) {
+			if (preorder == dzorder && sanpaiNum < 0 && type != DoudizhuRule.zhadan) {
 				for (int i = 3; i < 18; ++i) {
 					if (zhaDan.containsKey(i)) {
 						ret = zhaDan.get(i).getOnePlay();
@@ -1130,8 +1201,9 @@ public class DouDiZhuLogic {
 						}
 					}
 				}
+
 			}
-			// 地主打一对报对
+			//地主打一对报对
 			if (type == DoudizhuRule.Yidui && preorder == dzorder) {
 				for (int i = 17; i > otherMaxValue; i--) {
 					if (duiZi.containsKey(i)) {
@@ -1156,10 +1228,10 @@ public class DouDiZhuLogic {
 							}
 						}
 					}
+
 				}
 				for (int i = 17; i > otherMaxValue; --i) {
-					if (!this.pokers.containsKey(i)
-							|| this.pokers.get(i).PokerNum() < 2) {
+					if (!this.pokers.containsKey(i) || this.pokers.get(i).PokerNum() < 2) {
 						continue;
 					}
 					if (this.pokers.containsKey(i) && zhaDan.containsKey(i)) {
@@ -1170,6 +1242,7 @@ public class DouDiZhuLogic {
 						return ret;
 					}
 				}
+
 				for (int i = 17; i > otherMaxValue; i--) {
 					if (duiZi.containsKey(i)) {
 						ret = duiZi.get(i).getOnePlay();
@@ -1178,9 +1251,9 @@ public class DouDiZhuLogic {
 						}
 					}
 				}
+
 				for (int i = 17; i > otherMaxValue; --i) {
-					if (!this.pokers.containsKey(i)
-							|| this.pokers.get(i).PokerNum() < 2) {
+					if (!this.pokers.containsKey(i) || this.pokers.get(i).PokerNum() < 2) {
 						continue;
 					}
 					if (this.pokers.containsKey(i) && zhaDan.containsKey(i)) {
@@ -1191,8 +1264,10 @@ public class DouDiZhuLogic {
 						return ret;
 					}
 				}
+
 			}
 			if (type == DoudizhuRule.Danpai && preorder == dzorder.intValue()) {
+
 				for (int i = 17; i > otherMaxValue; i--) {
 					if (sanPai.containsKey(i)) {
 						ret = sanPai.get(i).getOnePlay();
@@ -1202,14 +1277,15 @@ public class DouDiZhuLogic {
 					}
 				}
 				for (int i = 17; i > otherMaxValue; --i) {
-					if (!this.pokers.containsKey(i)
-							|| this.pokers.get(i).PokerNum() < 1) {
+					if (!this.pokers.containsKey(i) || this.pokers.get(i).PokerNum() < 1) {
 						continue;
 					}
 					if (this.pokers.containsKey(i) && zhaDan.containsKey(i)) {
 						continue;
 					}
+
 					// PokerOfOnePlay poop = sanPai.get(i);
+
 					ret = this.pokers.get(i).getPokerIgnoreUsedState(1);
 					if (ret.size() > 0 && ret != null) {
 						return ret;
@@ -1232,10 +1308,12 @@ public class DouDiZhuLogic {
 					}
 				}
 			}
+
 		}
 		clearUsedState();
 		// 如果平民报单自己是地主
 		if (mineorder == dzorder.intValue() && ispmBaodan) {
+
 			if (sanpaiNum <= 0 && type == DoudizhuRule.zhadan) {
 				for (int i = otherMaxValue + 1; i < 18; ++i) {
 					// 如果有炸弹，并且手中的牌少于10个单牌少于2个则可以打炸弹
@@ -1246,6 +1324,7 @@ public class DouDiZhuLogic {
 						}
 					}
 				}
+
 			}
 			if (sanpaiNum <= 0 && type != DoudizhuRule.zhadan) {
 				for (int i = 3; i < 18; ++i) {
@@ -1257,18 +1336,20 @@ public class DouDiZhuLogic {
 						}
 					}
 				}
+
 			}
 			if (type == DoudizhuRule.Danpai) {
-				// 取最大的牌
+				//取最大的牌
 				for (int i = 17; i > otherMaxValue; --i) {
-					if (!this.pokers.containsKey(i)
-							|| this.pokers.get(i).PokerNum() < 1) {
+
+					if (!this.pokers.containsKey(i) || this.pokers.get(i).PokerNum() < 1) {
 						continue;
 					}
 					if (this.pokers.containsKey(i) && zhaDan.containsKey(i)) {
 						continue;
 					}
 					// PokerOfOnePlay poop = sanPai.get(i);
+
 					ret = this.pokers.get(i).getPokerIgnoreUsedState(1);
 					if (ret != null && ret.size() > 0) {
 						return ret;
@@ -1289,32 +1370,38 @@ public class DouDiZhuLogic {
 							}
 						}
 					}
+
 				}
 			}
 			if (type == DoudizhuRule.Yidui && preorder == sorder) {
+
 				for (int i = otherMaxValue + 1; i < 18; i++) {
 					if (duiZi.get(i) != null) {
 						ret = duiZi.get(i).getOnePlay();
+
 						if (ret.size() > 0 && ret != null) {
 							return ret;
 						}
 					}
 				}
 				for (int i = otherMaxValue + 1; i < 18; i++) {
-					if (!this.pokers.containsKey(i)
-							|| this.pokers.get(i).PokerNum() < 2) {
+
+					if (!this.pokers.containsKey(i) || this.pokers.get(i).PokerNum() < 2) {
 						continue;
 					}
 					if (this.pokers.containsKey(i) && zhaDan.containsKey(i)) {
 						continue;
 					}
 					// PokerOfOnePlay poop = sanPai.get(i);
+
 					ret = this.pokers.get(i).getPokerIgnoreUsedState(2);
+
 					if (ret.size() > 0 && ret != null) {
 						return ret;
 					}
 				}
 				if (ret == null || ret.size() == 0) {
+
 					for (int i = 3; i < 18; ++i) {
 						// 如果有炸弹，并且手中的牌少于10个单牌少于2个则可以打炸弹
 						if (zhaDan.containsKey(i) && danpaiNum <= 1) {
@@ -1331,10 +1418,12 @@ public class DouDiZhuLogic {
 					}
 				}
 			}
+
 		}
 		clearUsedState();
 		// 如果平民报dui自己是地主
 		if (mineorder == dzorder.intValue() && ispmBaodui) {
+
 			if (danpaiNum <= 0 && type == DoudizhuRule.zhadan) {
 				for (int i = otherMaxValue + 1; i < 18; ++i) {
 					// 如果有炸弹，并且手中的牌少于10个单牌少于2个则可以打炸弹
@@ -1345,6 +1434,7 @@ public class DouDiZhuLogic {
 						}
 					}
 				}
+
 			}
 			if (danpaiNum <= 0 && type != DoudizhuRule.zhadan) {
 				for (int i = 3; i < 18; ++i) {
@@ -1356,17 +1446,19 @@ public class DouDiZhuLogic {
 						}
 					}
 				}
+
 			}
+
 			if (type == DoudizhuRule.Yidui) {
 				for (int i = 17; i > otherMaxValue; --i) {
-					if (!this.pokers.containsKey(i)
-							|| this.pokers.get(i).PokerNum() < 2) {
+					if (!this.pokers.containsKey(i) || this.pokers.get(i).PokerNum() < 2) {
 						continue;
 					}
 					if (this.pokers.containsKey(i) && zhaDan.containsKey(i)) {
 						continue;
 					}
 					// PokerOfOnePlay poop = sanPai.get(i);
+
 					ret = this.pokers.get(i).getPokerIgnoreUsedState(2);
 					if (ret.size() > 0 && ret != null) {
 						return ret;
@@ -1387,33 +1479,39 @@ public class DouDiZhuLogic {
 							}
 						}
 					}
+
 				}
 			}
 			if (type == DoudizhuRule.Danpai) {
 				if (this.otherCount == 2 && preorder == sorder) {
+
 					for (int i = otherMaxValue; i < 18; i++) {
+
 						if (!sanPai.containsKey(i)) {
 							continue;
 						}
 						ret = sanPai.get(i).getOnePlay();
+
 						if (ret.size() > 0 && ret != null) {
 							return ret;
 						}
+
 					}
 					for (int i = 17; i > otherMaxValue; --i) {
-						if (!this.pokers.containsKey(i)
-								|| this.pokers.get(i).PokerNum() < 1) {
+
+						if (!this.pokers.containsKey(i) || this.pokers.get(i).PokerNum() < 1) {
 							continue;
 						}
-						if (this.pokers.containsKey(i)
-								&& this.pokers.get(i).PokerNum() == 4) {
+						if (this.pokers.containsKey(i) && this.pokers.get(i).PokerNum() == 4) {
 							continue;
 						}
 						// PokerOfOnePlay poop = sanPai.get(i);
+
 						ret = this.pokers.get(i).getPokerIgnoreUsedState(1);
 						if (ret.size() > 0 && ret != null) {
 							return ret;
 						}
+
 					}
 					if (ret == null || ret.size() == 0) {
 						for (int i = 3; i < 18; ++i) {
@@ -1423,8 +1521,7 @@ public class DouDiZhuLogic {
 								if (ret != null && ret.size() > 0) {
 									return ret;
 								}
-							} else if (zhaDan.containsKey(i)
-									&& zhaDan.size() > 1) {
+							} else if (zhaDan.containsKey(i) && zhaDan.size() > 1) {
 								ret = zhaDan.get(i).getOnePlay();
 								if (ret != null && ret.size() > 0) {
 									return ret;
@@ -1432,37 +1529,42 @@ public class DouDiZhuLogic {
 							}
 						}
 					}
+
 				}
+
 			}
+
 		}
+
 		clearUsedState();
-		// 队友的牌
-		if (play != null && mineorder != dzorder.intValue()
-				&& preorder != dzorder.intValue()) {
+
+		//队友的牌
+		if (play != null && mineorder != dzorder.intValue() && preorder != dzorder.intValue()) {
+
 			if (sorder == dzorder.intValue()) {
 				return null;
 			}
+
 			// 如果队友的牌地主不要
 			// 如果是队友打的对子或者单牌，则检查其大小
 			if (play == sanPai || play == duiZi) {
 				if (preorder != dzorder.intValue()) {
-					// 队友报单
-					if (play == sanPai && sorder != dzorder.intValue()
-							&& this.otherCount == 1 && !isDuishouPai) {
+					//队友报单
+					if (play == sanPai && sorder != dzorder.intValue() && this.otherCount == 1 && !isDuishouPai) {
 						return null;
 					}
-					// 队友报dui
-					if (play == duiZi && sorder != dzorder.intValue()
-							&& this.otherCount == 2 && !isdzBaodui) {
+
+					//队友报dui
+					if (play == duiZi && sorder != dzorder.intValue() && this.otherCount == 2 && !isdzBaodui) {
 						return null;
 					}
 					int allsanpaiNum = 0;
 					for (PokerOfOnePlay poop : this.getSanPai().values()) {
-						if (poop.getOnePlay().size() != 0
-								&& poop.getMaxValue() < 14) {
+						if (poop.getOnePlay().size() != 0 && poop.getMaxValue() < 14) {
 							++allsanpaiNum;
 						}
 					}
+
 					for (int i = otherMaxValue + 1; i < 18; ++i) {
 						if (!play.containsKey(i)) {
 							continue;
@@ -1470,33 +1572,35 @@ public class DouDiZhuLogic {
 						PokerOfOnePlay poop = play.get(i);
 						if (play == sanPai && allsanpaiNum < 3) {
 							play1 = poop.getOnePlay();
-							if (play1 != null && play1.size() > 0
-									&& otherMaxValue < 14) {
+							if (play1 != null && play1.size() > 0 && otherMaxValue < 14) {
 								return play1;
 							}
 						}
+
 						if (otherMaxValue <= 11) {
 							play1 = poop.getOnePlay();
 							if (play == sanPai) {
-								if (play1 != null && play1.size() > 0 && i > 10
-										&& otherMaxValue < 12) {
+								if (play1 != null && play1.size() > 0 && i > 10 && otherMaxValue < 12) {
 									return play1;
 								}
 							}
-							if (play == duiZi && play1 != null
-									&& play1.size() > 0 && i > 10
-									&& poop.getMaxValue() < 11) {
+							if (play == duiZi && play1 != null && play1.size() > 0 && i > 10 && poop.getMaxValue() < 11) {
 								return play1;
 							}
+
 						}
 					}
+
 				}
 			} else {
+
 			}
+
 		}
 		clearUsedState();
 		// 如果是对手打的牌。
 		if (isDuishouPai && play != null) {
+
 			for (int i = otherMaxValue + 1; i < 18; ++i) {
 				if (!play.containsKey(i)) {
 					continue;
@@ -1507,11 +1611,14 @@ public class DouDiZhuLogic {
 					if (play1 == null || play1.size() == 0) {
 						continue;
 					}
+
 					// 设置该手牌为已使用
+
 					setUsedState(play1, true);
 					nowPlaying = play1;
 					if (attachmentCount > 0) {
 						play2 = getAttachment(attachmentCount, takeSanPai);
+
 						if (play2 == null) {
 							setUsedState(play1, false);
 							continue;
@@ -1539,7 +1646,9 @@ public class DouDiZhuLogic {
 							return ret;
 						}
 					}
-					// System.out.println("总得分：" + point);
+
+					//System.out.println("总得分：" + point);
+
 					if (play1 != null) {
 						setUsedState(play1, false);
 					}
@@ -1558,17 +1667,21 @@ public class DouDiZhuLogic {
 					ret.clear();
 					if (play1 != null) {
 						ret.addAll(play1);
+
 					}
 					if (play2 != null) {
 						ret.addAll(play2);
 					}
+
 				}
+
 			}
+
 			clearUsedState();
+
 			// 如果已经是炸弹，则返回结果
 			if (type == DoudizhuRule.zhadan) {
-				if (preorder == dzorder.intValue()
-						&& mineorder != dzorder.intValue()) {
+				if (preorder == dzorder.intValue() && mineorder != dzorder.intValue()) {
 					if (dzCount > 12 && danpaiNum > 0) {
 						return null;
 					} else {
@@ -1586,45 +1699,40 @@ public class DouDiZhuLogic {
 						}
 					}
 				}
+
 				if (ret != null && ret.size() > 0 && zhaDan.size() > 2) {
 					return ret;
 				}
 				return null;
 			}
-			// 队友报单了，
+			//队友报单了，
 			if (type == DoudizhuRule.Danpai) {
-				if (preorder == dzorder && mineorder != dzorder
-						&& sorder == dzorder.intValue()) {
-					if (!isFirstPlay && ispmBaodan && !isdzBaodan
-							&& !isdzBaodui) {
+				if (preorder == dzorder && mineorder != dzorder && sorder == dzorder.intValue()) {
+					if (!isFirstPlay && ispmBaodan && !isdzBaodan && !isdzBaodui) {
 						isFirstPlay = true;
 						return null;
 					}
 				}
 			}
-			// 队友报对了，
+
+			//队友报对了，
 			if (type == DoudizhuRule.Yidui) {
-				if (preorder == dzorder.intValue()
-						&& mineorder != dzorder.intValue()
-						&& sorder == dzorder.intValue()) {
-					if (!isFirstPlaydui && ispmBaodan && !isdzBaodan
-							&& !isdzBaodui) {
+				if (preorder == dzorder.intValue() && mineorder != dzorder.intValue() && sorder == dzorder.intValue()) {
+					if (!isFirstPlaydui && ispmBaodan && !isdzBaodan && !isdzBaodui) {
 						isFirstPlaydui = true;
 						return null;
 					}
 				}
 			}
 			// 如果不是炸弹，而且当前玩家手中无打得起的牌，则检查打出第一炸弹是否可行
+
 			if (ret == null || ret.size() == 0) {
 				for (int i = 3; i < 18; ++i) {
 					// 如果有炸弹，并且手中的牌少于10个单牌少于2个则可以打炸弹
 					if (zhaDan.containsKey(i) && danpaiNum <= 1) {
-						if (preorder == dzorder.intValue()
-								&& mineorder != dzorder.intValue()) {
-							if (type == DoudizhuRule.Danpai
-									&& otherMaxValue < 14 && dzCount > 9) {
-							} else if (type == DoudizhuRule.Yidui
-									&& otherMaxValue < 11 && dzCount > 9) {
+						if (preorder == dzorder.intValue() && mineorder != dzorder.intValue()) {
+							if (type == DoudizhuRule.Danpai && otherMaxValue < 14 && dzCount > 9) {
+							} else if (type == DoudizhuRule.Yidui && otherMaxValue < 11 && dzCount > 9) {
 							} else if (dzCount > 12 && danpaiNum > 0) {
 							} else {
 								ret = zhaDan.get(i).getOnePlay();
@@ -1634,31 +1742,29 @@ public class DouDiZhuLogic {
 							}
 						}
 						if (mineorder == dzorder.intValue()) {
-							if (type == DoudizhuRule.Danpai
-									&& otherMaxValue < 14
-									&& pmCount(this.otherCount) > 10) {
-							} else if (type == DoudizhuRule.Yidui
-									&& otherMaxValue < 12
-									&& pmCount(this.otherCount) > 10) {
-							} else if (pmCount(this.otherCount) > 10
-									&& danpaiNum > 0) {
+							if (type == DoudizhuRule.Danpai && otherMaxValue < 14 && pmCount(this.otherCount) > 10) {
+							} else if (type == DoudizhuRule.Yidui && otherMaxValue < 12 && pmCount(this.otherCount) > 10) {
+							} else if (pmCount(this.otherCount) > 10 && danpaiNum > 0) {
 							} else {
 								if (ret != null && ret.size() > 0) {
 									return ret;
 								}
 							}
 						}
-					} else if (zhaDan.containsKey(i) && zhaDan.size() > 2) {
+					}else if(zhaDan.containsKey(i) && zhaDan.size() > 2){
 						ret = zhaDan.get(i).getOnePlay();
 						if (ret != null && ret.size() > 0) {
 							return ret;
 						}
 					}
 				}
+
 			}
+
 			// 如果对方老打单牌或者对子，自己必须拆牌
 			if (type == pritype && ret.size() == 0) {
 				if (type == DoudizhuRule.Danpai) {
+
 					if (ret == null || ret.size() == 0) {
 						for (int i = 3; i < 18; i++) {
 							// 如果有炸弹，并且手中的牌少于10个单牌少于2个则可以打炸弹
@@ -1668,8 +1774,7 @@ public class DouDiZhuLogic {
 									return ret;
 								}
 							}
-							if (zhaDan.containsKey(i) && zhaDan.size() > 1
-									&& danpaiNum < 2) {
+							if (zhaDan.containsKey(i) && zhaDan.size() > 1 && danpaiNum < 2) {
 								ret = zhaDan.get(i).getOnePlay();
 								if (ret != null && ret.size() > 0) {
 									return ret;
@@ -1677,23 +1782,26 @@ public class DouDiZhuLogic {
 							}
 						}
 					}
+
 					for (int i = 17; i > otherMaxValue; i--) {
-						if (!this.pokers.containsKey(i)
-								|| this.pokers.get(i).PokerNum() < 1) {
+
+						if (!this.pokers.containsKey(i) || this.pokers.get(i).PokerNum() < 1) {
 							continue;
 						}
 						if (this.pokers.containsKey(i) && zhaDan.containsKey(i)) {
 							continue;
 						}
+
 						ret = this.pokers.get(i).getPokerIgnoreUsedState(1);
 						if (ret != null && ret.size() > 0) {
 							return ret;
 						}
 					}
+
 				} else if (type == DoudizhuRule.Yidui) {
 					for (int i = 17; i > otherMaxValue; --i) {
-						if (!this.pokers.containsKey(i)
-								|| this.pokers.get(i).PokerNum() < 2) {
+
+						if (!this.pokers.containsKey(i) || this.pokers.get(i).PokerNum() < 2) {
 							continue;
 						}
 						if (this.pokers.containsKey(i) && zhaDan.containsKey(i)) {
@@ -1703,6 +1811,7 @@ public class DouDiZhuLogic {
 						if (ret != null && ret.size() > 0) {
 							return ret;
 						}
+
 					}
 					if (ret == null || ret.size() == 0) {
 						for (int i = 3; i < 18; ++i) {
@@ -1714,6 +1823,7 @@ public class DouDiZhuLogic {
 								}
 							}
 						}
+
 					}
 				} else {
 					for (int i = 3; i < 18; ++i) {
@@ -1727,14 +1837,11 @@ public class DouDiZhuLogic {
 					}
 				}
 			}
-			// 单牌打大小王的情况
+			//单牌打大小王的情况
 			if (type == DoudizhuRule.Danpai && ret != null && ret.size() > 0) {
-				if ((sanPai.containsKey(16) && ret == sanPai.get(16)
-						.getOnePlay())
-						|| (sanPai.containsKey(17) && ret == sanPai.get(17)
-								.getOnePlay())) {
-					if (preorder == dzorder.intValue()
-							&& mineorder != dzorder.intValue()) {
+				if ((sanPai.containsKey(16) && ret == sanPai.get(16).getOnePlay()) || (sanPai.containsKey(17) && ret == sanPai.get(17).getOnePlay())) {
+
+					if (preorder == dzorder.intValue() && mineorder != dzorder.intValue()) {
 						if (dzCount > 14 || otherMaxValue < 11) {
 							return null;
 						} else {
@@ -1744,8 +1851,7 @@ public class DouDiZhuLogic {
 						}
 					}
 					if (mineorder == dzorder.intValue()) {
-						if (pmCount(this.otherCount) > 12
-								|| !isMax(otherPokers)) {
+						if (pmCount(this.otherCount) > 12 || !isMax(otherPokers)) {
 							return null;
 						} else {
 							if (ret.size() > 0 && ret != null) {
@@ -1755,12 +1861,11 @@ public class DouDiZhuLogic {
 					}
 				}
 			}
-			// chai打大小王的情况
+			//chai打大小王的情况
 			if (type == DoudizhuRule.Danpai && ret.size() == 0) {
 				int allSan = 0;
 				for (PokerOfOnePlay poops : this.getSanPai().values()) {
-					if (poops.getOnePlay().size() != 0
-							&& poops.getMaxValue() < 14) {
+					if (poops.getOnePlay().size() != 0 && poops.getMaxValue() < 14) {
 						++allSan;
 					}
 				}
@@ -1770,7 +1875,9 @@ public class DouDiZhuLogic {
 						if (ret != null && ret.size() > 0) {
 							return ret;
 						}
+
 					}
+
 				}
 			}
 			// 如果不是单牌，则考虑是否不出牌
@@ -1798,6 +1905,7 @@ public class DouDiZhuLogic {
 				if (!isBaoPai && point > oldPoint) {
 					return null;
 				}
+
 			}
 		}
 		return ret;
@@ -1812,15 +1920,16 @@ public class DouDiZhuLogic {
 	 *            第二手牌 一般是带的散牌或者对牌
 	 */
 	private void printPokers(List<Poker> play1, List<Poker> play2) {
-		// System.out.print("一手牌:");
+		//System.out.print("一手牌:");
 		if (play1 != null) {
 			for (int i = 0; i < play1.size(); ++i) {
-				// System.out.print(play1.get(i).getValue() + " ");
+				//System.out.print(play1.get(i).getValue() + " ");
 			}
 		}
+
 		if (play2 != null) {
 			for (int i = 0; i < play2.size(); ++i) {
-				// System.out.print(play2.get(i).getValue() + " ");
+				//System.out.print(play2.get(i).getValue() + " ");
 			}
 		}
 	}
@@ -1852,16 +1961,19 @@ public class DouDiZhuLogic {
 		if (sorder == 0) {
 			sorder = 3;
 		}
+
 		for (PokerOfOnePlay poop : this.getSanPai().values()) {
 			if (poop.getOnePlay().size() != 0 && poop.getMaxValue() < minValue) {
 				++sanpaiNum;
 			}
 		}
+
 		for (PokerOfOnePlay poop : this.getDuiZi().values()) {
 			if (poop.getOnePlay().size() != 0 && poop.getMaxValue() < minDui) {
 				++duipaiNum;
 			}
 		}
+
 		if (sanPai.containsKey(16) || sanPai.containsKey(17)) {
 			--sanpaiNum;
 		}
@@ -1873,6 +1985,7 @@ public class DouDiZhuLogic {
 				} else {
 					--duipaiNum;
 				}
+
 			}
 		}
 		// 飞机
@@ -1883,6 +1996,7 @@ public class DouDiZhuLogic {
 					continue;
 				}
 				PokerOfOnePlay poop = nFeiJi.get(j);
+
 				play = poop.getOnePlay();
 				if (play.size() != 0) {
 					sanzhangnum += 2;
@@ -1896,8 +2010,10 @@ public class DouDiZhuLogic {
 				} else {
 					--duipaiNum;
 				}
+
 			}
 		}
+
 		danpaiNum = duipaiNum + sanpaiNum;
 		if (dzCount == 1) {
 			isdzBaodan = true;
@@ -1917,6 +2033,7 @@ public class DouDiZhuLogic {
 		if (ispmBaodan) {
 			ispmBaodui = false;
 		}
+
 		// 如果只有炸弹
 		if (pokerNum == 2) {
 			for (int i = 3; i < 16; ++i) {
@@ -1946,12 +2063,15 @@ public class DouDiZhuLogic {
 					break;
 				}
 			}
+
 			if (oldPlay != null && oldPlay.size() != 0) {
 				return oldPlay;
 			}
+
 		}
 		clearUsedState();
 		// 遍历手中所有手牌，计算出得分最高的牌
+
 		// 飞机
 		for (Map<Integer, PokerOfOnePlay> nFeiJi : feiJi.values()) {
 			for (int j = 4; j < 15; ++j) {
@@ -1960,16 +2080,17 @@ public class DouDiZhuLogic {
 					continue;
 				}
 				PokerOfOnePlay poop = nFeiJi.get(j);
+
 				play = poop.getOnePlay();
 				if (play.size() == 0) {
 					continue;
 				}
 				this.setUsedState(play, true);
 				nowPlaying = play;
+
 				// 带散、带对的情况
 				for (int i = 1; i < 3; ++i) {
-					attachment = this.getAttachment(play.size() / 3,
-							i % 2 == 1 ? false : true);
+					attachment = this.getAttachment(play.size() / 3, i % 2 == 1 ? false : true);
 					if (attachment == null) {
 						continue;
 					}
@@ -1993,7 +2114,9 @@ public class DouDiZhuLogic {
 							return oldPlay;
 						}
 					}
-					// System.out.println("总得分：" + point);
+
+					//System.out.println("总得分：" + point);
+
 					if (firstLoop) {
 						firstLoop = false;
 						oldPlay = play;
@@ -2007,6 +2130,7 @@ public class DouDiZhuLogic {
 					}
 					this.setUsedState(attachment, false);
 				}
+
 				// 不带散、不带对的情况
 				// 计算得分
 				setNowPlayingAttachment(null);
@@ -2027,7 +2151,9 @@ public class DouDiZhuLogic {
 						return oldPlay;
 					}
 				}
-				// System.out.println("总得分：" + point);
+
+				//System.out.println("总得分：" + point);
+
 				if (firstLoop) {
 					firstLoop = false;
 					oldPlay = play;
@@ -2039,12 +2165,14 @@ public class DouDiZhuLogic {
 					oldPoint = point;
 					oldAttachment = null;
 				}
+
 				this.setUsedState(play, false);
 			}
 		}
 		if (checkLastPoker(oldPlay, oldAttachment) != null) {
 			return checkLastPoker(oldPlay, oldAttachment);
 		}
+
 		clearUsedState();
 		setNowPlayingAttachment(null);
 		// 连对
@@ -2079,7 +2207,8 @@ public class DouDiZhuLogic {
 						return oldPlay;
 					}
 				}
-				// System.out.println("总得分：" + point);
+				//System.out.println("总得分：" + point);
+
 				if (firstLoop) {
 					firstLoop = false;
 					oldPlay = play;
@@ -2133,7 +2262,9 @@ public class DouDiZhuLogic {
 						return oldPlay;
 					}
 				}
-				// System.out.println("总得分：" + point);
+
+				//System.out.println("总得分：" + point);
+
 				if (firstLoop) {
 					firstLoop = false;
 					oldPlay = play;
@@ -2166,6 +2297,7 @@ public class DouDiZhuLogic {
 			}
 			this.setUsedState(play, true);
 			nowPlaying = play;
+
 			// 带散、带对的情况
 			for (int i = 1; i < 3; ++i) {
 				attachment = this.getAttachment(1, i % 2 == 1 ? false : true);
@@ -2192,6 +2324,7 @@ public class DouDiZhuLogic {
 				} else {
 					point = 5;
 				}
+
 				for (Strategy s : strategys) {
 					switch (s.check()) {
 					case 0:
@@ -2207,7 +2340,9 @@ public class DouDiZhuLogic {
 						return oldPlay;
 					}
 				}
-				// System.out.println("总得分：" + point);
+
+				//System.out.println("总得分：" + point);
+
 				if (firstLoop) {
 					firstLoop = false;
 					oldPlay = play;
@@ -2221,9 +2356,11 @@ public class DouDiZhuLogic {
 				}
 				this.setUsedState(attachment, false);
 			}
+
 			setNowPlayingAttachment(null);
 			printPokers(nowPlaying, nowPlayingAttachment);
 			// 计算得分
+
 			if (danpaiNum > 0) {
 				point = -20;
 			} else {
@@ -2244,7 +2381,9 @@ public class DouDiZhuLogic {
 					return oldPlay;
 				}
 			}
-			// System.out.println("总得分：" + point);
+
+			//System.out.println("总得分：" + point);
+
 			if (firstLoop) {
 				firstLoop = false;
 				oldPlay = play;
@@ -2275,6 +2414,7 @@ public class DouDiZhuLogic {
 			}
 			this.setUsedState(play, true);
 			nowPlaying = play;
+
 			printPokers(nowPlaying, nowPlayingAttachment);
 			// 计算得分
 			// 如果地主只有2个牌，打对先扣50分;
@@ -2283,12 +2423,10 @@ public class DouDiZhuLogic {
 			} else if (mineorder == dzorder.intValue() && ispmBaodui) {
 				point = -40;
 			} else {
-				if (mineorder != dzorder.intValue()
-						&& sorder != dzorder.intValue()) {
+				if (mineorder != dzorder.intValue() && sorder != dzorder.intValue()) {
 					point = 10;
 				}
-				if (duiZi.containsKey(13) || duiZi.containsKey(14)
-						|| duiZi.containsKey(15)) {
+				if (duiZi.containsKey(13) || duiZi.containsKey(14) || duiZi.containsKey(15)) {
 					point = 10;
 				} else {
 					point = 0;
@@ -2309,7 +2447,9 @@ public class DouDiZhuLogic {
 					return oldPlay;
 				}
 			}
-			// System.out.println("总得分：" + point);
+
+			//System.out.println("总得分：" + point);
+
 			if (firstLoop) {
 				firstLoop = false;
 				oldPlay = play;
@@ -2351,13 +2491,11 @@ public class DouDiZhuLogic {
 			// 如果自己是地主，有平民报单了，出单牌扣50分
 			else if (mineorder == dzorder.intValue() && ispmBaodan) {
 				point = -40;
-			} else if (mineorder != dzorder.intValue() && ispmBaodan
-					&& !isdzBaodan) {
+			} else if (mineorder != dzorder.intValue() && ispmBaodan && !isdzBaodan) {
 				// 打牌伙伴只剩下一张牌，同时地主不止一张牌的情况下，我要打一张散牌，看看伙伴能不能过，如果不能过，下一把我就只管打自己的牌，不再打散牌，
 				if (!hasPlayOneSanPai) {
 					for (int p = 3; p < 13; ++p) {
-						if (!this.pokers.containsKey(p)
-								|| this.pokers.get(p).PokerNum() < 1) {
+						if (!this.pokers.containsKey(p) || this.pokers.get(p).PokerNum() < 1) {
 							continue;
 						}
 						if (this.pokers.containsKey(p) && zhaDan.containsKey(p)) {
@@ -2367,16 +2505,16 @@ public class DouDiZhuLogic {
 						if (pv.getPokers() != null && pv.getPokers().size() > 0) {
 							hasPlayOneSanPai = true;
 							return pv.getPokerIgnoreUsedState(1);
+
 						}
 					}
 				}
+
 			} else {
-				if (mineorder != dzorder.intValue()
-						&& sorder == dzorder.intValue()) {
+				if (mineorder != dzorder.intValue() && sorder == dzorder.intValue()) {
 					point = 5;
 				}
-				if (sanPai.containsKey(16) || sanPai.containsKey(17)
-						|| sanPai.containsKey(15)) {
+				if (sanPai.containsKey(16) || sanPai.containsKey(17) || sanPai.containsKey(15)) {
 					if (sanpaiNum > 1) {
 						point = 10;
 					}
@@ -2389,6 +2527,7 @@ public class DouDiZhuLogic {
 					if (sanpaiNum > 3) {
 						point = -20;
 					}
+
 				}
 			}
 			for (Strategy s : strategys) {
@@ -2406,7 +2545,9 @@ public class DouDiZhuLogic {
 					return oldPlay;
 				}
 			}
-			// System.out.println("总得分：" + point);
+
+			//System.out.println("总得分：" + point);
+
 			if (firstLoop) {
 				firstLoop = false;
 				oldPlay = play;
@@ -2436,6 +2577,7 @@ public class DouDiZhuLogic {
 			}
 			this.setUsedState(play, true);
 			nowPlaying = play;
+
 			printPokers(nowPlaying, nowPlayingAttachment);
 			// 计算得分
 			// 如果地主只有2个牌，打对先扣50分;
@@ -2463,7 +2605,7 @@ public class DouDiZhuLogic {
 					return oldPlay;
 				}
 			}
-			// System.out.println("总得分：" + point);
+			//System.out.println("总得分：" + point);
 			if (firstLoop) {
 				firstLoop = false;
 				oldPlay = play;
@@ -2501,13 +2643,11 @@ public class DouDiZhuLogic {
 			// 如果自己是地主，有平民报单了，出单牌扣50分
 			else if (mineorder == dzorder.intValue() && ispmBaodan) {
 				point = -30;
-			} else if (mineorder != dzorder.intValue() && ispmBaodan
-					&& !isdzBaodan) {
+			} else if (mineorder != dzorder.intValue() && ispmBaodan && !isdzBaodan) {
 				// 打牌伙伴只剩下一张牌，同时地主不止一张牌的情况下，我要打一张散牌，看看伙伴能不能过，如果不能过，下一把我就只管打自己的牌，不再打散牌，
 				if (!hasPlayOneSanPai) {
 					for (int p = 3; p < 13; ++p) {
-						if (!this.pokers.containsKey(p)
-								|| this.pokers.get(p).PokerNum() < 1) {
+						if (!this.pokers.containsKey(p) || this.pokers.get(p).PokerNum() < 1) {
 							continue;
 						}
 						if (this.pokers.containsKey(p) && zhaDan.containsKey(p)) {
@@ -2517,16 +2657,18 @@ public class DouDiZhuLogic {
 						if (pv.getPokers() != null && pv.getPokers().size() > 0) {
 							hasPlayOneSanPai = true;
 							return pv.getPokerIgnoreUsedState(1);
+
 						}
 					}
 				}
+
 			} else {
-				if (sanPai.containsKey(16) || sanPai.containsKey(17)
-						|| sanPai.containsKey(15)) {
+				if (sanPai.containsKey(16) || sanPai.containsKey(17) || sanPai.containsKey(15)) {
 					point = -10;
 				} else {
 					point = -5;
 				}
+
 			}
 			for (Strategy s : strategys) {
 				switch (s.check()) {
@@ -2543,7 +2685,9 @@ public class DouDiZhuLogic {
 					return oldPlay;
 				}
 			}
-			// System.out.println("总得分：" + point);
+
+			//System.out.println("总得分：" + point);
+
 			if (firstLoop) {
 				firstLoop = false;
 				oldPlay = play;
@@ -2577,18 +2721,14 @@ public class DouDiZhuLogic {
 			if (this.pokerNum > 10) {
 				point = -60;
 				// 如果对手报对手中只有炸弹跟对子
-			} else if (oldPlay != null && mineorder != dzorder.intValue()
-					&& isdzBaodui && DoudizhuRule.checkpai(oldPlay) != 2) {
+			} else if (oldPlay != null && mineorder != dzorder.intValue() && isdzBaodui && DoudizhuRule.checkpai(oldPlay) != 2) {
 				point = -60;
-			} else if (oldPlay != null && mineorder == dzorder.intValue()
-					&& ispmBaodui && DoudizhuRule.checkpai(oldPlay) != 2) {
+			} else if (oldPlay != null && mineorder == dzorder.intValue() && ispmBaodui && DoudizhuRule.checkpai(oldPlay) != 2) {
 				point = -60;
 				// 如果对手报单手中只有炸弹跟单牌
-			} else if (oldPlay != null && mineorder != dzorder.intValue()
-					&& isdzBaodan && DoudizhuRule.checkpai(oldPlay) != 1) {
+			} else if (oldPlay != null && mineorder != dzorder.intValue() && isdzBaodan && DoudizhuRule.checkpai(oldPlay) != 1) {
 				point = -60;
-			} else if (oldPlay != null && mineorder == dzorder.intValue()
-					&& ispmBaodan && DoudizhuRule.checkpai(oldPlay) != 1) {
+			} else if (oldPlay != null && mineorder == dzorder.intValue() && ispmBaodan && DoudizhuRule.checkpai(oldPlay) != 1) {
 				point = -60;
 			} else {
 				if (danpaiNum >= 0) {
@@ -2596,6 +2736,7 @@ public class DouDiZhuLogic {
 				} else {
 					point = -50;
 				}
+
 			}
 			for (Strategy s : strategys) {
 				switch (s.check()) {
@@ -2612,7 +2753,8 @@ public class DouDiZhuLogic {
 					return oldPlay;
 				}
 			}
-			// System.out.println("总得分：" + point);
+			//System.out.println("总得分：" + point);
+
 			if (firstLoop) {
 				firstLoop = false;
 				oldPlay = play;
@@ -2642,9 +2784,12 @@ public class DouDiZhuLogic {
 			}
 			this.setUsedState(play, true);
 			nowPlaying = play;
+
 			// 带散、带对的情况
 			for (int i = 1; i < 3; ++i) {
+
 				attachment = this.getAttachment(2, i == 1 ? true : false);
+
 				if (attachment == null) {
 					continue;
 				}
@@ -2674,7 +2819,8 @@ public class DouDiZhuLogic {
 						return oldPlay;
 					}
 				}
-				// System.out.println("总得分：" + point);
+				//System.out.println("总得分：" + point);
+
 				if (firstLoop) {
 					firstLoop = false;
 					oldPlay = play;
@@ -2711,7 +2857,8 @@ public class DouDiZhuLogic {
 					return oldPlay;
 				}
 			}
-			// System.out.println("总得分：" + point);
+			//System.out.println("总得分：" + point);
+
 			if (firstLoop) {
 				firstLoop = false;
 				oldPlay = play;
@@ -2730,11 +2877,11 @@ public class DouDiZhuLogic {
 		}
 		if (oldPlay != null && oldAttachment != null) {
 			oldPlay.addAll(oldAttachment);
+
 		}
+
 		// 如果地主报单但是手中只有单牌
-		if (oldPlay != null && oldPlay.size() > 0
-				&& mineorder != dzorder.intValue() && isdzBaodan
-				&& DoudizhuRule.checkpai(oldPlay) == 1) {
+		if (oldPlay != null && oldPlay.size() > 0 && mineorder != dzorder.intValue() && isdzBaodan && DoudizhuRule.checkpai(oldPlay) == 1) {
 			for (int i = 17; i > 2; --i) {
 				if (!sanPai.containsKey(i)) {
 					continue;
@@ -2745,8 +2892,7 @@ public class DouDiZhuLogic {
 			}
 		}
 		// 如果自己是地主，平民报单且自己只有单牌
-		if (oldPlay != null && mineorder == dzorder.intValue() && ispmBaodan
-				&& DoudizhuRule.checkpai(oldPlay) == 1) {
+		if (oldPlay != null && mineorder == dzorder.intValue() && ispmBaodan && DoudizhuRule.checkpai(oldPlay) == 1) {
 			for (int i = 17; i > 2; --i) {
 				if (!sanPai.containsKey(i)) {
 					continue;
@@ -2755,10 +2901,10 @@ public class DouDiZhuLogic {
 				oldPlay = poop.getOnePlay();
 				break;
 			}
+
 		}
 		// 如果自己是地主，平民报对且自己只有对牌
-		if (oldPlay != null && mineorder == dzorder.intValue() && ispmBaodui
-				&& DoudizhuRule.checkpai(oldPlay) == 2) {
+		if (oldPlay != null && mineorder == dzorder.intValue() && ispmBaodui && DoudizhuRule.checkpai(oldPlay) == 2) {
 			// 对子
 			for (int i = 15; i > 2; i--) {
 				if (!duiZi.containsKey(i)) {
@@ -2771,7 +2917,9 @@ public class DouDiZhuLogic {
 						return playDui;
 					}
 				}
+
 			}
+
 			for (int p = 3; p < 18; ++p) {
 				if (this.pokers.containsKey(p)) {
 					PokerOfOneValue pv = this.pokers.get(p);
@@ -2780,10 +2928,10 @@ public class DouDiZhuLogic {
 					}
 				}
 			}
+
 		}
 		// 如果地主报对但是手中只有对
-		if (oldPlay != null && mineorder != dzorder.intValue() && isdzBaodui
-				&& DoudizhuRule.checkpai(oldPlay) == 2) {
+		if (oldPlay != null && mineorder != dzorder.intValue() && isdzBaodui && DoudizhuRule.checkpai(oldPlay) == 2) {
 			for (int i = 15; i > 2; i--) {
 				if (!duiZi.containsKey(i)) {
 					continue;
@@ -2795,7 +2943,9 @@ public class DouDiZhuLogic {
 						return playDui;
 					}
 				}
+
 			}
+
 			for (int p = 3; p < 18; ++p) {
 				if (this.pokers.containsKey(p)) {
 					PokerOfOneValue pv = this.pokers.get(p);
@@ -2805,17 +2955,16 @@ public class DouDiZhuLogic {
 				}
 			}
 		}
+
 		return oldPlay;
 	}
 
-	private List<Poker> checkLastPoker(List<Poker> oldPlay,
-			List<Poker> oldAttachment) {
-		// 除了单牌对子 其他牌出完正好只剩一首可优先打
+	private List<Poker> checkLastPoker(List<Poker> oldPlay, List<Poker> oldAttachment) {
+		//  除了单牌对子 其他牌出完正好只剩一首可优先打
 		if (oldPlay == null) {
 			return null;
 		}
-		if (DoudizhuRule.checkpai(oldPlay) == 1
-				|| DoudizhuRule.checkpai(oldPlay) == 2) {
+		if (DoudizhuRule.checkpai(oldPlay) == 1 || DoudizhuRule.checkpai(oldPlay) == 2) {
 			if (!isMax(oldPlay)) {
 				return null;
 			}
@@ -2824,6 +2973,7 @@ public class DouDiZhuLogic {
 		if (oldAttachment != null) {
 			this.setUsedState(oldAttachment, true);
 		}
+
 		List<Poker> ps = new ArrayList<Poker>();
 		for (PokerOfOneValue poov : this.getPokers().values()) {
 			for (Poker p : poov.getPokers()) {
@@ -2832,6 +2982,7 @@ public class DouDiZhuLogic {
 				}
 			}
 		}
+
 		if (ps.size() != 0 && DoudizhuRule.checkpai(ps) != 0) {
 			this.setUsedState(oldPlay, false);
 			if (oldAttachment != null) {
@@ -2863,6 +3014,7 @@ public class DouDiZhuLogic {
 			// 带散牌
 			int i = 0;
 			for (; i < poops.length; ++i) {
+
 				PokerOfOnePlay poop = (PokerOfOnePlay) poops[i];
 				if (poop.getMaxValue() > 14) {
 					continue;
@@ -2874,11 +3026,13 @@ public class DouDiZhuLogic {
 				ret.add(ps.get(0));
 				ps.get(0).setUsed(true);
 				usedList.add(ps.get(0));
+
 				if (--attachmentCount <= 0) {
 					this.setUsedState(usedList, false);
 					return ret;
 				}
 			}
+
 			poops = duiZi.values().toArray();
 			Poker dui = null;
 			// 在对子中取单牌
@@ -2902,11 +3056,14 @@ public class DouDiZhuLogic {
 				ret.add(dui);
 				dui.setUsed(true);
 				usedList.add(dui);
+
 				if (--attachmentCount == 0) {
 					this.setUsedState(usedList, false);
 					return ret;
 				}
+
 			}
+
 			// this.setUsedState(ret, true);
 			// 从pokers队列中取数据
 			for (i = 3; i < 18; ++i) {
@@ -2935,6 +3092,7 @@ public class DouDiZhuLogic {
 					this.setUsedState(usedList, false);
 					return ret;
 				}
+
 				p = poov.getOneUnusedPoker();
 				if (p != null) {
 					ret.add(p);
@@ -2942,10 +3100,12 @@ public class DouDiZhuLogic {
 				} else {
 					continue;
 				}
+
 				if (--attachmentCount == 0) {
 					this.setUsedState(usedList, false);
 					return ret;
 				}
+
 			}
 		} else {
 			// 带对
@@ -2996,6 +3156,7 @@ public class DouDiZhuLogic {
 		for (Poker p : play1) {
 			p.setUsed(isUsed);
 		}
+
 	}
 
 	/**
@@ -3296,6 +3457,7 @@ public class DouDiZhuLogic {
 		}
 		fillPokerList();
 		this.pokerNum = ps.size();
+
 	}
 
 	/**
@@ -3310,12 +3472,10 @@ public class DouDiZhuLogic {
 		int two = Integer.parseInt(ConfigUtils.get("rule.robot.bigPai.two"));
 		int a = Integer.parseInt(ConfigUtils.get("rule.robot.bigPai.a"));
 		int k = Integer.parseInt(ConfigUtils.get("rule.robot.bigPai.k"));
-		int lianDui = Integer.parseInt(ConfigUtils
-				.get("rule.robot.bigPai.lianDui"));
-		int feiJi = Integer
-				.parseInt(ConfigUtils.get("rule.robot.bigPai.feiJi"));
-		int bigSanZhang = Integer.parseInt(ConfigUtils
-				.get("rule.robot.bigPai.bigSanZhang"));
+		int lianDui = Integer.parseInt(ConfigUtils.get("rule.robot.bigPai.lianDui"));
+		int feiJi = Integer.parseInt(ConfigUtils.get("rule.robot.bigPai.feiJi"));
+		int bigSanZhang = Integer.parseInt(ConfigUtils.get("rule.robot.bigPai.bigSanZhang"));
+
 		int score = 0;
 		// 炸弹计分
 		score += zhaDan * this.zhaDan.size();
@@ -3352,17 +3512,21 @@ public class DouDiZhuLogic {
 		}
 		// 有飞机 计分
 		score += feiJi * this.feiJi2.size();
+
 		// 连对计分
 		score += lianDui * this.lianDui3.size();
-		// System.out.println("--------poker scoreing-----------");
+
+		//System.out.println("--------poker scoreing-----------");
+
 		this.printAllPokerList();
-		// System.out.println("--------score " + score + "------------");
+
+		//System.out.println("--------score " + score + "------------");
+
 		return score;
 	}
 
 	/**
 	 * 取出当前未打出的所有牌，按照value值从大到小排列
-	 * 
 	 * @return 所有牌的队列
 	 */
 	private List<Poker> getAllPokers() {
@@ -3390,6 +3554,7 @@ public class DouDiZhuLogic {
 		for (int i = 0; i < playedPokers.size(); i++) {
 			pos[i] = playedPokers.get(i).getNumber();
 		}
+
 		int paixu[] = DoudizhuRule.sort(pos, allPokers);
 		for (int i = 0; i < pos.length; i++) {
 			Poker card = allPokers[paixu[i]];
@@ -3402,8 +3567,7 @@ public class DouDiZhuLogic {
 		}
 		int type = DoudizhuRule.checkpai(otherPokers);
 		int maxValue = DoudizhuRule.getMaxNumber(otherPokers);
-		Map<Integer, PokerOfOnePlay> play = PokerUtil.whichArray(this,
-				otherPokers.size(), type);
+		Map<Integer, PokerOfOnePlay> play = PokerUtil.whichArray(this, otherPokers.size(), type);
 		for (int i = 17; i >= maxValue; --i) {
 			if (play.containsKey(i)) {
 				FillDiZhuData dizhuData = new FillDiZhuData(allofPokers);

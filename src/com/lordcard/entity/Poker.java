@@ -10,6 +10,7 @@ import com.lordcard.common.util.ImageUtil;
 import com.lordcard.common.util.MultiScreenTool;
 
 public class Poker extends RelativeLayout {
+
 	private int style = 0; // 牌的款式
 	private int value = 0; // 牌的值
 	private int number = 0; // 牌的数组
@@ -22,24 +23,19 @@ public class Poker extends RelativeLayout {
 	public RelativeLayout.LayoutParams params = null;
 	public RelativeLayout.LayoutParams imageParams = null;
 	public RelativeLayout.LayoutParams innerParams = null;
-	private static MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
-	public static final int width = mst.adjustXIgnoreDensity(90);
-	public static final int height = mst.adjustYIgnoreDensity(125);
+	
 
+	private static MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
+	public static final int width=mst.adjustXIgnoreDensity(90);
+	public static final int height=mst.adjustYIgnoreDensity(125);
 	public Poker(Context context) {
 		super(context);
-		// params = new
-		// RelativeLayout.LayoutParams(mst.adjustXIgnoreDensity(90),
-		// mst.adjustYIgnoreDensity(125));
-		params = new RelativeLayout.LayoutParams(width, height);
+//		params = new RelativeLayout.LayoutParams(mst.adjustXIgnoreDensity(90), mst.adjustYIgnoreDensity(125));
+		params = new RelativeLayout.LayoutParams(width,height);
 		pokeImage = new ImageView(context);
 		innerLayout = new RelativeLayout(context);
-		imageParams = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
-				android.view.ViewGroup.LayoutParams.FILL_PARENT);
-		innerParams = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
-				android.view.ViewGroup.LayoutParams.FILL_PARENT);
+		imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
+		innerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
 		addView(pokeImage, imageParams);
 		addView(innerLayout, innerParams);
 	}
@@ -51,7 +47,7 @@ public class Poker extends RelativeLayout {
 				Drawable drawable = pokeImage.getDrawable();
 				if (drawable != null) {
 					BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-					if (!bitmapDrawable.getBitmap().isRecycled()) {// 先判断图片是否已释放了
+					if (!bitmapDrawable.getBitmap().isRecycled()) {//先判断图片是否已释放了
 						bitmapDrawable.getBitmap().recycle();
 					}
 					bitmapDrawable.setCallback(null);
@@ -59,19 +55,21 @@ public class Poker extends RelativeLayout {
 				}
 				drawable.setCallback(null);
 				drawable = null;
-				// ImageUtil.releaseDrawable(pokeImage.getDrawable());//
-				// 释放扑克图片占用内存
+				//				ImageUtil.releaseDrawable(pokeImage.getDrawable());// 释放扑克图片占用内存
 			}
 			pokeImage = null;
+
 			if (innerLayout != null) {
 				innerLayout.setLayoutParams(null);
 				innerLayout.removeAllViews();
 				ImageUtil.releaseDrawable(innerLayout.getBackground());
 			}
 			innerLayout = null;
+
 			params = null;
 			imageParams = null;
 			innerParams = null;
+
 			setLayoutParams(null);
 			removeAllViews();
 			removeAllViewsInLayout();
@@ -128,15 +126,15 @@ public class Poker extends RelativeLayout {
 		setLayoutParams(params);
 		ischeck = !ischeck;
 	}
-
+	
 	public void setDefaultParams2() {
 		params.topMargin = mst.adjustYIgnoreDensity(20);
 		setLayoutParams(params);
-		ischeck = false;
+		ischeck=false;
 	}
 
 	/**
-	 * 设置牌上升位置
+	 *  设置牌上升位置
 	 */
 	public void setRiseParams() {
 		params.topMargin = 0;
@@ -167,4 +165,5 @@ public class Poker extends RelativeLayout {
 	public void setTouch(boolean isTouch) {
 		this.isTouch = isTouch;
 	}
+
 }

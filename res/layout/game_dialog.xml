@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mm_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
@@ -15,40 +14,25 @@
                 android:id="@+id/showmsg_layout"
                 android:layout_width="250dp"
                 android:layout_height="170dp"
-                android:background="@drawable/photo_bg"
-                android:orientation="vertical" >
+                android:layout_marginTop="10dp"
+                android:background="@drawable/photo_bg" >
 
                 <TextView
                     android:id="@+id/common_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="55dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="35dp"
-                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:gravity="top"
                     android:text="恭喜您，等级达到150，不滞于物，草木竹石均可为剑，渐进于无剑胜有剑之境。（获得15000金豆，抽奖券15张）"
-                    android:textColor="#c2811a"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
-
-<!--                 <com.google.android.gms.ads.AdView -->
-<!--                     android:id="@+id/adView" -->
-<!--                     android:layout_width="wrap_content" -->
-<!--                     android:layout_height="wrap_content" -->
-<!--                     android:layout_gravity="center_horizontal" -->
-<!--                     android:layout_marginLeft="15dp" -->
-<!--                     android:layout_marginRight="15dp" -->
-<!--                     ads:adSize="BANNER" -->
-<!--                     ads:adUnitId="@string/ad_unit_id_banner3" > -->
-<!--                 </com.google.android.gms.ads.AdView> -->
             </LinearLayout>
         </TableRow>
 
-        <TableRow>
-        </TableRow>
-
-        <TableRow android:layout_marginTop="-55dp" >
+        <TableRow android:layout_marginTop="-50dp" >
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -59,22 +43,23 @@
 
                 <Button
                     android:id="@+id/common_cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="50dp"
-                    android:background="@drawable/cancel_btn_bg"
-                    android:textSize="14sp" />
-                <!-- android:text="@string/dialog_cancell2" -->
+                    style="@style/dialog_cancle_btn_style"
+                   	android:layout_marginRight="60dp"
+                   	android:layout_height="30dp"
+                  	android:textSize="14dp" 
+                   	android:background="@drawable/cancel_btn_bg"
+                     />
+                   <!-- android:text="@string/dialog_cancell2"-->
 
                 <Button
                     android:id="@+id/common_ok"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/dialog_ok_btn_style"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/common_cancel"
+                    android:layout_height="30dp"
+                    android:textSize="14dp" 
                     android:background="@drawable/ok_btn_bg"
-                    android:textSize="14sp" />
-                <!-- android:text="@string/dialog_ok2" / -->
+                    android:layout_toRightOf="@+id/common_cancel" />
+                    <!-- android:text="@string/dialog_ok2" /-->
             </RelativeLayout>
         </TableRow>
     </TableLayout>

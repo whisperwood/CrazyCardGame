@@ -444,6 +444,7 @@ public class SimpleCache {
 			}
 		}
 		return null;
+
 	}
 
 	// =======================================
@@ -612,9 +613,11 @@ public class SimpleCache {
 			while (curCacheCount + 1 > countLimit) {
 				long freedSize = removeNext();
 				cacheSize.addAndGet(-freedSize);
+
 				curCacheCount = cacheCount.addAndGet(-1);
 			}
 			cacheCount.addAndGet(1);
+
 			long valueSize = calculateSize(file);
 			long curCacheSize = cacheSize.get();
 			while (curCacheSize + valueSize > sizeLimit) {
@@ -622,6 +625,7 @@ public class SimpleCache {
 				curCacheSize = cacheSize.addAndGet(-freedSize);
 			}
 			cacheSize.addAndGet(valueSize);
+
 			Long currentTime = System.currentTimeMillis();
 			file.setLastModified(currentTime);
 			lastUsageDates.put(file, currentTime);
@@ -632,6 +636,7 @@ public class SimpleCache {
 			Long currentTime = System.currentTimeMillis();
 			file.setLastModified(currentTime);
 			lastUsageDates.put(file, currentTime);
+
 			return file;
 		}
 
@@ -664,6 +669,7 @@ public class SimpleCache {
 			if (lastUsageDates.isEmpty()) {
 				return 0;
 			}
+
 			Long oldestUsage = null;
 			File mostLongUsedFile = null;
 			Set<Entry<File, Long>> entries = lastUsageDates.entrySet();
@@ -681,6 +687,7 @@ public class SimpleCache {
 					}
 				}
 			}
+
 			long fileSize = calculateSize(mostLongUsedFile);
 			if (mostLongUsedFile.delete()) {
 				lastUsageDates.remove(mostLongUsedFile);
@@ -699,6 +706,7 @@ public class SimpleCache {
 	 * @version 1.0
 	 */
 	private static class Utils {
+
 		/**
 		 * 判断缓存的String数据是否到期
 		 * 
@@ -859,4 +867,5 @@ public class SimpleCache {
 			return new BitmapDrawable(bm);
 		}
 	}
+
 }

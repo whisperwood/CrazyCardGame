@@ -16,12 +16,12 @@ import com.lordcard.ui.view.dialog.LotteryDialog;
  *         create at 2013 2013-3-19 下午4:09:01
  */
 public class GamePhoneStateListener extends PhoneStateListener {
-	// private Context context;
+//	private Context context;
 	private static boolean play = false;
-	private boolean zhengdongOn = false;// 震动是否开启
+	private boolean zhengdongOn = false;//震动是否开启
 
 	public GamePhoneStateListener(Context context) {
-		// this.context = context;
+//		this.context = context;
 	}
 
 	@Override
@@ -29,30 +29,27 @@ public class GamePhoneStateListener extends PhoneStateListener {
 		Log.d("phoneIdle", "phoneIdle2:state  " + state);
 		switch (state) {
 		// 空闲
-		case TelephonyManager.CALL_STATE_IDLE:// 0
+		case TelephonyManager.CALL_STATE_IDLE://0
 			if (play) {
 				play = false;
 				AudioPlayUtils.getInstance().ContinueBgMusic();
 				if (zhengdongOn) {
-					PreferenceHelper.getMyPreference().getEditor()
-							.putBoolean("zhendong", true).commit();
+					PreferenceHelper.getMyPreference().getEditor().putBoolean("zhendong", true).commit();
 				}
 				Log.d("phoneIdle", "-----------------CALL_STATE_IDLE  ");
 			}
 			break;
 		// 来电
-		case TelephonyManager.CALL_STATE_RINGING:// 1
+		case TelephonyManager.CALL_STATE_RINGING://1
 			if (!play) {
 				LotteryDialog.voiceON = false;
 				if (AudioPlayUtils.getInstance().isBgisPlaying()) {
 					play = true;
 					AudioPlayUtils.getInstance().stopBgMusic();
 				}
-				if (PreferenceHelper.getMyPreference().getSetting()
-						.getBoolean("zhendong", true)) {
+				if (PreferenceHelper.getMyPreference().getSetting().getBoolean("zhendong", true)) {
 					zhengdongOn = true;
-					PreferenceHelper.getMyPreference().getEditor()
-							.putBoolean("zhendong", false).commit();
+					PreferenceHelper.getMyPreference().getEditor().putBoolean("zhendong", false).commit();
 				} else {
 					zhengdongOn = false;
 				}
@@ -60,17 +57,15 @@ public class GamePhoneStateListener extends PhoneStateListener {
 			}
 			break;
 		// 摘机（正在通话中）
-		case TelephonyManager.CALL_STATE_OFFHOOK:// 2
+		case TelephonyManager.CALL_STATE_OFFHOOK://2
 			if (!play) {
 				if (AudioPlayUtils.getInstance().isBgisPlaying()) {
 					play = true;
 					AudioPlayUtils.getInstance().stopBgMusic();
 				}
-				if (PreferenceHelper.getMyPreference().getSetting()
-						.getBoolean("zhendong", true)) {
+				if (PreferenceHelper.getMyPreference().getSetting().getBoolean("zhendong", true)) {
 					zhengdongOn = true;
-					PreferenceHelper.getMyPreference().getEditor()
-							.putBoolean("zhendong", false).commit();
+					PreferenceHelper.getMyPreference().getEditor().putBoolean("zhendong", false).commit();
 				}
 				Log.d("phoneIdle", "-----------------CALL_STATE_OFFHOOK  ");
 			}

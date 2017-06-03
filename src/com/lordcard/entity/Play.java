@@ -7,95 +7,45 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Play implements Serializable {
-	private static final long serialVersionUID = 186874763769645267L;
-	@Expose
-	@SerializedName("i")
-	private String id; // 出牌人编号
-	@Expose
-	@SerializedName("ct")
-	private int count; // 剩余的牌数
-	@Expose
-	@SerializedName("cd")
-	private String cards; // 出的牌的json格式字符串
-	@Expose
-	@SerializedName("o")
-	private int order; // 游戏出牌顺序
-	@Expose
-	@SerializedName("cl")
-	private boolean call; // 叫分
-	@Expose
-	@SerializedName("co")
-	private int callOrder; // 开始叫分的人位置
-	@Expose
-	@SerializedName("e")
-	private boolean escape; // 是否逃跑
-	@Expose
-	@SerializedName("no")
-	private Integer nextOrder; // 下一个出牌人位置
-	@Expose
-	@SerializedName("nm")
-	private Map<Integer, String> nickMap; // 玩家名称
-	@Expose
-	@SerializedName("r")
-	private int ratio; // 总倍数
-	@Expose
-	@SerializedName("pm")
-	private double payment = 0; // 每局支付多少 负数为输 正数为赢
-	@Expose
-	@SerializedName("u")
-	private int unitType = 0; // 类型 积分还是豆 0 积分、1 豆
-	@Expose
-	@SerializedName("et")
-	private double extract = 0; // 抽成
-	@Expose
-	@SerializedName("gc")
-	private int goodsCount = 0; // 物品赠送数量
-	@Expose
-	@SerializedName("m")
-	private Integer masterOrder; // 庄家位置编号
-	@Expose
-	@SerializedName("bo")
-	private int bombRatio = 1; // 炸弹倍数(默认1)
-	@Expose
-	@SerializedName("sr")
-	private int springRatio = 1; // 春天倍数(默认1)
-	@Expose
-	@SerializedName("dr")
-	private int doubleRatio = 1; // 加倍倍数(默认1)
-	@Expose
-	@SerializedName("b")
-	private double bean = 0; // 最新所有金豆
-	// 炸弹、春天、加倍、总倍数、底数、金豆、经验、当前金豆、等级
-	@Expose
-	@SerializedName("iq")
-	private Integer iq = 0; // 最新等级
-	@Expose
-	@SerializedName("in")
-	private Integer intellect = 0; // 最新经验
-	@Expose
-	@SerializedName("ai")
-	private Integer addIntellect = 0; // 输赢经验
-	@Expose
-	@SerializedName("up")
-	private boolean upgrade; // 是否升级了
-	@Expose
-	@SerializedName("ce")
-	private String celebratedText; // 庆祝文字
-	@Expose
-	@SerializedName("ee")
-	private String celebratedEffect; // 庆祝效果
-	@Expose
-	@SerializedName("br")
-	private int baseRatio = 1; // 基础倍数(默认1)
-	@Expose
-	@SerializedName("cr")
-	private int callRatio = 1; // 叫分倍数(默认1)
-	@Expose
-	@SerializedName("it")
-	private Integer isTitle; // 是否为称号:0=不是,1=是
 
-	public Play() {
-	}
+	private static final long serialVersionUID = 186874763769645267L;
+
+	@Expose @SerializedName("i") 	private String id; // 出牌人编号
+	@Expose @SerializedName("ct") 	private int count; // 剩余的牌数
+	@Expose @SerializedName("cd") 	private String cards; // 出的牌的json格式字符串
+	@Expose @SerializedName("o") 	private int order; // 游戏出牌顺序
+	@Expose @SerializedName("cl") 	private boolean call; // 叫分
+	@Expose @SerializedName("co") 	private int callOrder; // 开始叫分的人位置
+	@Expose @SerializedName("e") 	private boolean escape; // 是否逃跑
+	@Expose @SerializedName("no") 	private Integer nextOrder; // 下一个出牌人位置
+	@Expose @SerializedName("nm") 	private Map<Integer, String> nickMap; // 玩家名称
+
+	@Expose @SerializedName("r") 	private int ratio; //总倍数
+	@Expose @SerializedName("pm") 	private double payment = 0; // 每局支付多少 负数为输 正数为赢
+	@Expose @SerializedName("u") 	private int unitType = 0; // 类型 积分还是豆 0 积分、1 豆
+	@Expose @SerializedName("et") 	private double extract = 0; // 抽成
+	@Expose @SerializedName("gc") 	private int goodsCount = 0; // 物品赠送数量
+	@Expose @SerializedName("m") 	private Integer masterOrder; // 庄家位置编号
+	
+	@Expose @SerializedName("bo") private int bombRatio = 1;				//炸弹倍数(默认1)
+	@Expose @SerializedName("sr") private int springRatio = 1;				//春天倍数(默认1)
+	@Expose @SerializedName("dr") private int doubleRatio = 1;				//加倍倍数(默认1)
+	@Expose @SerializedName("b") private double bean = 0;					//最新所有金豆
+	// 炸弹、春天、加倍、总倍数、底数、金豆、经验、当前金豆、等级
+	@Expose @SerializedName("iq") private Integer iq=0;						// 最新等级
+	@Expose @SerializedName("in") private Integer intellect=0 ;				// 最新经验
+	@Expose @SerializedName("ai") private Integer addIntellect=0;				// 输赢经验
+	
+	@Expose @SerializedName("up") private boolean	upgrade;				//是否升级了
+	@Expose @SerializedName("ce") private String	celebratedText;			//庆祝文字
+	@Expose @SerializedName("ee") private String	celebratedEffect;		//庆祝效果
+	
+	@Expose @SerializedName("br") private int baseRatio = 1;				//基础倍数(默认1)
+	@Expose @SerializedName("cr") private int callRatio = 1;				//叫分倍数(默认1)
+	@Expose@SerializedName("it")	private Integer isTitle; // 是否为称号:0=不是,1=是
+	
+	
+	public Play() {}
 
 	public String getId() {
 		return id;

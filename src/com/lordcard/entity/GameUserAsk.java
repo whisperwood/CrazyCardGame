@@ -12,15 +12,19 @@ import com.google.gson.annotations.SerializedName;
  * @date 2013-5-17 下午12:33:33
  */
 public class GameUserAsk {
+
 	public static final String ST_AN_NO = "0"; // 未解答
 	public static final String ST_AN_YES = "1"; // 已名解答
+
 	public static final String TP_DEFAULT = "0"; // 一般问题
 	public static final String TP_COMMON = "1"; // 常见问题
+
 	private String account; // 提问玩家账号
 	private String link; // 联系方式
 	@Expose
 	@SerializedName("q")
 	private String question; // 提问内容
+
 	@Expose
 	@SerializedName("ct")
 	private String createTime; // 提问时间

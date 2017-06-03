@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class GamePrizeRecord {
+
 	/**
 	 * 时间
 	 */
@@ -19,22 +20,17 @@ public class GamePrizeRecord {
 	/**
 	 * 奖励物品
 	 */
-	@Expose
-	@SerializedName("pr")
-	private String prize;
+	@Expose @SerializedName("pr") private String	prize;
 	/**
 	 * 比赛的赛场名称
 	 */
-	@Expose
-	@SerializedName("rn")
-	private String roomName;
-
-	public GamePrizeRecord(String time, String rank, String prize,
-			String roomName) {
+	@Expose @SerializedName("rn") private String roomName;
+	
+	public GamePrizeRecord(String time, String rank, String prize,String roomName) {
 		this.time = time;
 		this.rank = rank;
 		this.prize = prize;
-		this.roomName = roomName;
+		this.roomName=roomName;
 	}
 
 	public String getTime() {
@@ -60,7 +56,6 @@ public class GamePrizeRecord {
 	public void setPrize(String prize) {
 		this.prize = prize;
 	}
-
 	public final String getRoomName() {
 		return roomName;
 	}

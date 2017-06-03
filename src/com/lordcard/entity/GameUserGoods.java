@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * 游戏玩家的物品
  */
 public class GameUserGoods {
+
 	/**
 	 * 抽奖券
 	 */
@@ -17,8 +18,7 @@ public class GameUserGoods {
 	@SerializedName("b")
 	private long bean; // 我的金豆
 
-	public GameUserGoods() {
-	}
+	public GameUserGoods() {}
 
 	public int getCouponNum() {
 		return couponNum;
@@ -35,4 +35,5 @@ public class GameUserGoods {
 	public void setBean(long bean) {
 		this.bean = bean;
 	}
+
 }

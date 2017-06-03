@@ -13,6 +13,7 @@
  * @version V1.0  
  
  */
+
 package com.lordcard.entity;
 
 import java.util.List;
@@ -75,4 +76,5 @@ public class PageQueryResult {
 	public void setPageCount(int pageCount) {
 		this.pageCount = pageCount;
 	}
+
 }

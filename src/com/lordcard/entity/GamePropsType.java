@@ -92,4 +92,5 @@ public class GamePropsType {
 	public void setOrderNum(Integer orderNum) {
 		this.orderNum = orderNum;
 	}
+
 }

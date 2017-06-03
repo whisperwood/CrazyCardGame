@@ -29,6 +29,7 @@ import com.sdk.util.PayUtils;
 import com.sdk.util.vo.PayPoint;
 
 public class PrerechargeManager {
+
 	private static BaseDialog prerechargeDialogs = null;
 	private static boolean isPrePay = false;
 
@@ -97,25 +98,21 @@ public class PrerechargeManager {
 	 *            游戏倍数
 	 * @return 预支付Dialog实例
 	 */
-	public static BaseDialog createPrerechargeDialog(
-			PrerechargeDialogType type, Context context,
-			PayRecordOrder payRecordOrder, Handler handler, long multiple) {
+	public static BaseDialog createPrerechargeDialog(PrerechargeDialogType type, Context context, PayRecordOrder payRecordOrder, Handler handler, long multiple) {
 		BaseDialog baseDialog = null;
 		switch (type) {
-		case Dialog_ingame:
-			baseDialog = new PreRecharggeInGameDialog(context, multiple);
-			prerechargeDialogs = baseDialog;
-			break;
-		case Dialog_endgame:
-			baseDialog = new PreRechargeEndGameDialog(context, payRecordOrder,
-					handler);
-			break;
-		case Dialog_record:
-			baseDialog = new PreRechargeRecordDialog(context, payRecordOrder,
-					handler);
-			break;
-		default:
-			break;
+			case Dialog_ingame:
+				baseDialog = new PreRecharggeInGameDialog(context, multiple);
+				prerechargeDialogs = baseDialog;
+				break;
+			case Dialog_endgame:
+				baseDialog = new PreRechargeEndGameDialog(context, payRecordOrder, handler);
+				break;
+			case Dialog_record:
+				baseDialog = new PreRechargeRecordDialog(context, payRecordOrder, handler);
+				break;
+			default:
+				break;
 		}
 		return baseDialog;
 	}
@@ -128,8 +125,7 @@ public class PrerechargeManager {
 	 * @param simCardType
 	 * @return金豆赌注所计算出来的预充值价格列表
 	 */
-	public static int[] calculatePrerechargePrice(long currentIqBeans,
-			long wagerIqBeans) {
+	public static int[] calculatePrerechargePrice(long currentIqBeans, long wagerIqBeans) {
 		long differIqBeans = wagerIqBeans - currentIqBeans;
 		int price = -1;
 		if (differIqBeans < 10000) {
@@ -140,7 +136,7 @@ public class PrerechargeManager {
 			double tempDecimalParet = (differIqBeans - tempIntegerPart * 10000) / 10000f;
 			price = (tempDecimalParet >= percent) ? (price + 1) : price;
 		}
-		/** 清除一块钱计费点 **/
+		/**清除一块钱计费点**/
 		if (price <= 1) {
 			price = 2;
 		} else if (price > 30) {
@@ -153,68 +149,68 @@ public class PrerechargeManager {
 	 * 把金豆赌注所计算出来的预充值价格,调整为第三方支付相应计费点列表
 	 * 
 	 * @param price金豆赌注所计算出来的预充值价格
-	 * @param simCardType
-	 *            当前手机simCard类型
+	 * @param simCardType 当前手机simCard类型
 	 * @return 调整后的第三方相应支付计费点列表
 	 */
 	private static int[] changePriceToAdjustThirdPartyPurchase(int price) {
 		int[] thirdPartPriceArray = new int[2];
-		List<PayPoint> pointList = PayUtils
-				.getPayPoint(PaySite.PREPARERECHARGE); // 获取预充值对应支付方式的计费点
-		if (pointList == null) {
+		
+		List<PayPoint> pointList = PayUtils.getPayPoint(PaySite.PREPARERECHARGE); //获取预充值对应支付方式的计费点
+		if(pointList == null){
 			/** 无法识别为默认支付宝 **/
 			thirdPartPriceArray[0] = price;
 			thirdPartPriceArray[1] = price + 1;
-		} else {
+		}else{
 			int mmPrice[] = new int[pointList.size()];
 			for (int i = 0; i < pointList.size(); i++) {
-				mmPrice[i] = pointList.get(i).getMoney();
+				mmPrice[i]  = pointList.get(i).getMoney();
 			}
 		}
-		// int mmPrice[] = null;
-		// switch (simCardType) {
-		// case Constant.SIM_MOBILE:
-		// /** 移动MM支付 **/
-		// mmPrice = new int[] { 1, 2, 4, 5, 8, 10, 15, 20, 25, 30 };
-		// thirdPartPriceArray = getTwoSimilarPriceWithTarget(mmPrice, price);
-		// break;
-		// case Constant.SIM_TELE:
-		// /** 电信支付 **/
-		// List<ESurfing> telecomProductsList = TYConfig.ESURFING_LIST;
-		// if (null == telecomProductsList || telecomProductsList.size() == 0)
-		// break;
-		// mmPrice = new int[telecomProductsList.size()];
-		// int index = 0;
-		// for (ESurfing eSurfing : telecomProductsList) {
-		// mmPrice[index] = eSurfing.getPrice();
-		// index++;
-		// }
-		// thirdPartPriceArray = getTwoSimilarPriceWithTarget(mmPrice, price);
-		// break;
-		// case Constant.SIM_UNICOM:
-		// /** 联通支付 **/
-		// List<VACBillPoint> cuProductsList = VACConfig.BILLPOINT_LIST;
-		// if (null == cuProductsList || cuProductsList.size() == 0)
-		// break;
-		// mmPrice = new int[cuProductsList.size()];
-		// int position = 0;
-		// for (VACBillPoint vac : cuProductsList) {
-		// mmPrice[position] = vac.getPrice();
-		// position++;
-		// }
-		// thirdPartPriceArray = getTwoSimilarPriceWithTarget(mmPrice, price);
-		// break;
-		// case Constant.SIM_OTHER:
-		// /** 默认支付宝 **/
-		// thirdPartPriceArray[0] = price;
-		// thirdPartPriceArray[1] = price + 1;
-		// break;
-		// default:
-		// /** 无法识别为默认支付宝 **/
-		// thirdPartPriceArray[0] = price;
-		// thirdPartPriceArray[1] = price + 1;
-		// break;
-		// }
+		
+//		int mmPrice[] = null;
+//		switch (simCardType) {
+//			case Constant.SIM_MOBILE:
+//				/** 移动MM支付 **/
+//				mmPrice = new int[] { 1, 2, 4, 5, 8, 10, 15, 20, 25, 30 };
+//				thirdPartPriceArray = getTwoSimilarPriceWithTarget(mmPrice, price);
+//				break;
+//			case Constant.SIM_TELE:
+//				/** 电信支付 **/
+//				List<ESurfing> telecomProductsList = TYConfig.ESURFING_LIST;
+//				if (null == telecomProductsList || telecomProductsList.size() == 0)
+//					break;
+//				mmPrice = new int[telecomProductsList.size()];
+//				int index = 0;
+//				for (ESurfing eSurfing : telecomProductsList) {
+//					mmPrice[index] = eSurfing.getPrice();
+//					index++;
+//				}
+//				thirdPartPriceArray = getTwoSimilarPriceWithTarget(mmPrice, price);
+//				break;
+//			case Constant.SIM_UNICOM:
+//				/** 联通支付 **/
+//				List<VACBillPoint> cuProductsList = VACConfig.BILLPOINT_LIST;
+//				if (null == cuProductsList || cuProductsList.size() == 0)
+//					break;
+//				mmPrice = new int[cuProductsList.size()];
+//				int position = 0;
+//				for (VACBillPoint vac : cuProductsList) {
+//					mmPrice[position] = vac.getPrice();
+//					position++;
+//				}
+//				thirdPartPriceArray = getTwoSimilarPriceWithTarget(mmPrice, price);
+//				break;
+//			case Constant.SIM_OTHER:
+//				/** 默认支付宝 **/
+//				thirdPartPriceArray[0] = price;
+//				thirdPartPriceArray[1] = price + 1;
+//				break;
+//			default:
+//				/** 无法识别为默认支付宝 **/
+//				thirdPartPriceArray[0] = price;
+//				thirdPartPriceArray[1] = price + 1;
+//				break;
+//		}
 		return thirdPartPriceArray;
 	}
 
@@ -227,8 +223,7 @@ public class PrerechargeManager {
 	 *            目标计费点
 	 * @return resultPrice 查询结果
 	 */
-	public static int[] getTwoSimilarPriceWithTarget(int[] priceArray,
-			int targetPrice) {
+	public static int[] getTwoSimilarPriceWithTarget(int[] priceArray, int targetPrice) {
 		int[] resultPrice = new int[2];
 		Arrays.sort(priceArray);
 		for (int price : priceArray) {
@@ -258,8 +253,7 @@ public class PrerechargeManager {
 			}
 		}
 		resultPrice[0] = (resultPrice[0] == 0) ? 1 : resultPrice[0];
-		resultPrice[1] = (resultPrice[1] == 0) ? (resultPrice[0] + 1)
-				: resultPrice[1];
+		resultPrice[1] = (resultPrice[1] == 0) ? (resultPrice[0] + 1) : resultPrice[1];
 		Arrays.sort(resultPrice);
 		return resultPrice;
 	}
@@ -274,17 +268,19 @@ public class PrerechargeManager {
 	 */
 	public synchronized static void createPrerechargeOrder(final double money) {
 		ThreadPool.startWork(new Runnable() {
+
 			@Override
 			public void run() {
+				
 				PreOrder order = new PreOrder();
-				// String payType = SDKFactory.getPayType();
-				// if (TextUtils.isEmpty(payType)) {
-				// payType = "-1";
-				// }
-				// order.setPayType(Integer.parseInt(payType));
-				// PaySiteConfigItem paySiteConfigItem =
-				// PayUtils.getPaySiteUseConfig(PaySite.PREPARERECHARGE);
-				// String payCode = paySiteConfigItem.getPayCode();
+//				String payType = SDKFactory.getPayType();
+//				if (TextUtils.isEmpty(payType)) {
+//					payType = "-1";
+//				}
+//				order.setPayType(Integer.parseInt(payType));
+				
+//				PaySiteConfigItem paySiteConfigItem = PayUtils.getPaySiteUseConfig(PaySite.PREPARERECHARGE);
+//				String payCode = paySiteConfigItem.getPayCode();
 				order.setPayType(-1);
 				order.setMoney(money);
 				CmdDetail cmdDetail = new CmdDetail();
@@ -304,27 +300,22 @@ public class PrerechargeManager {
 	 *            访问地址
 	 */
 	public static void getPrerechargeParams() {
-		String result = HttpUtils.post(HttpURL.PRE_RECHARGE_MULTIPLE_URL, null,
-				true);
+		String result = HttpUtils.post(HttpURL.PRE_RECHARGE_MULTIPLE_URL, null, true);
 		boolean isGetParamsCorrect = false;
 		if (null != result && !TextUtils.isEmpty(result)) {
 			JSONObject jsonObject;
 			try {
 				jsonObject = new JSONObject(result);
 				String multiple = jsonObject.getString(PRERECHARGE_PREMULTIPLE);
-				String lastCardCount = jsonObject
-						.getString(PRERECHARGE_LASTCARDCOUNT);
+				String lastCardCount = jsonObject.getString(PRERECHARGE_LASTCARDCOUNT);
 				if (null != multiple) {
 					showPrerechargePercent = Double.valueOf(multiple);
-					ActivityUtils.addSharedValue(PRERECHARGE_PREMULTIPLE,
-							String.valueOf(showPrerechargePercent));
+					ActivityUtils.addSharedValue(PRERECHARGE_PREMULTIPLE, String.valueOf(showPrerechargePercent));
 					isGetParamsCorrect = true;
 				}
 				if (null != lastCardCount) {
-					showPrerechargelastCardCount = Integer
-							.valueOf(lastCardCount);
-					ActivityUtils.addSharedValue(PRERECHARGE_LASTCARDCOUNT,
-							String.valueOf(showPrerechargelastCardCount));
+					showPrerechargelastCardCount = Integer.valueOf(lastCardCount);
+					ActivityUtils.addSharedValue(PRERECHARGE_LASTCARDCOUNT, String.valueOf(showPrerechargelastCardCount));
 				} else {
 					isGetParamsCorrect = false;
 				}
@@ -333,16 +324,11 @@ public class PrerechargeManager {
 				e.printStackTrace();
 			} finally {
 				if (!isGetParamsCorrect) {
-					if (null != ActivityUtils
-							.getSharedValue(PRERECHARGE_PREMULTIPLE)) {
-						showPrerechargePercent = Double.valueOf(ActivityUtils
-								.getSharedValue(PRERECHARGE_PREMULTIPLE));
+					if (null != ActivityUtils.getSharedValue(PRERECHARGE_PREMULTIPLE)) {
+						showPrerechargePercent = Double.valueOf(ActivityUtils.getSharedValue(PRERECHARGE_PREMULTIPLE));
 					}
-					if (null != ActivityUtils
-							.getSharedValue(PRERECHARGE_LASTCARDCOUNT)) {
-						showPrerechargelastCardCount = Integer
-								.valueOf(ActivityUtils
-										.getSharedValue(PRERECHARGE_LASTCARDCOUNT));
+					if (null != ActivityUtils.getSharedValue(PRERECHARGE_LASTCARDCOUNT)) {
+						showPrerechargelastCardCount = Integer.valueOf(ActivityUtils.getSharedValue(PRERECHARGE_LASTCARDCOUNT));
 					}
 				}
 			}

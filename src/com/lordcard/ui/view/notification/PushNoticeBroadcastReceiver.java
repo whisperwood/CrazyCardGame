@@ -6,8 +6,6 @@
  */
 package com.lordcard.ui.view.notification;
 
-import com.lordcard.constant.Constant;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,14 +14,12 @@ import android.content.Intent;
  * 推送服务启动广播 接收系统开机广播
  */
 public class PushNoticeBroadcastReceiver extends BroadcastReceiver {
-	@Override
+
 	public void onReceive(Context context, Intent intent) {
 		if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-			if (Constant.DEBUG) {
-				Intent newIntent = new Intent(context,
-						NotificationService.class);
-				context.startService(newIntent);
-			}
+			Intent newIntent = new Intent(context, NotificationService.class);
+			context.startService(newIntent);
 		}
 	}
+
 }

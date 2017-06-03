@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +22,7 @@ import com.lordcard.entity.Room;
 import com.umeng.analytics.MobclickAgent;
 
 public abstract class SignupDialog extends Dialog implements OnClickListener {
+
 	private Context context;
 	// private RelativeLayout sign_bg;
 	private Boolean isPlayTime;
@@ -34,8 +35,7 @@ public abstract class SignupDialog extends Dialog implements OnClickListener {
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	private LinearLayout layout;
 
-	protected SignupDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected SignupDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
@@ -53,7 +53,7 @@ public abstract class SignupDialog extends Dialog implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sign_layout_item);
 		mainLayout = (RelativeLayout) findViewById(R.id.sign_bg);
-		// mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.baoming_bg));
+		//		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.baoming_bg));
 		layout(context);
 		layout = (LinearLayout) findViewById(R.id.mm_layout);
 		mst.adjustView(layout);
@@ -83,14 +83,12 @@ public abstract class SignupDialog extends Dialog implements OnClickListener {
 		} else if (type == 2) {
 			signBase.setText("" + room.getBasePoint());
 			Map<String, String> timeMap = new HashMap<String, String>();
-			timeMap = JsonHelper.fromJson(room.getStartRace(),
-					new TypeToken<Map<String, String>>() {
-					});
+			timeMap = JsonHelper.fromJson(room.getStartRace(), new TypeToken<Map<String, String>>() {
+			});
 			signFee.setText(timeMap.get("signUp") + "金豆");
 			signTimesLayout.setVisibility(View.GONE);
 			signdeitailLayout.setVisibility(View.VISIBLE);
-			signTime.setText("每天" + timeMap.get("startDate") + "准时开赛，"
-					+ timeMap.get("endDate") + "结束。");
+			signTime.setText("每天" + timeMap.get("startDate") + "准时开赛，" + timeMap.get("endDate") + "结束。");
 			if (isPlayTime) {
 				signOkBtn.setText("加  入");
 				signText.setText("合成剂专场,玩家可报名参加该专场比赛，每场赢家奖合成剂（平民奖一瓶，地主奖2瓶）。现在是加入时间，点击加入可直接进入专场。");

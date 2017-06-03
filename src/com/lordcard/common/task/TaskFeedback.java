@@ -12,35 +12,32 @@ import com.lordcard.common.task.base.Feedback;
 import com.lordcard.constant.Database;
 
 public abstract class TaskFeedback implements Feedback {
+
 	private static TaskFeedback _instance = null;
 	public static final int DIALOG_MODE = 0x01;
 
 	public static TaskFeedback getInstance(int type) {
 		switch (type) {
-		case DIALOG_MODE:
-			_instance = DialogFeedback.getInstance();
-			break;
+			case DIALOG_MODE:
+				_instance = DialogFeedback.getInstance();
+				break;
 		}
 		return _instance;
 	}
 
-	@Override
-	public void failed(CharSequence text) {
-	}
+	public void failed(CharSequence text) {}
 
-	public void showProgress(int progress) {
-	}
+	public void showProgress(int progress) {}
 
-	@Override
-	public void setIndeterminate(boolean indeterminate) {
-	}
+	public void setIndeterminate(boolean indeterminate) {}
 }
 
 /**
  *
  */
 class DialogFeedback extends TaskFeedback {
-	private boolean isCancel = false;// 加载对话框是否消失
+
+	private boolean isCancel = false;//加载对话框是否消失
 	private static DialogFeedback _instance = null;
 
 	public static DialogFeedback getInstance() {
@@ -52,7 +49,6 @@ class DialogFeedback extends TaskFeedback {
 
 	private ProgressDialog _dialog = null;
 
-	@Override
 	public void start(CharSequence text) {
 		_dialog = ProgressDialog.show(Database.currentActivity, "", text, true);
 		_dialog.setCancelable(true);
@@ -60,6 +56,7 @@ class DialogFeedback extends TaskFeedback {
 		_dialog.setProgress(ProgressDialog.STYLE_SPINNER);
 		_dialog.setIndeterminate(true);
 		_dialog.setOnCancelListener(new OnCancelListener() {
+
 			@Override
 			public void onCancel(DialogInterface dialog) {
 				Log.i("_dialog", "进度对话框被取消");
@@ -73,7 +70,6 @@ class DialogFeedback extends TaskFeedback {
 		window.setAttributes(lp);
 	}
 
-	@Override
 	public void cancel(CharSequence text) {
 		if (_dialog != null) {
 			isCancel(true);
@@ -85,21 +81,17 @@ class DialogFeedback extends TaskFeedback {
 		if (_dialog != null) {
 			_dialog.dismiss();
 		}
-		Toast toast = Toast.makeText(Database.currentActivity, prompt,
-				Toast.LENGTH_LONG);
+		Toast toast = Toast.makeText(Database.currentActivity, prompt, Toast.LENGTH_LONG);
 		toast.show();
 	}
 
-	@Override
 	public void success(CharSequence text) {
 		if (_dialog != null) {
 			_dialog.dismiss();
 		}
 	}
 
-	@Override
-	public void update(Object arg0) {
-	}
+	public void update(Object arg0) {}
 
 	@Override
 	public void isCancel(boolean isCancel) {

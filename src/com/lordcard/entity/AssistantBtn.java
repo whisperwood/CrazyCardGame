@@ -1,5 +1,5 @@
 /**
- */
+*/
 package com.lordcard.entity;
 
 import java.util.List;
@@ -7,19 +7,20 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 
 /**
- * @ClassName: AsstBtn
- * @Description: 游戏助手按钮
- * @author shaohu
- * @date 2013-7-30 下午03:25:32
- */
+* @ClassName: AsstBtn
+* @Description: 游戏助手按钮
+* @author shaohu
+* @date 2013-7-30 下午03:25:32
+* 
+*/
 public class AssistantBtn {
-	// 按钮唯一编码
+	//按钮唯一编码
 	@Expose
 	private String code;
-	// 按钮显示文本
+	//按钮显示文本
 	@Expose
 	private String btnText;
-	// 按钮动作
+	//按钮动作
 	@Expose
 	private List<AssistantAction> actions;
 
@@ -31,8 +32,7 @@ public class AssistantBtn {
 	}
 
 	/**
-	 * @param code
-	 *            the code to set
+	 * @param code the code to set
 	 */
 	public void setCode(String code) {
 		this.code = code;
@@ -46,8 +46,7 @@ public class AssistantBtn {
 	}
 
 	/**
-	 * @param btnText
-	 *            the btnText to set
+	 * @param btnText the btnText to set
 	 */
 	public void setBtnText(String btnText) {
 		this.btnText = btnText;
@@ -61,10 +60,10 @@ public class AssistantBtn {
 	}
 
 	/**
-	 * @param actions
-	 *            the actions to set
+	 * @param actions the actions to set
 	 */
 	public void setActions(List<AssistantAction> actions) {
 		this.actions = actions;
 	}
+
 }

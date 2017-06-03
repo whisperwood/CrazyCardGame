@@ -15,10 +15,10 @@ import com.lordcard.network.http.HttpRequest;
 import com.lordcard.ui.personal.logic.ConfigUtils;
 
 public class ChannelUtils {
+
 	/**
 	 * 获取统计用的appkey
-	 * 
-	 * @Title: getUappKey
+	 * @Title: getUappKey  
 	 * @param @return
 	 * @return String
 	 * @throws
@@ -26,7 +26,7 @@ public class ChannelUtils {
 	public static String getUappKey() {
 		String uappkey = ConfigUtil.getCfg("umeng_appkey");
 		String channelId = GameCache.getStr(CacheKey.CHANNEL_MM_ID);
-		// 对应的渠道配置ID存在
+		//对应的渠道配置ID存在
 		if (!TextUtils.isEmpty(channelId)) {
 			ChannelCfg cfg = (ChannelCfg) GameCache.getObj(channelId);
 			if (cfg != null && !TextUtils.isEmpty(cfg.getUappkey())) {
@@ -38,8 +38,7 @@ public class ChannelUtils {
 
 	/**
 	 * 获取自定义的渠道名称
-	 * 
-	 * @Title: getUChannel
+	 * @Title: getUChannel  
 	 * @param @return
 	 * @return String
 	 * @throws
@@ -47,7 +46,7 @@ public class ChannelUtils {
 	public static String getUChannel() {
 		String ucChannel = ConfigUtil.getCfg("umeng_channel");
 		String channelId = GameCache.getStr(CacheKey.CHANNEL_MM_ID);
-		// 对应的渠道配置ID存在
+		//对应的渠道配置ID存在
 		if (!TextUtils.isEmpty(channelId)) {
 			ChannelCfg cfg = (ChannelCfg) GameCache.getObj(channelId);
 			if (cfg != null && !TextUtils.isEmpty(cfg.getUchannel())) {
@@ -59,8 +58,7 @@ public class ChannelUtils {
 
 	/**
 	 * 服务器配置的目录名称
-	 * 
-	 * @Title: getSerCfgName
+	 * @Title: getSerCfgName  
 	 * @param @return
 	 * @return String
 	 * @throws
@@ -68,7 +66,7 @@ public class ChannelUtils {
 	public static String getSerCfgName() {
 		String sercfgname = ConfigUtil.getCfg("channel_config");
 		String channelId = GameCache.getStr(CacheKey.CHANNEL_MM_ID);
-		// 对应的渠道配置ID存在
+		//对应的渠道配置ID存在
 		if (!TextUtils.isEmpty(channelId)) {
 			ChannelCfg cfg = (ChannelCfg) GameCache.getObj(channelId);
 			if (cfg != null && !TextUtils.isEmpty(cfg.getSerCfgName())) {
@@ -80,8 +78,7 @@ public class ChannelUtils {
 
 	/**
 	 * 更新包目录地址
-	 * 
-	 * @Title: getSerDir
+	 * @Title: getSerDir  
 	 * @param @return
 	 * @return String
 	 * @throws
@@ -89,7 +86,7 @@ public class ChannelUtils {
 	public static String getSerDir() {
 		String serDir = ConfigUtil.getCfg("channel_update");
 		String channelId = GameCache.getStr(CacheKey.CHANNEL_MM_ID);
-		// 对应的渠道配置ID存在
+		//对应的渠道配置ID存在
 		if (!TextUtils.isEmpty(channelId)) {
 			ChannelCfg cfg = (ChannelCfg) GameCache.getObj(channelId);
 			if (cfg != null && !TextUtils.isEmpty(cfg.getSerDir())) {
@@ -101,8 +98,7 @@ public class ChannelUtils {
 
 	/**
 	 * 获取激活批次号
-	 * 
-	 * @Title: getBatchId
+	 * @Title: getBatchId  
 	 * @param @return
 	 * @return String
 	 * @throws
@@ -110,7 +106,7 @@ public class ChannelUtils {
 	public static String getBatchId() {
 		String batchId = ConfigUtil.getCfg("game_batch_id");
 		String channelId = GameCache.getStr(CacheKey.CHANNEL_MM_ID);
-		// 对应的渠道配置ID存在
+		//对应的渠道配置ID存在
 		if (!TextUtils.isEmpty(channelId)) {
 			ChannelCfg cfg = (ChannelCfg) GameCache.getObj(channelId);
 			if (cfg != null && !TextUtils.isEmpty(cfg.getBatchId())) {
@@ -122,86 +118,83 @@ public class ChannelUtils {
 
 	/**
 	 * 获取MM的渠道商 ID
-	 * 
-	 * @Title: getMMChannel
+	 * @Title: getMMChannel  
 	 * @param @return
 	 * @return String
 	 * @throws
 	 */
 	public static String getMMChannel() {
-		// try {
-		// InputStream inputStream = null;
-		// Context ctx = CrashApplication.getInstance();
-		// String packagePath = ctx.getPackageCodePath();
-		// ZipInputStream zipInput = new ZipInputStream(new
-		// FileInputStream(packagePath));
-		// ZipEntry currentZipEntry = null;
-		// while ((currentZipEntry = zipInput.getNextEntry()) != null) {
-		// String name = currentZipEntry.getName();
-		// if (!currentZipEntry.isDirectory()) {
-		// if (name.equalsIgnoreCase("mmiap.xml")) {
-		// File file = new File(ctx.getFilesDir() + File.separator + name);
-		// inputStream = new FileInputStream(file);
-		// break;
-		// }
-		// }
-		// }
-		// zipInput.close();
-		// if (inputStream == null) {
-		// return null;
-		// }
-		// XmlPullParserFactory pullParserFactory =
-		// XmlPullParserFactory.newInstance();
-		// XmlPullParser pullParser = pullParserFactory.newPullParser();
-		// pullParser.setInput(inputStream, Constant.CHAR);
-		// for (int j = pullParser.getEventType(); j != 1; j =
-		// pullParser.next())
-		// switch (j) {
-		// case 0:
-		// break;
-		// case 2:
-		// String nodeName = pullParser.getName();
-		// if ("channel".equals(nodeName)) {
-		// String channel = pullParser.nextText();
-		// DialogUtils.toastTip("========="+channel+"======");
-		// return channel;
-		// }
-		// }
-		// } catch (Exception exception) {}
-		// return null;
+//		try {
+//			InputStream inputStream = null;
+//			Context ctx = CrashApplication.getInstance();
+//			String packagePath = ctx.getPackageCodePath();
+//			ZipInputStream zipInput = new ZipInputStream(new FileInputStream(packagePath));
+//			ZipEntry currentZipEntry = null;
+//			while ((currentZipEntry = zipInput.getNextEntry()) != null) {
+//				String name = currentZipEntry.getName();
+//				if (!currentZipEntry.isDirectory()) {
+//					if (name.equalsIgnoreCase("mmiap.xml")) {
+//						File file = new File(ctx.getFilesDir() + File.separator + name);
+//						inputStream = new FileInputStream(file);
+//						break;
+//					}
+//				}
+//			}
+//			zipInput.close();
+//			if (inputStream == null) {
+//				return null;
+//			}
+//			XmlPullParserFactory pullParserFactory = XmlPullParserFactory.newInstance();
+//			XmlPullParser pullParser = pullParserFactory.newPullParser();
+//			pullParser.setInput(inputStream, Constant.CHAR);
+//			for (int j = pullParser.getEventType(); j != 1; j = pullParser.next())
+//				switch (j) {
+//					case 0:
+//						break;
+//					case 2:
+//						String nodeName = pullParser.getName();
+//						if ("channel".equals(nodeName)) {
+//							String channel = pullParser.nextText();
+//							DialogUtils.toastTip("========="+channel+"======");
+//							return channel;
+//						}
+//				}
+//		} catch (Exception exception) {}
+//		return null;
+			
 		InputStream inputStream = null;
 		InputStreamReader reader = null;
 		BufferedReader bufReader = null;
 		try {
-			inputStream = ConfigUtils.class.getClassLoader()
-					.getResourceAsStream("mmiap.xml");
+			inputStream = ConfigUtils.class.getClassLoader().getResourceAsStream("mmiap.xml");
 			reader = new InputStreamReader(inputStream, Constant.CHAR);
 			bufReader = new BufferedReader(reader);
+			
 			StringBuilder result = new StringBuilder();
 			String readLink = null;
 			while ((readLink = bufReader.readLine()) != null) {
-				readLink = new String(readLink.getBytes("ISO-8859-1"),
-						Constant.CHAR);
+				readLink = new String(readLink.getBytes("ISO-8859-1"), Constant.CHAR);
 				result.append(readLink.toLowerCase());
 			}
-			int start = result.indexOf("<channel>");
-			if (start <= 0)
-				return null; // 不存在当前配置
-			int end = result.indexOf("</channel>");
-			if (end <= start)
-				return null;
-			String channel = result.substring(start + 9, end);
+			int start= result.indexOf("<channel>");
+			if(start <= 0) return null;			//不存在当前配置
+			int end= result.indexOf("</channel>");
+			if(end <= start) return null;
+			
+			String channel = result.substring(start+9, end);
 			return channel;
 		} catch (Exception e) {
-		} finally {
+		}finally{
 			try {
-				if (inputStream != null) {
+				if(inputStream != null){
 					inputStream.close();
 				}
-				if (reader != null) {
+				
+				if(reader != null){
 					reader.close();
 				}
-				if (bufReader != null) {
+				
+				if(bufReader != null){
 					bufReader.close();
 				}
 			} catch (IOException e) {
@@ -213,16 +206,15 @@ public class ChannelUtils {
 
 	/**
 	 * 加载渠道配置，需在子线程中执行
-	 * 
-	 * @Title: loadChannelCfg
-	 * @param
+	 * @Title: loadChannelCfg  
+	 * @param 
 	 * @return void
 	 * @throws
 	 */
 	public static void loadChannelCfg() {
-		// 获取渠道相关配置
+		//获取渠道相关配置
 		String channelId = GameCache.getStr(CacheKey.CHANNEL_MM_ID);
-		// 对应的渠道配置ID存在
+		//对应的渠道配置ID存在
 		if (!TextUtils.isEmpty(channelId)) {
 			ChannelCfg cfg = HttpRequest.loadChannelCfg(channelId);
 			if (cfg != null) {

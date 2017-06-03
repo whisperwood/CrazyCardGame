@@ -9,8 +9,10 @@ import com.google.gson.annotations.Expose;
  * @Description: 游戏用户收货地址
  * @author shaohu
  * @date 2013-5-6 下午04:12:22
+ * 
  */
 public class GameUserAddress {
+
 	private String id;
 	private String account;
 	@Expose
@@ -127,4 +129,5 @@ public class GameUserAddress {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
+
 }

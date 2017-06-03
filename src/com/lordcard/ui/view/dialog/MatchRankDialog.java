@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.List;
 
@@ -17,13 +17,16 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lordcard.common.util.MultiScreenTool;
 import com.lordcard.constant.CacheKey;
+import com.lordcard.constant.Database;
 import com.lordcard.entity.GameScoreTradeRank;
 import com.lordcard.entity.GameUser;
 import com.lordcard.network.http.GameCache;
+import com.lordcard.ui.view.GameWaitView;
 
 /**
  * 比赛场排名对话框
@@ -31,6 +34,7 @@ import com.lordcard.network.http.GameCache;
  * @author Administrator
  */
 public class MatchRankDialog extends Dialog implements OnClickListener {
+
 	private Context context;
 	private ListView rankListView;
 	private Button closeBtn;
@@ -46,8 +50,7 @@ public class MatchRankDialog extends Dialog implements OnClickListener {
 		this.code = code;
 	}
 
-	public MatchRankDialog(Context context, int theme,
-			List<GameScoreTradeRank> gstList) {
+	public MatchRankDialog(Context context, int theme, List<GameScoreTradeRank> gstList) {
 		super(context, theme);
 		this.context = context;
 		this.gstList = gstList;
@@ -76,18 +79,14 @@ public class MatchRankDialog extends Dialog implements OnClickListener {
 		int index = -1;
 		for (int i = 0, count = gstList.size(); i < count; i++) {
 			GameScoreTradeRank gctRank = gstList.get(i);
-			GameUser cacheUser = (GameUser) GameCache
-					.getObj(CacheKey.GAME_USER);
+			GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 			if (gctRank.getAccount().equals(cacheUser.getAccount())) {
 				num.setText(gctRank.getRank());
 				name.setText(gctRank.getNickName());
 				zhidou.setText(gctRank.getScore());
-				num.setTextColor(context.getResources()
-						.getColor(R.color.yellow));
-				name.setTextColor(context.getResources().getColor(
-						R.color.yellow));
-				zhidou.setTextColor(context.getResources().getColor(
-						R.color.yellow));
+				num.setTextColor(context.getResources().getColor(R.color.yellow));
+				name.setTextColor(context.getResources().getColor(R.color.yellow));
+				zhidou.setTextColor(context.getResources().getColor(R.color.yellow));
 				if (Integer.valueOf(gctRank.getRank()).intValue() > 3) {
 					img.setVisibility(View.INVISIBLE);
 				} else if (Integer.valueOf(gctRank.getRank()).intValue() == -1) {
@@ -115,11 +114,11 @@ public class MatchRankDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.rank_close_btn:
-			dismiss();
-			break;
-		default:
-			break;
+			case R.id.rank_close_btn:
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -130,6 +129,7 @@ public class MatchRankDialog extends Dialog implements OnClickListener {
 	}
 
 	private class SignRankAdapter extends BaseAdapter {
+
 		private List<GameScoreTradeRank> gstList;
 		private LayoutInflater mInflater;
 		private Context context;
@@ -140,48 +140,34 @@ public class MatchRankDialog extends Dialog implements OnClickListener {
 			this.context = context;
 		}
 
-		@Override
 		public int getCount() {
 			return gstList.size();
 		}
 
-		@Override
 		public Object getItem(int position) {
 			return gstList.get(position);
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
 			if (null == convertView) {
 				holder = new ViewHolder();
-				convertView = mInflater.inflate(
-						R.layout.match_rank_dialog_item, null);
-				holder.num = (TextView) convertView
-						.findViewById(R.id.mk_item_num);
-				holder.name = (TextView) convertView
-						.findViewById(R.id.mk_item_name);
-				holder.zhidou = (TextView) convertView
-						.findViewById(R.id.mk_item_zhidou);
-				holder.img = (ImageView) convertView
-						.findViewById(R.id.match_ranking);
+				convertView = mInflater.inflate(R.layout.match_rank_dialog_item, null);
+				holder.num = (TextView) convertView.findViewById(R.id.mk_item_num);
+				holder.name = (TextView) convertView.findViewById(R.id.mk_item_name);
+				holder.zhidou = (TextView) convertView.findViewById(R.id.mk_item_zhidou);
+				holder.img = (ImageView) convertView.findViewById(R.id.match_ranking);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			GameScoreTradeRank gctRank = gstList.get(position);
-			Log.d("GameScoreTradeRank",
-					"排名  " + position + " : 账号 " + gctRank.getAccount()
-							+ "     昵称 " + gctRank.getNickName() + "    排名  "
-							+ gctRank.getRank() + "     积分  "
-							+ gctRank.getScore());
-			GameUser cacheUser = (GameUser) GameCache
-					.getObj(CacheKey.GAME_USER);
+			Log.d("GameScoreTradeRank", "排名  " + position + " : 账号 " + gctRank.getAccount() + "     昵称 " + gctRank.getNickName() + "    排名  " + gctRank.getRank() + "     积分  " + gctRank.getScore());
+			GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 			if (!gctRank.getAccount().equals(cacheUser.getAccount())) {
 				holder.num.setText(gctRank.getRank());
 				holder.name.setText(gctRank.getNickName());
@@ -196,9 +182,10 @@ public class MatchRankDialog extends Dialog implements OnClickListener {
 		}
 
 		class ViewHolder {
+
 			TextView num; // 排名
 			TextView name; // 昵称
-			TextView zhidou; // 金豆
+			TextView zhidou; //金豆
 			ImageView img;
 		}
 	}

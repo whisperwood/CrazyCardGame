@@ -8,60 +8,36 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 重连数据
- * 
- * @ClassName: ReLink
- * @Description: TODO
- * @author yinhongbiao
+ * @ClassName: ReLink   
+ * @Description: TODO 
+ * @author yinhongbiao   
  * @date 2013-6-26 下午07:46:01
  */
 public class ReLink {
+	
 	public static final int TARGET_MYSELF = 0;
 	public static final int TARGET_OTHER = 1;
-	@Expose
-	@SerializedName("t")
-	private int target; // 重连玩家 0:自己 1:其他玩家
-	@Expose
-	@SerializedName("o")
-	private int order; // 重连玩家的位置编号
-	@Expose
-	@SerializedName("rm")
-	private Room room; // 房间
-	@Expose
-	@SerializedName("cr")
-	private int callRatio; // 玩家叫的倍数
-	@Expose
-	@SerializedName("r")
-	private int ratio; // 游戏当前倍数
-	@Expose
-	@SerializedName("gs")
-	private String gameServer; // 玩家上局所在的游戏服务器
-	@Expose
-	@SerializedName("st")
-	private int status; // 当前状态
-	@Expose
-	@SerializedName("mo")
-	private int masterOrder = 0; // 庄家位置
-	@Expose
-	@SerializedName("no")
-	private int nextPlayOrder; // 操作人的order
-	@Expose
-	@SerializedName("mc")
-	private String masterCard; // 地主底牌
-	@Expose
-	@SerializedName("do")
-	private int isMyDo; // 是否轮到我操作,0:不是本人操作，1是本人操作
-	@Expose
-	@SerializedName("mcl")
-	private List<Integer> myCardList; // 我自己的剩余的牌
-	@Expose
-	@SerializedName("pcl")
-	private List<String> playCardList; // 玩家出牌的记录，最多取2条返回
-	@Expose
-	@SerializedName("u")
-	private Map<Integer, ReLinkUser> userInfo; // 其他玩家剩余的牌 key:玩家顺序 value:玩家信息
-	@Expose
-	@SerializedName("acm")
-	private Map<String, List<Integer>> allPlayCardMap; // 所有玩家出牌记录，key:玩家帐号,value:牌
+	
+	@Expose @SerializedName("t")  private int target;						//重连玩家 0:自己 1:其他玩家
+	@Expose @SerializedName("o")  private int order;						//重连玩家的位置编号
+	
+	@Expose @SerializedName("rm") private Room room;							//房间
+	@Expose @SerializedName("cr") private int callRatio;	 				//玩家叫的倍数
+	@Expose @SerializedName("r")  private int ratio;						//游戏当前倍数
+	@Expose @SerializedName("gs")  private String gameServer;				//玩家上局所在的游戏服务器
+	
+	@Expose @SerializedName("st") private int status;						//当前状态
+	@Expose @SerializedName("mo") private int masterOrder=0;				    //庄家位置
+	@Expose @SerializedName("no") private int nextPlayOrder;				//操作人的order
+	
+	@Expose @SerializedName("mc") private String masterCard;				//地主底牌
+	
+	@Expose @SerializedName("do") private int isMyDo; 						//是否轮到我操作,0:不是本人操作，1是本人操作
+	@Expose @SerializedName("mcl") private List<Integer> myCardList;			//我自己的剩余的牌
+
+	@Expose @SerializedName("pcl") private List<String> playCardList;					//玩家出牌的记录，最多取2条返回
+	@Expose @SerializedName("u") private Map<Integer,ReLinkUser> userInfo;	//其他玩家剩余的牌  key:玩家顺序 value:玩家信息
+	@Expose @SerializedName("acm") private Map<String, List<Integer>> allPlayCardMap;	//所有玩家出牌记录，key:玩家帐号,value:牌
 
 	public ReLink() {
 	}

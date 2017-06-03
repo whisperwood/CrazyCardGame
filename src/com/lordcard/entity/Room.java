@@ -7,109 +7,53 @@ import com.google.gson.annotations.SerializedName;
  * 斗地主房间
  * 
  * @author admin
+ * 
  */
 public class Room {
-	/** 普通房间 */
+
+	/** 普通房间  */
 	public static final Integer GENERAL_ROOM = 0;
 	/** 超快赛房间 */
 	public static final Integer ULTRAFAST_ROOM = 1;
-	/** 排位赛房间 */
+	/** 排位赛房间  */
 	public static final Integer RANK_ROOM = 2;
-	@Expose
-	@SerializedName("c")
-	private String code; // 房间编号
-	@Expose
-	@SerializedName("hn")
-	private String name; // 房间名称
-	@Expose
-	@SerializedName("r")
-	private int ratio; // 房间倍数
-	@Expose
-	@SerializedName("bp")
-	private int basePoint; // 房间每局底数
-	@Expose
-	@SerializedName("u")
-	private int unitType; // 交易单位 0 积分、1 豆
-	@Expose
-	@SerializedName("l")
-	private long limit = 0; // 允许进入的最低限制
-	@Expose
-	@SerializedName("pw")
-	private String password; // 房间密码
-	@Expose
-	@SerializedName("ln")
-	private int limitGroupNum = 0; // 每次参与游戏的人数
-	@Expose
-	@SerializedName("cn")
-	private long commissionNum; // 抽取的拥金数
-	@Expose
-	@SerializedName("ht")
-	private int homeType; // 0:普通房间/1:VIP/2:VIP包房/3:专场/4:钻石专场/5:合成挤专场/6:
-	@Expose
-	@SerializedName("hc")
-	private String hallCode; // 大厅编号
-	@Expose
-	@SerializedName("up")
-	private long upper; // 上限
+	@Expose @SerializedName("c") private String code; // 房间编号
+	@Expose @SerializedName("hn") private String name; // 房间名称
+	@Expose @SerializedName("r") private int ratio; // 房间倍数
+	@Expose @SerializedName("bp") private int basePoint; // 房间每局底数
+	@Expose @SerializedName("u") private int unitType; // 交易单位 0 积分、1 豆
+	@Expose @SerializedName("l") private long limit = 0; // 允许进入的最低限制
+	@Expose @SerializedName("pw") private String password; // 房间密码
+	@Expose @SerializedName("ln") private int limitGroupNum = 0; // 每次参与游戏的人数
+	@Expose @SerializedName("cn") private long commissionNum; // 抽取的拥金数
+	@Expose @SerializedName("ht") private int homeType; // 0:普通房间/1:VIP/2:VIP包房/3:专场/4:钻石专场/5:合成挤专场/6:
+	@Expose @SerializedName("hc") private String hallCode; // 大厅编号
+	@Expose @SerializedName("up") private long upper; // 上限
 	private int registFee; // 报名费
 	private String explanation;// 环境说明
-	@Expose
-	@SerializedName("s")
-	private int sort; // 房间在大厅排序
-	@Expose
-	@SerializedName("mc")
-	private int maxCount; // 房间最大支持人数 0不限制
-	@Expose
-	@SerializedName("v")
-	private int version; // 房间版本号 版本号 有变化代表房间数据有更改，前台需要更新
-	@Expose
-	@SerializedName("rh")
-	private String resHall; // 大厅展示资源下载目录
-	@Expose
-	@SerializedName("rhu")
-	private String resHallUrl; // 大厅展示资源下载地址
-	@Expose
-	@SerializedName("si")
-	private String serverIp; // 游戏服务器IP
-	@Expose
-	@SerializedName("gs")
-	private String gameServer; // 游戏服务器地址（临时变量，不存储） 格式 192.168.0.1:8080
-	@Expose
-	@SerializedName("rl")
-	private String rule; // 专场游戏物品赠送规则
-	@Expose
-	@SerializedName("sr")
-	private String startRace; // 专场开始时间
-	@Expose
-	@SerializedName("pt")
-	private Integer playType; // 游戏比赛类型
-	@Expose
-	@SerializedName("de")
-	private String detail; // 游戏房间说明
-	@Expose
-	@SerializedName("ma")
-	private String maxAward; // 最大奖励
-	@Expose
-	@SerializedName("pp")
-	private Long prizePool; // 奖金池金豆
-	@Expose
-	@SerializedName("ro")
-	private GameRoomRuleDetail roomDetail; // 游戏房间详细说明
-	@Expose
-	@SerializedName("ra")
-	private Integer raceType; // 比赛类型(1即时赛，2排位赛)
-	@Expose
-	@SerializedName("rt")
-	private int roomType; // 房间类型：0大厅房，1超快赛房，2排位赛房/6:挖矿场
+	@Expose @SerializedName("s") private int sort; // 房间在大厅排序
+	@Expose @SerializedName("mc") private int maxCount; // 房间最大支持人数 0不限制
+	@Expose @SerializedName("v") private int version; // 房间版本号 版本号 有变化代表房间数据有更改，前台需要更新
+	@Expose @SerializedName("rh") private String resHall; // 大厅展示资源下载目录
+	@Expose @SerializedName("rhu") private String resHallUrl; // 大厅展示资源下载地址
+	@Expose @SerializedName("si") private String serverIp; // 游戏服务器IP
+	@Expose @SerializedName("gs") private String gameServer; // 游戏服务器地址（临时变量，不存储） 格式 192.168.0.1:8080
+	@Expose @SerializedName("rl") private String rule; // 专场游戏物品赠送规则
+	@Expose @SerializedName("sr") private String startRace; // 专场开始时间
+	@Expose @SerializedName("pt") private Integer playType; // 游戏比赛类型
+	@Expose @SerializedName("de") private String detail; // 游戏房间说明
+	@Expose @SerializedName("ma") private String maxAward; // 最大奖励
+	@Expose @SerializedName("pp") private Long prizePool; //奖金池金豆
+	@Expose @SerializedName("ro") private GameRoomRuleDetail roomDetail; // 游戏房间详细说明
+	@Expose @SerializedName("ra") private Integer raceType; // 比赛类型(1即时赛，2排位赛)
+	@Expose @SerializedName("rt") private int roomType; // 房间类型：0大厅房，1超快赛房，2排位赛房/6:挖矿场
 	private Integer count = 0; // 当前在线的人数
 	private String msg; // 帮助提示信息
 	private String enter;
 
-	public Room() {
-	}
+	public Room() {}
 
-	public Room(String code, String name, int homeType, String msg,
-			int registFee) {
+	public Room(String code, String name, int homeType, String msg, int registFee) {
 		super();
 		this.code = code;
 		this.name = name;
@@ -134,9 +78,7 @@ public class Room {
 	 * @param explanation
 	 *            环境说明
 	 */
-	public Room(String code, long limit, String enter, int basePoint,
-			int ratio, int homeType, String name, int registFee,
-			String explanation) {
+	public Room(String code, long limit, String enter, int basePoint, int ratio, int homeType, String name, int registFee, String explanation) {
 		super();
 		this.code = code;
 		this.limit = limit;

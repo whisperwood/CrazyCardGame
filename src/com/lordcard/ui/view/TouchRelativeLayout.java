@@ -19,32 +19,35 @@ import com.lordcard.common.listener.HasTiShiListenner;
 import com.lordcard.entity.Poker;
 import com.lordcard.rule.DoudizhuRule;
 
-public class TouchRelativeLayout extends RelativeLayout implements
-		OnGestureListener, OnTouchListener,
-		android.view.GestureDetector.OnGestureListener {
+public class TouchRelativeLayout extends RelativeLayout implements OnGestureListener, OnTouchListener, android.view.GestureDetector.OnGestureListener {
+
 	private int startIndex, endIndex;
+
 	private GestureDetector mGestureDetector;
 	private int distance;
 	private HasTiShiListenner mHasTiShiListenner;
 	private OnTouchListener onTouchListener = null;
-
+	
 	public TouchRelativeLayout(Context context) {
 		super(context);
 		mGestureDetector = new GestureDetector(context, this);
+
 		setLongClickable(true);
 		onTouchListener = new OnTouchListener() {
-			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				return mGestureDetector.onTouchEvent(event);
 			}
 		};
+
 		this.setOnTouchListener(onTouchListener);
 	}
 
 	public void onDestory() {
+
 		setOnTouchListener(null);
 		removeAllViews();
 		removeAllViewsInLayout();
+
 		mGestureDetector = null;
 		mHasTiShiListenner = null;
 		onTouchListener = null;
@@ -84,10 +87,9 @@ public class TouchRelativeLayout extends RelativeLayout implements
 		startTime = System.currentTimeMillis();
 		return false;
 	}
-
+ 
 	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 		return false;
 	}
 
@@ -96,11 +98,10 @@ public class TouchRelativeLayout extends RelativeLayout implements
 		Log.i("OnGestureListener", "onLongPress");
 	}
 
-	private float xlength = 0;// 滑动式X轴位移长度
+	private float xlength = 0;//滑动式X轴位移长度
 
 	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 		if (null == e1 || null == e2) {
 			return false;
 		}
@@ -109,9 +110,8 @@ public class TouchRelativeLayout extends RelativeLayout implements
 		int e1Y = (int) e1.getRawY();
 		int e2Y = (int) e2.getRawY();
 		xlength = Math.abs(e1X - e2X);
-		Log.i("OnGestureListener", "location==Top:" + this.getTop()
-				+ "   Left:" + this.getLeft() + "  Right:" + this.getRight()
-				+ "distanceX:" + xlength);
+		Log.i("OnGestureListener", "location==Top:" + this.getTop() + "   Left:" + this.getLeft() + "  Right:" + this.getRight() + "distanceX:"
+				+ xlength);
 		if (e2Y >= this.getTop()) {
 			if (e1X - e2X > 0) {
 				final int[] location = new int[2];
@@ -130,13 +130,13 @@ public class TouchRelativeLayout extends RelativeLayout implements
 				endIndex = endIndex - 1;
 				adjustIndex();
 				for (int i = startIndex; i <= endIndex; i++) {
-					((Poker) getChildAt(i)).getInnerLayout().setVisibility(
-							View.VISIBLE);
+					((Poker) getChildAt(i)).getInnerLayout().setVisibility(View.VISIBLE);
 				}
 				// 当向左侧滑动的时候
 			} else if (e1X - e2X < 0) {
 				final int[] location = new int[2];
 				getLocationOnScreen(location);
+
 				startIndex = (e1X - location[0]) / distance;
 				if ((e1X - location[0]) % distance != 0) {
 					startIndex++;
@@ -149,12 +149,11 @@ public class TouchRelativeLayout extends RelativeLayout implements
 				endIndex = endIndex - 1;
 				adjustIndex();
 				for (int i = startIndex; i <= endIndex; i++) {
-					((Poker) getChildAt(i)).getInnerLayout().setVisibility(
-							View.VISIBLE);
+					((Poker) getChildAt(i)).getInnerLayout().setVisibility(View.VISIBLE);
 				}
 			}
 		}
-		// mHasTiShiListenner.onScrollListenner(e1X, e1Y, e2X, e2Y,startIndex);
+		//		mHasTiShiListenner.onScrollListenner(e1X, e1Y, e2X, e2Y,startIndex);
 		return false;
 	}
 
@@ -175,6 +174,7 @@ public class TouchRelativeLayout extends RelativeLayout implements
 		} else if (startIndex >= getChildCount()) {
 			startIndex = getChildCount() - 1;
 		}
+
 		if (endIndex >= getChildCount()) {
 			endIndex = getChildCount() - 1;
 		} else if (endIndex < 0) {
@@ -184,20 +184,19 @@ public class TouchRelativeLayout extends RelativeLayout implements
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		if (null == event) {
+	if(null ==event){
 			return mGestureDetector.onTouchEvent(event);
-		}
+	   }
 		if (event.getAction() == MotionEvent.ACTION_UP) {
 			Log.i("OnGestureListener", "TouchUp");
 			stopTime = System.currentTimeMillis();
 			long times = stopTime - startTime;
-			if (event.getRawY() < this.getTop() && xlength < 150
-					&& (times < 800)) {
+			if (event.getRawY() < this.getTop() && xlength<150 && (times < 800)) {
 				mHasTiShiListenner.onFling();
 			} else {
 				chekCard();
 			}
-			// mHasTiShiListenner.onTouchUpListenner(event.getRawX(),event.getRawY(),startIndex);
+			//			mHasTiShiListenner.onTouchUpListenner(event.getRawX(),event.getRawY(),startIndex);
 		}
 		return mGestureDetector.onTouchEvent(event);
 	}
@@ -224,7 +223,7 @@ public class TouchRelativeLayout extends RelativeLayout implements
 				cards.add(((Poker) getChildAt(i)));
 				set.add(((Poker) getChildAt(i)).getValue());
 			}
-			// 看是否存在连对
+			//看是否存在连对
 			if ((endIndex - startIndex) >= 10) {
 				List<Integer> liandui = DoudizhuRule.checkLianDui2(cards);
 				if (liandui.size() > 0) {
@@ -239,12 +238,10 @@ public class TouchRelativeLayout extends RelativeLayout implements
 						}
 						if (has) {
 							((Poker) getChildAt(startIndex + i)).ischeck = false;
-							((Poker) getChildAt(startIndex + i))
-									.setRiseParams();
+							((Poker) getChildAt(startIndex + i)).setRiseParams();
 						} else {
 							((Poker) getChildAt(startIndex + i)).ischeck = true;
-							((Poker) getChildAt(startIndex + i))
-									.setDefaultParams();
+							((Poker) getChildAt(startIndex + i)).setDefaultParams();
 						}
 					}
 					return;
@@ -255,8 +252,7 @@ public class TouchRelativeLayout extends RelativeLayout implements
 				for (int i = 0; i < cards.size(); i++) {
 					boolean has = false;
 					for (int j = 0; j < shunPai.length; j++) {
-						if (Integer.valueOf(shunPai[j]) == cards.get(i)
-								.getValue()) {
+						if (Integer.valueOf(shunPai[j]) == cards.get(i).getValue()) {
 							shunPai[j] = "0";
 							has = true;
 						}
@@ -274,10 +270,9 @@ public class TouchRelativeLayout extends RelativeLayout implements
 			}
 			cards.clear();
 			cards = null;
-		} else if ((startIndex == endIndex) && !hasCheck) {// 选择一张牌，并且没有牌弹出
-			// 是否提示对应牌型：true 提示 ；false 不提示
-			boolean tishi = mHasTiShiListenner.hasTiShi(
-					((Poker) getChildAt(startIndex)), startIndex);
+		} else if ((startIndex == endIndex) && !hasCheck) {//选择一张牌，并且没有牌弹出
+			//是否提示对应牌型：true 提示 ；false 不提示
+			boolean tishi = mHasTiShiListenner.hasTiShi(((Poker) getChildAt(startIndex)), startIndex);
 			if (!tishi) {
 				makeAChoiceCard();
 			}
@@ -302,20 +297,16 @@ public class TouchRelativeLayout extends RelativeLayout implements
 	}
 
 	@Override
-	public void onGesture(GestureOverlayView overlay, MotionEvent event) {
-	}
+	public void onGesture(GestureOverlayView overlay, MotionEvent event) {}
 
 	@Override
-	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
-	}
+	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {}
 
 	@Override
-	public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
-	}
+	public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {}
 
 	@Override
-	public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
-	}
+	public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {}
 
 	public int getDistance() {
 		return distance;
@@ -324,4 +315,5 @@ public class TouchRelativeLayout extends RelativeLayout implements
 	public void setDistance(int distance) {
 		this.distance = distance;
 	}
+
 }

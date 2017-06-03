@@ -49,4 +49,5 @@ public class AwardVo {
 	public final void setPrize(String prize) {
 		this.prize = prize;
 	}
+
 }

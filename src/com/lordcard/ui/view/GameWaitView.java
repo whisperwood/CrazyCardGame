@@ -1,6 +1,6 @@
 package com.lordcard.ui.view;
 
-import com.crazy.shui.R;
+import com.zzyddz.shui.R;
 
 import java.util.List;
 
@@ -15,7 +15,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -53,28 +52,30 @@ import com.umeng.analytics.MobclickAgent;
  */
 @SuppressLint("ViewConstructor")
 public class GameWaitView extends LinearLayout implements ChangeProInterface {
+
 	private LayoutInflater layoutInflater = null;
 	private View mainView = null;
 	private ImageView puKeHuaSe1, puKeHuaSe2, puKeHuaSe3, puKeHuaSe4;
 	private AnimationDrawable anim1, anim2, anim3, anim4;
 	private TextView vipRoomId, joinText = null;
-	// private Timer timer;
+	//	private Timer timer;
 	private AutoTask waitTask = null;
 	private int ShowIndex;
 	private int FRAME_TIME = 800;
 	private Handler mHandler;
 	private RelativeLayout joinBottomll;
 	private TextView joinProgrees;// 加入房间进度(比赛场)
-	private Button exitGame, gameRank, returnGpBtn;// 退出比赛，排行,退赛
+	private Button exitGame, gameRank,returnGpBtn;// 退出比赛，排行,退赛
 	private Context context;
 	private Handler handler;
-	private static int maxPeople = 0; // 普通赛制开赛人数
+	private static int maxPeople=0; // 普通赛制开赛人数
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	private RelativeLayout layout;
-	private int tableNum = 0; // 当前正在比赛的桌数(普通赛制比赛场提示数据)
-	private int rank = 0;// 当前排名(普通赛制比赛场提示数据)
-	private int rankCount = 0; // 当前排名列表总人数(普通赛制比赛场提示数据)
-	private boolean isFast; // 是否为超快赛
+	private int tableNum = 0; //当前正在比赛的桌数(普通赛制比赛场提示数据)
+	private int rank = 0;//当前排名(普通赛制比赛场提示数据)
+	private int rankCount = 0; //当前排名列表总人数(普通赛制比赛场提示数据)
+
+	private boolean isFast; //是否为超快赛
 	private List<NoticesVo> noticeList = null;
 
 	/**
@@ -96,22 +97,16 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 		puKeHuaSe2 = (ImageView) mainView.findViewById(R.id.puke_huase_2);
 		puKeHuaSe3 = (ImageView) mainView.findViewById(R.id.puke_huase_3);
 		puKeHuaSe4 = (ImageView) mainView.findViewById(R.id.puke_huase_4);
-		puKeHuaSe1.setImageDrawable(ImageUtil.getDrawableResId(
-				R.drawable.wait10, true, true));
-		// puKeHuaSe1.setImageResource(R.drawable.wait10);
-		// puKeHuaSe2.setImageResource(R.drawable.wait20);
-		puKeHuaSe2.setImageDrawable(ImageUtil.getDrawableResId(
-				R.drawable.wait20, true, true));
-		// puKeHuaSe3.setImageResource(R.drawable.wait30);
-		puKeHuaSe3.setImageDrawable(ImageUtil.getDrawableResId(
-				R.drawable.wait30, true, true));
-		// puKeHuaSe4.setImageResource(R.drawable.wait40);
-		puKeHuaSe4.setImageDrawable(ImageUtil.getDrawableResId(
-				R.drawable.wait40, true, true));
-		mainView.findViewById(R.id.doudizhu_waitting).setBackgroundResource(
-				R.drawable.game_waiting_bg);
-		mainView.findViewById(R.id.join_ad_layout).setBackgroundDrawable(
-				ImageUtil.getResDrawable(R.drawable.join_ad, true));
+		puKeHuaSe1.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait10, true, true));
+		//		puKeHuaSe1.setImageResource(R.drawable.wait10);
+		//		puKeHuaSe2.setImageResource(R.drawable.wait20);
+		puKeHuaSe2.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait20, true, true));
+		//		puKeHuaSe3.setImageResource(R.drawable.wait30);
+		puKeHuaSe3.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait30, true, true));
+		//		puKeHuaSe4.setImageResource(R.drawable.wait40);
+		puKeHuaSe4.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait40, true, true));
+		mainView.findViewById(R.id.doudizhu_waitting).setBackgroundResource(R.drawable.join_bj);
+		mainView.findViewById(R.id.join_ad_layout).setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.join_ad, true));
 		joinProgrees = (TextView) mainView.findViewById(R.id.join_home_text);
 		exitGame = (Button) mainView.findViewById(R.id.join_gp_exit_btn);
 		exitGame.setOnClickListener(new OnClickListener() {
@@ -120,38 +115,36 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 				handler.sendEmptyMessage(20);
 			}
 		});
-		joinBottomll = (RelativeLayout) mainView
-				.findViewById(R.id.join_bottom_ll);
+		joinBottomll = (RelativeLayout) mainView.findViewById(R.id.join_bottom_ll);
 		setjoinBottomllInVisible();
 		gameRank = (Button) mainView.findViewById(R.id.join_gp_top_btn);
 		gameRank.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if ((System.currentTimeMillis() - Constant.CLICK_TIME) >= Constant.SPACING_TIME) {
-					Constant.CLICK_TIME = System.currentTimeMillis();
+				if ((System.currentTimeMillis()-Constant.CLICK_TIME)>=Constant.SPACING_TIME) {
+					Constant.CLICK_TIME=System.currentTimeMillis();
 					GetRankTask getRankTask = new GetRankTask();
 					getRankTask.execute();
 				}
 			}
 		});
-		returnGpBtn = (Button) mainView
-				.findViewById(R.id.join_gp_return_place_btn);
+		returnGpBtn = (Button) mainView.findViewById(R.id.join_gp_return_place_btn);
 		returnGpBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (Math.abs(System.currentTimeMillis() - Constant.CLICK_TIME) >= Constant.SPACING_TIME) {// 防止重复刷新
+				if (Math.abs(System.currentTimeMillis() - Constant.CLICK_TIME)>= Constant.SPACING_TIME) {//防止重复刷新
 					Constant.CLICK_TIME = System.currentTimeMillis();
-					// 发送退赛退赛
+					//发送退赛退赛
 					HttpRequest.returnGamePlace(Database.JOIN_ROOM_CODE);
-					// 退出打牌界面
+					
+					//退出打牌界面
 					CmdUtils.exitGame();
 					MobclickAgent.onEvent(context, "退赛");
 					// 记录逃跑日志
-					GameUser gameUser = (GameUser) GameCache
-							.getObj(CacheKey.GAME_USER);
+					GameUser gameUser = (GameUser)GameCache.getObj(CacheKey.GAME_USER);
 					if (gameUser != null) {
 						gameUser.setRound(0);
-						GameCache.putObj(CacheKey.GAME_USER, gameUser);
+						GameCache.putObj(CacheKey.GAME_USER,gameUser);
 					}
 					ClientCmdMgr.closeClient();
 					ActivityUtils.finishAcitivity();
@@ -159,11 +152,10 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 			}
 		});
 		int[] location = new int[2];
-		TranslateAnimation translate = new TranslateAnimation(location[0],
-				location[0], location[1] - 20, location[1] + 20);
+		TranslateAnimation translate = new TranslateAnimation(location[0], location[0], location[1] - 20, location[1] + 20);
 		translate.setDuration(FRAME_TIME);
-		translate.setRepeatCount(Animation.INFINITE);
-		translate.setRepeatMode(Animation.REVERSE);
+		translate.setRepeatCount(TranslateAnimation.INFINITE);
+		translate.setRepeatMode(TranslateAnimation.REVERSE);
 		vipRoomId = (TextView) mainView.findViewById(R.id.vip_room_id);
 		Room room = Database.JOIN_ROOM;
 		if (activity.getClass().equals(PersonnalDoudizhuActivity.class)) {
@@ -179,111 +171,105 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 			} else {
 				setRoomName(room);
 			}
-			if (1 != Database.JOIN_ROOM.getRoomType()) {// 不是超快赛
+			if (1 != Database.JOIN_ROOM.getRoomType()) {//不是超快赛
 				isFast = false;
 			} else {
 				isFast = true;
 			}
 		}
-		LayoutParams layoutParams = new LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
-				android.view.ViewGroup.LayoutParams.FILL_PARENT);
+		LayoutParams layoutParams = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 		addView(mainView, layoutParams);
 		joinPro();
 		mHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				switch (msg.what) {
-				case 10001:
-					puKeHuaSe1.setImageResource(R.drawable.wait_anim1);
-					anim1 = (AnimationDrawable) puKeHuaSe1.getDrawable();
-					anim1.stop();
-					anim1.start();
-					if (!isFast) {
-						joinProgrees.setText("智能拼桌中..");
-					}
-					break;
-				case 10002:
-					puKeHuaSe2.setImageResource(R.drawable.wait_anim2);
-					anim2 = (AnimationDrawable) puKeHuaSe2.getDrawable();
-					anim2.stop();
-					anim2.start();
-					if (!isFast) {
-						joinProgrees.setText("智能拼桌中....");
-					}
-					break;
-				case 10003:
-					puKeHuaSe3.setImageResource(R.drawable.wait_anim3);
-					anim3 = (AnimationDrawable) puKeHuaSe3.getDrawable();
-					anim3.stop();
-					anim3.start();
-					if (!isFast) {
-						joinProgrees.setText("智能拼桌中......");
-					}
-					break;
-				case 10004:
-					puKeHuaSe4.setImageResource(R.drawable.wait_anim4);
-					anim4 = (AnimationDrawable) puKeHuaSe4.getDrawable();
-					anim4.stop();
-					anim4.start();
-					if (!isFast) {
-						joinProgrees.setText("智能拼桌中........");
-					}
-					break;
-				case 10005:
-					puKeHuaSe1.setImageDrawable(ImageUtil.getDrawableResId(
-							R.drawable.wait10, true, true));
-					puKeHuaSe2.setImageDrawable(ImageUtil.getDrawableResId(
-							R.drawable.wait20, true, true));
-					puKeHuaSe3.setImageDrawable(ImageUtil.getDrawableResId(
-							R.drawable.wait30, true, true));
-					puKeHuaSe4.setImageDrawable(ImageUtil.getDrawableResId(
-							R.drawable.wait40, true, true));
-					if (!isFast) {
-						joinProgrees.setText("智能拼桌中");
-					}
-					break;
-				case 10006:// 设置提示(普通赛制比赛场)
-					setTishi();
-					break;
-				case 10007:// 设置等待进度(普通赛制比赛场)
-					int n = msg.getData().getInt("n");
-					setNum(n);
-					break;
-				case 10008:
-					break;
-				case 10009:
-					break;
-				case 10010:
-					break;
-				default:
-					break;
+					case 10001:
+						puKeHuaSe1.setImageResource(R.drawable.wait_anim1);
+						anim1 = (AnimationDrawable) puKeHuaSe1.getDrawable();
+						anim1.stop();
+						anim1.start();
+						if (!isFast) {
+							joinProgrees.setText("智能拼桌中..");
+						}
+						break;
+					case 10002:
+						puKeHuaSe2.setImageResource(R.drawable.wait_anim2);
+						anim2 = (AnimationDrawable) puKeHuaSe2.getDrawable();
+						anim2.stop();
+						anim2.start();
+						if (!isFast) {
+							joinProgrees.setText("智能拼桌中....");
+						}
+						break;
+					case 10003:
+						puKeHuaSe3.setImageResource(R.drawable.wait_anim3);
+						anim3 = (AnimationDrawable) puKeHuaSe3.getDrawable();
+						anim3.stop();
+						anim3.start();
+						if (!isFast) {
+							joinProgrees.setText("智能拼桌中......");
+						}
+						break;
+					case 10004:
+						puKeHuaSe4.setImageResource(R.drawable.wait_anim4);
+						anim4 = (AnimationDrawable) puKeHuaSe4.getDrawable();
+						anim4.stop();
+						anim4.start();
+						if (!isFast) {
+							joinProgrees.setText("智能拼桌中........");
+						}
+						break;
+					case 10005:
+						puKeHuaSe1.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait10, true, true));
+						puKeHuaSe2.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait20, true, true));
+						puKeHuaSe3.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait30, true, true));
+						puKeHuaSe4.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait40, true, true));
+						if (!isFast) {
+							joinProgrees.setText("智能拼桌中");
+						}
+						break;
+					case 10006://设置提示(普通赛制比赛场)
+						setTishi();
+						break;
+					case 10007://设置等待进度(普通赛制比赛场)
+						int n = msg.getData().getInt("n");
+						setNum(n);
+						break;
+					case 10008:
+						break;
+					case 10009:
+						break;
+					case 10010:
+						break;
+					default:
+						break;
 				}
 				super.handleMessage(msg);
 			}
 		};
 		ShowIndex = 1;
 		waitTask = new AutoTask() {
-			@Override
+
 			public void run() {
 				switch (ShowIndex) {
-				case 1:
-					mHandler.sendEmptyMessage(10001);
-					break;
-				case 2:
-					mHandler.sendEmptyMessage(10002);
-					break;
-				case 3:
-					mHandler.sendEmptyMessage(10003);
-					break;
-				case 4:
-					mHandler.sendEmptyMessage(10004);
-					break;
-				case 5:
-					mHandler.sendEmptyMessage(10005);
-					break;
-				default:
-					break;
+					case 1:
+						mHandler.sendEmptyMessage(10001);
+						break;
+					case 2:
+						mHandler.sendEmptyMessage(10002);
+						break;
+					case 3:
+						mHandler.sendEmptyMessage(10003);
+						break;
+					case 4:
+						mHandler.sendEmptyMessage(10004);
+						break;
+					case 5:
+						mHandler.sendEmptyMessage(10005);
+						break;
+					default:
+						break;
 				}
 				ShowIndex += 1;
 				if (ShowIndex == 6) {
@@ -299,7 +285,7 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 	 */
 	public void setjoinBottomllVisible() {
 		joinBottomll.setVisibility(View.VISIBLE);
-		GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+		GameUser gameUser = (GameUser)GameCache.getObj(CacheKey.GAME_USER);
 		if (0 == gameUser.getRound()) {
 			exitGame.setVisibility(View.INVISIBLE);
 			gameRank.setVisibility(View.INVISIBLE);
@@ -310,45 +296,39 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 			returnGpBtn.setVisibility(View.INVISIBLE);
 		}
 	}
-
 	/**
 	 * 设置等待界面"退出"、"排名"、"退赛"按钮的隐藏
 	 */
 	public void setjoinBottomllInVisible() {
 		joinBottomll.setVisibility(View.INVISIBLE);
-		GoogleAdsHelper.getInstance().showBanner(mainView);
 	}
 
 	/**
 	 * 设置房间名称
-	 * 
 	 * @param room
 	 */
 	public void setRoomName(Room room) {
 		switch (room.getRoomType()) {
-		case 0:// 0大厅房
-		case 2:// 2排位赛房
-			if (room != null && !TextUtils.isEmpty(room.getName())
-					&& room.getHomeType() != 2) {
-				vipRoomId.setText(room.getName());
-			} else {
-				vipRoomId.setText(context.getResources().getString(
-						R.string.vip_room_lable)
-						+ Database.JOIN_ROOM_CODE);
-			}
-			break;
-		case 1:// 1超快赛房
-			if (null != room && null != room.getRoomDetail()) {
+			case 0:// 0大厅房
+			case 2:// 2排位赛房
+				if (room != null && !TextUtils.isEmpty(room.getName()) && room.getHomeType() != 2) {
+					vipRoomId.setText(room.getName());
+				} else {
+					vipRoomId.setText(context.getResources().getString(R.string.vip_room_lable) + Database.JOIN_ROOM_CODE);
+				}
+				break;
+			case 1:// 1超快赛房
+				if (null != room && null != room.getRoomDetail()) {
 				maxPeople = room.getRoomDetail().getLimitNum();
-			} else {
-				Log.i("room", "room.getRoomDetail() is null");
-			}
-			setNum(0);
-			setjoinBottomllVisible();
-			if (room != null && !TextUtils.isEmpty(room.getName())) {
-				vipRoomId.setText(room.getName());
-			}
-			break;
+				}else{
+					Log.i("room", "room.getRoomDetail() is null");
+				}
+				setNum(0);
+				setjoinBottomllVisible();
+				if (room != null && !TextUtils.isEmpty(room.getName())) {
+					vipRoomId.setText(room.getName());
+				}
+				break;
 		}
 	}
 
@@ -359,12 +339,11 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 		if (noticeList != null) {
 			int i = (int) (Math.random() * noticeList.size());
 			joinText = (TextView) findViewById(R.id.join_ad_text);
-			if (null != noticeList && i < noticeList.size()) {
+			if(null != noticeList && i<noticeList.size()){
 				joinText.setText(noticeList.get(i).getContent());
 			}
 		} else {
 			new Thread() {
-				@Override
 				public void run() {
 					HttpRequest.loadJoinRoomTip(); // 加载房间提示信息
 				};
@@ -381,26 +360,22 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 		}
 		if (null != anim1) {
 			anim1.stop();
-			puKeHuaSe1.setImageDrawable(ImageUtil.getDrawableResId(
-					R.drawable.wait10, true, true));
+			puKeHuaSe1.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait10, true, true));
 			AnimUtils.releaseLoadAnimDrawable(anim1);
 		}
 		if (null != anim2) {
 			anim2.stop();
-			puKeHuaSe2.setImageDrawable(ImageUtil.getDrawableResId(
-					R.drawable.wait20, true, true));
+			puKeHuaSe2.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait20, true, true));
 			AnimUtils.releaseLoadAnimDrawable(anim2);
 		}
 		if (null != anim3) {
 			anim3.stop();
-			puKeHuaSe3.setImageDrawable(ImageUtil.getDrawableResId(
-					R.drawable.wait30, true, true));
+			puKeHuaSe3.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait30, true, true));
 			AnimUtils.releaseLoadAnimDrawable(anim3);
 		}
 		if (null != anim4) {
 			anim4.stop();
-			puKeHuaSe4.setImageDrawable(ImageUtil.getDrawableResId(
-					R.drawable.wait40, true, true));
+			puKeHuaSe4.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait40, true, true));
 			AnimUtils.releaseLoadAnimDrawable(anim4);
 		}
 	}
@@ -419,14 +394,14 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 	 * @param n
 	 */
 	public void setNum(int n) {
-		GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+		GameUser gameUser = (GameUser)GameCache.getObj(CacheKey.GAME_USER);
 		if (0 == gameUser.getRound()) {
 			if (-1 == n) {
 				joinProgrees.setText("人数已到齐，马上开赛");
 			} else {
-				if ((maxPeople - n) >= 0) {
+				if((maxPeople - n)>=0){
 					joinProgrees.setText("还差" + (maxPeople - n) + "人开赛");
-				} else {
+				}else{
 					joinProgrees.setText("还差0人开赛");
 				}
 			}
@@ -439,9 +414,9 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 				tableNum = n;
 			}
 			setTishi();
-			// clickPm = false;
-			// GetRankTask getRankTask = new GetRankTask();
-			// getRankTask.execute();
+			//			clickPm = false;
+			//			GetRankTask getRankTask = new GetRankTask();
+			//			getRankTask.execute();
 		}
 	}
 
@@ -449,7 +424,7 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 	 * 设置等待进度，及排名名次信息
 	 */
 	private void setTishi() {
-		GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+		GameUser gameUser = (GameUser)GameCache.getObj(CacheKey.GAME_USER);
 		if (0 != gameUser.getRound()) {
 			String table = "";
 			String rankNum = "";
@@ -480,41 +455,42 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 		mHandler.sendMessage(msg);
 	}
 
-	// /**
-	// * 请求排名
-	// * */
-	// private class GetRankTask extends GenericTask {
-	// protected TaskResult _doInBackground(TaskParams... params) {
-	// try {
-	// if (Database.CLIENT == null || !Database.CLIENT.isConnected()) {
-	// Database.CLIENT = new Client();
-	// }
-	// if (Database.CLIENT.isConnected()) {
-	// // 发送获取排名的命令
-	// CmdUtils.sendGetRankCmd(Database.USER.getLoginToken());
-	// return TaskResult.OK;
-	// } else {
-	// DialogUtils.mesTip(context.getString(R.string.link_server_fail), true);
-	// return TaskResult.FAILED;
-	// }
-	// } catch (Exception e) {
-	// DialogUtils.mesTip(context.getString(R.string.link_server_fail), true);
-	// return TaskResult.FAILED;
-	// }
-	// }
-	// }
+	//	/**
+	//	 * 请求排名
+	//	 * 	 */
+	//	private class GetRankTask extends GenericTask {
+	//		protected TaskResult _doInBackground(TaskParams... params) {
+	//			try {
+	//				if (Database.CLIENT == null || !Database.CLIENT.isConnected()) {
+	//					Database.CLIENT = new Client();
+	//				}
+	//				if (Database.CLIENT.isConnected()) {
+	//					// 发送获取排名的命令
+	//					CmdUtils.sendGetRankCmd(Database.USER.getLoginToken());
+	//					return TaskResult.OK;
+	//				} else {
+	//					DialogUtils.mesTip(context.getString(R.string.link_server_fail), true);
+	//					return TaskResult.FAILED;
+	//				}
+	//			} catch (Exception e) {
+	//				DialogUtils.mesTip(context.getString(R.string.link_server_fail), true);
+	//				return TaskResult.FAILED;
+	//			}
+	//		}
+	//	}
 	@Override
 	public void setRank(List<GameScoreTradeRank> gstList) {
 		rankCount = gstList.size();
-		FOR: for (int i = 0, count = gstList.size(); i < count; i++) {
+		FOR:
+		for (int i = 0, count = gstList.size(); i < count; i++) {
 			GameScoreTradeRank gctRank = gstList.get(i);
-			GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+			GameUser gameUser = (GameUser)GameCache.getObj(CacheKey.GAME_USER);
 			if (gctRank.getAccount().equals(gameUser.getAccount())) {
 				rank = Integer.parseInt(gctRank.getRank().trim());
 				break FOR;
 			}
 		}
-		mHandler.sendEmptyMessage(10006);// 设置提示(普通赛制比赛场)
+		mHandler.sendEmptyMessage(10006);//设置提示(普通赛制比赛场)
 	}
 
 	public void onDestory() {

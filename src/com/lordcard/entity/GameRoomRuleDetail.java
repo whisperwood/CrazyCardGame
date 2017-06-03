@@ -7,6 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class GameRoomRuleDetail {
+
 	@Expose
 	@SerializedName("rd")
 	private String roomDetail; // 房间说明
@@ -21,7 +22,7 @@ public class GameRoomRuleDetail {
 	private List<Map<String, String>> applyFee; // 报名费用
 	@Expose
 	@SerializedName("ln")
-	private int limitNum = 0; // 开赛人数
+	private int limitNum=0; // 开赛人数
 	@Expose
 	@SerializedName("ar")
 	private Map<String, String> applyRoom; // 排位赛对应普通房间
@@ -31,9 +32,8 @@ public class GameRoomRuleDetail {
 	@Expose
 	@SerializedName("tt")
 	private String timeText; // 赛场时间文本
-	@Expose
-	@SerializedName("an")
-	private int applyNum = 0; // 报名人数
+	@Expose @SerializedName("an") private int  applyNum=0;	// 报名人数
+
 
 	public Map<String, String> getApplyRoom() {
 		return applyRoom;
@@ -106,4 +106,5 @@ public class GameRoomRuleDetail {
 	public final void setApplyNum(int applyNum) {
 		this.applyNum = applyNum;
 	}
+
 }
