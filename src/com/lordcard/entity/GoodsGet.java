@@ -24,8 +24,7 @@ public class GoodsGet {
 	}
 
 	/**
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -39,8 +38,7 @@ public class GoodsGet {
 	}
 
 	/**
-	 * @param goodCode
-	 *            the goodCode to set
+	 * @param goodCode the goodCode to set
 	 */
 	public void setGoodCode(String goodCode) {
 		this.goodCode = goodCode;
@@ -54,8 +52,7 @@ public class GoodsGet {
 	}
 
 	/**
-	 * @param count
-	 *            the count to set
+	 * @param count the count to set
 	 */
 	public void setCount(Integer count) {
 		this.count = count;

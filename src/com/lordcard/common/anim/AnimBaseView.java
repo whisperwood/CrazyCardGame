@@ -17,12 +17,9 @@ public class AnimBaseView extends View {
 
 	/**
 	 * @param context
-	 * @param frameBitmap
-	 *            动画的帧集合
-	 * @param duration
-	 *            每帧播放间隔
-	 * @param oneshot
-	 *            是单次播放
+	 * @param frameBitmap 动画的帧集合
+	 * @param duration 每帧播放间隔
+	 * @param oneshot 是单次播放
 	 */
 	public AnimBaseView(Context context, int duration, boolean oneshot) {
 		super(context);
@@ -33,13 +30,11 @@ public class AnimBaseView extends View {
 
 	/**
 	 * 加载动画的帧
-	 * 
 	 * @param frameBitmap
 	 */
 	public void loadAnimFrame(Bitmap[] frameBitmap) {
 		for (int frame = 0; frame < frameBitmap.length; frame++) {
-			animationDrawable.addFrame(new BitmapDrawable(frameBitmap[frame]),
-					duration);
+			animationDrawable.addFrame(new BitmapDrawable(frameBitmap[frame]), duration);
 		}
 		setBackgroundDrawable(animationDrawable);
 	}

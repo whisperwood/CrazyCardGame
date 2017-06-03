@@ -17,7 +17,6 @@ public class MySelector {
 	public interface DrawCallback {
 		/**
 		 * 设置加载的图片
-		 * 
 		 * @param bitmap
 		 * @param view
 		 */
@@ -25,28 +24,24 @@ public class MySelector {
 
 		/**
 		 * 设置默认图片
-		 * 
 		 * @param view
 		 * @param homeType
 		 */
 		public void imageLoadedDefault(ImageView view, String Code);
 	}
 
-	public static void newSelector(Drawable idNormal, Drawable idPressed,
-			String Code, final ImageView imageview,
+	public static void newSelector(Drawable idNormal, Drawable idPressed, String Code, final ImageView imageview,
 			final DrawCallback drawCallback) {
 		drawCallback.imageLoadedDefault(imageview, Code);
 		final Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
-				drawCallback
-						.imageLoaded((StateListDrawable) msg.obj, imageview);
+				drawCallback.imageLoaded((StateListDrawable) msg.obj, imageview);
 			}
 		};
 		StateListDrawable bg = new StateListDrawable();
-		bg.addState(new int[] { android.R.attr.state_pressed,
-				android.R.attr.state_enabled }, idPressed);
+		bg.addState(new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled }, idPressed);
 		bg.addState(new int[] { android.R.attr.state_enabled }, idNormal);
 		bg.addState(new int[] {}, idNormal);
 		Message message = handler.obtainMessage(0, bg);
@@ -54,16 +49,14 @@ public class MySelector {
 		return;
 	}
 
-	public static void newSelector(final String idNormal,
-			final String idPressed, final String Code,
+	public static void newSelector(final String idNormal, final String idPressed, final String Code,
 			final ImageView imageview, final DrawCallback drawCallback) {
 		drawCallback.imageLoadedDefault(imageview, Code);
 		final Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
-				drawCallback
-						.imageLoaded((StateListDrawable) msg.obj, imageview);
+				drawCallback.imageLoaded((StateListDrawable) msg.obj, imageview);
 			}
 		};
 		new Thread() {
@@ -90,21 +83,13 @@ public class MySelector {
 						normal = new BitmapDrawable(bitmapN);
 						pressed = new BitmapDrawable(bitmapP);
 						// 将图片路径存入SharedPreferences
-						CrashApplication
-								.getInstance()
-								.getSharedPreferences("saveImgPath",
-										Context.MODE_PRIVATE).edit()
+						CrashApplication.getInstance().getSharedPreferences("saveImgPath", Context.MODE_PRIVATE).edit()
 								.putString(Code + "N", idNormal).commit();
-						CrashApplication
-								.getInstance()
-								.getSharedPreferences("saveImgPath",
-										Context.MODE_PRIVATE).edit()
+						CrashApplication.getInstance().getSharedPreferences("saveImgPath", Context.MODE_PRIVATE).edit()
 								.putString(Code + "P", idPressed).commit();
 					}
-					bg.addState(new int[] { android.R.attr.state_pressed,
-							android.R.attr.state_enabled }, pressed);
-					bg.addState(new int[] { android.R.attr.state_enabled },
-							normal);
+					bg.addState(new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled }, pressed);
+					bg.addState(new int[] { android.R.attr.state_enabled }, normal);
 					bg.addState(new int[] {}, normal);
 					Message message = handler.obtainMessage(0, bg);
 					handler.sendMessage(message);

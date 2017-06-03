@@ -34,14 +34,11 @@ public class AnimUtils {
 	// private static int yOffset = 13;
 	/**
 	 * 播放动画
-	 * 
 	 * @param viewGroup
 	 * @param animView
-	 * @param playTime
-	 *            动画时长
+	 * @param playTime 动画时长
 	 */
-	public static void playAnim(final ViewGroup viewGroup,
-			final AnimBaseView animView, long playTime) {
+	public static void playAnim(final ViewGroup viewGroup, final AnimBaseView animView, long playTime) {
 		if (playTime < 0)
 			return;
 		viewGroup.addView(animView);
@@ -71,8 +68,7 @@ public class AnimUtils {
 		// timer.schedule(animTask, playTime);
 	}
 
-	public static void playAnim(final ImageView viewGroup,
-			final AnimationDrawable animView, long playTime) {
+	public static void playAnim(final ImageView viewGroup, final AnimationDrawable animView, long playTime) {
 		viewGroup.clearAnimation();
 		viewGroup.setBackgroundDrawable(animView);
 		if (!animView.isRunning()) {
@@ -98,8 +94,7 @@ public class AnimUtils {
 		}
 	}
 
-	public static void playButtonAnim(final Button viewGroup,
-			final AnimationDrawable animView, long playTime) {
+	public static void playButtonAnim(final Button viewGroup, final AnimationDrawable animView, long playTime) {
 		viewGroup.clearAnimation();
 		viewGroup.setBackgroundDrawable(animView);
 		if (!animView.isRunning()) {
@@ -147,8 +142,7 @@ public class AnimUtils {
 		});
 	}
 
-	public static void playAnim(final ViewGroup viewGroup,
-			final AnimationDrawable animView, long playTime) {
+	public static void playAnim(final ViewGroup viewGroup, final AnimationDrawable animView, long playTime) {
 		viewGroup.setBackgroundDrawable(animView);
 		if (animView.isRunning()) {
 			animView.stop();
@@ -201,16 +195,14 @@ public class AnimUtils {
 	/**
 	 * 释放加载动画所占的内存
 	 */
-	public static void releaseLoadAnimDrawable(
-			AnimationDrawable animationDrawable) {
+	public static void releaseLoadAnimDrawable(AnimationDrawable animationDrawable) {
 		for (int i = 0; i < animationDrawable.getNumberOfFrames(); i++) {
 			ImageUtil.releaseDrawable(animationDrawable.getFrame(i));
 		}
 	}
 
 	public static Animation getMiniAnimation(int durationMillis) {
-		Animation miniAnimation = new ScaleAnimation(2.0f, 1f, 2.0f, 1f,
-				Animation.RELATIVE_TO_PARENT, 0.5f,
+		Animation miniAnimation = new ScaleAnimation(2.0f, 1f, 2.0f, 1f, Animation.RELATIVE_TO_PARENT, 0.5f,
 				Animation.RELATIVE_TO_PARENT, 0.5f);
 		miniAnimation.setDuration(durationMillis);
 		miniAnimation.setFillAfter(true);
@@ -219,26 +211,20 @@ public class AnimUtils {
 
 	/**
 	 * 缩放动画入
-	 * 
 	 * @param viewgroup
 	 */
-	public static void startScaleAnimationIn(ViewGroup viewgroup,
-			Context context) {
+	public static void startScaleAnimationIn(ViewGroup viewgroup, Context context) {
 		viewgroup.setVisibility(View.VISIBLE);
-		Animation animationjg = AnimationUtils.loadAnimation(context,
-				R.anim.tuoguan_scale_action_in);
+		Animation animationjg = AnimationUtils.loadAnimation(context, R.anim.tuoguan_scale_action_in);
 		viewgroup.startAnimation(animationjg);
 	}
 
 	/**
 	 * 缩放动画出
-	 * 
 	 * @param viewgroup
 	 */
-	public static void startScaleAnimationOut(final View viewgroup,
-			Context context) {
-		Animation animationjg = AnimationUtils.loadAnimation(context,
-				R.anim.tuoguan_scale_action_out);
+	public static void startScaleAnimationOut(final View viewgroup, Context context) {
+		Animation animationjg = AnimationUtils.loadAnimation(context, R.anim.tuoguan_scale_action_out);
 		viewgroup.startAnimation(animationjg);
 		animationjg.setAnimationListener(new AnimationListener() {
 			@Override
@@ -258,22 +244,16 @@ public class AnimUtils {
 
 	/**
 	 * 图标的动画(右入动画)
-	 * 
 	 * @param viewgroup
-	 * @param durationMillis
-	 *            时间
-	 * @param moveLength
-	 *            唯一长度
+	 * @param durationMillis 时间
+	 * @param moveLength 唯一长度
 	 */
-	public static void startAnimationsIn(ViewGroup viewgroup,
-			int durationMillis, int moveLength) {
+	public static void startAnimationsIn(ViewGroup viewgroup, int durationMillis, int moveLength) {
 		viewgroup.setVisibility(0);
 		viewgroup.setClickable(true);
 		viewgroup.setFocusable(true);
-		MarginLayoutParams mlp = (MarginLayoutParams) viewgroup
-				.getLayoutParams();
-		Animation animation = new TranslateAnimation(mlp.rightMargin + 300, 0F,
-				0F, 0F);
+		MarginLayoutParams mlp = (MarginLayoutParams) viewgroup.getLayoutParams();
+		Animation animation = new TranslateAnimation(mlp.rightMargin + 300, 0F, 0F, 0F);
 		animation.setFillAfter(true);
 		animation.setDuration(durationMillis);
 		animation.setInterpolator(new OvershootInterpolator(2F));// 动画的效果
@@ -283,19 +263,13 @@ public class AnimUtils {
 
 	/**
 	 * 图标的动画(右出动画)
-	 * 
 	 * @param viewgroup
-	 * @param durationMillis
-	 *            时间
-	 * @param moveLength
-	 *            唯一长度
+	 * @param durationMillis 时间
+	 * @param moveLength 唯一长度
 	 */
-	public static void startAnimationsOut(final ViewGroup viewgroup,
-			int durationMillis, int moveLength) {
-		MarginLayoutParams mlp = (MarginLayoutParams) viewgroup
-				.getLayoutParams();
-		Animation animation = new TranslateAnimation(0F, mlp.rightMargin
-				+ moveLength, 0F, 0F);
+	public static void startAnimationsOut(final ViewGroup viewgroup, int durationMillis, int moveLength) {
+		MarginLayoutParams mlp = (MarginLayoutParams) viewgroup.getLayoutParams();
+		Animation animation = new TranslateAnimation(0F, mlp.rightMargin + moveLength, 0F, 0F);
 		animation.setFillAfter(false);
 		animation.setDuration(durationMillis);
 		animation.setAnimationListener(new Animation.AnimationListener() {
@@ -316,20 +290,15 @@ public class AnimUtils {
 	}
 
 	/**
-	 * @param view
-	 *            执行动画的VIEW
-	 * @param durationMillis
-	 *            时间
-	 * @param moveLength
-	 *            移动长度
-	 * @param view2
-	 *            显示控件，用于把头像布局顶下去
+	 * @param view 执行动画的VIEW
+	 * @param durationMillis 时间
+	 * @param moveLength 移动长度
+	 * @param view2 显示控件，用于把头像布局顶下去
 	 */
-	public static void startAnimationsOut1(final View view, int durationMillis,
-			final int moveLength, final View view1, final View view2) {
+	public static void startAnimationsOut1(final View view, int durationMillis, final int moveLength, final View view1,
+			final View view2) {
 		MarginLayoutParams mlp = (MarginLayoutParams) view.getLayoutParams();
-		Animation animation = new TranslateAnimation(0F, 0F, 0F,
-				mlp.bottomMargin + moveLength);
+		Animation animation = new TranslateAnimation(0F, 0F, 0F, mlp.bottomMargin + moveLength);
 		animation.setDuration(durationMillis);
 		animation.setInterpolator(new OvershootInterpolator());
 		animation.setDuration(durationMillis);
@@ -353,15 +322,12 @@ public class AnimUtils {
 	}
 
 	// 图标的动画(入动画左入)
-	public static void startAnimationsInLeft(ViewGroup viewgroup,
-			int durationMillis) {
+	public static void startAnimationsInLeft(ViewGroup viewgroup, int durationMillis) {
 		viewgroup.setVisibility(0);
 		viewgroup.setClickable(true);
 		viewgroup.setFocusable(true);
-		MarginLayoutParams mlp = (MarginLayoutParams) viewgroup
-				.getLayoutParams();
-		Animation animation = new TranslateAnimation(mlp.leftMargin - 500, 0F,
-				0F, 0F);
+		MarginLayoutParams mlp = (MarginLayoutParams) viewgroup.getLayoutParams();
+		Animation animation = new TranslateAnimation(mlp.leftMargin - 500, 0F, 0F, 0F);
 		animation.setFillAfter(true);
 		animation.setDuration(durationMillis);
 		// animation.setInterpolator(new OvershootInterpolator(2F));// 动画的效果
@@ -370,15 +336,12 @@ public class AnimUtils {
 	}
 
 	// 图标的动画(入动画下入)
-	public static void startAnimationsInBottom(ViewGroup viewgroup,
-			int durationMillis, int startOffset) {
+	public static void startAnimationsInBottom(ViewGroup viewgroup, int durationMillis, int startOffset) {
 		viewgroup.setVisibility(0);
 		viewgroup.setClickable(true);
 		viewgroup.setFocusable(true);
-		MarginLayoutParams mlp = (MarginLayoutParams) viewgroup
-				.getLayoutParams();
-		Animation animation = new TranslateAnimation(0f, 0F,
-				mlp.bottomMargin + 800, 0F);
+		MarginLayoutParams mlp = (MarginLayoutParams) viewgroup.getLayoutParams();
+		Animation animation = new TranslateAnimation(0f, 0F, mlp.bottomMargin + 800, 0F);
 		animation.setFillAfter(true);
 		animation.setDuration(durationMillis);
 		animation.setStartOffset(startOffset);
@@ -388,12 +351,9 @@ public class AnimUtils {
 	}
 
 	// 图标的动画(出动画左出)
-	public static void startAnimationsOutLeft(final ViewGroup viewgroup,
-			int durationMillis) {
-		MarginLayoutParams mlp = (MarginLayoutParams) viewgroup
-				.getLayoutParams();
-		Animation animation = new TranslateAnimation(0F, mlp.leftMargin - 500,
-				0F, 0F);
+	public static void startAnimationsOutLeft(final ViewGroup viewgroup, int durationMillis) {
+		MarginLayoutParams mlp = (MarginLayoutParams) viewgroup.getLayoutParams();
+		Animation animation = new TranslateAnimation(0F, mlp.leftMargin - 500, 0F, 0F);
 		animation.setFillAfter(false);
 		animation.setDuration(durationMillis);
 		animation.setAnimationListener(new Animation.AnimationListener() {
@@ -420,25 +380,17 @@ public class AnimUtils {
 
 	/**
 	 * /** 图标的动画(出动画下出)
-	 * 
 	 * @param viewgroup
-	 * @param durationMillis
-	 *            时间
+	 * @param durationMillis 时间
 	 * @param startOffset
-	 * @param moveLength
-	 *            位移长度
-	 * @param hasGone
-	 *            是否隐藏
+	 * @param moveLength 位移长度
+	 * @param hasGone 是否隐藏
 	 */
-	public static void startAnimationsOutBttom(final ViewGroup viewgroup,
-			int durationMillis, int startOffset, final int moveLength,
-			final boolean hasGone) {
-		MarginLayoutParams mlp = (MarginLayoutParams) viewgroup
-				.getLayoutParams();
-		Animation animation = new TranslateAnimation(0F, 0f, 0F,
-				mlp.bottomMargin + moveLength);
-		Log.i("moveLength", "mlp.bottomMargin:" + mlp.bottomMargin
-				+ "    moveLength:" + moveLength);
+	public static void startAnimationsOutBttom(final ViewGroup viewgroup, int durationMillis, int startOffset,
+			final int moveLength, final boolean hasGone) {
+		MarginLayoutParams mlp = (MarginLayoutParams) viewgroup.getLayoutParams();
+		Animation animation = new TranslateAnimation(0F, 0f, 0F, mlp.bottomMargin + moveLength);
+		Log.i("moveLength", "mlp.bottomMargin:" + mlp.bottomMargin + "    moveLength:" + moveLength);
 		final int left = mlp.leftMargin;
 		final int right = mlp.rightMargin;
 		final int bottom = mlp.bottomMargin;
@@ -465,19 +417,16 @@ public class AnimUtils {
 				if (hasGone) {
 					viewgroup.setVisibility(View.GONE);
 				} else {
-					viewgroup.layout(left, top + moveLength, right, bottom
-							+ moveLength);
+					viewgroup.layout(left, top + moveLength, right, bottom + moveLength);
 				}
 			}
 		});
 		viewgroup.startAnimation(animation);
 	}
 
-	public static void startAnimationsOut(final View view, int durationMillis,
-			final int moveLength) {
+	public static void startAnimationsOut(final View view, int durationMillis, final int moveLength) {
 		MarginLayoutParams mlp = (MarginLayoutParams) view.getLayoutParams();
-		Animation animation = new TranslateAnimation(0F, 0F, 0F,
-				mlp.bottomMargin + moveLength);
+		Animation animation = new TranslateAnimation(0F, 0F, 0F, mlp.bottomMargin + moveLength);
 		final int right = view.getRight();
 		final int left = view.getLeft();
 		final int top = view.getTop();
@@ -502,10 +451,8 @@ public class AnimUtils {
 	}
 
 	// 按钮点击效果
-	public static void btnShake(final ViewGroup btn, int durationMillis,
-			final ProgressDialog dialog) {
-		Animation animation = new ScaleAnimation(1F, 0.8F, 1F, 0.8F, 1, 0.5F,
-				1, 0.5F);
+	public static void btnShake(final ViewGroup btn, int durationMillis, final ProgressDialog dialog) {
+		Animation animation = new ScaleAnimation(1F, 0.8F, 1F, 0.8F, 1, 0.5F, 1, 0.5F);
 		animation.setInterpolator(new OvershootInterpolator(2F));
 		animation.setDuration(durationMillis);
 		animation.setAnimationListener(new AnimationListener() {

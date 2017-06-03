@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 
 /**
  * 计费点
- * 
  * @author Administrator
  */
 public class PayPoint implements java.io.Serializable {

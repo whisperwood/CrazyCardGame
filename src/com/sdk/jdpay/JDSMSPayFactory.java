@@ -11,7 +11,6 @@ import com.sdk.util.vo.PayPoint;
 
 /**
  * 移动ＭＭ弱联网支付
- * 
  * @author yinhb 2013-12-9 下午2:00:41
  */
 public class JDSMSPayFactory extends ISDKFactory {
@@ -24,10 +23,8 @@ public class JDSMSPayFactory extends ISDKFactory {
 
 	/**
 	 * 支付
-	 * 
 	 * @Title: goPay
-	 * @param payPoint
-	 *            具体的充值计费点
+	 * @param payPoint 具体的充值计费点
 	 * @return void
 	 * @throws
 	 */
@@ -55,8 +52,7 @@ public class JDSMSPayFactory extends ISDKFactory {
 						public void run() {
 							MMSMSPayUtil.mListener.setPayTo(PaySite.OFF_LINE);
 							MMSMSPayUtil.mListener.setPayPoint(point);
-							MMSMSPayUtil.purchase.smsOrder(
-									Database.currentActivity, point.getValue(),
+							MMSMSPayUtil.purchase.smsOrder(Database.currentActivity, point.getValue(),
 									MMSMSPayUtil.mListener);
 						}
 					});

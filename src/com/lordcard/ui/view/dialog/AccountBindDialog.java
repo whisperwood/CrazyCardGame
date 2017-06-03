@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.lordcard.common.exception.CrashApplication;
 import com.lordcard.common.util.ActivityUtils;
 import com.lordcard.common.util.DialogUtils;
@@ -36,7 +35,6 @@ import com.lordcard.ui.LoginActivity;
 
 /**
  * 账号绑定对话框
- * 
  * @ClassName: AccountBindDialog
  * @Description: TODO
  * @author zhenggang
@@ -93,7 +91,6 @@ public class AccountBindDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	private void layout(final Context context) {
@@ -116,8 +113,7 @@ public class AccountBindDialog extends Dialog implements OnClickListener {
 				if (!hasFocus) {// 失去焦点
 					String result = relaAccountEdt.getText().toString();
 					newAccountOkImg.setVisibility(View.VISIBLE);
-					if (TextUtils.isEmpty(result) || result.length() < 6
-							|| result.length() > 8) {
+					if (TextUtils.isEmpty(result) || result.length() < 6 || result.length() > 8) {
 						// 账号为空 || 账号长度<6 || 账号长度>8
 						newAccountOkImg.setImageResource(R.drawable.no);
 					} else {
@@ -139,8 +135,7 @@ public class AccountBindDialog extends Dialog implements OnClickListener {
 				if (!hasFocus) {// 失去焦点
 					String result = newPasswordEdt.getText().toString();
 					newPasswordOkImg.setVisibility(View.VISIBLE);
-					if (TextUtils.isEmpty(result) || result.length() < 6
-							|| result.length() > 12) {
+					if (TextUtils.isEmpty(result) || result.length() < 6 || result.length() > 12) {
 						// 密码1为空 || 密码1长度<4 || 密码1长度>12
 						newPasswordOkImg.setImageResource(R.drawable.no);
 					} else {
@@ -160,10 +155,8 @@ public class AccountBindDialog extends Dialog implements OnClickListener {
 					String result1 = newPasswordEdt.getText().toString();
 					String result2 = checkPasswordEdt.getText().toString();
 					checkPasswordOkImg.setVisibility(View.VISIBLE);
-					if (TextUtils.isEmpty(result1)
-							|| TextUtils.isEmpty(result2)
-							|| result2.length() < 6 || result2.length() > 12
-							|| !result1.equals(result2)) {
+					if (TextUtils.isEmpty(result1) || TextUtils.isEmpty(result2) || result2.length() < 6
+							|| result2.length() > 12 || !result1.equals(result2)) {
 						// 密码1为空 || 密码2为空 || 密码2长度<4 || 密码2长度>12||密码2长度!=密码1
 						checkPasswordOkImg.setImageResource(R.drawable.no);
 					} else {
@@ -197,155 +190,129 @@ public class AccountBindDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.ok_btn:
-			if (View.VISIBLE == mLinearLayout2.getVisibility()) {
-				final String relaAccount = relaAccountEdt.getText().toString();
-				final String newPassword = newPasswordEdt.getText().toString();
-				String checkPassword = checkPasswordEdt.getText().toString();
-				if (TextUtils.isEmpty(relaAccount)
-						|| TextUtils.isEmpty(newPassword)
-						|| TextUtils.isEmpty(checkPassword)) {
-					DialogUtils.toastTip("绑定账号或密码不能为空");
-					return;
-				}
-				GameUser cacheUser = (GameUser) GameCache
-						.getObj(CacheKey.GAME_USER);
-				String accTemp = cacheUser.getAccount();
-				if (!TextUtils.isEmpty(cacheUser.getRelaAccount())) {
-					accTemp = cacheUser.getRelaAccount();
-				}
-				// 本地的账号密码
-				final String oldAccPwd = ActivityUtils.getUserPwd(accTemp)
-						.replaceAll("\\|", "\\\\\\|");
-				final GameUser gameUser = new GameUser();
-				gameUser.setAccount(cacheUser.getAccount());
-				if (!TextUtils.isEmpty(newPassword)) {
-					if (newPassword.length() < 6 || newPassword.length() > 12) {
-						DialogUtils.toastTip("密码长度为6-12位");
+			case R.id.ok_btn:
+				if (View.VISIBLE == mLinearLayout2.getVisibility()) {
+					final String relaAccount = relaAccountEdt.getText().toString();
+					final String newPassword = newPasswordEdt.getText().toString();
+					String checkPassword = checkPasswordEdt.getText().toString();
+					if (TextUtils.isEmpty(relaAccount) || TextUtils.isEmpty(newPassword)
+							|| TextUtils.isEmpty(checkPassword)) {
+						DialogUtils.toastTip("绑定账号或密码不能为空");
 						return;
 					}
-					if (newPassword.equals(checkPassword)) {
-						gameUser.setUserPwd(EncodeUtils.MD5(checkPassword));
-					} else {
-						DialogUtils.toastTip("两次输入的密码不一致");
-						return;
+					GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+					String accTemp = cacheUser.getAccount();
+					if (!TextUtils.isEmpty(cacheUser.getRelaAccount())) {
+						accTemp = cacheUser.getRelaAccount();
 					}
-				}
-				if (!TextUtils.isEmpty(relaAccount)) {
-					if (relaAccount.length() < 6 || relaAccount.length() > 8) {
-						DialogUtils.toastTip("账号长度为6-8位");
-						return;
-					}
-					gameUser.setRelaAccount(relaAccount);
-				}
-				// 提交数据到服务器
-				new Thread() {
-					@Override
-					public void run() {
-						String result = HttpRequest.updateCustomer(gameUser);
-						JsonResult jsonResult = JsonHelper.fromJson(result,
-								JsonResult.class);
-						if (JsonResult.SUCCESS.equals(jsonResult
-								.getMethodCode())) {
-							String gameUserJson = jsonResult.getMethodMessage();
-							Log.i("gameUserJson", "绑定账号gameUserJson: "
-									+ gameUserJson);
-							GameUser gameUser1 = JsonHelper.fromJson(
-									gameUserJson, GameUser.class);
-							if (!TextUtils.isEmpty(gameUser1.getMd5Pwd())) {
-								GameUser cacheUser = (GameUser) GameCache
-										.getObj(CacheKey.GAME_USER);
-								String account = gameUser1.getAccount();
-								if (!TextUtils.isEmpty(gameUser1
-										.getRelaAccount())) {
-									account = gameUser1.getRelaAccount();
-									cacheUser.setRelaAccount(account);
-									GameCache.putObj(CacheKey.GAME_USER,
-											cacheUser);
-								}
-								String newAccPwd = account + "\\|"
-										+ gameUser1.getMd5Pwd();
-								String newLocalUsePwd = ActivityUtils
-										.getAccount().replaceAll(oldAccPwd,
-												newAccPwd);
-								SharedPreferences preferences = CrashApplication
-										.getInstance().getSharedPreferences(
-												Constant.LOCAL_ACCOUNTS,
-												Context.MODE_PRIVATE);
-								Editor editor = preferences.edit();
-								editor.putString("acount", newLocalUsePwd);
-								editor.commit();
-								// String[]
-								// accounts=ActivityUtils.getAccount().split("/");
-								// if(null != accounts){
-								// String[] acc=accounts[0].split("\\|");
-								// String nowAccount=(null
-								// ==Database.USER.getRelaAccount() ||
-								// "".equals(Database.USER.getRelaAccount()) ) ?
-								// Database.USER.getAccount() :
-								// Database.USER.getRelaAccount();
-								// if(acc[0].equals(nowAccount)){//如果是本地注册的账号，直接替换,否则直接删除
-								// String
-								// localAccount=ActivityUtils.getAccount().replaceAll(account+"\\|"+gameUser1.getMd5Pwd(),
-								// acc[0]);
-								// SharedPreferences preferences =
-								// CrashApplication.getInstance().getSharedPreferences(Constant.LOCAL_ACCOUNTS,
-								// Context.MODE_PRIVATE);
-								// Editor editor = preferences.edit();
-								// editor.putString("acount",localAccount);
-								// editor.commit();
-								// }else{
-								// ActivityUtils.removeAccount(Database.USER.getRelaAccount());
-								// ActivityUtils.saveAccount(account,
-								// gameUser1.getMd5Pwd());
-								// }
-								// }
-							}
-							// Database.USER.setRelaAccount(relaAccount);
-							Database.currentActivity
-									.runOnUiThread(new Runnable() {
-										@Override
-										public void run() {
-											GameUser cacheUser = (GameUser) GameCache
-													.getObj(CacheKey.GAME_USER);
-											DialogUtils.toastTip("修改成功");
-											gameIdTv.setText(cacheUser
-													.getAccount());
-											gameAccountTv1.setText(cacheUser
-													.getRelaAccount());
-											titleTv.setText("绑定成功");
-											contentTv
-													.setText(R.string.account_bind_ok_text);
-											gameAccountTv1
-													.setText(relaAccountEdt
-															.getText()
-															.toString());
-											gameIdTv.setText(cacheUser
-													.getAccount());
-											mLinearLayout1
-													.setVisibility(View.VISIBLE);
-											mLinearLayout2
-													.setVisibility(View.INVISIBLE);
-											ActivityUtils.BindAccount();// 保存在SharedPreferences中，作为取消自动弹出绑定对话框的提示
-										}
-									});
-							if (handler != null) {
-								handler.sendEmptyMessage(LoginActivity.HANDLER_WHAT_LOGIN_UPDATE_USER); // 通知页面更新展示账号
-							}
-						} else {
-							DialogUtils.toastTip(jsonResult.getMethodMessage());
+					// 本地的账号密码
+					final String oldAccPwd = ActivityUtils.getUserPwd(accTemp).replaceAll("\\|", "\\\\\\|");
+					final GameUser gameUser = new GameUser();
+					gameUser.setAccount(cacheUser.getAccount());
+					if (!TextUtils.isEmpty(newPassword)) {
+						if (newPassword.length() < 6 || newPassword.length() > 12) {
+							DialogUtils.toastTip("密码长度为6-12位");
+							return;
 						}
-					};
-				}.start();
-			} else {
+						if (newPassword.equals(checkPassword)) {
+							gameUser.setUserPwd(EncodeUtils.MD5(checkPassword));
+						} else {
+							DialogUtils.toastTip("两次输入的密码不一致");
+							return;
+						}
+					}
+					if (!TextUtils.isEmpty(relaAccount)) {
+						if (relaAccount.length() < 6 || relaAccount.length() > 8) {
+							DialogUtils.toastTip("账号长度为6-8位");
+							return;
+						}
+						gameUser.setRelaAccount(relaAccount);
+					}
+					// 提交数据到服务器
+					new Thread() {
+						@Override
+						public void run() {
+							String result = HttpRequest.updateCustomer(gameUser);
+							JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
+							if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) {
+								String gameUserJson = jsonResult.getMethodMessage();
+								Log.i("gameUserJson", "绑定账号gameUserJson: " + gameUserJson);
+								GameUser gameUser1 = JsonHelper.fromJson(gameUserJson, GameUser.class);
+								if (!TextUtils.isEmpty(gameUser1.getMd5Pwd())) {
+									GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+									String account = gameUser1.getAccount();
+									if (!TextUtils.isEmpty(gameUser1.getRelaAccount())) {
+										account = gameUser1.getRelaAccount();
+										cacheUser.setRelaAccount(account);
+										GameCache.putObj(CacheKey.GAME_USER, cacheUser);
+									}
+									String newAccPwd = account + "\\|" + gameUser1.getMd5Pwd();
+									String newLocalUsePwd = ActivityUtils.getAccount().replaceAll(oldAccPwd, newAccPwd);
+									SharedPreferences preferences = CrashApplication.getInstance()
+											.getSharedPreferences(Constant.LOCAL_ACCOUNTS, Context.MODE_PRIVATE);
+									Editor editor = preferences.edit();
+									editor.putString("acount", newLocalUsePwd);
+									editor.commit();
+									// String[]
+									// accounts=ActivityUtils.getAccount().split("/");
+									// if(null != accounts){
+									// String[] acc=accounts[0].split("\\|");
+									// String nowAccount=(null
+									// ==Database.USER.getRelaAccount() ||
+									// "".equals(Database.USER.getRelaAccount()) ) ?
+									// Database.USER.getAccount() :
+									// Database.USER.getRelaAccount();
+									// if(acc[0].equals(nowAccount)){//如果是本地注册的账号，直接替换,否则直接删除
+									// String
+									// localAccount=ActivityUtils.getAccount().replaceAll(account+"\\|"+gameUser1.getMd5Pwd(),
+									// acc[0]);
+									// SharedPreferences preferences =
+									// CrashApplication.getInstance().getSharedPreferences(Constant.LOCAL_ACCOUNTS,
+									// Context.MODE_PRIVATE);
+									// Editor editor = preferences.edit();
+									// editor.putString("acount",localAccount);
+									// editor.commit();
+									// }else{
+									// ActivityUtils.removeAccount(Database.USER.getRelaAccount());
+									// ActivityUtils.saveAccount(account,
+									// gameUser1.getMd5Pwd());
+									// }
+									// }
+								}
+								// Database.USER.setRelaAccount(relaAccount);
+								Database.currentActivity.runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+										DialogUtils.toastTip("修改成功");
+										gameIdTv.setText(cacheUser.getAccount());
+										gameAccountTv1.setText(cacheUser.getRelaAccount());
+										titleTv.setText("绑定成功");
+										contentTv.setText(R.string.account_bind_ok_text);
+										gameAccountTv1.setText(relaAccountEdt.getText().toString());
+										gameIdTv.setText(cacheUser.getAccount());
+										mLinearLayout1.setVisibility(View.VISIBLE);
+										mLinearLayout2.setVisibility(View.INVISIBLE);
+										ActivityUtils.BindAccount();// 保存在SharedPreferences中，作为取消自动弹出绑定对话框的提示
+									}
+								});
+								if (handler != null) {
+									handler.sendEmptyMessage(LoginActivity.HANDLER_WHAT_LOGIN_UPDATE_USER); // 通知页面更新展示账号
+								}
+							} else {
+								DialogUtils.toastTip(jsonResult.getMethodMessage());
+							}
+						};
+					}.start();
+				} else {
+					dismiss();
+				}
+				break;
+			case R.id.dialog_close_btn:
 				dismiss();
-			}
-			break;
-		case R.id.dialog_close_btn:
-			dismiss();
-			break;
-		default:
-			break;
+				break;
+			default:
+				break;
 		}
 	}
 

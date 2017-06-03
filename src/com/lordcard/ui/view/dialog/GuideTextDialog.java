@@ -39,8 +39,7 @@ public class GuideTextDialog extends Dialog implements OnClickListener {
 	private ListView guidelListView;
 	private List<GoodsDetails> detailtextList;
 
-	protected GuideTextDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected GuideTextDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
@@ -56,8 +55,7 @@ public class GuideTextDialog extends Dialog implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.goods_guide_text);
 		mainLayout = (LinearLayout) findViewById(R.id.guide_text_layout);
-		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(
-				R.drawable.photo_bg, false));
+		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.photo_bg, false));
 		layout(context);
 	}
 
@@ -66,7 +64,6 @@ public class GuideTextDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	private void layout(final Context context) {
@@ -82,24 +79,18 @@ public class GuideTextDialog extends Dialog implements OnClickListener {
 				Map<String, String> paramMap = new HashMap<String, String>();
 				paramMap.put("detailId", detailId);
 				try {
-					String result = HttpUtils.post(HttpURL.GUIDE_DETAIL_URL,
-							paramMap, true);
-					Database.GUIDE_DETAIL_LIST = JsonHelper.fromJson(result,
-							new TypeToken<ContentDetail>() {
-							});
-					detailtextList = JsonHelper.fromJson(
-							Database.GUIDE_DETAIL_LIST.getDescription(),
+					String result = HttpUtils.post(HttpURL.GUIDE_DETAIL_URL, paramMap, true);
+					Database.GUIDE_DETAIL_LIST = JsonHelper.fromJson(result, new TypeToken<ContentDetail>() {
+					});
+					detailtextList = JsonHelper.fromJson(Database.GUIDE_DETAIL_LIST.getDescription(),
 							new TypeToken<List<GoodsDetails>>() {
 							});
 					Database.currentActivity.runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							toptView.setText(Database.GUIDE_DETAIL_LIST
-									.getTitle());
-							if (detailtextList != null
-									&& detailtextList.size() > 0) {
-								StoveGuideAdapter guideAdapter = new StoveGuideAdapter(
-										context, detailtextList);
+							toptView.setText(Database.GUIDE_DETAIL_LIST.getTitle());
+							if (detailtextList != null && detailtextList.size() > 0) {
+								StoveGuideAdapter guideAdapter = new StoveGuideAdapter(context, detailtextList);
 								guidelListView.setAdapter(guideAdapter);
 							}
 						}
@@ -149,13 +140,13 @@ public class GuideTextDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.envalue_back:
-			GuideDialog guideDialog = new GuideDialog(context);
-			guideDialog.show();
-			dismiss();
-			break;
-		default:
-			break;
+			case R.id.envalue_back:
+				GuideDialog guideDialog = new GuideDialog(context);
+				guideDialog.show();
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -207,20 +198,15 @@ public class GuideTextDialog extends Dialog implements OnClickListener {
 		}
 
 		@Override
-		public View getView(final int position, View convertView,
-				ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
 			if (convertView == null) {
 				holder = new ViewHolder();
-				convertView = mInflater
-						.inflate(R.layout.stove_guide_item, null);
-				holder.leftBtn = (TextView) convertView
-						.findViewById(R.id.guide_left_btn);
+				convertView = mInflater.inflate(R.layout.stove_guide_item, null);
+				holder.leftBtn = (TextView) convertView.findViewById(R.id.guide_left_btn);
 				holder.leftBtn.setVisibility(View.GONE);
-				holder.guideItem = (TextView) convertView
-						.findViewById(R.id.guide_item_data);
-				holder.guideItem.setText("    "
-						+ datalist.get(position).getText());
+				holder.guideItem = (TextView) convertView.findViewById(R.id.guide_item_data);
+				holder.guideItem.setText("    " + datalist.get(position).getText());
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();

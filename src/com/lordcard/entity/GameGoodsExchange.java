@@ -41,9 +41,8 @@ public class GameGoodsExchange {
 	 * @param ordernum
 	 * @param description
 	 */
-	public GameGoodsExchange(String id, Integer isAvailable, String fromName,
-			String fromTypeId, Integer fromCount, Integer type, String typeId,
-			String typeName, Integer count, Integer ordernum, String description) {
+	public GameGoodsExchange(String id, Integer isAvailable, String fromName, String fromTypeId, Integer fromCount,
+			Integer type, String typeId, String typeName, Integer count, Integer ordernum, String description) {
 		super();
 		this.id = id;
 		this.isAvailable = isAvailable;
@@ -66,8 +65,7 @@ public class GameGoodsExchange {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -81,8 +79,7 @@ public class GameGoodsExchange {
 	}
 
 	/**
-	 * @param isAvailable
-	 *            the isAvailable to set
+	 * @param isAvailable the isAvailable to set
 	 */
 	public void setIsAvailable(Integer isAvailable) {
 		this.isAvailable = isAvailable;
@@ -96,8 +93,7 @@ public class GameGoodsExchange {
 	}
 
 	/**
-	 * @param fromName
-	 *            the fromName to set
+	 * @param fromName the fromName to set
 	 */
 	public void setFromName(String fromName) {
 		this.fromName = fromName;
@@ -111,8 +107,7 @@ public class GameGoodsExchange {
 	}
 
 	/**
-	 * @param fromTypeId
-	 *            the fromTypeId to set
+	 * @param fromTypeId the fromTypeId to set
 	 */
 	public void setFromTypeId(String fromTypeId) {
 		this.fromTypeId = fromTypeId;
@@ -126,8 +121,7 @@ public class GameGoodsExchange {
 	}
 
 	/**
-	 * @param fromCount
-	 *            the fromCount to set
+	 * @param fromCount the fromCount to set
 	 */
 	public void setFromCount(Integer fromCount) {
 		this.fromCount = fromCount;
@@ -141,8 +135,7 @@ public class GameGoodsExchange {
 	}
 
 	/**
-	 * @param type
-	 *            the type to set
+	 * @param type the type to set
 	 */
 	public void setType(Integer type) {
 		this.type = type;
@@ -156,8 +149,7 @@ public class GameGoodsExchange {
 	}
 
 	/**
-	 * @param typeId
-	 *            the typeId to set
+	 * @param typeId the typeId to set
 	 */
 	public void setTypeId(String typeId) {
 		this.typeId = typeId;
@@ -171,8 +163,7 @@ public class GameGoodsExchange {
 	}
 
 	/**
-	 * @param typeName
-	 *            the typeName to set
+	 * @param typeName the typeName to set
 	 */
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
@@ -186,8 +177,7 @@ public class GameGoodsExchange {
 	}
 
 	/**
-	 * @param count
-	 *            the count to set
+	 * @param count the count to set
 	 */
 	public void setCount(Integer count) {
 		this.count = count;
@@ -201,8 +191,7 @@ public class GameGoodsExchange {
 	}
 
 	/**
-	 * @param ordernum
-	 *            the ordernum to set
+	 * @param ordernum the ordernum to set
 	 */
 	public void setOrdernum(Integer ordernum) {
 		this.ordernum = ordernum;
@@ -216,8 +205,7 @@ public class GameGoodsExchange {
 	}
 
 	/**
-	 * @param description
-	 *            the description to set
+	 * @param description the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;

@@ -2,7 +2,6 @@ package com.lordcard.common.task.base;
 
 /**
  * 任务状态反馈 common.task.Feedback
- * 
  * @author yinhb <br/>
  *         create at 2013 2013-2-5 下午3:29:16
  */

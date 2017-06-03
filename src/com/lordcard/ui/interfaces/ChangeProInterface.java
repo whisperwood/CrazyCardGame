@@ -12,7 +12,6 @@ public interface ChangeProInterface {
 
 	/**
 	 * 设置比赛排名
-	 * 
 	 * @param gstList
 	 */
 	void setRank(List<GameScoreTradeRank> gstList);

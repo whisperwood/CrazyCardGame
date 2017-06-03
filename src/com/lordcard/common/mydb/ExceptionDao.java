@@ -29,7 +29,6 @@ public class ExceptionDao {
 
 	/**
 	 * 取所有的加密手机号
-	 * 
 	 * @param table
 	 * @param columns
 	 * @return
@@ -52,8 +51,7 @@ public class ExceptionDao {
 						error.setId(c.getInt(c.getColumnIndex("id")));
 						error.setCause(c.getString(c.getColumnIndex("cause")));
 						error.setUrl(c.getString(c.getColumnIndex("url")));
-						error.setNetinfo(c.getString(c
-								.getColumnIndex("netinfo")));
+						error.setNetinfo(c.getString(c.getColumnIndex("netinfo")));
 						error.setTime(c.getString(c.getColumnIndex("time")));
 						error.setType(c.getString(c.getColumnIndex("type")));
 						error.setApk(c.getString(c.getColumnIndex("apk")));
@@ -73,7 +71,6 @@ public class ExceptionDao {
 
 	/**
 	 * 增加
-	 * 
 	 * @param people
 	 */
 	public static void add(NetException exception) {

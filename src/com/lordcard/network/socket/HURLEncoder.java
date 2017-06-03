@@ -101,14 +101,11 @@ public class HURLEncoder {
 	private static Cipher decryptCipher = null;
 
 	/**
-	 * 将byte数组转换为表示16进制值的字符串， 如：byte[]{8,18}转换为：0813， 和public static byte[]
-	 * hexStr2ByteArr(String strIn) 互为可逆的转换过程
-	 * 
-	 * @param arrB
-	 *            需要转换的byte数组
+	 * 将byte数组转换为表示16进制值的字符串， 如：byte[]{8,18}转换为：0813， 和public static byte[] hexStr2ByteArr(String
+	 * strIn) 互为可逆的转换过程
+	 * @param arrB 需要转换的byte数组
 	 * @return 转换后的字符串
-	 * @throws Exception
-	 *             本方法不处理任何异常，所有异常全部抛出
+	 * @throws Exception 本方法不处理任何异常，所有异常全部抛出
 	 */
 	public static String byteArr2HexStr(byte[] arrB) throws Exception {
 		int iLen = arrB.length;
@@ -130,14 +127,10 @@ public class HURLEncoder {
 	}
 
 	/**
-	 * 将表示16进制值的字符串转换为byte数组， 和public static String byteArr2HexStr(byte[] arrB)
-	 * 互为可逆的转换过程
-	 * 
-	 * @param strIn
-	 *            需要转换的字符串
+	 * 将表示16进制值的字符串转换为byte数组， 和public static String byteArr2HexStr(byte[] arrB) 互为可逆的转换过程
+	 * @param strIn 需要转换的字符串
 	 * @return 转换后的byte数组
-	 * @throws Exception
-	 *             本方法不处理任何异常，所有异常全部抛出
+	 * @throws Exception 本方法不处理任何异常，所有异常全部抛出
 	 * @author <a href="mailto:leo841001@163.com">LiGuoQing</a>
 	 */
 	public static byte[] hexStr2ByteArr(String strIn) throws Exception {
@@ -154,9 +147,7 @@ public class HURLEncoder {
 
 	/**
 	 * 指定密钥构造方法
-	 * 
-	 * @param strKey
-	 *            指定的密钥
+	 * @param strKey 指定的密钥
 	 * @throws Exception
 	 */
 	static String strKey = "zjlinegame";
@@ -172,9 +163,7 @@ public class HURLEncoder {
 
 	/**
 	 * 加密字节数组
-	 * 
-	 * @param arrB
-	 *            需加密的字节数组
+	 * @param arrB 需加密的字节数组
 	 * @return 加密后的字节数组
 	 * @throws Exception
 	 */
@@ -194,9 +183,7 @@ public class HURLEncoder {
 
 	/**
 	 * 加密字符串
-	 * 
-	 * @param strIn
-	 *            需加密的字符串
+	 * @param strIn 需加密的字符串
 	 * @return 加密后的字符串
 	 * @throws Exception
 	 */
@@ -222,9 +209,7 @@ public class HURLEncoder {
 
 	/**
 	 * 解密字节数组
-	 * 
-	 * @param arrB
-	 *            需解密的字节数组
+	 * @param arrB 需解密的字节数组
 	 * @return 解密后的字节数组
 	 * @throws Exception
 	 */
@@ -234,9 +219,7 @@ public class HURLEncoder {
 
 	/**
 	 * 解密字符串
-	 * 
-	 * @param strIn
-	 *            需解密的字符串
+	 * @param strIn 需解密的字符串
 	 * @return 解密后的字符串
 	 * @throws Exception
 	 */
@@ -255,9 +238,7 @@ public class HURLEncoder {
 
 	/**
 	 * 从指定字符串生成密钥，密钥所需的字节数组长度为8位 不足8位时后面补0，超出8位只取前8位
-	 * 
-	 * @param arrBTmp
-	 *            构成该字符串的字节数组
+	 * @param arrBTmp 构成该字符串的字节数组
 	 * @return 生成的密钥
 	 * @throws java.lang.Exception
 	 */

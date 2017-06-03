@@ -28,8 +28,7 @@ public class GameContent {
 	 * @param ordernum
 	 * @param description
 	 */
-	public GameContent(String id, String title, Integer type, Integer display,
-			Integer ordernum, String description) {
+	public GameContent(String id, String title, Integer type, Integer display, Integer ordernum, String description) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -47,8 +46,7 @@ public class GameContent {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -62,8 +60,7 @@ public class GameContent {
 	}
 
 	/**
-	 * @param title
-	 *            the title to set
+	 * @param title the title to set
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -77,8 +74,7 @@ public class GameContent {
 	}
 
 	/**
-	 * @param type
-	 *            the type to set
+	 * @param type the type to set
 	 */
 	public void setType(Integer type) {
 		this.type = type;
@@ -92,8 +88,7 @@ public class GameContent {
 	}
 
 	/**
-	 * @param display
-	 *            the display to set
+	 * @param display the display to set
 	 */
 	public void setDisplay(Integer display) {
 		this.display = display;
@@ -107,8 +102,7 @@ public class GameContent {
 	}
 
 	/**
-	 * @param ordernum
-	 *            the ordernum to set
+	 * @param ordernum the ordernum to set
 	 */
 	public void setOrdernum(Integer ordernum) {
 		this.ordernum = ordernum;
@@ -122,8 +116,7 @@ public class GameContent {
 	}
 
 	/**
-	 * @param description
-	 *            the description to set
+	 * @param description the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;

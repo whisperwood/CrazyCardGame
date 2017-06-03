@@ -32,19 +32,15 @@ public class HuaJianSmsPay {
 				paramMap.put("payFromType", paySiteTag); // 充值的标识位
 				paramMap.put("consumeCode", cmdArr[1]); // 业务代码
 				// 后台生成订单
-				String resultJson = HttpRequest.addPayOrder(
-						HuaJianConfig.LTPAY_URL, paramMap);
+				String resultJson = HttpRequest.addPayOrder(HuaJianConfig.LTPAY_URL, paramMap);
 				if (TextUtils.isEmpty(resultJson)) {
 					return;
 				}
-				JsonResult result = JsonHelper.fromJson(resultJson,
-						JsonResult.class);
+				JsonResult result = JsonHelper.fromJson(resultJson, JsonResult.class);
 				if (JsonResult.SUCCESS.equals(result.getMethodCode())) {
-					SmsOrder order = JsonHelper.fromJson(
-							result.getMethodMessage(), SmsOrder.class);
+					SmsOrder order = JsonHelper.fromJson(result.getMethodMessage(), SmsOrder.class);
 					String smsText = cmdArr[0] + order.getOrderNo();
-					SmsUtil.goPay(point.getSmsCall(), smsText, order,
-							paySiteTag);
+					SmsUtil.goPay(point.getSmsCall(), smsText, order, paySiteTag);
 				} else {
 					DialogUtils.mesTip(result.getMethodMessage(), true);
 				}

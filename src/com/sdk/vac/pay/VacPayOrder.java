@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 
 /**
  * 联通沃商店支付
- * 
  * @author Administrator
  */
 public class VacPayOrder {

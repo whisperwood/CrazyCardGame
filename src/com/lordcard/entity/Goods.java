@@ -33,8 +33,7 @@ public class Goods {
 	}
 
 	/**
-	 * @param typeId
-	 *            the typeId to set
+	 * @param typeId the typeId to set
 	 */
 	public void setTypeId(String typeId) {
 		this.typeId = typeId;
@@ -48,8 +47,7 @@ public class Goods {
 	}
 
 	/**
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -63,8 +61,7 @@ public class Goods {
 	}
 
 	/**
-	 * @param couponNum
-	 *            the couponNum to set
+	 * @param couponNum the couponNum to set
 	 */
 	public void setCouponNum(int couponNum) {
 		this.couponNum = couponNum;
@@ -78,8 +75,7 @@ public class Goods {
 	}
 
 	/**
-	 * @param picPath
-	 *            the picPath to set
+	 * @param picPath the picPath to set
 	 */
 	public void setPicPath(String picPath) {
 		this.picPath = picPath;

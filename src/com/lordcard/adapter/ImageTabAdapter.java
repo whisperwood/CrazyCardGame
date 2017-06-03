@@ -19,7 +19,6 @@ import android.widget.ImageView;
 
 /**
  * adapter.ImageTabAdapter
- * 
  * @author yinhb <br/>
  *         create at 2012 2012-11-6 下午3:16:15
  */
@@ -33,8 +32,8 @@ public class ImageTabAdapter extends BaseAdapter {
 	private List<Drawable> selectImageList;
 	private int selectTabId = 0;
 
-	public ImageTabAdapter(Context context, List<Drawable> imageList,
-			List<Drawable> selectImageList, int width, int height) {
+	public ImageTabAdapter(Context context, List<Drawable> imageList, List<Drawable> selectImageList, int width,
+			int height) {
 		this.context = context;
 		this.imageList = imageList;
 		this.selectImageList = selectImageList;
@@ -63,7 +62,6 @@ public class ImageTabAdapter extends BaseAdapter {
 
 	/**
 	 * 点击设置
-	 * 
 	 * @param selectedID
 	 */
 	public void setFocus(int selectedID) {
@@ -72,20 +70,17 @@ public class ImageTabAdapter extends BaseAdapter {
 			imageViews[i].setImageDrawable(imageList.get(i));
 		}
 		selectTabId = selectedID;
-		imageViews[selectedID]
-				.setImageDrawable(selectImageList.get(selectedID));
+		imageViews[selectedID].setImageDrawable(selectImageList.get(selectedID));
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (position == selectTabId) {
-			imageViews[position]
-					.setImageDrawable(selectImageList.get(position));
+			imageViews[position].setImageDrawable(selectImageList.get(position));
 		} else {
 			imageViews[position].setImageDrawable(imageList.get(position));
 		}
-		imageViews[position].setLayoutParams(new GridView.LayoutParams(width,
-				height));
+		imageViews[position].setLayoutParams(new GridView.LayoutParams(width, height));
 		imageViews[position].setBackgroundColor(Color.TRANSPARENT);
 		return imageViews[position];
 	}

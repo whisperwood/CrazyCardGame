@@ -89,8 +89,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 	private FeedBackAdapter feedBackAdapter;
 	private AudioManager audiomanage;// 声音管理器
 	private RelativeLayout layout;
-	private LinearLayout gameSetLayout, gameAccoutLayout, gameAboutLayout,
-			gameFeedBackLayout;
+	private LinearLayout gameSetLayout, gameAccoutLayout, gameAboutLayout, gameFeedBackLayout;
 
 	// private MainMenuBar mMainMenuBar;//菜单栏
 	@Override
@@ -144,15 +143,15 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch (checkedId) {
-				case R.id.man:
-					gender = "2";
-					break;
-				case R.id.woman:
-					gender = "1";
-					break;
-				case R.id.mimi:
-					gender = "0";
-					break;
+					case R.id.man:
+						gender = "2";
+						break;
+					case R.id.woman:
+						gender = "1";
+						break;
+					case R.id.mimi:
+						gender = "0";
+						break;
 				}
 			}
 		});
@@ -189,43 +188,30 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		// }
 		// });
 		// 设置初始化
-		if (PreferenceHelper.getMyPreference().getSetting()
-				.getBoolean("shoushi", true)) {
-			shoushi.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.open, true));
+		if (PreferenceHelper.getMyPreference().getSetting().getBoolean("shoushi", true)) {
+			shoushi.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.open, true));
 		} else {
-			shoushi.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.close, true));
+			shoushi.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.close, true));
 		}
-		if (PreferenceHelper.getMyPreference().getSetting()
-				.getBoolean("zhendong", true)) {
-			zhendong.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.open, true));
+		if (PreferenceHelper.getMyPreference().getSetting().getBoolean("zhendong", true)) {
+			zhendong.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.open, true));
 		} else {
-			zhendong.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.close, true));
+			zhendong.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.close, true));
 		}
-		if (PreferenceHelper.getMyPreference().getSetting()
-				.getBoolean("jingyin", false)) {
-			jingyin.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.open, true));
+		if (PreferenceHelper.getMyPreference().getSetting().getBoolean("jingyin", false)) {
+			jingyin.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.open, true));
 		} else {
-			jingyin.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.close, true));
+			jingyin.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.close, true));
 		}
-		if (PreferenceHelper.getMyPreference().getSetting()
-				.getBoolean("bgmusic", true)) {
-			bgmusic.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.open, true));
+		if (PreferenceHelper.getMyPreference().getSetting().getBoolean("bgmusic", true)) {
+			bgmusic.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.open, true));
 		} else {
-			bgmusic.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.close, true));
+			bgmusic.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.close, true));
 		}
 		audiomanage = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		int max = audiomanage.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		musicControl.setMax(max);
-		musicControl.setProgress(PreferenceHelper.getMyPreference()
-				.getSetting().getInt("music", 0));
+		musicControl.setProgress(PreferenceHelper.getMyPreference().getSetting().getInt("music", 0));
 		musicControl.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
@@ -236,11 +222,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			}
 
 			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress,
-					boolean fromUser) {
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				Log.i("onProgressChanged", "progress: " + progress);
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("music", progress).commit();
+				PreferenceHelper.getMyPreference().getEditor().putInt("music", progress).commit();
 				AudioPlayUtils.getInstance().SetVoice(progress);
 			}
 		});
@@ -252,62 +236,44 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		// mMainMenuBar = (MainMenuBar) findViewById(R.id.main_page_bottom_rl);
 		if (bundle != null) {
 			gameFeedBackBtn.setTextColor(Color.WHITE);
-			gameAccountBtn.setTextColor(getResources().getColor(
-					R.color.gpl_top_btn_text_color));
-			gameSetBtn.setTextColor(getResources().getColor(
-					R.color.gpl_top_btn_text_color));
-			gameFeedBackBtn.setTextColor(getResources().getColor(
-					R.color.gpl_top_btn_text_color));
-			gameAboutBtn.setTextColor(getResources().getColor(
-					R.color.gpl_top_btn_text_color));
+			gameAccountBtn.setTextColor(getResources().getColor(R.color.gpl_top_btn_text_color));
+			gameSetBtn.setTextColor(getResources().getColor(R.color.gpl_top_btn_text_color));
+			gameFeedBackBtn.setTextColor(getResources().getColor(R.color.gpl_top_btn_text_color));
+			gameAboutBtn.setTextColor(getResources().getColor(R.color.gpl_top_btn_text_color));
 			int page = bundle.getInt("page");
 			switch (page) {
-			case 0:
-				gameAccountBtn.setTextColor(Color.WHITE);
-				gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_left_select, true));
-				gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_center, true));
-				gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_center, true));
-				gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_right, true));
-				break;
-			case 1:
-				gameSetBtn.setTextColor(Color.WHITE);
-				gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_left, true));
-				gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_center_select, true));
-				gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_center, true));
-				gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_right, true));
-				break;
-			case 2:
-				gameFeedBackBtn.setTextColor(Color.WHITE);
-				gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_left, true));
-				gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_center, true));
-				gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_center_select, true));
-				gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_right, true));
-				break;
-			case 3:
-				gameAboutBtn.setTextColor(Color.WHITE);
-				gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_left, true));
-				gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_center, true));
-				gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_center, true));
-				gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gpl_top_right_select, true));
-				break;
-			default:
-				break;
+				case 0:
+					gameAccountBtn.setTextColor(Color.WHITE);
+					gameAccountBtn
+							.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_left_select, true));
+					gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center, true));
+					gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center, true));
+					gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_right, true));
+					break;
+				case 1:
+					gameSetBtn.setTextColor(Color.WHITE);
+					gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_left, true));
+					gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center_select, true));
+					gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center, true));
+					gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_right, true));
+					break;
+				case 2:
+					gameFeedBackBtn.setTextColor(Color.WHITE);
+					gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_left, true));
+					gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center, true));
+					gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center_select,
+							true));
+					gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_right, true));
+					break;
+				case 3:
+					gameAboutBtn.setTextColor(Color.WHITE);
+					gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_left, true));
+					gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center, true));
+					gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center, true));
+					gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_right_select, true));
+					break;
+				default:
+					break;
 			}
 			getPageView(page);
 			// findViewById(R.id.set_bttom).setVisibility(View.GONE);
@@ -325,23 +291,19 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		loadUserInfoTask.setFeedback(feedback);
 		loadUserInfoTask.execute();
 		taskManager.addTask(loadUserInfoTask);
-		int currentVolume = audiomanage
-				.getStreamVolume(AudioManager.STREAM_MUSIC);
+		int currentVolume = audiomanage.getStreamVolume(AudioManager.STREAM_MUSIC);
 		musicControl.setProgress(currentVolume);
-		PreferenceHelper.getMyPreference().getEditor()
-				.putInt("music", currentVolume).commit();
+		PreferenceHelper.getMyPreference().getEditor().putInt("music", currentVolume).commit();
 	}
 
 	private void setUserInfo() {
 		GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
-		if (null == gameUser || TextUtils.isEmpty(gameUser.getCreateDate())
-				|| TextUtils.isEmpty(gameUser.getAccount())
+		if (null == gameUser || TextUtils.isEmpty(gameUser.getCreateDate()) || TextUtils.isEmpty(gameUser.getAccount())
 				|| TextUtils.isEmpty(gameUser.getGender())) {
 			return;
 		}
 		// 格式化日期
-		SimpleDateFormat sdf = new SimpleDateFormat(" ",
-				Locale.SIMPLIFIED_CHINESE);
+		SimpleDateFormat sdf = new SimpleDateFormat(" ", Locale.SIMPLIFIED_CHINESE);
 		sdf.applyPattern("yyyy/MM/dd");// 设置日期显示格式
 		Date date0 = new Date();
 		long test = Long.parseLong(gameUser.getCreateDate());// 这个表示秒数，这里如果直接用*1000的毫秒会越界，所以用秒
@@ -367,10 +329,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		zhishangPb.setMax(100);
 		float step = gameUser.getNextIntellect() / 100f;
 		zhishangPb.setProgress(Math.round(gameUser.getIntellect() / step));
-		zhishangPlTv.setText("" + gameUser.getIntellect() + "/"
-				+ gameUser.getNextIntellect());
-		if (!TextUtils.isEmpty(gameUser.getGender())
-				&& "1".equals(gameUser.getGender())) {// 女性
+		zhishangPlTv.setText("" + gameUser.getIntellect() + "/" + gameUser.getNextIntellect());
+		if (!TextUtils.isEmpty(gameUser.getGender()) && "1".equals(gameUser.getGender())) {// 女性
 			headIv.setBackgroundResource(R.drawable.nv_photo_tip);
 		} else {
 			headIv.setBackgroundResource(R.drawable.nan_photo_tip);
@@ -379,232 +339,170 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == R.id.set_account || v.getId() == R.id.set_set
-				|| v.getId() == R.id.set_about
+		if (v.getId() == R.id.set_account || v.getId() == R.id.set_set || v.getId() == R.id.set_about
 				|| v.getId() == R.id.set_feedback) {
-			gameAccountBtn.setTextColor(getResources().getColor(
-					R.color.gpl_top_btn_text_color));
-			gameSetBtn.setTextColor(getResources().getColor(
-					R.color.gpl_top_btn_text_color));
-			gameFeedBackBtn.setTextColor(getResources().getColor(
-					R.color.gpl_top_btn_text_color));
-			gameAboutBtn.setTextColor(getResources().getColor(
-					R.color.gpl_top_btn_text_color));
+			gameAccountBtn.setTextColor(getResources().getColor(R.color.gpl_top_btn_text_color));
+			gameSetBtn.setTextColor(getResources().getColor(R.color.gpl_top_btn_text_color));
+			gameFeedBackBtn.setTextColor(getResources().getColor(R.color.gpl_top_btn_text_color));
+			gameAboutBtn.setTextColor(getResources().getColor(R.color.gpl_top_btn_text_color));
 		}
 		switch (v.getId()) {
-		case R.id.set_account:
-			gameAccountBtn.setTextColor(Color.WHITE);
-			gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_left_select, true));
-			gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_center, true));
-			gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_center, true));
-			gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_right, true));
-			// findViewById(R.id.set_bttom).setVisibility(View.VISIBLE);
-			// findViewById(R.id.setting_finish_button).setVisibility(View.VISIBLE);
-			getPageView(0);
-			break;
-		case R.id.set_set:
-			gameSetBtn.setTextColor(Color.WHITE);
-			gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_left, true));
-			gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_center_select, true));
-			gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_center, true));
-			gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_right, true));
-			// findViewById(R.id.set_bttom).setVisibility(View.VISIBLE);
-			// findViewById(R.id.setting_finish_button).setVisibility(View.GONE);
-			getPageView(1);
-			break;
-		case R.id.set_about:
-			gameAboutBtn.setTextColor(Color.WHITE);
-			gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_left, true));
-			gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_center, true));
-			gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_center, true));
-			gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_right_select, true));
-			// findViewById(R.id.set_bttom).setVisibility(View.VISIBLE);
-			// findViewById(R.id.setting_finish_button).setVisibility(View.GONE);
-			getPageView(3);
-			break;
-		case R.id.set_feedback:
-			gameFeedBackBtn.setTextColor(Color.WHITE);
-			gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_left, true));
-			gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_center, true));
-			gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_center_select, true));
-			gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.gpl_top_right, true));
-			getPageView(2);
-			// findViewById(R.id.set_bttom).setVisibility(View.GONE);
-			if (userAskList == null) { // 第下次加载自己的提问
-				LoadMyAskTask loadMyAskTask = new LoadMyAskTask();
-				loadMyAskTask.execute(1);
-			}
-			break;
-		case R.id.game_feedback_ok_btn: // 提交反馈问题
-			String question = feedBackEdit.getText().toString();
-			if (TextUtils.isEmpty(question)) {
-				DialogUtils.mesTip("您提交的反馈问题不能为空!", false);
-			} else {
-				// 提交反馈问题
-				GenericTask submitAskTask = new SubmitAskTask();
-				submitAskTask.setFeedback(feedback);
-				TaskParams pms = new TaskParams();
-				pms.put("question", question);
-				submitAskTask.execute(pms);
-				taskManager.addTask(submitAskTask);
-			}
-			break;
-		case R.id.shoushi_yingdao:// 手势引导
-			boolean shoushitishi = PreferenceHelper.getMyPreference()
-					.getSetting().getBoolean("shoushi", true);
-			PreferenceHelper.getMyPreference().getEditor()
-					.putBoolean("shoushi", !shoushitishi).commit();// 手势总开关
-			if (PreferenceHelper.getMyPreference().getSetting()
-					.getBoolean("shoushi", true)) {
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("newImage", 3).commit();// 新图鉴
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("pointTable", 2).commit();// 轻敲桌面
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("slideLeftRight", 1).commit();// 左右滑动
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("slideDown", 2).commit();// 向下滑动
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("slideUp", 2).commit();// 向上滑动
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("slideLeftRight", 1).commit();// 向左右滑动
-				shoushi.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.open, true));
-			} else {
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("newImage", 0).commit();// 新图鉴
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("pointTable", 0).commit();// 轻敲桌面
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("slideLeftRight", 0).commit();// 左右滑动
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("slideDown", 0).commit();// 向下滑动
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("slideUp", 0).commit();// 向上滑动
-				PreferenceHelper.getMyPreference().getEditor()
-						.putInt("slideLeftRight", 0).commit();// 向左右滑动
-				shoushi.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.close, true));
-			}
-			break;
-		case R.id.zhendong_ToggleButton0:// 震动
-			boolean zhengDong = PreferenceHelper.getMyPreference().getSetting()
-					.getBoolean("zhendong", true);
-			PreferenceHelper.getMyPreference().getEditor()
-					.putBoolean("zhendong", !zhengDong).commit();
-			if (PreferenceHelper.getMyPreference().getSetting()
-					.getBoolean("zhendong", true)) {
-				zhendong.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.open, true));
-			} else {
-				zhendong.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.close, true));
-			}
-			break;
-		case R.id.setting_jingyin:// 静音
-			boolean jingYin = PreferenceHelper.getMyPreference().getSetting()
-					.getBoolean("jingyin", false);
-			PreferenceHelper.getMyPreference().getEditor()
-					.putBoolean("jingyin", !jingYin).commit();
-			if (PreferenceHelper.getMyPreference().getSetting()
-					.getBoolean("jingyin", false)) {
-				jingyin.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.open, true));
-			} else {
-				jingyin.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.close, true));
-			}
-			break;
-		case R.id.ToggleButtonbgMusic:// 背景音乐
-			boolean beijing = PreferenceHelper.getMyPreference().getSetting()
-					.getBoolean("bgmusic", true);
-			PreferenceHelper.getMyPreference().getEditor()
-					.putBoolean("bgmusic", !beijing).commit();
-			if (PreferenceHelper.getMyPreference().getSetting()
-					.getBoolean("bgmusic", true)) {
-				bgmusic.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.open, true));
-			} else {
-				bgmusic.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.close, true));
-			}
-			break;
-		case R.id.xiugaimima:
-			AccountBindDialog bindDialog = new AccountBindDialog(
-					SettingActivity.this);
-			if (null != bindDialog && !bindDialog.isShowing()) {
-				bindDialog.show();
-			}
-			break;
-		case R.id.chong_setting:
-			recharge();
-			break;
-		case R.id.set_back:
-			finishSelf();
-			break;
-		case R.id.setting_finish_button:// 保存设置
-			final String email = emailEdit.getText().toString();
-			if (nickName.getText().toString().trim().equals("")) {
-				Toast.makeText(SettingActivity.this, "请输入您的的昵称！",
-						Toast.LENGTH_SHORT).show();
-				return;
-			} else if (PatternUtils.hasIllegalWords(nickName.getText()
-					.toString().trim())) {// 是否存在非法字符
-				Toast.makeText(SettingActivity.this, "昵称不能有特殊字符！",
-						Toast.LENGTH_SHORT).show();
-				return;
-			} else if (PatternUtils.hasSensitivword(nickName.getText()
-					.toString().trim())) {// 是否存在非法字符
-				Toast.makeText(SettingActivity.this, "昵称不能有敏感信息！",
-						Toast.LENGTH_SHORT).show();
-				return;
-			} else if (!PatternUtils.isEmail(email)) { // 如果邮箱是空的话
-				Toast.makeText(SettingActivity.this, "请输入正确邮箱地址",
-						Toast.LENGTH_SHORT).show();
-				return;
-			} else {
-				submitInfo(email);
-				// if(gameUser.getAccount().equals(gameUser.getNickname())){
-				// //账号==呢称，说明用户还没改过昵称，不扣金豆
-				// }else{//改过一次昵称之后，再改需要支付20000金豆(防止恶意该昵称)
-				// GameDialog gameDialog = new
-				// GameDialog(Database.currentActivity, true) {
-				// public void okClick() {//确定
-				// submitInfo(email);
-				// }
-				// };
-				// gameDialog.show();
-				// gameDialog.setText("此次修改昵称需花费20000金豆，确定修改？");
-				// }
-			}
-			break;
+			case R.id.set_account:
+				gameAccountBtn.setTextColor(Color.WHITE);
+				gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_left_select, true));
+				gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center, true));
+				gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center, true));
+				gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_right, true));
+				// findViewById(R.id.set_bttom).setVisibility(View.VISIBLE);
+				// findViewById(R.id.setting_finish_button).setVisibility(View.VISIBLE);
+				getPageView(0);
+				break;
+			case R.id.set_set:
+				gameSetBtn.setTextColor(Color.WHITE);
+				gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_left, true));
+				gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center_select, true));
+				gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center, true));
+				gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_right, true));
+				// findViewById(R.id.set_bttom).setVisibility(View.VISIBLE);
+				// findViewById(R.id.setting_finish_button).setVisibility(View.GONE);
+				getPageView(1);
+				break;
+			case R.id.set_about:
+				gameAboutBtn.setTextColor(Color.WHITE);
+				gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_left, true));
+				gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center, true));
+				gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center, true));
+				gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_right_select, true));
+				// findViewById(R.id.set_bttom).setVisibility(View.VISIBLE);
+				// findViewById(R.id.setting_finish_button).setVisibility(View.GONE);
+				getPageView(3);
+				break;
+			case R.id.set_feedback:
+				gameFeedBackBtn.setTextColor(Color.WHITE);
+				gameAccountBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_left, true));
+				gameSetBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center, true));
+				gameFeedBackBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_center_select, true));
+				gameAboutBtn.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gpl_top_right, true));
+				getPageView(2);
+				// findViewById(R.id.set_bttom).setVisibility(View.GONE);
+				if (userAskList == null) { // 第下次加载自己的提问
+					LoadMyAskTask loadMyAskTask = new LoadMyAskTask();
+					loadMyAskTask.execute(1);
+				}
+				break;
+			case R.id.game_feedback_ok_btn: // 提交反馈问题
+				String question = feedBackEdit.getText().toString();
+				if (TextUtils.isEmpty(question)) {
+					DialogUtils.mesTip("您提交的反馈问题不能为空!", false);
+				} else {
+					// 提交反馈问题
+					GenericTask submitAskTask = new SubmitAskTask();
+					submitAskTask.setFeedback(feedback);
+					TaskParams pms = new TaskParams();
+					pms.put("question", question);
+					submitAskTask.execute(pms);
+					taskManager.addTask(submitAskTask);
+				}
+				break;
+			case R.id.shoushi_yingdao:// 手势引导
+				boolean shoushitishi = PreferenceHelper.getMyPreference().getSetting().getBoolean("shoushi", true);
+				PreferenceHelper.getMyPreference().getEditor().putBoolean("shoushi", !shoushitishi).commit();// 手势总开关
+				if (PreferenceHelper.getMyPreference().getSetting().getBoolean("shoushi", true)) {
+					PreferenceHelper.getMyPreference().getEditor().putInt("newImage", 3).commit();// 新图鉴
+					PreferenceHelper.getMyPreference().getEditor().putInt("pointTable", 2).commit();// 轻敲桌面
+					PreferenceHelper.getMyPreference().getEditor().putInt("slideLeftRight", 1).commit();// 左右滑动
+					PreferenceHelper.getMyPreference().getEditor().putInt("slideDown", 2).commit();// 向下滑动
+					PreferenceHelper.getMyPreference().getEditor().putInt("slideUp", 2).commit();// 向上滑动
+					PreferenceHelper.getMyPreference().getEditor().putInt("slideLeftRight", 1).commit();// 向左右滑动
+					shoushi.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.open, true));
+				} else {
+					PreferenceHelper.getMyPreference().getEditor().putInt("newImage", 0).commit();// 新图鉴
+					PreferenceHelper.getMyPreference().getEditor().putInt("pointTable", 0).commit();// 轻敲桌面
+					PreferenceHelper.getMyPreference().getEditor().putInt("slideLeftRight", 0).commit();// 左右滑动
+					PreferenceHelper.getMyPreference().getEditor().putInt("slideDown", 0).commit();// 向下滑动
+					PreferenceHelper.getMyPreference().getEditor().putInt("slideUp", 0).commit();// 向上滑动
+					PreferenceHelper.getMyPreference().getEditor().putInt("slideLeftRight", 0).commit();// 向左右滑动
+					shoushi.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.close, true));
+				}
+				break;
+			case R.id.zhendong_ToggleButton0:// 震动
+				boolean zhengDong = PreferenceHelper.getMyPreference().getSetting().getBoolean("zhendong", true);
+				PreferenceHelper.getMyPreference().getEditor().putBoolean("zhendong", !zhengDong).commit();
+				if (PreferenceHelper.getMyPreference().getSetting().getBoolean("zhendong", true)) {
+					zhendong.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.open, true));
+				} else {
+					zhendong.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.close, true));
+				}
+				break;
+			case R.id.setting_jingyin:// 静音
+				boolean jingYin = PreferenceHelper.getMyPreference().getSetting().getBoolean("jingyin", false);
+				PreferenceHelper.getMyPreference().getEditor().putBoolean("jingyin", !jingYin).commit();
+				if (PreferenceHelper.getMyPreference().getSetting().getBoolean("jingyin", false)) {
+					jingyin.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.open, true));
+				} else {
+					jingyin.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.close, true));
+				}
+				break;
+			case R.id.ToggleButtonbgMusic:// 背景音乐
+				boolean beijing = PreferenceHelper.getMyPreference().getSetting().getBoolean("bgmusic", true);
+				PreferenceHelper.getMyPreference().getEditor().putBoolean("bgmusic", !beijing).commit();
+				if (PreferenceHelper.getMyPreference().getSetting().getBoolean("bgmusic", true)) {
+					bgmusic.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.open, true));
+				} else {
+					bgmusic.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.close, true));
+				}
+				break;
+			case R.id.xiugaimima:
+				AccountBindDialog bindDialog = new AccountBindDialog(SettingActivity.this);
+				if (null != bindDialog && !bindDialog.isShowing()) {
+					bindDialog.show();
+				}
+				break;
+			case R.id.chong_setting:
+				recharge();
+				break;
+			case R.id.set_back:
+				finishSelf();
+				break;
+			case R.id.setting_finish_button:// 保存设置
+				final String email = emailEdit.getText().toString();
+				if (nickName.getText().toString().trim().equals("")) {
+					Toast.makeText(SettingActivity.this, "请输入您的的昵称！", Toast.LENGTH_SHORT).show();
+					return;
+				} else if (PatternUtils.hasIllegalWords(nickName.getText().toString().trim())) {// 是否存在非法字符
+					Toast.makeText(SettingActivity.this, "昵称不能有特殊字符！", Toast.LENGTH_SHORT).show();
+					return;
+				} else if (PatternUtils.hasSensitivword(nickName.getText().toString().trim())) {// 是否存在非法字符
+					Toast.makeText(SettingActivity.this, "昵称不能有敏感信息！", Toast.LENGTH_SHORT).show();
+					return;
+				} else if (!PatternUtils.isEmail(email)) { // 如果邮箱是空的话
+					Toast.makeText(SettingActivity.this, "请输入正确邮箱地址", Toast.LENGTH_SHORT).show();
+					return;
+				} else {
+					submitInfo(email);
+					// if(gameUser.getAccount().equals(gameUser.getNickname())){
+					// //账号==呢称，说明用户还没改过昵称，不扣金豆
+					// }else{//改过一次昵称之后，再改需要支付20000金豆(防止恶意该昵称)
+					// GameDialog gameDialog = new
+					// GameDialog(Database.currentActivity, true) {
+					// public void okClick() {//确定
+					// submitInfo(email);
+					// }
+					// };
+					// gameDialog.show();
+					// gameDialog.setText("此次修改昵称需花费20000金豆，确定修改？");
+					// }
+				}
+				break;
 		}
 	}
 
 	/**
 	 * 提交用户信息
-	 * 
 	 * @param email
 	 */
 	private void submitInfo(final String email) {
-		nickName.setText(PatternUtils.replaceBlank(nickName.getText()
-				.toString()));
+		nickName.setText(PatternUtils.replaceBlank(nickName.getText().toString()));
 		GenericTask completePersonalInfoTask = new CompletePersonalInfoTask();
 		completePersonalInfoTask.setFeedback(feedback);
 		TaskParams params = new TaskParams();
@@ -617,8 +515,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 	 * 注销
 	 */
 	public void logout() {
-		Toast.makeText(getApplicationContext(), "退出登录成功", Toast.LENGTH_SHORT)
-				.show();
+		Toast.makeText(getApplicationContext(), "退出登录成功", Toast.LENGTH_SHORT).show();
 		GameCache.remove(CacheKey.GAME_USER);
 		Intent in1 = new Intent();
 		in1.putExtra("logout", "logout");
@@ -654,8 +551,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 					return TaskResult.FAILED;
 				}
 				param = params[0];
-				GameUser updateUser = (GameUser) GameCache
-						.getObj(CacheKey.GAME_USER);
+				GameUser updateUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 				updateUser.setNickname(nickName.getText().toString());
 				updateUser.setEmail(param.getString("email"));
 				updateUser.setGender(gender);
@@ -663,58 +559,39 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 				updateUser.setHeadImage("");
 				String jsonResult = HttpRequest.updateCustomer(updateUser);
 				if (!TextUtils.isEmpty(jsonResult)) {
-					JsonResult result = JsonHelper.fromJson(jsonResult,
-							JsonResult.class);
+					JsonResult result = JsonHelper.fromJson(jsonResult, JsonResult.class);
 					if (JsonResult.SUCCESS.equals(result.getMethodCode())) { // 成功
-						GameUser gu = JsonHelper.fromJson(
-								result.getMethodMessage(), GameUser.class);
+						GameUser gu = JsonHelper.fromJson(result.getMethodMessage(), GameUser.class);
 						GameCache.putObj(CacheKey.GAME_USER, gu);
 						// 送金豆(第一次)
-						String sendBeanResult = HttpRequest
-								.completePersonalInfo();
+						String sendBeanResult = HttpRequest.completePersonalInfo();
 						if (HttpRequest.FAIL_STATE.equals(sendBeanResult)) { // 失败
 							DialogUtils.mesTip("完善资料失败!", false);
-						} else if (HttpRequest.SENSITIVE_WORDS
-								.equals(sendBeanResult)) { // 敏感字符
+						} else if (HttpRequest.SENSITIVE_WORDS.equals(sendBeanResult)) { // 敏感字符
 							DialogUtils.mesTip("禁止敏感字符!", false);
-						} else if (HttpRequest.TOKEN_ILLEGAL
-								.equals(sendBeanResult)) { // 用户登录Token过期
+						} else if (HttpRequest.TOKEN_ILLEGAL.equals(sendBeanResult)) { // 用户登录Token过期
 							DialogUtils.reLogin(Database.currentActivity);
 						} else {
-							final GameTask resultTask = JsonHelper.fromJson(
-									sendBeanResult, GameTask.class);
+							final GameTask resultTask = JsonHelper.fromJson(sendBeanResult, GameTask.class);
 							runOnUiThread(new Runnable() {
 								@Override
 								public void run() {
-									if (GameTask.TASK_TYPE[3] == resultTask
-											.getType()) { // 完善资料
-										if (CmdUtils.FAIL_CODE
-												.equals(resultTask.getValue())) { // 送豆6失败
-										} else if (CmdUtils.SUCCESS_CODE
-												.equals(resultTask.getValue())) {
-											GameUser gameUser = (GameUser) GameCache
-													.getObj(CacheKey.GAME_USER);
-											long bean = gameUser.getBean()
-													+ resultTask.getCount();
+									if (GameTask.TASK_TYPE[3] == resultTask.getType()) { // 完善资料
+										if (CmdUtils.FAIL_CODE.equals(resultTask.getValue())) { // 送豆6失败
+										} else if (CmdUtils.SUCCESS_CODE.equals(resultTask.getValue())) {
+											GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+											long bean = gameUser.getBean() + resultTask.getCount();
 											gameUser.setBean(bean);
-											GameCache.putObj(
-													CacheKey.GAME_USER,
-													gameUser);
-											zhidou.setText(String
-													.valueOf(gameUser.getBean()));
-											if (!TextUtils.isEmpty(gameUser
-													.getGender())
-													&& "1".equals(gameUser
-															.getGender())) {// 女性
+											GameCache.putObj(CacheKey.GAME_USER, gameUser);
+											zhidou.setText(String.valueOf(gameUser.getBean()));
+											if (!TextUtils.isEmpty(gameUser.getGender())
+													&& "1".equals(gameUser.getGender())) {// 女性
 												headIv.setBackgroundResource(R.drawable.nv_photo_tip);
 											} else {
 												headIv.setBackgroundResource(R.drawable.nan_photo_tip);
 											}
-											DialogUtils.toastTip("恭喜您首次完善资料获取"
-													+ resultTask.getCount()
-													+ "金豆!");
-										} else if ("2".equals(resultTask
-												.getValue())) {
+											DialogUtils.toastTip("恭喜您首次完善资料获取" + resultTask.getCount() + "金豆!");
+										} else if ("2".equals(resultTask.getValue())) {
 											DialogUtils.toastTip("完善资料成功");
 										}
 									}
@@ -736,11 +613,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		@Override
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
-				GameUser gameUser = (GameUser) GameCache
-						.getObj(CacheKey.GAME_USER);
+				GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 				if (gameUser != null) {
-					gameUser = HttpRequest.getGameUserDetail(gameUser
-							.getLoginToken());
+					gameUser = HttpRequest.getGameUserDetail(gameUser.getLoginToken());
 					gameUser.setRound(0);
 					GameCache.putObj(CacheKey.GAME_USER, gameUser);
 				}
@@ -776,8 +651,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			if (null != userAskList) {
-				feedBackAdapter = new FeedBackAdapter(SettingActivity.this,
-						userAskList);
+				feedBackAdapter = new FeedBackAdapter(SettingActivity.this, userAskList);
 				feedBackList.setAdapter(feedBackAdapter);
 			}
 		}
@@ -799,8 +673,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 						@Override
 						public void run() {
 							if (null != userAskList) {
-								feedBackAdapter = new FeedBackAdapter(
-										SettingActivity.this, userAskList);
+								feedBackAdapter = new FeedBackAdapter(SettingActivity.this, userAskList);
 								feedBackList.setAdapter(feedBackAdapter);
 								feedBackEdit.setText("");
 							}
@@ -874,14 +747,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			if (null == convertView) {
 				holder = new ViewHolder();
 				convertView = mInflater.inflate(R.layout.feedback_item, null);
-				holder.questionImg = (ImageView) convertView
-						.findViewById(R.id.feedback_item_question_img);
-				holder.questionTv = (TextView) convertView
-						.findViewById(R.id.feedback_item_question_tv);
-				holder.answerImg = (ImageView) convertView
-						.findViewById(R.id.feedback_item_answer_img);
-				holder.answerTv = (TextView) convertView
-						.findViewById(R.id.feedback_item_answer_tv);
+				holder.questionImg = (ImageView) convertView.findViewById(R.id.feedback_item_question_img);
+				holder.questionTv = (TextView) convertView.findViewById(R.id.feedback_item_question_tv);
+				holder.answerImg = (ImageView) convertView.findViewById(R.id.feedback_item_answer_img);
+				holder.answerTv = (TextView) convertView.findViewById(R.id.feedback_item_answer_tv);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();

@@ -11,7 +11,6 @@ public class ThreadPool {
 
 	/**
 	 * 开启线程任务
-	 * 
 	 * @Title: startWork
 	 * @param @param runnable
 	 * @return void

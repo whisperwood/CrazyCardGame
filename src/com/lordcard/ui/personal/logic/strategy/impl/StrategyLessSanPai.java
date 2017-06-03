@@ -36,8 +36,7 @@ public class StrategyLessSanPai implements Strategy {
 		ddzData = new DouDiZhuLogic(ps);
 		ddzData.setPokerNum(ddzDataOriginal.getPokerNum());
 		ddzData.setNowPlaying(this.ddzDataOriginal.getNowPlaying());
-		ddzData.setNowPlayingAttachment(this.ddzDataOriginal
-				.getNowPlayingAttachment());
+		ddzData.setNowPlayingAttachment(this.ddzDataOriginal.getNowPlayingAttachment());
 		int sanPaiNum = 0;
 		for (PokerOfOnePlay poop : ddzData.getSanPai().values()) {
 			if (poop.getOnePlay().size() != 0 && poop.getMaxValue() < 13) {
@@ -46,8 +45,7 @@ public class StrategyLessSanPai implements Strategy {
 		}
 		int xiaoDuiNum = 0;
 		for (PokerOfOnePlay poop : ddzData.getDuiZi().values()) {
-			if (poop.getOnePlay().size() != 0
-					&& poop.getMaxValue() < littleDuiValue) {
+			if (poop.getOnePlay().size() != 0 && poop.getMaxValue() < littleDuiValue) {
 				++xiaoDuiNum;
 			}
 		}
@@ -73,8 +71,7 @@ public class StrategyLessSanPai implements Strategy {
 		// --siZhangNum;
 		// }
 		int bigSanPaiNum = 0;
-		if (ddzData.getPokers().containsKey(15)
-				&& ddzData.getPokers().get(15).getUnusedNum() > 0) {
+		if (ddzData.getPokers().containsKey(15) && ddzData.getPokers().get(15).getUnusedNum() > 0) {
 			// bigSanPaiNum += ddzData.getPokers().get(15).getUnusedNum();
 			bigSanPaiNum++;
 		}

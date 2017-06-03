@@ -31,11 +31,9 @@ import com.sdk.util.vo.PayPoint;
 
 /**
  * 三合一(移动，联通，电信)充值界面
- * 
  * @author Administrator
  */
-public class GroupPayDetailActivity extends BaseActivity implements
-		OnClickListener {
+public class GroupPayDetailActivity extends BaseActivity implements OnClickListener {
 	private Button genBackBtn;
 	private RadioGroup genRadio;
 	private RadioButton yiButton, ltButton, dxButton;
@@ -118,10 +116,8 @@ public class GroupPayDetailActivity extends BaseActivity implements
 			// VACPayAdapter adapter = new
 			// VACPayAdapter(GroupPayDetailActivity.this,
 			// VACConfig.BILLPOINT_LIST);
-			List<PayPoint> pointList = PayUtils
-					.getPayPoint(PaySite.RECHARGE_LIST);
-			PayAdapter adapter = new PayAdapter(GroupPayDetailActivity.this,
-					pointList, PaySite.RECHARGE_LIST);
+			List<PayPoint> pointList = PayUtils.getPayPoint(PaySite.RECHARGE_LIST);
+			PayAdapter adapter = new PayAdapter(GroupPayDetailActivity.this, pointList, PaySite.RECHARGE_LIST);
 			vaclist.setAdapter(adapter);
 			vaclist.setVisibility(View.VISIBLE);
 		} else if (Constant.SIM_TELE.equals(simKey)) {
@@ -133,10 +129,8 @@ public class GroupPayDetailActivity extends BaseActivity implements
 			// TYPayAdapter adapter = new
 			// TYPayAdapter(GroupPayDetailActivity.this,
 			// TYConfig.ESURFING_LIST);
-			List<PayPoint> pointList = PayUtils
-					.getPayPoint(PaySite.RECHARGE_LIST);
-			PayAdapter adapter = new PayAdapter(GroupPayDetailActivity.this,
-					pointList, PaySite.RECHARGE_LIST);
+			List<PayPoint> pointList = PayUtils.getPayPoint(PaySite.RECHARGE_LIST);
+			PayAdapter adapter = new PayAdapter(GroupPayDetailActivity.this, pointList, PaySite.RECHARGE_LIST);
 			tianyilist.setAdapter(adapter);
 			tianyilist.setVisibility(View.VISIBLE);
 		} else {
@@ -151,11 +145,11 @@ public class GroupPayDetailActivity extends BaseActivity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.gen_detail_back:
-			finishSelf();
-			break;
-		default:
-			break;
+			case R.id.gen_detail_back:
+				finishSelf();
+				break;
+			default:
+				break;
 		}
 		Database.chargingProcessDia = null;
 		// progressDialog = DialogUtils.getWaitProgressDialog(this, "请稍后...");
@@ -163,43 +157,43 @@ public class GroupPayDetailActivity extends BaseActivity implements
 		// progressDialog.show();
 		int payMoney = 0;
 		switch (v.getId()) {
-		case R.id.gen_detail_back:
-			finishSelf();
-			break;
-		case R.id.gen_detail_yi_2_btn:
-			payMoney = 2;
-			// MMPayUtil.goPay(MMConfig.PAY_CODE_2, SDKConstant.LIST, null);
-			break;
-		case R.id.gen_detail_yi_5_btn:
-			payMoney = 5;
-			// MMPayUtil.goPay(MMConfig.PAY_CODE_5, SDKConstant.LIST, null);
-			break;
-		case R.id.gen_detail_yi_8_btn:
-			payMoney = 8;
-			// MMPayUtil.goPay(MMConfig.PAY_CODE_8, SDKConstant.LIST, null);
-			break;
-		case R.id.gen_detail_yi_10_btn:
-			payMoney = 10;
-			// MMPayUtil.goPay(MMConfig.PAY_CODE_10, SDKConstant.LIST, null);
-			break;
-		case R.id.gen_detail_yi_15_btn:
-			payMoney = 15;
-			// MMPayUtil.goPay(MMConfig.PAY_CODE_15, SDKConstant.LIST, null);
-			break;
-		case R.id.gen_detail_yi_20_btn:
-			payMoney = 20;
-			// MMPayUtil.goPay(MMConfig.PAY_CODE_20, SDKConstant.LIST, null);
-			break;
-		case R.id.gen_detail_yi_25_btn:
-			payMoney = 25;
-			// MMPayUtil.goPay(MMConfig.PAY_CODE_25, SDKConstant.LIST, null);
-			break;
-		case R.id.gen_detail_yi_30_btn:
-			payMoney = 30;
-			// MMPayUtil.goPay(MMConfig.PAY_CODE_30, SDKConstant.LIST, null);
-			break;
-		default:
-			break;
+			case R.id.gen_detail_back:
+				finishSelf();
+				break;
+			case R.id.gen_detail_yi_2_btn:
+				payMoney = 2;
+				// MMPayUtil.goPay(MMConfig.PAY_CODE_2, SDKConstant.LIST, null);
+				break;
+			case R.id.gen_detail_yi_5_btn:
+				payMoney = 5;
+				// MMPayUtil.goPay(MMConfig.PAY_CODE_5, SDKConstant.LIST, null);
+				break;
+			case R.id.gen_detail_yi_8_btn:
+				payMoney = 8;
+				// MMPayUtil.goPay(MMConfig.PAY_CODE_8, SDKConstant.LIST, null);
+				break;
+			case R.id.gen_detail_yi_10_btn:
+				payMoney = 10;
+				// MMPayUtil.goPay(MMConfig.PAY_CODE_10, SDKConstant.LIST, null);
+				break;
+			case R.id.gen_detail_yi_15_btn:
+				payMoney = 15;
+				// MMPayUtil.goPay(MMConfig.PAY_CODE_15, SDKConstant.LIST, null);
+				break;
+			case R.id.gen_detail_yi_20_btn:
+				payMoney = 20;
+				// MMPayUtil.goPay(MMConfig.PAY_CODE_20, SDKConstant.LIST, null);
+				break;
+			case R.id.gen_detail_yi_25_btn:
+				payMoney = 25;
+				// MMPayUtil.goPay(MMConfig.PAY_CODE_25, SDKConstant.LIST, null);
+				break;
+			case R.id.gen_detail_yi_30_btn:
+				payMoney = 30;
+				// MMPayUtil.goPay(MMConfig.PAY_CODE_30, SDKConstant.LIST, null);
+				break;
+			default:
+				break;
 		}
 		if (payMoney > 0) {
 			JDSMSPayUtil.setContext(this);

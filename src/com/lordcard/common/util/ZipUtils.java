@@ -24,11 +24,9 @@ import com.lordcard.constant.Constant;
 public class ZipUtils {
 	/**
 	 * 解压缩功能. 将zipFile文件解压到folderPath目录下.
-	 * 
 	 * @throws Exception
 	 */
-	public static boolean upZipFile(String path, String folderPath,
-			Handler handler) throws ZipException, IOException {
+	public static boolean upZipFile(String path, String folderPath, Handler handler) throws ZipException, IOException {
 		File zipFile = new File(path);
 		ZipFile zfile = new ZipFile(zipFile);
 		Enumeration zList = zfile.entries();
@@ -39,14 +37,12 @@ public class ZipUtils {
 			if (ze.isDirectory()) {
 				String dirstr = folderPath + ze.getName();
 				// dirstr.trim();
-				dirstr = new String(dirstr.getBytes("ISO-8859-1"),
-						Constant.CHAR);
+				dirstr = new String(dirstr.getBytes("ISO-8859-1"), Constant.CHAR);
 				File f = new File(dirstr);
 				f.mkdir();
 				continue;
 			}
-			OutputStream os = new BufferedOutputStream(new FileOutputStream(
-					getRealFileName(folderPath, ze.getName())));
+			OutputStream os = new BufferedOutputStream(new FileOutputStream(getRealFileName(folderPath, ze.getName())));
 			InputStream is = new BufferedInputStream(zfile.getInputStream(ze));
 			int readLen = 0;
 			while ((readLen = is.read(buf, 0, 1024)) != -1) {
@@ -64,11 +60,8 @@ public class ZipUtils {
 
 	/**
 	 * 给定根目录，返回一个相对路径所对应的实际文件名.
-	 * 
-	 * @param baseDir
-	 *            指定根目录
-	 * @param absFileName
-	 *            相对路径名，来自于ZipEntry中的name
+	 * @param baseDir 指定根目录
+	 * @param absFileName 相对路径名，来自于ZipEntry中的name
 	 * @return java.io.File 实际的文件
 	 */
 	public static File getRealFileName(String baseDir, String absFileName) {
@@ -80,8 +73,7 @@ public class ZipUtils {
 				substr = dirs[i];
 				try {
 					// substr.trim();
-					substr = new String(substr.getBytes("ISO-8859-1"),
-							Constant.CHAR);
+					substr = new String(substr.getBytes("ISO-8859-1"), Constant.CHAR);
 				} catch (UnsupportedEncodingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -93,8 +85,7 @@ public class ZipUtils {
 			substr = dirs[dirs.length - 1];
 			try {
 				// substr.trim();
-				substr = new String(substr.getBytes("ISO-8859-1"),
-						Constant.CHAR);
+				substr = new String(substr.getBytes("ISO-8859-1"), Constant.CHAR);
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

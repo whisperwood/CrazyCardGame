@@ -65,14 +65,12 @@ public class PhotoDialog extends Dialog implements OnClickListener {
 	private boolean isMaster = false;// 是否是地主
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 
-	protected PhotoDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected PhotoDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
 
-	public PhotoDialog(ImageView view, boolean isMaster, Context context,
-			String showAccount, GameUser user) {
+	public PhotoDialog(ImageView view, boolean isMaster, Context context, String showAccount, GameUser user) {
 		super(context, R.style.dialog);
 		this.context = context;
 		this.showAccount = showAccount;
@@ -86,21 +84,18 @@ public class PhotoDialog extends Dialog implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.photo_dialog);
 		mainLayout = (LinearLayout) findViewById(R.id.photo_info_layout);
-		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(
-				R.drawable.photo_bg, false));
+		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.photo_bg, false));
 		layout();
 		mst.adjustView(mainLayout);
 	}
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	private void layout() {
 		sexIv = (ImageView) findViewById(R.id.pd_sex_iv);
-		if (!TextUtils.isEmpty(user.getGender())
-				&& "1".equals(user.getGender())) {// 女
+		if (!TextUtils.isEmpty(user.getGender()) && "1".equals(user.getGender())) {// 女
 			sexIv.setImageResource(R.drawable.nv_photo_tip);
 		} else {
 			sexIv.setImageResource(R.drawable.nan_photo_tip);
@@ -110,22 +105,18 @@ public class PhotoDialog extends Dialog implements OnClickListener {
 		beanTextView = (TextView) findViewById(R.id.bean_count);
 		diamondTextView = (TextView) findViewById(R.id.diamond_count);
 		zhiShangTv = (TextView) findViewById(R.id.gift_zhishang);
-		zhiShangTv.setText(""
-				+ (TextUtils.isEmpty(user.getTitle()) ? "" : user.getTitle())
-				+ "  等级 " + user.getIq());
+		zhiShangTv.setText("" + (TextUtils.isEmpty(user.getTitle()) ? "" : user.getTitle()) + "  等级 " + user.getIq());
 		userTextView.setText(user.getNickname());
 		reportLl = (LinearLayout) findViewById(R.id.report_ll);
 		reportBtn = (Button) findViewById(R.id.report_btn);
 		GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
-		if (null != cacheUser
-				&& cacheUser.getAccount().equals(user.getAccount())) {
+		if (null != cacheUser && cacheUser.getAccount().equals(user.getAccount())) {
 			reportLl.setVisibility(View.GONE);
 		}
 		reportBtn.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				GameDialog gameDialog = new GameDialog(
-						Database.currentActivity, true) {
+				GameDialog gameDialog = new GameDialog(Database.currentActivity, true) {
 					@Override
 					public void okClick() {
 						// 提交举报信息
@@ -157,91 +148,50 @@ public class PhotoDialog extends Dialog implements OnClickListener {
 		new Thread() {
 			@Override
 			public void run() {
-				final GameUser cacheUser = (GameUser) GameCache
-						.getObj(CacheKey.GAME_USER);
+				final GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 				Map<String, String> paramMap = new HashMap<String, String>();
 				paramMap.put("account", showAccount);
 				paramMap.put("loginToken", cacheUser.getLoginToken());
 				paramMap.put("signKey", cacheUser.getAuthKey());
 				paramMap.put("type", String.valueOf(user.getType()));
-				paramMap.put("code",
-						String.valueOf(Database.JOIN_ROOM.getCode()));
+				paramMap.put("code", String.valueOf(Database.JOIN_ROOM.getCode()));
 				paramMap.put("hallCode", String.valueOf(Database.GAME_TYPE));
 				try {
-					String result = HttpUtils.post(HttpURL.COUPON_INFO_URL,
-							paramMap, true);
-					userInfo = JsonHelper.fromJson(result,
-							new TypeToken<List<UserGoods>>() {
-							});
+					String result = HttpUtils.post(HttpURL.COUPON_INFO_URL, paramMap, true);
+					userInfo = JsonHelper.fromJson(result, new TypeToken<List<UserGoods>>() {
+					});
 					if (userInfo != null && userInfo.size() > 0) {
 						Database.currentActivity.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
 								for (int i = 0; i < userInfo.size(); i++) {
-									if (userInfo != null
-											&& userInfo.get(i).getDisplay()
-													.intValue() == 2) {
+									if (userInfo != null && userInfo.get(i).getDisplay().intValue() == 2) {
 										imageurl = (userInfo.get(i).getGoods());
 									}
-									if (userInfo != null
-											&& userInfo.get(i).getDisplay()
-													.intValue() == 1) {
+									if (userInfo != null && userInfo.get(i).getDisplay().intValue() == 1) {
 										// 金豆2 抽奖券1 钻石3
 										textGoods = (userInfo.get(i).getGoods());
-										if (textGoods != null
-												&& textGoods.size() > 0) {
-											for (int j = 0; j < textGoods
-													.size(); j++) {
-												if (textGoods.get(j)
-														.getTypeId().trim()
-														.equals("2")) {
-													if (textGoods.get(j)
-															.getCouponNum() > 100000) {
-														beanTextView
-																.setText(textGoods
-																		.get(j)
-																		.getCouponNum()
-																		/ 10000
-																		+ "W");
-														Log.i("freshUserInfo",
-																"textGoods:"
-																		+ textGoods
-																				.get(j)
-																				.getCouponNum());
+										if (textGoods != null && textGoods.size() > 0) {
+											for (int j = 0; j < textGoods.size(); j++) {
+												if (textGoods.get(j).getTypeId().trim().equals("2")) {
+													if (textGoods.get(j).getCouponNum() > 100000) {
+														beanTextView.setText(textGoods.get(j).getCouponNum() / 10000
+																+ "W");
+														Log.i("freshUserInfo", "textGoods:"
+																+ textGoods.get(j).getCouponNum());
 													} else {
-														beanTextView
-																.setText(""
-																		+ textGoods
-																				.get(j)
-																				.getCouponNum());
-														Log.i("freshUserInfo",
-																"textGoods:"
-																		+ textGoods
-																				.get(j)
-																				.getCouponNum());
+														beanTextView.setText("" + textGoods.get(j).getCouponNum());
+														Log.i("freshUserInfo", "textGoods:"
+																+ textGoods.get(j).getCouponNum());
 													}
 													if (null != cacheUser
-															&& cacheUser
-																	.getAccount()
-																	.equals(user
-																			.getAccount())) {
-														cacheUser
-																.setBean(textGoods
-																		.get(j)
-																		.getCouponNum());
-														GameCache
-																.putObj(CacheKey.GAME_USER,
-																		cacheUser);
+															&& cacheUser.getAccount().equals(user.getAccount())) {
+														cacheUser.setBean(textGoods.get(j).getCouponNum());
+														GameCache.putObj(CacheKey.GAME_USER, cacheUser);
 													}
 												}
-												if (textGoods.get(j)
-														.getTypeId().trim()
-														.equals("3")) {
-													diamondTextView
-															.setText(""
-																	+ textGoods
-																			.get(j)
-																			.getCouponNum());
+												if (textGoods.get(j).getTypeId().trim().equals("3")) {
+													diamondTextView.setText("" + textGoods.get(j).getCouponNum());
 												}
 											}
 										}
@@ -256,20 +206,14 @@ public class PhotoDialog extends Dialog implements OnClickListener {
 								if (size < 4) {
 									size = 4;
 								}
-								LayoutParams linearParams = goodsList
-										.getLayoutParams(); // 取控件mGrid当前的布局参数
-								linearParams.width = size
-										* (mst.adjustXIgnoreDensity(numColumn
-												+ space)) + 20;
+								LayoutParams linearParams = goodsList.getLayoutParams(); // 取控件mGrid当前的布局参数
+								linearParams.width = size * (mst.adjustXIgnoreDensity(numColumn + space)) + 20;
 								goodsList.setLayoutParams(linearParams);
 								goodsList.setNumColumns(size);
-								goodsList.setColumnWidth(mst
-										.adjustXIgnoreDensity(numColumn));
-								goodsList.setHorizontalSpacing(mst
-										.adjustXIgnoreDensity(space));
+								goodsList.setColumnWidth(mst.adjustXIgnoreDensity(numColumn));
+								goodsList.setHorizontalSpacing(mst.adjustXIgnoreDensity(space));
 								goodsList.setStretchMode(GridView.NO_STRETCH);
-								GoodsValuesAdapter valueAdapter = new GoodsValuesAdapter(
-										imageurl);
+								GoodsValuesAdapter valueAdapter = new GoodsValuesAdapter(imageurl);
 								goodsList.setAdapter(valueAdapter);
 							}
 						});
@@ -290,11 +234,11 @@ public class PhotoDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.photo_info_layout:
-			dismiss();
-			break;
-		default:
-			break;
+			case R.id.photo_info_layout:
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -338,25 +282,19 @@ public class PhotoDialog extends Dialog implements OnClickListener {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			convertView = mInflater.inflate(R.layout.goods_gif_item, null);
-			ImageView ivpic = (ImageView) convertView
-					.findViewById(R.id.goods_pic);
-			ivpic.setBackgroundDrawable(ImageUtil.getResDrawable(
-					R.drawable.daoju, true));
-			final ImageView iv = (ImageView) convertView
-					.findViewById(R.id.goodsview);
+			ImageView ivpic = (ImageView) convertView.findViewById(R.id.goods_pic);
+			ivpic.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.daoju, true));
+			final ImageView iv = (ImageView) convertView.findViewById(R.id.goodsview);
 			// final TextView tv = (TextView)
 			// convertView.findViewById(R.id.goodstextview);
 			if (gifInt != null && position < gifInt.size()) {
 				// tv.setText("" + gifInt.get(position).getCouponNum());
-				ImageUtil.setImg(HttpURL.URL_PIC_ALL
-						+ gifInt.get(position).getPicPath(), iv,
-						new ImageCallback() {
-							@Override
-							public void imageLoaded(final Bitmap bitmap,
-									final ImageView view) {
-								view.setImageBitmap(bitmap);
-							}
-						});
+				ImageUtil.setImg(HttpURL.URL_PIC_ALL + gifInt.get(position).getPicPath(), iv, new ImageCallback() {
+					@Override
+					public void imageLoaded(final Bitmap bitmap, final ImageView view) {
+						view.setImageBitmap(bitmap);
+					}
+				});
 			} else {
 				iv.setImageBitmap(null);
 			}

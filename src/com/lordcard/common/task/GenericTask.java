@@ -10,8 +10,7 @@ import com.lordcard.common.task.base.TaskListener;
 import com.lordcard.common.task.base.TaskParams;
 import com.lordcard.common.task.base.TaskResult;
 
-public abstract class GenericTask extends
-		AsyncTask<TaskParams, Object, TaskResult> implements Observer {
+public abstract class GenericTask extends AsyncTask<TaskParams, Object, TaskResult> implements Observer {
 	private TaskListener mListener = null;
 	private Feedback mFeedback = null;
 	private boolean isCancelable = true;

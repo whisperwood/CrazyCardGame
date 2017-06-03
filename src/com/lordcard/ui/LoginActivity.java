@@ -193,6 +193,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 		mst.adjustView(gameBg);
 		GoogleAdsHelper.getInstance().showBanner(gameBg);
 	}
+
 	@Override
 	public void onBackPressed() {
 		String appName = getResources().getString(R.string.app_name);
@@ -201,6 +202,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 			public void okClick() {
 				ActivityPool.exitApp();
 			}
+
 			@Override
 			public void cancelClick() {
 				dismiss();
@@ -209,27 +211,12 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 		gameDialog.show();
 		gameDialog.setText("是否退出   " + appName + " ?");
 	}
+
 	/**
 	 * 初始化view控件
 	 */
 	private void initView() {
 		String isShow = GameCache.getStr(LOGIN_VIEW_FLIPPER);
-		// sharedViewfiper = getSharedPreferences("viewflipper",
-		// MODE_WORLD_READABLE);
-		// isShown = sharedViewfiper.getBoolean("flipper", false);
-		// if (!isShown) {
-		/*
-		 * xs_del if (isShow == null || "0".equals(isShow)) { //没有展示过
-		 * mViewFlipper.setVisibility(View.VISIBLE); for (int i = 0; i <
-		 * imageId.length; i++) { ImageView mImageView = new ImageView(this);
-		 * mImageView.setBackgroundDrawable(ImageUtil.getResDrawable(imageId[i],
-		 * false)); mImageView.setLayoutParams(new
-		 * LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-		 * mViewFlipper.addView(mImageView); } ImageView mImageView = new
-		 * ImageView(this); mImageView.setBackgroundColor(Color.TRANSPARENT);
-		 * mImageView.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-		 * LayoutParams.FILL_PARENT)); mViewFlipper.addView(mImageView); }
-		 */
 		mChangeAccountDialog = new ChangeAccountDialog(this, handler);
 		mAccountBindDialog = new AccountBindDialog(this, handler);
 		updateBtn = (Button) findViewById(R.id.update);
@@ -250,13 +237,6 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 		// 切换账号
 		changeAccountBtn.setEnabled(false);
 		changeAccountBtn.setVisibility(View.INVISIBLE);
-		/*
-		 * if(CGChargeActivity.isYd(this)) { bindAccountBtn.setEnabled(false);
-		 * bindAccountBtn.setVisibility(View.INVISIBLE);
-		 * bindAccountBtn.setText(""); //切换账号
-		 * changeAccountBtn.setEnabled(false);
-		 * changeAccountBtn.setVisibility(View.INVISIBLE); }
-		 */
 		bindAccountBtn.setOnClickListener(mOnClickListener);
 		accountTv = (TextView) findViewById(R.id.game_login_id);
 		goldTv = (TextView) findViewById(R.id.game_login_gold);
@@ -309,14 +289,13 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 	@Override
 	public void onResume() {
 		super.onResume();
-		accountTv.setText(TextUtils.isEmpty(GameCache.getStr(Constant.GAME_NAME_CACHE)) ? "武则天"
-				: GameCache.getStr(Constant.GAME_NAME_CACHE)); // 账号
+		accountTv.setText(TextUtils.isEmpty(GameCache.getStr(Constant.GAME_NAME_CACHE)) ? "武则天" : GameCache
+				.getStr(Constant.GAME_NAME_CACHE)); // 账号
 		goldTv.setText(checkBeans()); // 金豆
 		goldbean.setNum(Integer.parseInt(checkBeans()));
 		AudioReadDataUtils.playOrStopBgMusic(this);
 	}
-	
-	
+
 	@Override
 	public void onPause() {
 		super.onPause();
@@ -324,6 +303,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 		AudioPlayUtils.getInstance().stopBgMusic();
 		AudioPlayUtils.getInstance().stopMusic();
 	}
+
 	/**
 	 * 设置用户信息
 	 * @param gameUser
@@ -337,8 +317,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 			}
 			// accountTv.setText(account); // 账号
 			accountTv.setText("武则天"); // 账号
-			goldTv.setText(PatternUtils.changeZhidou(0 > gameUser.getBean() ? 0 : gameUser
-					.getBean())); // 金豆
+			goldTv.setText(PatternUtils.changeZhidou(0 > gameUser.getBean() ? 0 : gameUser.getBean())); // 金豆
 			String localBean = GameCache.getStr(Constant.GAME_BEAN_CACHE);
 			goldTv.setText(localBean);
 			goldbean.setNum(Integer.parseInt(localBean));
@@ -572,10 +551,12 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 			rjoinTask = null;
 		}
 	}
+
 	public void recyleDrawable() {
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout);
 		layout.removeAllViews();
 	}
+
 	private void mesTip(final String msg, final boolean showCancel, final boolean isFinish) {
 		try {
 			Database.currentActivity.runOnUiThread(new Runnable() {
@@ -588,8 +569,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 								ActivityUtils.finishAcitivity();
 							}
 							if (null != mChangeAccountDialog && !mChangeAccountDialog.isShowing()) {
-								mChangeAccountDialog = new ChangeAccountDialog(LoginActivity.this,
-										handler);
+								mChangeAccountDialog = new ChangeAccountDialog(LoginActivity.this, handler);
 								mChangeAccountDialog.show();
 							}
 						}
@@ -601,6 +581,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 		} catch (Exception e) {
 		}
 	}
+
 	/**
 	 * 提示没有网络
 	 * @Title: showNetWorkDialog
@@ -615,6 +596,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 			netWorkDialog.show();
 		}
 	}
+
 	/**
 	 * 展示登录或账号切换窗口
 	 * @Title: showLoginDialog
@@ -636,6 +618,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 		// mChangeAccountDialog.show();
 		// }
 	}
+
 	/**
 	 * 检查金豆然后发牌开始
 	 */
@@ -645,10 +628,8 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 			int allMybeans = Integer.parseInt(localBean);
 			if (allMybeans <= 0) {
 				if (!TextUtils.isEmpty(GameCache.getStr(Constant.GET_BEAN_CACHE))
-						&& GameCache.getStr(Constant.GET_BEAN_CACHE).trim()
-								.equals(ActivityUtils.getNowDate().trim())) {
-					int getBeanCount = Integer.parseInt(GameCache.getStr(Constant.GET_BEAN_COUNT)
-							.trim());
+						&& GameCache.getStr(Constant.GET_BEAN_CACHE).trim().equals(ActivityUtils.getNowDate().trim())) {
+					int getBeanCount = Integer.parseInt(GameCache.getStr(Constant.GET_BEAN_COUNT).trim());
 					if (getBeanCount < 3) {
 						getBeanCount++;
 						DialogUtils.mesToastTip("您的金豆不足，系统赠送1000金豆，每天最多三次！");

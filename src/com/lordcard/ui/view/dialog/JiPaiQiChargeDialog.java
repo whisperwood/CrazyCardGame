@@ -27,18 +27,18 @@ public class JiPaiQiChargeDialog extends BaseDialog {
 	public void onClick(View v) {
 		int id = v.getId();
 		switch (id) {
-		case R.id.dialog_close_btn:
-			dismiss();
-			break;
-		case R.id.btn_jipaiqi_charge:
-			JDSMSPayUtil.setContext(context);
-			PayTipUtils.showTip(0, PaySite.RECORED_CARD); // 配置的提示方式
-			// if(SmsPayUtil.canUseSmsPay()){
-			// // SDKFactory.smsPay(0, SDKConstant.PLAYING);
-			// }
-			// SDKFactory.smsPay(0, SDKConstant.PLAYING);
-			dismiss();
-			break;
+			case R.id.dialog_close_btn:
+				dismiss();
+				break;
+			case R.id.btn_jipaiqi_charge:
+				JDSMSPayUtil.setContext(context);
+				PayTipUtils.showTip(0, PaySite.RECORED_CARD); // 配置的提示方式
+				// if(SmsPayUtil.canUseSmsPay()){
+				// // SDKFactory.smsPay(0, SDKConstant.PLAYING);
+				// }
+				// SDKFactory.smsPay(0, SDKConstant.PLAYING);
+				dismiss();
+				break;
 		}
 	}
 
@@ -58,13 +58,10 @@ public class JiPaiQiChargeDialog extends BaseDialog {
 		if (null != chargeNoticeMsg && !TextUtils.isEmpty(chargeNoticeMsg))
 			chargeNoticeTextView.setText(chargeNoticeMsg);
 		else
-			chargeNoticeTextView.setText(context
-					.getString(R.string.text_jipaiqitips));
-		((TextView) findViewById(R.id.dialog_title_tv))
-				.setText(R.string.text_jipaiqi);
+			chargeNoticeTextView.setText(context.getString(R.string.text_jipaiqitips));
+		((TextView) findViewById(R.id.dialog_title_tv)).setText(R.string.text_jipaiqi);
 		/** Initialize buttons for dialog **/
-		initButtons(null,
-				(Button) mainLayout.findViewById(R.id.btn_jipaiqi_charge),
+		initButtons(null, (Button) mainLayout.findViewById(R.id.btn_jipaiqi_charge),
 				(Button) mainLayout.findViewById(R.id.dialog_close_btn));
 	}
 

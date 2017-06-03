@@ -10,7 +10,6 @@ import com.google.gson.annotations.Expose;
 
 /**
  * 下载软件 model.DownloadSoft
- * 
  * @author yinhb <br/>
  *         create at 2013 2013-1-8 上午11:23:41
  */

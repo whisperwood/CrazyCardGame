@@ -66,15 +66,10 @@ public class EGameSMSpayUtil {
 					paramMap.put("payFromType", paySiteTag); // 充值的标识位
 					// 判断是不是预充值
 					if (PaySite.PREPARERECHARGE.equalsIgnoreCase(paySiteTag)
-							&& null != PrerechargeManager.mPayRecordOrder
-									.getPreOrderNo()) {
-						paramMap.put(
-								PrerechargeManager.PRERECHARGE_ORDER_PARAMS_PREORDERNO,
-								PrerechargeManager.mPayRecordOrder
-										.getPreOrderNo());
-						paramMap.put(
-								PrerechargeManager.PRERECHARGE_ORDER_PARAMS_PREORDERTYPE,
-								"1");
+							&& null != PrerechargeManager.mPayRecordOrder.getPreOrderNo()) {
+						paramMap.put(PrerechargeManager.PRERECHARGE_ORDER_PARAMS_PREORDERNO,
+								PrerechargeManager.mPayRecordOrder.getPreOrderNo());
+						paramMap.put(PrerechargeManager.PRERECHARGE_ORDER_PARAMS_PREORDERTYPE, "1");
 					}
 					if (Assistant.ASSID != null && Assistant.BTNCODE != null) {
 						paramMap.put("asstId", Assistant.ASSID);
@@ -83,21 +78,16 @@ public class EGameSMSpayUtil {
 						Assistant.BTNCODE = null;
 					}
 					if (Database.JOIN_ROOM != null) {
-						paramMap.put("payFromItem",
-								Database.JOIN_ROOM.getCode());
+						paramMap.put("payFromItem", Database.JOIN_ROOM.getCode());
 					}
-					String resultJson = HttpRequest.addPayOrder(
-							EGameSMSConfig.PAY_ORDER_URL, paramMap);
-					JsonResult result = JsonHelper.fromJson(resultJson,
-							JsonResult.class);
+					String resultJson = HttpRequest.addPayOrder(EGameSMSConfig.PAY_ORDER_URL, paramMap);
+					JsonResult result = JsonHelper.fromJson(resultJson, JsonResult.class);
 					if (JsonResult.SUCCESS.equals(result.getMethodCode())) {
-						EGameOrder mmorder = JsonHelper.fromJson(
-								result.getMethodMessage(), EGameOrder.class);
+						EGameOrder mmorder = JsonHelper.fromJson(result.getMethodMessage(), EGameOrder.class);
 						EGameSMSConfig.PAY_ORDER = mmorder.getOrderNo();
 						Database.currentActivity.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								
 							}
 						});
 					} else {

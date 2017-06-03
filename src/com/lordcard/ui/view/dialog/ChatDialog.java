@@ -28,7 +28,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-
 import com.lordcard.common.util.ImageUtil;
 import com.lordcard.common.util.MultiScreenTool;
 import com.lordcard.common.util.PatternUtils;
@@ -39,27 +38,37 @@ import com.lordcard.network.http.GameCache;
 
 /**
  * 聊天对话框
- * 
  * @author xu
  */
 public class ChatDialog extends Dialog implements OnClickListener {
 	private List<RelativeLayout> taskLayoutList;
-	private final int[] gifInt = { R.drawable.f01, R.drawable.f02,
-			R.drawable.f03, R.drawable.f04, R.drawable.f05, R.drawable.f06,
-			R.drawable.f07, R.drawable.f08 };
+	private final int[] gifInt = {
+			R.drawable.f01,
+			R.drawable.f02,
+			R.drawable.f03,
+			R.drawable.f04,
+			R.drawable.f05,
+			R.drawable.f06,
+			R.drawable.f07,
+			R.drawable.f08 };
 	// private final int[] girlsDrawable = { R.drawable.girl1, R.drawable.girl2,
 	// R.drawable.girl3,
 	// R.drawable.girl4, R.drawable.girl5, R.drawable.girl6, R.drawable.girl7,
 	// R.drawable.girl8 };
-	private final String[] gifStr = { "g01.gif", "g02.gif", "g03.gif",
-			"g04.gif", "g05.gif", "g06.gif", "g07.gif", "g08.gif" };
+	private final String[] gifStr = {
+			"g01.gif",
+			"g02.gif",
+			"g03.gif",
+			"g04.gif",
+			"g05.gif",
+			"g06.gif",
+			"g07.gif",
+			"g08.gif" };
 	// private final String[] girlStr = { "girl1.png", "girl2.png", "girl3.png",
 	// "girl4.png",
 	// "girl5.png", "girl6.png", "girl7.png", "girl8.png" };
-	private Button thinkMessBtn, moRenBtn, usualMessBtn, sendMessBtn,
-			girlMessBtn, sendMessBtn1, exitBtn = null;
-	private RelativeLayout thinkMessLayout, morenImageLayout, usualMessLayout,
-			girlMessLayout;
+	private Button thinkMessBtn, moRenBtn, usualMessBtn, sendMessBtn, girlMessBtn, sendMessBtn1, exitBtn = null;
+	private RelativeLayout thinkMessLayout, morenImageLayout, usualMessLayout, girlMessLayout;
 	private EditText messEditText, thinkText;
 	private GridView girlGrid, boyGrid; // 美女和小孩gif
 	private MyAdapter girlGridAdapter, boyGridAdapter;
@@ -115,17 +124,14 @@ public class ChatDialog extends Dialog implements OnClickListener {
 			boyGrid.setPadding(1, 1, 1, 1);
 			boyGridAdapter = new MyAdapter(gifInt, mContext);
 			boyGrid.setAdapter(boyGridAdapter);
-			final GameUser cacheUser = (GameUser) GameCache
-					.getObj(CacheKey.GAME_USER);
+			final GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 			boyGrid.setOnItemClickListener(new Gallery.OnItemClickListener() {
 				@Override
-				public void onItemClick(AdapterView<?> parent, View arg1,
-						int position, long arg3) {
+				public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
 					Message msg = new Message();
 					Bundle b = new Bundle();
 					msg.what = Constant.HANDLER_WHAT_GAME_VIEW_SEND_MESS_GIF;
-					b.putString(Constant.GAME_VIEW_SEND_MESS_GIF,
-							gifStr[position]);
+					b.putString(Constant.GAME_VIEW_SEND_MESS_GIF, gifStr[position]);
 					b.putInt(Constant.GAME_VIEW_SEND_MESS_CLICK_TYPE, clickType);
 					msg.setData(b);
 					mHandler.sendMessage(msg);
@@ -162,18 +168,15 @@ public class ChatDialog extends Dialog implements OnClickListener {
 			// });
 			// // 美女 end
 			messList = (ListView) findViewById(R.id.message_list);
-			messList.setAdapter(new ArrayAdapter<String>(mContext,
-					R.layout.mess_list_item, getMessData()));
+			messList.setAdapter(new ArrayAdapter<String>(mContext, R.layout.mess_list_item, getMessData()));
 			messList.setOnItemClickListener(new OnItemClickListener() {
 				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,
-						int arg2, long arg3) {
+				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 					messEditText.setText(getMessData().get(arg2));
 					Message msg = new Message();
 					Bundle b = new Bundle();
 					msg.what = Constant.HANDLER_WHAT_GAME_VIEW_SEND_MESS_TEXT;
-					b.putString(Constant.GAME_VIEW_SEND_MESS_TEXT,
-							getMessData().get(arg2));
+					b.putString(Constant.GAME_VIEW_SEND_MESS_TEXT, getMessData().get(arg2));
 					b.putInt(Constant.GAME_VIEW_SEND_MESS_CLICK_TYPE, clickType);
 					msg.setData(b);
 					mHandler.sendMessage(msg);
@@ -181,18 +184,15 @@ public class ChatDialog extends Dialog implements OnClickListener {
 				}
 			});
 			thinkList = (ListView) findViewById(R.id.think_list);
-			thinkList.setAdapter(new ArrayAdapter<String>(mContext,
-					R.layout.mess_list_item, getThinkData()));
+			thinkList.setAdapter(new ArrayAdapter<String>(mContext, R.layout.mess_list_item, getThinkData()));
 			thinkList.setOnItemClickListener(new OnItemClickListener() {
 				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,
-						int arg2, long arg3) {
+				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 					thinkText.setText(getThinkData().get(arg2));
 					Message msg = new Message();
 					Bundle b = new Bundle();
 					msg.what = Constant.HANDLER_WHAT_GAME_VIEW_SEND_MESS_TEXT;
-					b.putString(Constant.GAME_VIEW_SEND_MESS_TEXT,
-							getThinkData().get(arg2));
+					b.putString(Constant.GAME_VIEW_SEND_MESS_TEXT, getThinkData().get(arg2));
 					b.putInt(Constant.GAME_VIEW_SEND_MESS_CLICK_TYPE, clickType);
 					msg.setData(b);
 					mHandler.sendMessage(msg);
@@ -208,91 +208,83 @@ public class ChatDialog extends Dialog implements OnClickListener {
 		Message msg = new Message();
 		Bundle b = new Bundle();
 		switch (v.getId()) {
-		case R.id.guanbi_btn:
-			dismiss();
-			break;
-		case R.id.send_mess_btn:
-			if (PatternUtils.hasSensitivword(messEditText.getText().toString()
-					.trim())) {
-				Toast.makeText(mContext, "聊天内容不能包含敏感信息", Toast.LENGTH_SHORT)
-						.show();
-			} else {
-				msg.what = Constant.HANDLER_WHAT_GAME_VIEW_SEND_MESS_TEXT;
-				b.putString(Constant.GAME_VIEW_SEND_MESS_TEXT, messEditText
-						.getText().toString());
-				b.putInt(Constant.GAME_VIEW_SEND_MESS_CLICK_TYPE, clickType);
-				msg.setData(b);
-				mHandler.sendMessage(msg);
+			case R.id.guanbi_btn:
 				dismiss();
-			}
-			break;
-		case R.id.send_mess_btn1:
-			if (PatternUtils.hasSensitivword(thinkText.getText().toString()
-					.trim())) {
-				Toast.makeText(mContext, "聊天内容不能包含敏感信息", Toast.LENGTH_SHORT)
-						.show();
-			} else {
-				msg.what = Constant.HANDLER_WHAT_GAME_VIEW_SEND_MESS_TEXT;
-				b.putString(Constant.GAME_VIEW_SEND_MESS_TEXT, thinkText
-						.getText().toString());
-				b.putInt(Constant.GAME_VIEW_SEND_MESS_CLICK_TYPE, clickType);
-				msg.setData(b);
-				mHandler.sendMessage(msg);
-				dismiss();
-			}
-			break;
-		case R.id.gridviews:// GIF动画
-			break;
-		case R.id.girl_grid:// 美女
-			break;
-		case R.id.quite_image_btn://
-			clickType = Constant.MESSAGE_TYPE_TWO;
-			moRenBtn.setBackgroundResource(R.drawable.images_btn_2);
-			usualMessBtn.setBackgroundResource(R.drawable.images_btn_1);
-			thinkMessBtn.setBackgroundResource(R.drawable.images_btn_1);
-			girlMessBtn.setBackgroundResource(R.drawable.images_btn_1);
-			getPageView(0);
-			break;
-		case R.id.usual_mess_btn://
-			clickType = Constant.MESSAGE_TYPE_ZERO;
-			usualMessBtn.setBackgroundResource(R.drawable.images_btn_2);
-			moRenBtn.setBackgroundResource(R.drawable.images_btn_1);
-			thinkMessBtn.setBackgroundResource(R.drawable.images_btn_1);
-			girlMessBtn.setBackgroundResource(R.drawable.images_btn_1);
-			getPageView(1);
-			break;
-		case R.id.think_mess_btn://
-			clickType = Constant.MESSAGE_TYPE_ONE;
-			thinkMessBtn.setBackgroundResource(R.drawable.images_btn_2);
-			moRenBtn.setBackgroundResource(R.drawable.images_btn_1);
-			usualMessBtn.setBackgroundResource(R.drawable.images_btn_1);
-			girlMessBtn.setBackgroundResource(R.drawable.images_btn_1);
-			getPageView(2);
-			break;
-		// case R.id.girl_mess_btn:
-		// clickType = Constant.MESSAGE_TYPE_THREE;
-		// girlMessBtn.setBackgroundResource(R.drawable.images_btn_2);
-		// moRenBtn.setBackgroundResource(R.drawable.images_btn_1);
-		// usualMessBtn.setBackgroundResource(R.drawable.images_btn_1);
-		// thinkMessBtn.setBackgroundResource(R.drawable.images_btn_1);
-		// getPageView(3);
-		// break;
-		default:
-			break;
+				break;
+			case R.id.send_mess_btn:
+				if (PatternUtils.hasSensitivword(messEditText.getText().toString().trim())) {
+					Toast.makeText(mContext, "聊天内容不能包含敏感信息", Toast.LENGTH_SHORT).show();
+				} else {
+					msg.what = Constant.HANDLER_WHAT_GAME_VIEW_SEND_MESS_TEXT;
+					b.putString(Constant.GAME_VIEW_SEND_MESS_TEXT, messEditText.getText().toString());
+					b.putInt(Constant.GAME_VIEW_SEND_MESS_CLICK_TYPE, clickType);
+					msg.setData(b);
+					mHandler.sendMessage(msg);
+					dismiss();
+				}
+				break;
+			case R.id.send_mess_btn1:
+				if (PatternUtils.hasSensitivword(thinkText.getText().toString().trim())) {
+					Toast.makeText(mContext, "聊天内容不能包含敏感信息", Toast.LENGTH_SHORT).show();
+				} else {
+					msg.what = Constant.HANDLER_WHAT_GAME_VIEW_SEND_MESS_TEXT;
+					b.putString(Constant.GAME_VIEW_SEND_MESS_TEXT, thinkText.getText().toString());
+					b.putInt(Constant.GAME_VIEW_SEND_MESS_CLICK_TYPE, clickType);
+					msg.setData(b);
+					mHandler.sendMessage(msg);
+					dismiss();
+				}
+				break;
+			case R.id.gridviews:// GIF动画
+				break;
+			case R.id.girl_grid:// 美女
+				break;
+			case R.id.quite_image_btn://
+				clickType = Constant.MESSAGE_TYPE_TWO;
+				moRenBtn.setBackgroundResource(R.drawable.images_btn_2);
+				usualMessBtn.setBackgroundResource(R.drawable.images_btn_1);
+				thinkMessBtn.setBackgroundResource(R.drawable.images_btn_1);
+				girlMessBtn.setBackgroundResource(R.drawable.images_btn_1);
+				getPageView(0);
+				break;
+			case R.id.usual_mess_btn://
+				clickType = Constant.MESSAGE_TYPE_ZERO;
+				usualMessBtn.setBackgroundResource(R.drawable.images_btn_2);
+				moRenBtn.setBackgroundResource(R.drawable.images_btn_1);
+				thinkMessBtn.setBackgroundResource(R.drawable.images_btn_1);
+				girlMessBtn.setBackgroundResource(R.drawable.images_btn_1);
+				getPageView(1);
+				break;
+			case R.id.think_mess_btn://
+				clickType = Constant.MESSAGE_TYPE_ONE;
+				thinkMessBtn.setBackgroundResource(R.drawable.images_btn_2);
+				moRenBtn.setBackgroundResource(R.drawable.images_btn_1);
+				usualMessBtn.setBackgroundResource(R.drawable.images_btn_1);
+				girlMessBtn.setBackgroundResource(R.drawable.images_btn_1);
+				getPageView(2);
+				break;
+			// case R.id.girl_mess_btn:
+			// clickType = Constant.MESSAGE_TYPE_THREE;
+			// girlMessBtn.setBackgroundResource(R.drawable.images_btn_2);
+			// moRenBtn.setBackgroundResource(R.drawable.images_btn_1);
+			// usualMessBtn.setBackgroundResource(R.drawable.images_btn_1);
+			// thinkMessBtn.setBackgroundResource(R.drawable.images_btn_1);
+			// getPageView(3);
+			// break;
+			default:
+				break;
 		}
 	}
 
 	// 短语，思考
 	private List<String> getMessData() {
-		String[] items = mContext.getResources().getStringArray(
-				R.array.mes_language);
+		String[] items = mContext.getResources().getStringArray(R.array.mes_language);
 		List<String> list = Arrays.asList(items);
 		return list;
 	}
 
 	private List<String> getThinkData() {
-		String[] items = mContext.getResources().getStringArray(
-				R.array.think_language);
+		String[] items = mContext.getResources().getStringArray(R.array.think_language);
 		List<String> list = Arrays.asList(items);
 		return list;
 	}
@@ -381,8 +373,7 @@ class MyAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.gif_item, null);
 			holder.iv = (ImageView) convertView.findViewById(R.id.gif1);
-			holder.iv.setBackgroundDrawable(ImageUtil.getDrawableResId(
-					gifInt[position], true, true));
+			holder.iv.setBackgroundDrawable(ImageUtil.getDrawableResId(gifInt[position], true, true));
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();

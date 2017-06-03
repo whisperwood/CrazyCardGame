@@ -47,8 +47,7 @@ public class GuideImgDialog extends Dialog implements OnClickListener {
 	private List<String> picurlList = new ArrayList<String>();
 	private List<Bitmap> picList = new ArrayList<Bitmap>();
 
-	protected GuideImgDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected GuideImgDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
@@ -64,8 +63,7 @@ public class GuideImgDialog extends Dialog implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.goods_guide_img);
 		mainLayout = (LinearLayout) findViewById(R.id.guide_image_layout);
-		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(
-				R.drawable.photo_bg, false));
+		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.photo_bg, false));
 		layout(context);
 	}
 
@@ -75,7 +73,6 @@ public class GuideImgDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	private void layout(final Context context) {
@@ -89,30 +86,25 @@ public class GuideImgDialog extends Dialog implements OnClickListener {
 				Map<String, String> paramMap = new HashMap<String, String>();
 				paramMap.put("detailId", detailId);
 				try {
-					String result = HttpUtils.post(HttpURL.GUIDE_DETAIL_URL,
-							paramMap, false);
-					Database.GUIDE_DETAIL_LIST = JsonHelper.fromJson(result,
-							new TypeToken<ContentDetail>() {
-							});
-					Database.GUIDE_DESCRIBLE_LIST = JsonHelper.fromJson(
-							Database.GUIDE_DETAIL_LIST.getDescription(),
+					String result = HttpUtils.post(HttpURL.GUIDE_DETAIL_URL, paramMap, false);
+					Database.GUIDE_DETAIL_LIST = JsonHelper.fromJson(result, new TypeToken<ContentDetail>() {
+					});
+					Database.GUIDE_DESCRIBLE_LIST = JsonHelper.fromJson(Database.GUIDE_DETAIL_LIST.getDescription(),
 							new TypeToken<List<GoodsDetails>>() {
 							});
 					detailtextList = Database.GUIDE_DESCRIBLE_LIST;
 					Database.currentActivity.runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							toptView.setText(Database.GUIDE_DETAIL_LIST
-									.getTitle());
+							toptView.setText(Database.GUIDE_DETAIL_LIST.getTitle());
 							// guideAdapter = new ImageAdapter(context,
 							// detailtextList);
 							// //
 							// guidelListView.setDivider(ImageUtil.getResDrawable(context,
 							// R.drawable.stove_line));
 							// viewFlipper.setAdapter(guideAdapter);
-							((Gallery) findViewById(R.id.viewflipper))
-									.setAdapter(new ImageAdapter(context,
-											detailtextList));
+							((Gallery) findViewById(R.id.viewflipper)).setAdapter(new ImageAdapter(context,
+									detailtextList));
 						}
 					});
 				} catch (Exception e) {
@@ -140,13 +132,13 @@ public class GuideImgDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.envalue_back:
-			GuideDialog guideDialog = new GuideDialog(context);
-			guideDialog.show();
-			dismiss();
-			break;
-		default:
-			break;
+			case R.id.envalue_back:
+				GuideDialog guideDialog = new GuideDialog(context);
+				guideDialog.show();
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -197,28 +189,23 @@ public class GuideImgDialog extends Dialog implements OnClickListener {
 		}
 
 		@Override
-		public View getView(final int position, View convertView,
-				ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
 			if (convertView == null) {
 				holder = new ViewHolder();
-				convertView = mInflater
-						.inflate(R.layout.guide_image_item, null);
-				holder.image = (ImageView) convertView
-						.findViewById(R.id.guide_view);
+				convertView = mInflater.inflate(R.layout.guide_image_item, null);
+				holder.image = (ImageView) convertView.findViewById(R.id.guide_view);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			ImageUtil.setImg(HttpURL.URL_PIC_ALL
-					+ datalist.get(position).getText(), holder.image,
-					new ImageCallback() {
-						@Override
-						public void imageLoaded(Bitmap bitmap, ImageView view) {
-							view.setScaleType(ScaleType.FIT_XY);
-							view.setImageBitmap(bitmap);
-						}
-					});
+			ImageUtil.setImg(HttpURL.URL_PIC_ALL + datalist.get(position).getText(), holder.image, new ImageCallback() {
+				@Override
+				public void imageLoaded(Bitmap bitmap, ImageView view) {
+					view.setScaleType(ScaleType.FIT_XY);
+					view.setImageBitmap(bitmap);
+				}
+			});
 			return convertView;
 		}
 

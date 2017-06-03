@@ -33,10 +33,8 @@ import com.lordcard.entity.GameScoreTradeRank;
 import com.lordcard.entity.Room;
 import com.lordcard.network.http.HttpRequest;
 
-
 /**
  * 比赛场详情对话框(待删除)
- * 
  * @author Administrator
  */
 public class SignMatchDialog extends Dialog implements OnClickListener {
@@ -55,14 +53,12 @@ public class SignMatchDialog extends Dialog implements OnClickListener {
 	private Handler mHandler;
 	private List<GameScoreTradeRank> gstList;
 
-	protected SignMatchDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected SignMatchDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
 
-	public SignMatchDialog(Context context, int theme,
-			GameRoomRuleDetail gameHallView, boolean isFuhe, Room room,
+	public SignMatchDialog(Context context, int theme, GameRoomRuleDetail gameHallView, boolean isFuhe, Room room,
 			int position, Handler mHandler) {
 		super(context, theme);
 		this.context = context;
@@ -87,7 +83,6 @@ public class SignMatchDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	private void layout(final Context context) {
@@ -126,70 +121,64 @@ public class SignMatchDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.sign_rank_detail_btn:
-			if (isFuhe) {// 复合赛制
-				// 显示排名信息
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						try {
-							String rank = HttpRequest.getFuheRank(room
-									.getCode());
-							if (rank != null) {
-								gstList = JsonHelper
-										.fromJson(
-												rank,
-												new TypeToken<List<GameScoreTradeRank>>() {
-												});
-							}
-						} catch (Exception e) {
-							// TODO: handle exception
-						}
-						if (gstList != null) {
-							Database.currentActivity
-									.runOnUiThread(new Runnable() {
-										@Override
-										public void run() {
-											MatchRankDialog mrdDialog = new MatchRankDialog(
-													context, R.style.dialog,
-													gstList);
-											mrdDialog.show();
-										}
+			case R.id.sign_rank_detail_btn:
+				if (isFuhe) {// 复合赛制
+					// 显示排名信息
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							try {
+								String rank = HttpRequest.getFuheRank(room.getCode());
+								if (rank != null) {
+									gstList = JsonHelper.fromJson(rank, new TypeToken<List<GameScoreTradeRank>>() {
 									});
-						} else {
-							DialogUtils.mesTip("获取排名失败！", false);
-							dismiss();
+								}
+							} catch (Exception e) {
+								// TODO: handle exception
+							}
+							if (gstList != null) {
+								Database.currentActivity.runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										MatchRankDialog mrdDialog = new MatchRankDialog(context, R.style.dialog,
+												gstList);
+										mrdDialog.show();
+									}
+								});
+							} else {
+								DialogUtils.mesTip("获取排名失败！", false);
+								dismiss();
+							}
 						}
-					}
-				}).start();
-			} else {
+					}).start();
+				} else {
+					dismiss();
+				}
+				break;
+			case R.id.sign_rank_ok_btn:
+				Message message = new Message();
+				if (isFuhe) {// 复合赛制
+					message.what = FHGPlaceListAdapter.WHAT1;
+					Bundle bundle = new Bundle();
+					bundle.putInt(FHGPlaceListAdapter.POSITION, position);
+					message.setData(bundle);
+					mHandler.sendMessage(message);
+					dismiss();
+				} else {
+					message.what = FGPlaceListAdapter.WHAT2;
+					Bundle bundle = new Bundle();
+					bundle.putInt(FGPlaceListAdapter.POSITION, position);
+					message.setData(bundle);
+					mHandler.sendMessage(message);
+					dismiss();
+				}
+				break;
+			case R.id.dialog_close_btn:
 				dismiss();
-			}
-			break;
-		case R.id.sign_rank_ok_btn:
-			Message message = new Message();
-			if (isFuhe) {// 复合赛制
-				message.what = FHGPlaceListAdapter.WHAT1;
-				Bundle bundle = new Bundle();
-				bundle.putInt(FHGPlaceListAdapter.POSITION, position);
-				message.setData(bundle);
-				mHandler.sendMessage(message);
-				dismiss();
-			} else {
-				message.what = FGPlaceListAdapter.WHAT2;
-				Bundle bundle = new Bundle();
-				bundle.putInt(FGPlaceListAdapter.POSITION, position);
-				message.setData(bundle);
-				mHandler.sendMessage(message);
-				dismiss();
-			}
-			break;
-		case R.id.dialog_close_btn:
-			dismiss();
-			break;
-		default:
-			break;
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -231,8 +220,7 @@ public class SignMatchDialog extends Dialog implements OnClickListener {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			convertView = mInflater.inflate(R.layout.match_list_item, null);
 			TextView tv = (TextView) convertView.findViewById(R.id.match_text);
-			tv.setText(gifInt.get(position).get("rankText") + " : "
-					+ gifInt.get(position).get("prizeText"));
+			tv.setText(gifInt.get(position).get("rankText") + " : " + gifInt.get(position).get("prizeText"));
 			return convertView;
 		}
 	}

@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class RoomSignup {
 	/**
-	 * [{"signUp":"1","hallCode":"1","roomCode":"1"},{"signUp":"0","hallCode":
-	 * "1","roomCode":"2"}] signUp=0未报名，1已报名
+	 * [{"signUp":"1","hallCode":"1","roomCode":"1"},{"signUp":"0","hallCode": "1","roomCode":"2"}]
+	 * signUp=0未报名，1已报名
 	 */
 	@Expose
 	@SerializedName("hc")

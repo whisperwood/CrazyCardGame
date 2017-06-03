@@ -49,7 +49,6 @@ public class DialogUtils {
 
 	/**
 	 * Toast提示消息
-	 * 
 	 * @Title: toastTip
 	 * @param @param msg 提示的消息
 	 * @param @param showTime 显示的时间 小于0默认时间
@@ -57,16 +56,13 @@ public class DialogUtils {
 	 * @return void
 	 * @throws
 	 */
-	public static void toastTip(final String msg, final int showTime,
-			final int align) {
+	public static void toastTip(final String msg, final int showTime, final int align) {
 		try {
 			Database.currentActivity.runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
 					MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
-					View toastRoot = Database.currentActivity
-							.getLayoutInflater().inflate(
-									R.layout.my_text_toast, null);
+					View toastRoot = Database.currentActivity.getLayoutInflater().inflate(R.layout.my_text_toast, null);
 					toastRoot.getBackground().setAlpha(85);// 0~255透明度值
 					Toast toast = new Toast(CrashApplication.getInstance());
 					if (showTime > 0) {
@@ -74,8 +70,7 @@ public class DialogUtils {
 					}
 					mst.adjustView(toastRoot);
 					toast.setView(toastRoot);
-					TextView tv = (TextView) toastRoot
-							.findViewById(R.id.TextViewInfo);
+					TextView tv = (TextView) toastRoot.findViewById(R.id.TextViewInfo);
 					mst.adjustView(tv);
 					if (!TextUtils.isEmpty(msg)) {
 						tv.setText(Html.fromHtml(msg));
@@ -96,14 +91,12 @@ public class DialogUtils {
 	}
 
 	/** 提示对话框 */
-	public static void mesTip(final String msg, final boolean showCancel,
-			final boolean isFinish) {
+	public static void mesTip(final String msg, final boolean showCancel, final boolean isFinish) {
 		Database.currentActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, showCancel) {
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, showCancel) {
 						@Override
 						public void okClick() {
 							if (isFinish) {
@@ -128,8 +121,7 @@ public class DialogUtils {
 			@Override
 			public void run() {
 				try {
-					BaoXiangDialog baoXiangDialog = new BaoXiangDialog(
-							Database.currentActivity) {
+					BaoXiangDialog baoXiangDialog = new BaoXiangDialog(Database.currentActivity) {
 						@Override
 						public void okClick() {
 							if (isFinish) {
@@ -151,8 +143,7 @@ public class DialogUtils {
 			@Override
 			public void run() {
 				try {
-					SingleDialog gameDialog = new SingleDialog(
-							Database.currentActivity, isFinish) {
+					SingleDialog gameDialog = new SingleDialog(Database.currentActivity, isFinish) {
 						@Override
 						public void okClick() {
 							dismiss();
@@ -172,8 +163,7 @@ public class DialogUtils {
 			@Override
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, false) {
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, false) {
 						@Override
 						public void okClick() {
 							ActivityUtils.finishAcitivity();
@@ -193,8 +183,7 @@ public class DialogUtils {
 			@Override
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, false) {
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, false) {
 						@Override
 						public void okClick() {
 							GameCache.remove(CacheKey.GAME_USER);
@@ -221,20 +210,17 @@ public class DialogUtils {
 			@Override
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity) {
+					GameDialog gameDialog = new GameDialog(Database.currentActivity) {
 						@Override
 						public void okClick() {
 							Intent in = new Intent();
-							in.setClass(Database.currentActivity,
-									TaskMenuActivity.class);
+							in.setClass(Database.currentActivity, TaskMenuActivity.class);
 							in.putExtra("award", true);
 							Database.currentActivity.startActivity(in);
 						}
 					};
 					gameDialog.show();
-					gameDialog.setText(Database.currentActivity.getText(
-							R.string.award).toString());
+					gameDialog.setText(Database.currentActivity.getText(R.string.award).toString());
 				} catch (Exception e) {
 				}
 			}
@@ -243,26 +229,21 @@ public class DialogUtils {
 
 	/**
 	 * 与服务器断开连接
-	 * 
-	 * @param tipMsgId
-	 *            string.xml资源文件提示信息id
+	 * @param tipMsgId string.xml资源文件提示信息id
 	 */
 	public static void netFailTip(int tipMsgId) {
-		final String msg = Database.currentActivity.getResources().getString(
-				tipMsgId);
+		final String msg = Database.currentActivity.getResources().getString(tipMsgId);
 		final Activity act = Database.currentActivity;
 		act.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, false) {
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, false) {
 						@Override
 						public void okClick() {
 							Intent intent = new Intent();
 							if (Database.GAME_TYPE == Constant.GAME_TYPE_DIZHU) { // 斗地主
-								intent.setClass(act,
-										DoudizhuRoomListActivity.class);
+								intent.setClass(act, DoudizhuRoomListActivity.class);
 							}
 							act.startActivity(intent);
 							ActivityUtils.finishAcitivity();
@@ -278,7 +259,6 @@ public class DialogUtils {
 
 	/**
 	 * 退出游戏
-	 * 
 	 * @param context
 	 * @param act
 	 */
@@ -287,13 +267,11 @@ public class DialogUtils {
 			@Override
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity) {
+					GameDialog gameDialog = new GameDialog(Database.currentActivity) {
 						@Override
 						public void okClick() {
 							CmdUtils.exitGame();
-							GameUser gu = (GameUser) GameCache
-									.getObj(CacheKey.GAME_USER);
+							GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 							// 记录逃跑日志
 							if (gu != null) {
 								gu.setRound(0);
@@ -324,8 +302,7 @@ public class DialogUtils {
 	/**
 	 * 加载提示
 	 */
-	public static ProgressDialog getWaitProgressDialog(Context context,
-			String msg) {
+	public static ProgressDialog getWaitProgressDialog(Context context, String msg) {
 		ProgressDialog dialog = new ProgressDialog(context, R.style.tsdialog);
 		dialog.setMessage(msg);
 		dialog.setProgress(ProgressDialog.STYLE_SPINNER);
@@ -341,13 +318,11 @@ public class DialogUtils {
 
 	/**
 	 * 充值提示
-	 * 
 	 * @param context
 	 * @param msg
 	 * @return
 	 */
-	public static ProgressDialog getChargingProgressDialog(Context context,
-			String msg) {
+	public static ProgressDialog getChargingProgressDialog(Context context, String msg) {
 		ProgressDialog dialog = new ProgressDialog(context, R.style.tsdialog);
 		dialog.setMessage(msg);
 		dialog.setProgress(ProgressDialog.STYLE_SPINNER);
@@ -366,14 +341,12 @@ public class DialogUtils {
 			@Override
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, false) {
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, false) {
 						@Override
 						public void okClick() {
 							ClientCmdMgr.closeClient();
 							Intent intent = new Intent();
-							intent.setClass(Database.currentActivity,
-									DoudizhuRoomListActivity.class);
+							intent.setClass(Database.currentActivity, DoudizhuRoomListActivity.class);
 							Database.currentActivity.startActivity(intent);
 							ActivityUtils.finishAcitivity();
 						}
@@ -394,13 +367,11 @@ public class DialogUtils {
 			@Override
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity, false) {
+					GameDialog gameDialog = new GameDialog(Database.currentActivity, false) {
 						@Override
 						public void okClick() {
 							Intent intent = new Intent();
-							intent.setClass(Database.currentActivity,
-									TaskMenuActivity.class);
+							intent.setClass(Database.currentActivity, TaskMenuActivity.class);
 							Database.currentActivity.startActivity(intent);
 							ActivityUtils.finishAcitivity();
 						}
@@ -415,7 +386,6 @@ public class DialogUtils {
 
 	/**
 	 * 判断网络是否可用
-	 * 
 	 * @param context
 	 * @return
 	 */
@@ -424,14 +394,12 @@ public class DialogUtils {
 			@Override
 			public void okClick() {
 				// Settings.ACTION_WIRELESS_SETTINGS 移动网络(2G/3G)
-				Database.currentActivity.startActivity(new Intent(
-						Settings.ACTION_SETTINGS)); // 进入手机中的wifi网络设置界面
+				Database.currentActivity.startActivity(new Intent(Settings.ACTION_SETTINGS)); // 进入手机中的wifi网络设置界面
 			}
 
 			@Override
 			public void cancelClick() {
-				if (!Database.currentActivity.getClass().equals(
-						LoginActivity.class)) {
+				if (!Database.currentActivity.getClass().equals(LoginActivity.class)) {
 					ActivityPool.exitApp();
 				}
 			}
@@ -451,8 +419,7 @@ public class DialogUtils {
 			@Override
 			public void run() {
 				try {
-					GameDialog gameDialog = new GameDialog(
-							Database.currentActivity) {
+					GameDialog gameDialog = new GameDialog(Database.currentActivity) {
 						@Override
 						public void okClick() {
 							dismiss();
@@ -462,13 +429,11 @@ public class DialogUtils {
 						public void cancelClick() {
 							dismiss();
 							Intent intent = new Intent();
-							intent.setClass(Database.currentActivity,
-									PersonnalDoudizhuActivity.class);
+							intent.setClass(Database.currentActivity, PersonnalDoudizhuActivity.class);
 							Database.currentActivity.startActivity(intent);
 						}
 					};
-					String msg = Database.currentActivity
-							.getString(R.string.link_server_fail);
+					String msg = Database.currentActivity.getString(R.string.link_server_fail);
 					gameDialog.show();
 					gameDialog.setText(msg);
 					gameDialog.setOkText("确   定");

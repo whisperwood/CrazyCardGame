@@ -22,7 +22,6 @@ public class ChoudiRule {
 
 	/**
 	 * 提示功能
-	 * 
 	 * @param cards
 	 * @return
 	 */
@@ -39,60 +38,53 @@ public class ChoudiRule {
 		// 首先检测别人是什么类型的牌
 		int cardType = checkpai(Othercards);
 		switch (cardType) {
-		case Danpai:
-			int value = Othercards.get(0).getValue() * 100
-					+ Othercards.get(0).getStyle();
-			if (value == 17) {// 如果是火箭的话直接返回
-				return null;
-			}
-			tishi = new int[Othercards.size()];
-			for (int i = Mycards.size() - 1; i >= 0; i--) {
-				// //System.out.println("最后一张的值为"+Mycards.get(i).getValue());
-				if (value < Mycards.get(i).getValue() * 100
-						+ Mycards.get(i).getStyle()) {
-					tishi[0] = Mycards.get(i).getNumber();
-					return tishi;
+			case Danpai:
+				int value = Othercards.get(0).getValue() * 100 + Othercards.get(0).getStyle();
+				if (value == 17) {// 如果是火箭的话直接返回
+					return null;
 				}
-			}
-			return null;
-		case Yidui:
-			tishi = new int[Othercards.size()];
-			int yiduivalue = Othercards.get(0).getValue() * 100
-					+ Othercards.get(0).getStyle();
-			if (yiduivalue == 17) {// 如果是火箭的话直接返回
-				return null;
-			}
-			for (int i = Mycards.size() - 1; i > 0; i--) {
-				// //System.out.println("最后一张的值为"+Mycards.get(i).getValue());
-				if (yiduivalue < Mycards.get(i - 1).getValue() * 100
-						+ Mycards.get(i - 1).getStyle()) {
-					if (Mycards.get(i).getValue() == Mycards.get(i - 1)
-							.getValue()) {
-						tishi[0] = Mycards.get(i - 1).getNumber();
-						tishi[1] = Mycards.get(i).getNumber();
-						return tishi;
-					}
-				}
-			}
-			return null;
-		case Santiao:
-			tishi = new int[Othercards.size()];
-			int santiaovalue = Othercards.get(0).getValue();
-			for (int i = Mycards.size() - 1; i > 1; i--) {
-				// //System.out.println("最后一张的值为"+Mycards.get(i).getValue());
-				if (santiaovalue < Mycards.get(i).getValue()) {
-					if (Mycards.get(i).getValue() == Mycards.get(i - 1)
-							.getValue()
-							&& Mycards.get(i - 2).getValue() == Mycards.get(
-									i - 1).getValue()) {
+				tishi = new int[Othercards.size()];
+				for (int i = Mycards.size() - 1; i >= 0; i--) {
+					// //System.out.println("最后一张的值为"+Mycards.get(i).getValue());
+					if (value < Mycards.get(i).getValue() * 100 + Mycards.get(i).getStyle()) {
 						tishi[0] = Mycards.get(i).getNumber();
-						tishi[1] = Mycards.get(i - 1).getNumber();
-						tishi[2] = Mycards.get(i - 2).getNumber();
 						return tishi;
 					}
 				}
-			}
-			return null;
+				return null;
+			case Yidui:
+				tishi = new int[Othercards.size()];
+				int yiduivalue = Othercards.get(0).getValue() * 100 + Othercards.get(0).getStyle();
+				if (yiduivalue == 17) {// 如果是火箭的话直接返回
+					return null;
+				}
+				for (int i = Mycards.size() - 1; i > 0; i--) {
+					// //System.out.println("最后一张的值为"+Mycards.get(i).getValue());
+					if (yiduivalue < Mycards.get(i - 1).getValue() * 100 + Mycards.get(i - 1).getStyle()) {
+						if (Mycards.get(i).getValue() == Mycards.get(i - 1).getValue()) {
+							tishi[0] = Mycards.get(i - 1).getNumber();
+							tishi[1] = Mycards.get(i).getNumber();
+							return tishi;
+						}
+					}
+				}
+				return null;
+			case Santiao:
+				tishi = new int[Othercards.size()];
+				int santiaovalue = Othercards.get(0).getValue();
+				for (int i = Mycards.size() - 1; i > 1; i--) {
+					// //System.out.println("最后一张的值为"+Mycards.get(i).getValue());
+					if (santiaovalue < Mycards.get(i).getValue()) {
+						if (Mycards.get(i).getValue() == Mycards.get(i - 1).getValue()
+								&& Mycards.get(i - 2).getValue() == Mycards.get(i - 1).getValue()) {
+							tishi[0] = Mycards.get(i).getNumber();
+							tishi[1] = Mycards.get(i - 1).getNumber();
+							tishi[2] = Mycards.get(i - 2).getNumber();
+							return tishi;
+						}
+					}
+				}
+				return null;
 		}
 		// 使用新的提示函数
 		return ChoudiRule.gettiShiFive(Othercards, Mycards, cardType);
@@ -100,15 +92,11 @@ public class ChoudiRule {
 
 	/**
 	 * 对手是五张牌时取提示
-	 * 
-	 * @param Othercards
-	 *            对手牌
-	 * @param Mycards
-	 *            我的牌
+	 * @param Othercards 对手牌
+	 * @param Mycards 我的牌
 	 * @return 牌的Number队列
 	 */
-	public static int[] gettiShiFive(List<Poker> Othercards,
-			List<Poker> Mycards, int cardType) {
+	public static int[] gettiShiFive(List<Poker> Othercards, List<Poker> Mycards, int cardType) {
 		// 设置一个矩阵，将自己的牌放进去,每行代表一个花色（1为方片、2为梅花、3为红桃、4为黑桃），
 		// 每列得下标是牌的value，比如cards[0][3]代表方片三，cards[3][3]代表黑桃三
 		// 需要特别说明的是，列坐标1代表A，2代表2,14也代表A，15代表2，这在做顺子判断时比较容易，在其他判断中，忽略坐标1和2
@@ -128,94 +116,81 @@ public class ChoudiRule {
 		}
 		int ret[] = null;
 		switch (cardType) {
-		case ChoudiRule.shunzi:
-			if (Othercards.get(0).getValue() == 15
-					&& Othercards.get(1).getValue() == 14) {
-				// 唯一情况：1,2,3,4,5
-				ret = getShunziFromCards(cards, 5, Othercards.get(2).getStyle());
-			} else if (Othercards.get(0).getValue() == 15) {
-				// w唯一情况：2,3,4,5,6
-				ret = getShunziFromCards(cards, 6, Othercards.get(1).getStyle());
-			} else {
-				ret = getShunziFromCards(cards, Othercards.get(0).getValue(),
-						Othercards.get(0).getStyle());
-			}
-			if (ret != null) {
-				return ret;
-			}
-		case ChoudiRule.tonghuawu:
-			if (cardType == tonghuawu) {
-				ret = getTongHuaWuFromCards(cards,
-						Othercards.get(0).getValue(), Othercards.get(0)
-								.getStyle());
-			} else {
-				// 牌型不是同花五，任何一个同花五都能胜，
-				ret = getTongHuaWuFromCards(cards, 0, 0);
-			}
-			if (ret != null) {
-				return ret;
-			}
-		case ChoudiRule.sandaier:
-			// 对手五张牌中第三张牌必定是三张中的一张
-			if (cardType == sandaier) {
-				ret = getSanDaiErFromCards(cards, Othercards.get(2).getValue());
-			} else {
-				// 牌型不是三带二，任何一个同花顺都能胜
-				ret = getSanDaiErFromCards(cards, 0);
-			}
-			if (ret != null) {
-				return ret;
-			}
-		case ChoudiRule.sidaiyi:
-			// 对手五张牌中第三张牌必定是四张中的一张
-			if (cardType == sidaiyi) {
-				ret = getSiDaiYiFromCards(cards, Othercards.get(2).getValue());
-			} else {
-				// 牌型不是四带一，任何牌都能胜
-				ret = getSiDaiYiFromCards(cards, 0);
-			}
-			if (ret != null) {
-				return ret;
-			}
-		case ChoudiRule.tonghuashun:
-			if (cardType == tonghuashun) {
-				if (Othercards.get(0).getValue() == 15
-						&& Othercards.get(0).getValue() == 14) {
+			case ChoudiRule.shunzi:
+				if (Othercards.get(0).getValue() == 15 && Othercards.get(1).getValue() == 14) {
 					// 唯一情况：1,2,3,4,5
-					ret = getTongHuaShunFromCards(cards, 5, Othercards.get(2)
-							.getStyle());
+					ret = getShunziFromCards(cards, 5, Othercards.get(2).getStyle());
 				} else if (Othercards.get(0).getValue() == 15) {
 					// w唯一情况：2,3,4,5,6
-					ret = getTongHuaShunFromCards(cards, 6, Othercards.get(1)
-							.getStyle());
+					ret = getShunziFromCards(cards, 6, Othercards.get(1).getStyle());
 				} else {
-					ret = getTongHuaShunFromCards(cards, Othercards.get(0)
-							.getValue(), Othercards.get(0).getStyle());
+					ret = getShunziFromCards(cards, Othercards.get(0).getValue(), Othercards.get(0).getStyle());
 				}
-			} else {
-				// 牌型不是同花顺，任何一个同花都能胜
-				ret = getTongHuaShunFromCards(cards, 0, 0);
-			}
-			if (ret != null) {
-				return ret;
-			}
+				if (ret != null) {
+					return ret;
+				}
+			case ChoudiRule.tonghuawu:
+				if (cardType == tonghuawu) {
+					ret = getTongHuaWuFromCards(cards, Othercards.get(0).getValue(), Othercards.get(0).getStyle());
+				} else {
+					// 牌型不是同花五，任何一个同花五都能胜，
+					ret = getTongHuaWuFromCards(cards, 0, 0);
+				}
+				if (ret != null) {
+					return ret;
+				}
+			case ChoudiRule.sandaier:
+				// 对手五张牌中第三张牌必定是三张中的一张
+				if (cardType == sandaier) {
+					ret = getSanDaiErFromCards(cards, Othercards.get(2).getValue());
+				} else {
+					// 牌型不是三带二，任何一个同花顺都能胜
+					ret = getSanDaiErFromCards(cards, 0);
+				}
+				if (ret != null) {
+					return ret;
+				}
+			case ChoudiRule.sidaiyi:
+				// 对手五张牌中第三张牌必定是四张中的一张
+				if (cardType == sidaiyi) {
+					ret = getSiDaiYiFromCards(cards, Othercards.get(2).getValue());
+				} else {
+					// 牌型不是四带一，任何牌都能胜
+					ret = getSiDaiYiFromCards(cards, 0);
+				}
+				if (ret != null) {
+					return ret;
+				}
+			case ChoudiRule.tonghuashun:
+				if (cardType == tonghuashun) {
+					if (Othercards.get(0).getValue() == 15 && Othercards.get(0).getValue() == 14) {
+						// 唯一情况：1,2,3,4,5
+						ret = getTongHuaShunFromCards(cards, 5, Othercards.get(2).getStyle());
+					} else if (Othercards.get(0).getValue() == 15) {
+						// w唯一情况：2,3,4,5,6
+						ret = getTongHuaShunFromCards(cards, 6, Othercards.get(1).getStyle());
+					} else {
+						ret = getTongHuaShunFromCards(cards, Othercards.get(0).getValue(), Othercards.get(0).getStyle());
+					}
+				} else {
+					// 牌型不是同花顺，任何一个同花都能胜
+					ret = getTongHuaShunFromCards(cards, 0, 0);
+				}
+				if (ret != null) {
+					return ret;
+				}
 		}
 		return null;
 	}
 
 	/**
 	 * 从牌矩阵中取一个杂顺，其最小的值要大于minValue
-	 * 
-	 * @param cards
-	 *            牌矩阵
-	 * @param maxValue
-	 *            对手最大的牌 ，为0则表示对手不是同花顺，任何牌型都能胜
-	 * @param maxStyle
-	 *            对手最大的牌的花色 ，maxValue为0时忽略此参数
+	 * @param cards 牌矩阵
+	 * @param maxValue 对手最大的牌 ，为0则表示对手不是同花顺，任何牌型都能胜
+	 * @param maxStyle 对手最大的牌的花色 ，maxValue为0时忽略此参数
 	 * @return null则找不到，非null则为找到的杂顺
 	 */
-	private static int[] getTongHuaShunFromCards(boolean[][] cards,
-			int maxValue, int maxStyle) {
+	private static int[] getTongHuaShunFromCards(boolean[][] cards, int maxValue, int maxStyle) {
 		int ret[] = new int[5];
 		int retIndex = 0;
 		int loopEnd = cards[0].length - 1;// 顺子不能算入最后的2，因为 “jqkA2”不是顺子
@@ -246,9 +221,8 @@ public class ChoudiRule {
 				if (j == maxValue && i <= maxStyle) {
 					continue;
 				}
-				if (cards[i][j] == true && cards[i][j - 1] == true
-						&& cards[i][j - 2] == true && cards[i][j - 3] == true
-						&& cards[i][j - 4] == true) {
+				if (cards[i][j] == true && cards[i][j - 1] == true && cards[i][j - 2] == true
+						&& cards[i][j - 3] == true && cards[i][j - 4] == true) {
 					ret[retIndex++] = getCardNumber(i, j);
 					ret[retIndex++] = getCardNumber(i, j - 1);
 					ret[retIndex++] = getCardNumber(i, j - 2);
@@ -263,11 +237,8 @@ public class ChoudiRule {
 
 	/**
 	 * 对手是四带一时的提示
-	 * 
-	 * @param cards
-	 *            牌矩阵
-	 * @param rechargeType
-	 *            对手四张的牌的值 为0表示任何四带一都能胜
+	 * @param cards 牌矩阵
+	 * @param rechargeType 对手四张的牌的值 为0表示任何四带一都能胜
 	 * @return 五张牌的Number
 	 */
 	private static int[] getSiDaiYiFromCards(boolean[][] cards, int siZhangValue) {
@@ -318,14 +289,11 @@ public class ChoudiRule {
 
 	/**
 	 * 对手是三带对时的提示
-	 * 
 	 * @param cards
-	 * @param sanZhangValue
-	 *            对手三张的牌，如果是0则代表任何一个三带二都能胜过
+	 * @param sanZhangValue 对手三张的牌，如果是0则代表任何一个三带二都能胜过
 	 * @return
 	 */
-	private static int[] getSanDaiErFromCards(boolean[][] cards,
-			int sanZhangValue) {
+	private static int[] getSanDaiErFromCards(boolean[][] cards, int sanZhangValue) {
 		try {
 			int ret[] = new int[5];
 			int retIndex = 0;
@@ -388,16 +356,12 @@ public class ChoudiRule {
 
 	/**
 	 * 对手是同花五时的提示
-	 * 
 	 * @param cards
-	 * @param maxValue
-	 *            对手最大的牌数，为0则表示任何牌都能吃
-	 * @param maxStyle
-	 *            对手最大的牌的花色 maxValue为0时忽略此参数
+	 * @param maxValue 对手最大的牌数，为0则表示任何牌都能吃
+	 * @param maxStyle 对手最大的牌的花色 maxValue为0时忽略此参数
 	 * @return
 	 */
-	private static int[] getTongHuaWuFromCards(boolean[][] cards, int maxValue,
-			int maxStyle) {
+	private static int[] getTongHuaWuFromCards(boolean[][] cards, int maxValue, int maxStyle) {
 		int ret[] = new int[5];
 		int retIndex = 0;
 		int j = 0;
@@ -456,15 +420,11 @@ public class ChoudiRule {
 
 	/**
 	 * 从牌矩阵中取一个杂顺，其最小的值要大于minValue
-	 * 
-	 * @param cards
-	 *            牌矩阵
-	 * @param MinValue
-	 *            对手最小的牌
+	 * @param cards 牌矩阵
+	 * @param MinValue 对手最小的牌
 	 * @return null则找不到，非null则为找到的杂顺
 	 */
-	public static int[] getShunziFromCards(boolean cards[][], int maxValue,
-			int maxStyle) {
+	public static int[] getShunziFromCards(boolean cards[][], int maxValue, int maxStyle) {
 		int minValue = maxValue - 4;
 		int ret[] = new int[5];
 		int retIndex = 0;
@@ -504,11 +464,8 @@ public class ChoudiRule {
 
 	/**
 	 * 计算一个牌的Number参数
-	 * 
-	 * @param style
-	 *            花色
-	 * @param value
-	 *            牌的值 (14==1,15==2)
+	 * @param style 花色
+	 * @param value 牌的值 (14==1,15==2)
 	 * @return 牌的Number
 	 */
 	public static int getCardNumber(int style, int value) {
@@ -521,9 +478,7 @@ public class ChoudiRule {
 	}
 
 	/**
-	 * 寻找一张牌中出现次数最多，牌最大的数字,这里取出来的值不是Card中的Number，而是按一下规则定义的牌：牌的数 * 10 +
-	 * 牌的花色，这样保证的所有的牌之间有大小关系
-	 * 
+	 * 寻找一张牌中出现次数最多，牌最大的数字,这里取出来的值不是Card中的Number，而是按一下规则定义的牌：牌的数 * 10 + 牌的花色，这样保证的所有的牌之间有大小关系
 	 * @param cards
 	 * @param type
 	 * @return
@@ -549,8 +504,7 @@ public class ChoudiRule {
 			// //System.out.println("c出现最多是"+count+"次");
 			for (int i = 0; i < cards.size(); i++) {
 				if (count == numberCount(cards.get(i).getValue(), cards)) {
-					max = cards.get(i).getValue() * pei
-							+ cards.get(i).getStyle();
+					max = cards.get(i).getValue() * pei + cards.get(i).getStyle();
 					// System.out.println("最大的牌位"+max);
 					return max;
 				}
@@ -561,43 +515,39 @@ public class ChoudiRule {
 
 	/**
 	 * //检测牌的大小，如果大能出就true
-	 * 
 	 * @param typeOher
 	 * @param typeMe
 	 * @param maxOhther
 	 * @param maxMe
 	 * @return
 	 */
-	public static boolean compterpai(int typeOher, int typeMe, int maxOhther,
-			int maxMe) {
+	public static boolean compterpai(int typeOher, int typeMe, int maxOhther, int maxMe) {
 		boolean compter = false;
 		// 如果两个人出的牌类型不一样
 		if (typeMe != typeOher) {
 			// System.out.println("牌型不一样");
 			compter = false;
 			switch (typeOher) {
-			case tonghuawu:
-				if (typeMe == tonghuashun || typeMe == sidaiyi
-						|| typeMe == sandaier) { // 别人同花，自己同花顺，4带1，三代二都可以打得过
-					compter = true;
-				}
-				break;
-			case sidaiyi:
-				if (typeMe == tonghuashun) { // 别人四带1，自己只有同花顺才能打得过
-					compter = true;
-				}
-				break;
-			case shunzi:
-				if (typeMe == tonghuashun || typeMe == sidaiyi
-						|| typeMe == sandaier || typeMe == tonghuawu) { // 别人同花，自己同花顺，4带1，三代二,同花都可以打得过
-					compter = true;
-				}
-				break;
-			case sandaier:
-				if (typeMe == tonghuashun || typeMe == sidaiyi) { // 别人同花，自己同花顺，4带1，都可以打得过
-					compter = true;
-				}
-				break;
+				case tonghuawu:
+					if (typeMe == tonghuashun || typeMe == sidaiyi || typeMe == sandaier) { // 别人同花，自己同花顺，4带1，三代二都可以打得过
+						compter = true;
+					}
+					break;
+				case sidaiyi:
+					if (typeMe == tonghuashun) { // 别人四带1，自己只有同花顺才能打得过
+						compter = true;
+					}
+					break;
+				case shunzi:
+					if (typeMe == tonghuashun || typeMe == sidaiyi || typeMe == sandaier || typeMe == tonghuawu) { // 别人同花，自己同花顺，4带1，三代二,同花都可以打得过
+						compter = true;
+					}
+					break;
+				case sandaier:
+					if (typeMe == tonghuashun || typeMe == sidaiyi) { // 别人同花，自己同花顺，4带1，都可以打得过
+						compter = true;
+					}
+					break;
 			}
 		} else {// 两个人出牌的类型一样
 				// System.out.println("牌型一样");
@@ -612,7 +562,6 @@ public class ChoudiRule {
 
 	/**
 	 * 检测是什么牌
-	 * 
 	 * @param cards
 	 * @return 0为错误，1为单张，2为一对，3为3张，4为顺子，5为同花顺，6为同花五，7为三带二，8为四带一
 	 */
@@ -627,55 +576,54 @@ public class ChoudiRule {
 		int pokerCount = getPokeCount(cards);
 		// //System.out.println("相同的牌位："+pokerCount);
 		switch (cards.size()) {
-		case 1: // 如果是一张牌
-			cardStyle = Danpai; // 单牌
-			// System.out.println("单牌");
-			break;
-		case 2:// 如果是两张牌
-			if (cards.get(0).getValue() == cards.get(1).getValue()) {
-				cardStyle = Yidui;// 一对
-				// System.out.println("一对");
-			}
-			break;
-		case 3:// 如果是三张牌
-			if (pokerCount == 3) {
-				cardStyle = Santiao;
-				// System.out.println("三张");
-			}
-			break;
-		case 5:// 如果是五张牌
-			if (pokerCount == 3) {// 三待二
-				// 最开始两张和最后两张都必须相等
-				if (cards.get(3).getValue() == cards.get(4).getValue()
-						&& cards.get(0).getValue() == cards.get(1).getValue()) {
-					cardStyle = sandaier;
-					// System.out.println("三带2");
+			case 1: // 如果是一张牌
+				cardStyle = Danpai; // 单牌
+				// System.out.println("单牌");
+				break;
+			case 2:// 如果是两张牌
+				if (cards.get(0).getValue() == cards.get(1).getValue()) {
+					cardStyle = Yidui;// 一对
+					// System.out.println("一对");
 				}
-			} else if (pokerCount == 4) {// 四带1
-				cardStyle = sidaiyi;
-				// System.out.println("四带一");
-			} else if (checkShunpai(cards)) {// 是顺牌
-				if (checkTonghua(cards)) {
-					cardStyle = tonghuashun;
-					// System.out.println("同花顺");
+				break;
+			case 3:// 如果是三张牌
+				if (pokerCount == 3) {
+					cardStyle = Santiao;
+					// System.out.println("三张");
+				}
+				break;
+			case 5:// 如果是五张牌
+				if (pokerCount == 3) {// 三待二
+					// 最开始两张和最后两张都必须相等
+					if (cards.get(3).getValue() == cards.get(4).getValue()
+							&& cards.get(0).getValue() == cards.get(1).getValue()) {
+						cardStyle = sandaier;
+						// System.out.println("三带2");
+					}
+				} else if (pokerCount == 4) {// 四带1
+					cardStyle = sidaiyi;
+					// System.out.println("四带一");
+				} else if (checkShunpai(cards)) {// 是顺牌
+					if (checkTonghua(cards)) {
+						cardStyle = tonghuashun;
+						// System.out.println("同花顺");
+					} else {
+						cardStyle = shunzi;
+						// System.out.println("杂顺");
+					}
 				} else {
-					cardStyle = shunzi;
-					// System.out.println("杂顺");
+					if (checkTonghua(cards)) {
+						cardStyle = tonghuawu;
+						// System.out.println("同花五");
+					}
 				}
-			} else {
-				if (checkTonghua(cards)) {
-					cardStyle = tonghuawu;
-					// System.out.println("同花五");
-				}
-			}
-			break;
+				break;
 		}
 		return cardStyle;
 	}
 
 	/**
 	 * 检测是不是同花
-	 * 
 	 * @param cards
 	 * @return
 	 */
@@ -696,7 +644,6 @@ public class ChoudiRule {
 
 	/**
 	 * 统计是不是顺牌，顺牌最後不包括2,
-	 * 
 	 * @param cards
 	 * @return
 	 */
@@ -710,16 +657,15 @@ public class ChoudiRule {
 			return false;
 		}
 		if (cards.get(0).getValue() == 15// 如果是12345的話，是順子
-				&& cards.get(1).getValue() == 14
-				&& cards.get(2).getValue() == 5
+				&& cards.get(1).getValue() == 14 && cards.get(2).getValue() == 5
 				&& cards.get(3).getValue() == 4
 				&& cards.get(4).getValue() == 3) {
 			return true;
 		}
 		if (cards.get(0).getValue() == 15// 如果是23456的話，是順子
-				&& cards.get(1).getValue() == 6
-				&& cards.get(2).getValue() == 5
-				&& cards.get(3).getValue() == 4 && cards.get(4).getValue() == 3) {
+				&& cards.get(1).getValue() == 6 && cards.get(2).getValue() == 5
+				&& cards.get(3).getValue() == 4
+				&& cards.get(4).getValue() == 3) {
 			return true;
 		}
 		for (int i = 0; i < cards.size() - 1; i++) {
@@ -734,7 +680,6 @@ public class ChoudiRule {
 
 	/**
 	 * 檢測一張牌在一手牌中出現的次數
-	 * 
 	 * @param number
 	 * @param cards
 	 * @return
@@ -753,7 +698,6 @@ public class ChoudiRule {
 
 	/**
 	 * 统计一手牌中同值的牌出现的次数来判断
-	 * 
 	 * @param cards
 	 * @return
 	 */
@@ -780,7 +724,6 @@ public class ChoudiRule {
 
 	/**
 	 * 将牌排序从大到小排序
-	 * 
 	 * @param cards
 	 * @param poker
 	 * @return
@@ -791,8 +734,7 @@ public class ChoudiRule {
 		// * 冒泡排序
 		for (int i = 0; i < cards.length; i++) {
 			num[i] = new Number();
-			num[i].setValue(poker[cards[i]].getValue() * 100
-					+ poker[cards[i]].getStyle());
+			num[i].setValue(poker[cards[i]].getValue() * 100 + poker[cards[i]].getStyle());
 			num[i].setPokerNumber(cards[i]);
 			zhi[i] = poker[cards[i]].getValue();
 		}

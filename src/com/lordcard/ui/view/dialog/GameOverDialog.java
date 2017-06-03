@@ -33,25 +33,21 @@ import com.lordcard.ui.interfaces.InitMainGameInterface;
 
 /**
  * 淘汰或胜利对话框
- * 
  * @author Administrator
  */
-public class GameOverDialog extends Dialog implements
-		android.view.View.OnClickListener {
+public class GameOverDialog extends Dialog implements android.view.View.OnClickListener {
 	private ListView listview;
 	private List<PrizeGoods> prizeGoods;
 	private Context context;
 	private TaskManager taskManager;
 	private int rank;
 	private TextView tv;
-	private TaskFeedback feedback = TaskFeedback
-			.getInstance(TaskFeedback.DIALOG_MODE);
+	private TaskFeedback feedback = TaskFeedback.getInstance(TaskFeedback.DIALOG_MODE);
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	private RelativeLayout layout;
 	private InitMainGameInterface initInterface;
 
-	public GameOverDialog(Context context, int theme,
-			List<PrizeGoods> prizeGoods, TaskManager taskManager, String rank) {
+	public GameOverDialog(Context context, int theme, List<PrizeGoods> prizeGoods, TaskManager taskManager, String rank) {
 		super(context, theme);
 		this.prizeGoods = prizeGoods;
 		this.context = context;
@@ -76,13 +72,11 @@ public class GameOverDialog extends Dialog implements
 		String result = "";
 		if (rank <= 3) {
 			result = "恭喜,您在此轮比赛中获得第" + rank + "名,太给力啦！\n";
-			winOrLoseIconIv
-					.setBackgroundResource(R.drawable.game_place_dialog_win_icon);
+			winOrLoseIconIv.setBackgroundResource(R.drawable.game_place_dialog_win_icon);
 			tv.setTextColor(context.getResources().getColor(R.color.orange_red));
 		} else {
 			result = "对不起，由于您在此轮比赛中排名第" + rank + "名，此轮被淘汰了，加油哦！";
-			winOrLoseIconIv
-					.setBackgroundResource(R.drawable.game_place_dialog_lose_icon);
+			winOrLoseIconIv.setBackgroundResource(R.drawable.game_place_dialog_lose_icon);
 			tv.setTextColor(context.getResources().getColor(R.color.black));
 		}
 		if (0 == prizeGoods.size()) {
@@ -107,25 +101,24 @@ public class GameOverDialog extends Dialog implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.gped_cancel: // 返回
-			mst.unRegisterView(layout);
-			dismiss();
-			ClientCmdMgr.closeClient();
-			// CmdUtils.exitDizhu();
-			ActivityUtils.finishAcitivity();
-			GameUser cacheUser = (GameUser) GameCache
-					.getObj(CacheKey.GAME_USER);
-			cacheUser.setRound(0);
-			GameCache.putObj(CacheKey.GAME_USER, cacheUser);
-			break;
-		case R.id.gped_sign_up: // 报名
-			mst.unRegisterView(layout);
-			// joinRoom(Database.JOIN_ROOM);
-			initInterface.InitMainGame();
-			dismiss();
-			break;
-		default:
-			break;
+			case R.id.gped_cancel: // 返回
+				mst.unRegisterView(layout);
+				dismiss();
+				ClientCmdMgr.closeClient();
+				// CmdUtils.exitDizhu();
+				ActivityUtils.finishAcitivity();
+				GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+				cacheUser.setRound(0);
+				GameCache.putObj(CacheKey.GAME_USER, cacheUser);
+				break;
+			case R.id.gped_sign_up: // 报名
+				mst.unRegisterView(layout);
+				// joinRoom(Database.JOIN_ROOM);
+				initInterface.InitMainGame();
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -166,15 +159,13 @@ public class GameOverDialog extends Dialog implements
 			if (null == convertView) {
 				holder = new ViewHolder();
 				convertView = mInflater.inflate(R.layout.text_list_item, null);
-				holder.tv = (TextView) convertView
-						.findViewById(R.id.evalues_text);
+				holder.tv = (TextView) convertView.findViewById(R.id.evalues_text);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			PrizeGoods pg = prizeGoods.get(position);
-			holder.tv.setText("" + (position + 1) + " ，" + pg.getGoodsName()
-					+ pg.getCount() + pg.getUnit());
+			holder.tv.setText("" + (position + 1) + " ，" + pg.getGoodsName() + pg.getCount() + pg.getUnit());
 			return convertView;
 		}
 

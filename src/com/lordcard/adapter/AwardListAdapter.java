@@ -16,7 +16,6 @@ import com.lordcard.entity.AwardVo;
 
 /**
  * 奖励方案Adapter
- * 
  * @author Administrator
  */
 public class AwardListAdapter extends BaseAdapter {
@@ -56,16 +55,12 @@ public class AwardListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = layoutInflater
-					.inflate(R.layout.award_list_item, null);
+			convertView = layoutInflater.inflate(R.layout.award_list_item, null);
 			holder = new ViewHolder();
 			holder.noTv = (TextView) convertView.findViewById(R.id.ali_no_tv);
-			holder.nameTv = (TextView) convertView
-					.findViewById(R.id.ali_name_tv);
-			holder.integralTv = (TextView) convertView
-					.findViewById(R.id.ali_integral_tv);
-			holder.prizeTv = (TextView) convertView
-					.findViewById(R.id.ali_prize_tv);
+			holder.nameTv = (TextView) convertView.findViewById(R.id.ali_name_tv);
+			holder.integralTv = (TextView) convertView.findViewById(R.id.ali_integral_tv);
+			holder.prizeTv = (TextView) convertView.findViewById(R.id.ali_prize_tv);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -75,8 +70,8 @@ public class AwardListAdapter extends BaseAdapter {
 		holder.nameTv.setText("" + awardVo.getName());
 		holder.integralTv.setText("" + awardVo.getIntegral());
 		holder.prizeTv.setText("" + awardVo.getPrize());
-		Log.i("convertView", "" + awardVo.getNo() + "" + awardVo.getName() + ""
-				+ awardVo.getIntegral() + "" + awardVo.getPrize());
+		Log.i("convertView",
+				"" + awardVo.getNo() + "" + awardVo.getName() + "" + awardVo.getIntegral() + "" + awardVo.getPrize());
 		return convertView;
 	}
 }

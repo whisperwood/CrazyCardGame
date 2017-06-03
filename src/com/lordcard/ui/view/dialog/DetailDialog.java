@@ -49,10 +49,8 @@ import com.lordcard.network.http.HttpRequest;
 import com.lordcard.network.http.HttpURL;
 import com.lordcard.network.http.HttpUtils;
 
-
 /**
  * 比赛场详情对话框
- * 
  * @author Administrator
  */
 public class DetailDialog extends Dialog implements OnClickListener {
@@ -93,9 +91,8 @@ public class DetailDialog extends Dialog implements OnClickListener {
 		this.code = code;
 	}
 
-	public DetailDialog(Context context, GameRoomRuleDetail gameHallView,
-			boolean isFuhe, Room room, int position, Handler mHandler,
-			String isSignUp) {
+	public DetailDialog(Context context, GameRoomRuleDetail gameHallView, boolean isFuhe, Room room, int position,
+			Handler mHandler, String isSignUp) {
 		super(context, R.style.dialog);
 		this.context = context;
 		this.gameHallView = gameHallView;
@@ -106,8 +103,8 @@ public class DetailDialog extends Dialog implements OnClickListener {
 		this.isSignUp = isSignUp;
 	}
 
-	public DetailDialog(Context context, GameRoomRuleDetail gameHallView,
-			boolean isFuhe, Room room, int position, Handler mHandler) {
+	public DetailDialog(Context context, GameRoomRuleDetail gameHallView, boolean isFuhe, Room room, int position,
+			Handler mHandler) {
 		super(context, R.style.dialog);
 		this.context = context;
 		this.gameHallView = gameHallView;
@@ -129,7 +126,6 @@ public class DetailDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	private void layout() {
@@ -194,31 +190,31 @@ public class DetailDialog extends Dialog implements OnClickListener {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch (checkedId) {
-				case R.id.if_dialog_detail_rb:
-					rankLl.setVisibility(View.INVISIBLE);
-					detailLl.setVisibility(View.VISIBLE);
-					recordLl.setVisibility(View.INVISIBLE);
-					radioGroup.check(R.id.if_dialog_detail_rb);
-					Log.i("radioGroup", "详情");
-					break;
-				case R.id.if_dialog_record__rb:
-					Log.i("radioGroup", "记录");
-					recordLl.setVisibility(View.VISIBLE);
-					detailLl.setVisibility(View.INVISIBLE);
-					rankLl.setVisibility(View.INVISIBLE);
-					radioGroup.check(R.id.if_dialog_record__rb);
-					if (recordAllList == null || recordAllList.size() == 0) {
-						getRecord();
-					}
-					break;
-				case R.id.if_dialog_rank_rb:
-					Log.i("radioGroup", "排名");
-					rankLl.setVisibility(View.VISIBLE);
-					detailLl.setVisibility(View.INVISIBLE);
-					recordLl.setVisibility(View.INVISIBLE);
-					radioGroup.check(R.id.if_dialog_rank_rb);
-					getRnk();
-					break;
+					case R.id.if_dialog_detail_rb:
+						rankLl.setVisibility(View.INVISIBLE);
+						detailLl.setVisibility(View.VISIBLE);
+						recordLl.setVisibility(View.INVISIBLE);
+						radioGroup.check(R.id.if_dialog_detail_rb);
+						Log.i("radioGroup", "详情");
+						break;
+					case R.id.if_dialog_record__rb:
+						Log.i("radioGroup", "记录");
+						recordLl.setVisibility(View.VISIBLE);
+						detailLl.setVisibility(View.INVISIBLE);
+						rankLl.setVisibility(View.INVISIBLE);
+						radioGroup.check(R.id.if_dialog_record__rb);
+						if (recordAllList == null || recordAllList.size() == 0) {
+							getRecord();
+						}
+						break;
+					case R.id.if_dialog_rank_rb:
+						Log.i("radioGroup", "排名");
+						rankLl.setVisibility(View.VISIBLE);
+						detailLl.setVisibility(View.INVISIBLE);
+						recordLl.setVisibility(View.INVISIBLE);
+						radioGroup.check(R.id.if_dialog_rank_rb);
+						getRnk();
+						break;
 				}
 			}
 		});
@@ -227,8 +223,7 @@ public class DetailDialog extends Dialog implements OnClickListener {
 		PrizeAdapter valueAdapter = new PrizeAdapter(context, testList);
 		new Utility().setListViewHeightBasedOnChildren(detailListView);
 		ViewGroup.LayoutParams params = detailListView.getLayoutParams();
-		params.height = mst.adjustYIgnoreDensity(testList.size() * (30)
-				+ (testList.size() - 1) * 5);
+		params.height = mst.adjustYIgnoreDensity(testList.size() * (30) + (testList.size() - 1) * 5);
 		detailListView.setDividerHeight(mst.adjustYIgnoreDensity(5));
 		detailListView.setLayoutParams(params);
 		detailListView.setAdapter(valueAdapter);
@@ -238,8 +233,7 @@ public class DetailDialog extends Dialog implements OnClickListener {
 			if (null != room.getPrizePool()) {
 				zhidou += room.getPrizePool() + "金豆";
 			}
-			if (null != room.getMaxAward()
-					&& !"".equals(room.getMaxAward().trim())) {
+			if (null != room.getMaxAward() && !"".equals(room.getMaxAward().trim())) {
 				zhidou += "," + room.getMaxAward().trim();
 			}
 			detailGolds.setText(zhidou);
@@ -261,77 +255,74 @@ public class DetailDialog extends Dialog implements OnClickListener {
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
 				switch (msg.what) {
-				case 1010:// 设置排名信息
-					String rank = msg.getData().getString("rank");
-					Log.i("radioGroup", "rank" + rank);
-					List<GameScoreTradeRank> gstList = null;
-					if (rank != null && !"-1".equals(rank) && !"1".equals(rank)) {
-						gstList = JsonHelper.fromJson(rank,
-								new TypeToken<List<GameScoreTradeRank>>() {
-								});
-					} else {
-						DialogUtils.toastTip("获取排名失败！");
-					}
-					if (gstList != null) {
-						GameScoreTradeRank gctRank = gstList.get(0);
-						if ("-1".equals(gctRank.getRank())) {// 未报名
-							myName.setText("您未报名，暂无排名信息");
-							myLl.setVisibility(View.GONE);
-							myNum.setVisibility(View.GONE);
-							myRankIv.setVisibility(View.GONE);
-							myIntegral.setVisibility(View.GONE);
+					case 1010:// 设置排名信息
+						String rank = msg.getData().getString("rank");
+						Log.i("radioGroup", "rank" + rank);
+						List<GameScoreTradeRank> gstList = null;
+						if (rank != null && !"-1".equals(rank) && !"1".equals(rank)) {
+							gstList = JsonHelper.fromJson(rank, new TypeToken<List<GameScoreTradeRank>>() {
+							});
 						} else {
-							myNum.setText(gctRank.getRank());
-							myName.setText(gctRank.getNickName());
-							myIntegral.setText(gctRank.getScore());
-							if (Integer.valueOf(gctRank.getRank()).intValue() > 3) {
-								myRankIv.setVisibility(View.INVISIBLE);
-							} else {
-								myRankIv.setVisibility(View.VISIBLE);
-							}
+							DialogUtils.toastTip("获取排名失败！");
 						}
-						gstList.remove(0);
-						rankListView.setAdapter(new SignRankAdapter(context,
-								gstList));
-					} else {
-						DialogUtils.toastTip("获取排名失败！");
-					}
-					break;
-				case 1020:// 设置排名信息
-					String record = msg.getData().getString("record");
-					Log.i("radioGroup", "record" + record);
-					List<GamePrizeRecord> recordList = null;
-					if (record != null && !"1".equals(record)) {
-						recordList = JsonHelper.fromJson(record,
-								new TypeToken<List<GamePrizeRecord>>() {
-								});
-						if (recordList != null && recordList.size() > 0) {
-							for (int i = 0; i < recordList.size(); i++) {
-								recordAllList.add(recordList.get(i));
+						if (gstList != null) {
+							GameScoreTradeRank gctRank = gstList.get(0);
+							if ("-1".equals(gctRank.getRank())) {// 未报名
+								myName.setText("您未报名，暂无排名信息");
+								myLl.setVisibility(View.GONE);
+								myNum.setVisibility(View.GONE);
+								myRankIv.setVisibility(View.GONE);
+								myIntegral.setVisibility(View.GONE);
+							} else {
+								myNum.setText(gctRank.getRank());
+								myName.setText(gctRank.getNickName());
+								myIntegral.setText(gctRank.getScore());
+								if (Integer.valueOf(gctRank.getRank()).intValue() > 3) {
+									myRankIv.setVisibility(View.INVISIBLE);
+								} else {
+									myRankIv.setVisibility(View.VISIBLE);
+								}
+							}
+							gstList.remove(0);
+							rankListView.setAdapter(new SignRankAdapter(context, gstList));
+						} else {
+							DialogUtils.toastTip("获取排名失败！");
+						}
+						break;
+					case 1020:// 设置排名信息
+						String record = msg.getData().getString("record");
+						Log.i("radioGroup", "record" + record);
+						List<GamePrizeRecord> recordList = null;
+						if (record != null && !"1".equals(record)) {
+							recordList = JsonHelper.fromJson(record, new TypeToken<List<GamePrizeRecord>>() {
+							});
+							if (recordList != null && recordList.size() > 0) {
+								for (int i = 0; i < recordList.size(); i++) {
+									recordAllList.add(recordList.get(i));
+								}
+							} else {
+								loadMoreButton.setClickable(false);
+								if (pageNum != 1) {
+									DialogUtils.toastTip("亲，没有更多数据了...");
+								}
 							}
 						} else {
-							loadMoreButton.setClickable(false);
-							if (pageNum != 1) {
+							if (pageNum == 1) {
+								loadMoreButton.setClickable(false);
+							} else {
+								loadMoreButton.setClickable(false);
 								DialogUtils.toastTip("亲，没有更多数据了...");
 							}
 						}
-					} else {
-						if (pageNum == 1) {
-							loadMoreButton.setClickable(false);
+						if (recordAllList != null && recordAllList.size() > 0) {
+							adapter = new SignRecordAdapter(context, recordAllList);
+							recordListView.setAdapter(adapter);
+							// adapter.notifyDataSetChanged();
 						} else {
-							loadMoreButton.setClickable(false);
-							DialogUtils.toastTip("亲，没有更多数据了...");
 						}
-					}
-					if (recordAllList != null && recordAllList.size() > 0) {
-						adapter = new SignRecordAdapter(context, recordAllList);
-						recordListView.setAdapter(adapter);
-						// adapter.notifyDataSetChanged();
-					} else {
-					}
-					break;
-				default:
-					break;
+						break;
+					default:
+						break;
 				}
 			}
 		};
@@ -368,15 +359,13 @@ public class DetailDialog extends Dialog implements OnClickListener {
 			@Override
 			public void run() {
 				try {
-					GameUser cacheUser = (GameUser) GameCache
-							.getObj(CacheKey.GAME_USER);
+					GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 					Map<String, String> param = new HashMap<String, String>();
 					param.put("roomCode", room.getCode());
 					param.put("hallCode", String.valueOf(Database.GAME_TYPE));
 					param.put("loginToken", cacheUser.getLoginToken());
 					param.put("pageNo", String.valueOf(pageNum));
-					String url = HttpURL.HTTP_PATH
-							+ "/game/prizerecord/getlistbypage.sc";
+					String url = HttpURL.HTTP_PATH + "/game/prizerecord/getlistbypage.sc";
 					String result = HttpUtils.post(url, param, true);
 					Message msg = new Message();
 					Bundle b = new Bundle();
@@ -407,26 +396,26 @@ public class DetailDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.if_dialog_close_btn:// 关闭对话框
-			dismiss();
-			break;
-		case R.id.if_dialog_detail_signup_btn: // 报名
-			Message message = new Message();
-			if (isFuhe) {// 复合赛制
-				message.what = FHGPlaceListAdapter.WHAT1;
-				Bundle bundle = new Bundle();
-				bundle.putInt(FHGPlaceListAdapter.POSITION, position);
-				message.setData(bundle);
-				mHandler.sendMessage(message);
-			} else {
-				message.what = FGPlaceListAdapter.WHAT2;
-				Bundle bundle = new Bundle();
-				bundle.putInt(FGPlaceListAdapter.POSITION, position);
-				message.setData(bundle);
-				mHandler.sendMessage(message);
-			}
-			dismiss();
-			break;
+			case R.id.if_dialog_close_btn:// 关闭对话框
+				dismiss();
+				break;
+			case R.id.if_dialog_detail_signup_btn: // 报名
+				Message message = new Message();
+				if (isFuhe) {// 复合赛制
+					message.what = FHGPlaceListAdapter.WHAT1;
+					Bundle bundle = new Bundle();
+					bundle.putInt(FHGPlaceListAdapter.POSITION, position);
+					message.setData(bundle);
+					mHandler.sendMessage(message);
+				} else {
+					message.what = FGPlaceListAdapter.WHAT2;
+					Bundle bundle = new Bundle();
+					bundle.putInt(FGPlaceListAdapter.POSITION, position);
+					message.setData(bundle);
+					mHandler.sendMessage(message);
+				}
+				dismiss();
+				break;
 		}
 	}
 
@@ -437,7 +426,6 @@ public class DetailDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 排名Adapter
-	 * 
 	 * @author Administrator
 	 */
 	private class SignRankAdapter extends BaseAdapter {
@@ -471,26 +459,19 @@ public class DetailDialog extends Dialog implements OnClickListener {
 			ViewHolder holder = null;
 			if (null == convertView) {
 				holder = new ViewHolder();
-				convertView = mInflater.inflate(
-						R.layout.match_rank_dialog_item, null);
-				holder.num = (TextView) convertView
-						.findViewById(R.id.mk_item_num);
-				holder.name = (TextView) convertView
-						.findViewById(R.id.mk_item_name);
-				holder.zhidou = (TextView) convertView
-						.findViewById(R.id.mk_item_zhidou);
-				holder.img = (ImageView) convertView
-						.findViewById(R.id.match_ranking);
+				convertView = mInflater.inflate(R.layout.match_rank_dialog_item, null);
+				holder.num = (TextView) convertView.findViewById(R.id.mk_item_num);
+				holder.name = (TextView) convertView.findViewById(R.id.mk_item_name);
+				holder.zhidou = (TextView) convertView.findViewById(R.id.mk_item_zhidou);
+				holder.img = (ImageView) convertView.findViewById(R.id.match_ranking);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			GameScoreTradeRank gctRank = gstList.get(position);
 			Log.i("GameScoreTradeRank",
-					"排名  " + position + " : 账号 " + gctRank.getAccount()
-							+ "     昵称 " + gctRank.getNickName() + "    排名  "
-							+ gctRank.getRank() + "     积分  "
-							+ gctRank.getScore());
+					"排名  " + position + " : 账号 " + gctRank.getAccount() + "     昵称 " + gctRank.getNickName()
+							+ "    排名  " + gctRank.getRank() + "     积分  " + gctRank.getScore());
 			holder.num.setText(gctRank.getRank());
 			holder.name.setText(gctRank.getNickName());
 			holder.zhidou.setText(gctRank.getScore());
@@ -512,7 +493,6 @@ public class DetailDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 记录Adapter
-	 * 
 	 * @author Administrator
 	 */
 	private class SignRecordAdapter extends BaseAdapter {
@@ -547,16 +527,11 @@ public class DetailDialog extends Dialog implements OnClickListener {
 			if (null == convertView) {
 				holder = new ViewHolder();
 				convertView = mInflater.inflate(R.layout.match_rank_item, null);
-				holder.roomName = (TextView) convertView
-						.findViewById(R.id.mk_room_name);
-				holder.time = (TextView) convertView
-						.findViewById(R.id.mk_item_num);
-				holder.rank = (TextView) convertView
-						.findViewById(R.id.mk_item_name);
-				holder.prize = (TextView) convertView
-						.findViewById(R.id.mk_item_zhidou);
-				holder.img = (ImageView) convertView
-						.findViewById(R.id.match_ranking);
+				holder.roomName = (TextView) convertView.findViewById(R.id.mk_room_name);
+				holder.time = (TextView) convertView.findViewById(R.id.mk_item_num);
+				holder.rank = (TextView) convertView.findViewById(R.id.mk_item_name);
+				holder.prize = (TextView) convertView.findViewById(R.id.mk_item_zhidou);
+				holder.img = (ImageView) convertView.findViewById(R.id.match_ranking);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
@@ -587,8 +562,7 @@ public class DetailDialog extends Dialog implements OnClickListener {
 		private LayoutInflater mInflater;
 		private Context context;
 
-		public PrizeAdapter(Context context,
-				List<Map<String, String>> goodbagList) {
+		public PrizeAdapter(Context context, List<Map<String, String>> goodbagList) {
 			this.gifInt = goodbagList;
 			this.context = context;
 			this.mInflater = LayoutInflater.from(context);
@@ -615,16 +589,15 @@ public class DetailDialog extends Dialog implements OnClickListener {
 			if (null == convertView) {
 				mViewHolder = new ViewHolder();
 				convertView = mInflater.inflate(R.layout.text_list_item, null);
-				mViewHolder.text = (TextView) convertView
-						.findViewById(R.id.evalues_text);
+				mViewHolder.text = (TextView) convertView.findViewById(R.id.evalues_text);
 				convertView.setTag(mViewHolder);
 			} else {
 				mViewHolder = (ViewHolder) convertView.getTag();
 			}
 			// mViewHolder.text.setTextColor(color.gold);
 			// mViewHolder.text.setTextSize(R.dimen.text_size15);
-			mViewHolder.text.setText(gifInt.get(position).get("rankText")
-					+ " : " + gifInt.get(position).get("prizeText"));
+			mViewHolder.text.setText(gifInt.get(position).get("rankText") + " : "
+					+ gifInt.get(position).get("prizeText"));
 			return convertView;
 		}
 
@@ -635,7 +608,6 @@ public class DetailDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 用于重新计算listview高度， 解决scrollview嵌套listview问题
-	 * 
 	 * @author Administrator
 	 */
 	public class Utility {
@@ -652,8 +624,7 @@ public class DetailDialog extends Dialog implements OnClickListener {
 				totalHeight += listItem.getMeasuredHeight();
 			}
 			ViewGroup.LayoutParams params = listView.getLayoutParams();
-			params.height = totalHeight
-					+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+			params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 			listView.setLayoutParams(params);
 		}
 	}

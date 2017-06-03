@@ -9,10 +9,8 @@ import java.util.Random;
 import com.lordcard.common.exception.LogUtil;
 
 /**
- * 斗地主游戏规则 [0--------12]: 黑桃A---------黑桃K [13-------25]: 红心A---------红心K
- * [26-------38]： 梅花A---------梅花K [39-------51]: 方块A---------方块K [52] : 小王 [53]
- * : 大王
- * 
+ * 斗地主游戏规则 [0--------12]: 黑桃A---------黑桃K [13-------25]: 红心A---------红心K [26-------38]：
+ * 梅花A---------梅花K [39-------51]: 方块A---------方块K [52] : 小王 [53] : 大王
  * @author yinhongbiao 2012 2012-6-6
  */
 public class Rule {
@@ -57,7 +55,6 @@ public class Rule {
 
 	/**
 	 * 给玩家发炸弹派
-	 * 
 	 * @param bombRecored
 	 * @return 2012 2012-6-12
 	 */
@@ -73,7 +70,6 @@ public class Rule {
 
 	/**
 	 * 洗牌
-	 * 
 	 * @return 2012 2012-6-12
 	 */
 	private static LinkedList<Integer> washCards() {
@@ -93,9 +89,7 @@ public class Rule {
 
 	/**
 	 * 获取炸弹数
-	 * 
-	 * @param count
-	 *            炸弹数
+	 * @param count 炸弹数
 	 * @return
 	 */
 	private static LinkedList<Integer> getBombs(int count) {
@@ -116,9 +110,7 @@ public class Rule {
 
 	/**
 	 * 发牌
-	 * 
-	 * @param group
-	 *            2012 2012-6-8
+	 * @param group 2012 2012-6-8
 	 */
 	public static ClientData issueCards(ClientData data) {
 		try {

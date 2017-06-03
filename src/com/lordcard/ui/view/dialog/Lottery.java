@@ -22,7 +22,6 @@ import com.lordcard.ui.interfaces.PrizeInterface;
 
 /**
  * 抽将项组件 model.Lottery
- * 
  * @author Administrator <br/>
  *         create at 2013 2013-3-19 下午2:43:03
  */
@@ -55,26 +54,19 @@ public class Lottery extends RelativeLayout {
 		obs = new Vector<PrizeInterface>();
 		medalImage = new ImageView(context);
 		innerLayout = new RelativeLayout(context);
-		innerLayout.setBackgroundDrawable(ImageUtil.getResDrawable(
-				R.drawable.medal, true));
-		imageParams = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
+		innerLayout.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.medal, true));
+		imageParams = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
 				android.view.ViewGroup.LayoutParams.FILL_PARENT);
-		imageParams.setMargins(mst.adjustXIgnoreDensity(2),
-				mst.adjustXIgnoreDensity(5), mst.adjustXIgnoreDensity(2),
+		imageParams.setMargins(mst.adjustXIgnoreDensity(2), mst.adjustXIgnoreDensity(5), mst.adjustXIgnoreDensity(2),
 				mst.adjustXIgnoreDensity(2));
 		// imageParams.setMargins(2, 5, 2,2);
-		innerParams = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
+		innerParams = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
 				android.view.ViewGroup.LayoutParams.FILL_PARENT);
 		coverImage = new ImageView(context);
-		coverImage.setBackgroundDrawable(ImageUtil.getResDrawable(
-				R.drawable.lot_cover, true));
-		coverParams = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
+		coverImage.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.lot_cover, true));
+		coverParams = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
 				android.view.ViewGroup.LayoutParams.FILL_PARENT);
-		coverParams.setMargins(mst.adjustXIgnoreDensity(5),
-				mst.adjustXIgnoreDensity(5), mst.adjustXIgnoreDensity(5),
+		coverParams.setMargins(mst.adjustXIgnoreDensity(5), mst.adjustXIgnoreDensity(5), mst.adjustXIgnoreDensity(5),
 				mst.adjustXIgnoreDensity(2));
 		// coverParams.setMargins(5, 5, 5, 2);
 		addView(medalImage, imageParams);
@@ -199,13 +191,13 @@ public class Lottery extends RelativeLayout {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch (msg.what) {
-			case 0:
-				getInnerLayout().setVisibility(View.INVISIBLE);
-				getCoverImage().setVisibility(View.VISIBLE);
-				successor.handle(isCJ);
-				break;
-			default:
-				break;
+				case 0:
+					getInnerLayout().setVisibility(View.INVISIBLE);
+					getCoverImage().setVisibility(View.VISIBLE);
+					successor.handle(isCJ);
+					break;
+				default:
+					break;
 			}
 		}
 	};

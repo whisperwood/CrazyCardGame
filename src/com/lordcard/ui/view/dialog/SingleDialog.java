@@ -21,7 +21,6 @@ import com.lordcard.common.util.MultiScreenTool;
 
 /**
  * com.lordcard.ui.view.dialog.AlertDialog
- * 
  * @author Administrator <br/>
  *         create at 2013 2013-3-25 下午5:32:42
  */
@@ -32,8 +31,7 @@ public class SingleDialog extends Dialog implements OnClickListener {
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	private RelativeLayout layout;
 
-	protected SingleDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected SingleDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
@@ -77,18 +75,18 @@ public class SingleDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.single_common_cancel:
-			mst.unRegisterView(layout);
-			dismiss();
-			cancelClick();
-			break;
-		case R.id.single_common_ok:
-			mst.unRegisterView(layout);
-			dismiss();
-			okClick();
-			break;
-		default:
-			break;
+			case R.id.single_common_cancel:
+				mst.unRegisterView(layout);
+				dismiss();
+				cancelClick();
+				break;
+			case R.id.single_common_ok:
+				mst.unRegisterView(layout);
+				dismiss();
+				okClick();
+				break;
+			default:
+				break;
 		}
 	}
 

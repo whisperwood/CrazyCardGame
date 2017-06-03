@@ -19,8 +19,7 @@ import com.lordcard.common.listener.HasTiShiListenner;
 import com.lordcard.entity.Poker;
 import com.lordcard.rule.DoudizhuRule;
 
-public class TouchRelativeLayout extends RelativeLayout implements
-		OnGestureListener, OnTouchListener,
+public class TouchRelativeLayout extends RelativeLayout implements OnGestureListener, OnTouchListener,
 		android.view.GestureDetector.OnGestureListener {
 	private int startIndex, endIndex;
 	private GestureDetector mGestureDetector;
@@ -86,8 +85,7 @@ public class TouchRelativeLayout extends RelativeLayout implements
 	}
 
 	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 		return false;
 	}
 
@@ -99,8 +97,7 @@ public class TouchRelativeLayout extends RelativeLayout implements
 	private float xlength = 0;// 滑动式X轴位移长度
 
 	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 		if (null == e1 || null == e2) {
 			return false;
 		}
@@ -109,9 +106,9 @@ public class TouchRelativeLayout extends RelativeLayout implements
 		int e1Y = (int) e1.getRawY();
 		int e2Y = (int) e2.getRawY();
 		xlength = Math.abs(e1X - e2X);
-		Log.i("OnGestureListener", "location==Top:" + this.getTop()
-				+ "   Left:" + this.getLeft() + "  Right:" + this.getRight()
-				+ "distanceX:" + xlength);
+		Log.i("OnGestureListener",
+				"location==Top:" + this.getTop() + "   Left:" + this.getLeft() + "  Right:" + this.getRight()
+						+ "distanceX:" + xlength);
 		if (e2Y >= this.getTop()) {
 			if (e1X - e2X > 0) {
 				final int[] location = new int[2];
@@ -130,8 +127,7 @@ public class TouchRelativeLayout extends RelativeLayout implements
 				endIndex = endIndex - 1;
 				adjustIndex();
 				for (int i = startIndex; i <= endIndex; i++) {
-					((Poker) getChildAt(i)).getInnerLayout().setVisibility(
-							View.VISIBLE);
+					((Poker) getChildAt(i)).getInnerLayout().setVisibility(View.VISIBLE);
 				}
 				// 当向左侧滑动的时候
 			} else if (e1X - e2X < 0) {
@@ -149,8 +145,7 @@ public class TouchRelativeLayout extends RelativeLayout implements
 				endIndex = endIndex - 1;
 				adjustIndex();
 				for (int i = startIndex; i <= endIndex; i++) {
-					((Poker) getChildAt(i)).getInnerLayout().setVisibility(
-							View.VISIBLE);
+					((Poker) getChildAt(i)).getInnerLayout().setVisibility(View.VISIBLE);
 				}
 			}
 		}
@@ -191,8 +186,7 @@ public class TouchRelativeLayout extends RelativeLayout implements
 			Log.i("OnGestureListener", "TouchUp");
 			stopTime = System.currentTimeMillis();
 			long times = stopTime - startTime;
-			if (event.getRawY() < this.getTop() && xlength < 150
-					&& (times < 800)) {
+			if (event.getRawY() < this.getTop() && xlength < 150 && (times < 800)) {
 				mHasTiShiListenner.onFling();
 			} else {
 				chekCard();
@@ -239,12 +233,10 @@ public class TouchRelativeLayout extends RelativeLayout implements
 						}
 						if (has) {
 							((Poker) getChildAt(startIndex + i)).ischeck = false;
-							((Poker) getChildAt(startIndex + i))
-									.setRiseParams();
+							((Poker) getChildAt(startIndex + i)).setRiseParams();
 						} else {
 							((Poker) getChildAt(startIndex + i)).ischeck = true;
-							((Poker) getChildAt(startIndex + i))
-									.setDefaultParams();
+							((Poker) getChildAt(startIndex + i)).setDefaultParams();
 						}
 					}
 					return;
@@ -255,8 +247,7 @@ public class TouchRelativeLayout extends RelativeLayout implements
 				for (int i = 0; i < cards.size(); i++) {
 					boolean has = false;
 					for (int j = 0; j < shunPai.length; j++) {
-						if (Integer.valueOf(shunPai[j]) == cards.get(i)
-								.getValue()) {
+						if (Integer.valueOf(shunPai[j]) == cards.get(i).getValue()) {
 							shunPai[j] = "0";
 							has = true;
 						}
@@ -276,8 +267,7 @@ public class TouchRelativeLayout extends RelativeLayout implements
 			cards = null;
 		} else if ((startIndex == endIndex) && !hasCheck) {// 选择一张牌，并且没有牌弹出
 			// 是否提示对应牌型：true 提示 ；false 不提示
-			boolean tishi = mHasTiShiListenner.hasTiShi(
-					((Poker) getChildAt(startIndex)), startIndex);
+			boolean tishi = mHasTiShiListenner.hasTiShi(((Poker) getChildAt(startIndex)), startIndex);
 			if (!tishi) {
 				makeAChoiceCard();
 			}

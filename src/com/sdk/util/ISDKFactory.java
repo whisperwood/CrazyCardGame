@@ -11,7 +11,6 @@ import com.sdk.util.vo.PayPoint;
 
 /**
  * com.lordcard.common.pay.IPayView
- * 
  * @author Administrator <br/>
  *         create at 2013 2013-3-20 下午3:04:23
  */
@@ -21,10 +20,8 @@ public abstract class ISDKFactory {
 
 	/**
 	 * 加载支付方式
-	 * 
 	 * @Title: loadPay
-	 * @param payInit
-	 *            初始化的基本信息
+	 * @param payInit 初始化的基本信息
 	 * @return void
 	 * @throws
 	 */
@@ -37,12 +34,9 @@ public abstract class ISDKFactory {
 
 	/**
 	 * 支付
-	 * 
 	 * @Title: goPay
-	 * @param payPoint
-	 *            具体的充值计费点
-	 * @param paySiteTag
-	 *            计费位置点
+	 * @param payPoint 具体的充值计费点
+	 * @param paySiteTag 计费位置点
 	 * @return void
 	 * @throws
 	 */
@@ -50,12 +44,9 @@ public abstract class ISDKFactory {
 
 	/**
 	 * 本地账号单机支付
-	 * 
 	 * @Title: goPay
-	 * @param payPoint
-	 *            具体的充值计费点
-	 * @param paySiteTag
-	 *            计费位置点
+	 * @param payPoint 具体的充值计费点
+	 * @param paySiteTag 计费位置点
 	 * @return void
 	 * @throws
 	 */

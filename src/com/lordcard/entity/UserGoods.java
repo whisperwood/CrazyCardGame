@@ -32,8 +32,7 @@ public class UserGoods {
 	}
 
 	/**
-	 * @param display
-	 *            the display to set
+	 * @param display the display to set
 	 */
 	public void setDisplay(Integer display) {
 		this.display = display;
@@ -47,8 +46,7 @@ public class UserGoods {
 	}
 
 	/**
-	 * @param goods
-	 *            the goods to set
+	 * @param goods the goods to set
 	 */
 	public void setGoods(List<Goods> goods) {
 		this.goods = goods;
@@ -62,8 +60,7 @@ public class UserGoods {
 	}
 
 	/**
-	 * @param goodsType
-	 *            the goodsType to set
+	 * @param goodsType the goodsType to set
 	 */
 	public void setGoodsType(GoodsType goodsType) {
 		this.goodsType = goodsType;

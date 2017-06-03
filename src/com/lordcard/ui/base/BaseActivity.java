@@ -22,7 +22,6 @@ import com.lordcard.common.upgrade.UpdateUtils;
 import com.lordcard.common.util.ActivityPool;
 import com.lordcard.common.util.ActivityUtils;
 import com.lordcard.common.util.AudioPlayUtils;
-import com.lordcard.common.util.ChannelUtils;
 import com.lordcard.common.util.ImageUtil;
 import com.lordcard.common.util.MultiScreenTool;
 import com.lordcard.constant.Constant;
@@ -35,14 +34,12 @@ import com.sdk.util.SDKFactory;
 
 /**
  * ui.base.BaseActivity
- * 
  * @author yinhb <br/>
  *         create at 2012 2012-11-7 下午10:27:50
  */
 public class BaseActivity extends Activity {
 	protected TaskManager taskManager = new TaskManager();
-	protected Feedback feedback = TaskFeedback
-			.getInstance(TaskFeedback.DIALOG_MODE);
+	protected Feedback feedback = TaskFeedback.getInstance(TaskFeedback.DIALOG_MODE);
 	protected MultiScreenTool mst = null;
 
 	@Override
@@ -76,14 +73,14 @@ public class BaseActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
-		case KeyEvent.KEYCODE_VOLUME_DOWN:// 游戏音量减小
-			AudioPlayUtils.getInstance().lowerVoice();
-			return true;
-		case KeyEvent.KEYCODE_VOLUME_UP:// 游戏音量增大
-			AudioPlayUtils.getInstance().raiseVoice();
-			return true;
-		default:
-			break;
+			case KeyEvent.KEYCODE_VOLUME_DOWN:// 游戏音量减小
+				AudioPlayUtils.getInstance().lowerVoice();
+				return true;
+			case KeyEvent.KEYCODE_VOLUME_UP:// 游戏音量增大
+				AudioPlayUtils.getInstance().raiseVoice();
+				return true;
+			default:
+				break;
 		}
 		return super.onKeyDown(keyCode, event);
 	}

@@ -20,7 +20,7 @@ public class CGChargeActivity extends Activity {
 			Intent intent2 = new Intent();
 			try {
 				int id = getId(this, "string", "g_class_name");
-				intent2.setClass(CGChargeActivity.this,Class.forName(getString(id)));
+				intent2.setClass(CGChargeActivity.this, Class.forName(getString(id)));
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -36,7 +36,6 @@ public class CGChargeActivity extends Activity {
 
 	/**
 	 * 是否是移动计费
-	 * 
 	 * @param context
 	 * @return
 	 */

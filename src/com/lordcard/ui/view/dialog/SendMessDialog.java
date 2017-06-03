@@ -14,8 +14,7 @@ public class SendMessDialog extends Dialog {
 	private RelativeLayout mainLayout;
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 
-	protected SendMessDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected SendMessDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		// this.context = context;
 		// layout(context);
@@ -36,8 +35,7 @@ public class SendMessDialog extends Dialog {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liaotian_menu);
 		mainLayout = (RelativeLayout) findViewById(R.id.liaotian_layout);
-		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(
-				R.drawable.liaotian_bj_1, true));
+		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.liaotian_bj_1, true));
 		// layout(context);
 		mst.adjustView(mainLayout);
 	}
@@ -47,7 +45,6 @@ public class SendMessDialog extends Dialog {
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	// private void layout(final Context context) {

@@ -97,13 +97,10 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 设置是否要缓存图片<br>
-	 * 当设置要缓存图片时，解码出来的图片会直接写到文件中，而不保留在内存中，缓存时如果有Sd卡，会直接缓存到sd卡中，
-	 * 如果没有则会缓存到当前apk下的文件目录中<br>
+	 * 当设置要缓存图片时，解码出来的图片会直接写到文件中，而不保留在内存中，缓存时如果有Sd卡，会直接缓存到sd卡中， 如果没有则会缓存到当前apk下的文件目录中<br>
 	 * <b>如果创建缓存目录失败，会自动切换为不缓存</b><br>
 	 * 默认不缓存
-	 * 
-	 * @param cache
-	 *            是否要缓存，true要缓存
+	 * @param cache 是否要缓存，true要缓存
 	 * @param context
 	 */
 	public void setCacheImage(boolean cache, Context context) {
@@ -111,13 +108,9 @@ public class GifDecoder extends Thread {
 		try {
 			if (cacheImage) {
 				boolean f = true;
-				if (Environment.getExternalStorageState().equals(
-						Environment.MEDIA_MOUNTED)) {
-					imagePath = android.os.Environment
-							.getExternalStorageDirectory().getPath()
-							+ File.separator
-							+ "gifView_tmp_dir"
-							+ File.separator + getDir();
+				if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+					imagePath = android.os.Environment.getExternalStorageDirectory().getPath() + File.separator
+							+ "gifView_tmp_dir" + File.separator + getDir();
 					if (!createDir(imagePath)) {
 						f = true;
 					} else {
@@ -127,8 +120,7 @@ public class GifDecoder extends Thread {
 					f = true;
 				}
 				if (f) {
-					imagePath = context.getFilesDir().getAbsolutePath()
-							+ File.separator + getDir();
+					imagePath = context.getFilesDir().getAbsolutePath() + File.separator + getDir();
 					if (!createDir(imagePath))
 						cacheImage = false;
 				}
@@ -200,8 +192,7 @@ public class GifDecoder extends Thread {
 	private void saveImage(Bitmap image, String name) {
 		try {
 			File f = new File(imagePath + File.separator + name + ".png");
-			FileOutputStream fos = new FileOutputStream(imagePath
-					+ File.separator + getDir() + ".png");
+			FileOutputStream fos = new FileOutputStream(imagePath + File.separator + getDir() + ".png");
 			image.compress(Bitmap.CompressFormat.PNG, 100, fos);
 		} catch (Exception ex) {
 		}
@@ -247,7 +238,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 当前状态
-	 * 
 	 * @return
 	 */
 	public int getStatus() {
@@ -256,7 +246,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 解码是否成功，成功返回true
-	 * 
 	 * @return 成功返回true，否则返回false
 	 */
 	public boolean parseOk() {
@@ -265,9 +254,7 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取某帧的延时时间
-	 * 
-	 * @param n
-	 *            第几帧
+	 * @param n 第几帧
 	 * @return 延时时间，毫秒
 	 */
 	public int getDelay(int n) {
@@ -283,7 +270,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取所有帧的延时时间
-	 * 
 	 * @return
 	 */
 	public int[] getDelays() {
@@ -300,7 +286,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取总帧 数
-	 * 
 	 * @return 图片的总帧数
 	 */
 	public int getFrameCount() {
@@ -309,7 +294,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取第一帧图片
-	 * 
 	 * @return
 	 */
 	public Bitmap getImage() {
@@ -362,16 +346,16 @@ public class GifDecoder extends Thread {
 				if (iline >= ih) {
 					pass++;
 					switch (pass) {
-					case 2:
-						iline = 4;
-						break;
-					case 3:
-						iline = 2;
-						inc = 4;
-						break;
-					case 4:
-						iline = 1;
-						inc = 2;
+						case 2:
+							iline = 4;
+							break;
+						case 3:
+							iline = 2;
+							inc = 4;
+							break;
+						case 4:
+							iline = 1;
+							inc = 2;
 					}
 				}
 				line = iline;
@@ -402,9 +386,7 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取第几帧的图片
-	 * 
-	 * @param n
-	 *            帧数
+	 * @param n 帧数
 	 * @return 可画的图片，如果没有此帧或者出错，返回null
 	 */
 	public Bitmap getFrameImage(int n) {
@@ -417,7 +399,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取当前帧图片
-	 * 
 	 * @hide
 	 * @return 当前帧可画的图片
 	 */
@@ -427,10 +408,8 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 取第几帧，每帧包含了可画的图片和延时时间
-	 * 
 	 * @hide
-	 * @param n
-	 *            帧数
+	 * @param n 帧数
 	 * @return
 	 */
 	public GifFrame getFrame(int n) {
@@ -449,7 +428,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 重置，进行本操作后，会直接到第一帧
-	 * 
 	 * @hide
 	 */
 	public void reset() {
@@ -458,7 +436,6 @@ public class GifDecoder extends Thread {
 
 	/**
 	 * 下一帧，进行本操作后，通过getCurrentFrame得到的是下一帧
-	 * 
 	 * @hide
 	 * @return 返回下一帧
 	 */
@@ -613,8 +590,7 @@ public class GifDecoder extends Thread {
 				prefix[available] = (short) old_code;
 				suffix[available] = (byte) first;
 				available++;
-				if (((available & code_mask) == 0)
-						&& (available < MaxStackSize)) {
+				if (((available & code_mask) == 0) && (available < MaxStackSize)) {
 					code_size++;
 					code_mask += available;
 				}
@@ -707,38 +683,38 @@ public class GifDecoder extends Thread {
 		while (!(done || err())) {
 			int code = read();
 			switch (code) {
-			case 0x2C: // image separator
-				readImage();
-				break;
-			case 0x21: // extension
-				code = read();
-				switch (code) {
-				case 0xf9: // graphics control extension
-					readGraphicControlExt();
+				case 0x2C: // image separator
+					readImage();
 					break;
-				case 0xff: // application extension
-					readBlock();
-					String app = "";
-					for (int i = 0; i < 11; i++) {
-						app += (char) block[i];
-					}
-					if (app.equals("NETSCAPE2.0")) {
-						readNetscapeExt();
-					} else {
-						skip(); // don't care
+				case 0x21: // extension
+					code = read();
+					switch (code) {
+						case 0xf9: // graphics control extension
+							readGraphicControlExt();
+							break;
+						case 0xff: // application extension
+							readBlock();
+							String app = "";
+							for (int i = 0; i < 11; i++) {
+								app += (char) block[i];
+							}
+							if (app.equals("NETSCAPE2.0")) {
+								readNetscapeExt();
+							} else {
+								skip(); // don't care
+							}
+							break;
+						default: // uninteresting extension
+							skip();
 					}
 					break;
-				default: // uninteresting extension
-					skip();
-				}
-				break;
-			case 0x3b: // terminator
-				done = true;
-				break;
-			case 0x00: // bad byte, but keep going and see what happens
-				break;
-			default:
-				status = STATUS_FORMAT_ERROR;
+				case 0x3b: // terminator
+					done = true;
+					break;
+				case 0x00: // bad byte, but keep going and see what happens
+					break;
+				default:
+					status = STATUS_FORMAT_ERROR;
 			}
 		}
 	}
@@ -816,8 +792,7 @@ public class GifDecoder extends Thread {
 		if (gifFrame == null) {
 			if (cacheImage) {
 				String name = getDir();
-				gifFrame = new GifFrame(imagePath + File.separator + name
-						+ ".png", delay);
+				gifFrame = new GifFrame(imagePath + File.separator + name + ".png", delay);
 				saveImage(image, name);
 			} else {
 				gifFrame = new GifFrame(image, delay);
@@ -830,8 +805,7 @@ public class GifDecoder extends Thread {
 			}
 			if (cacheImage) {
 				String name = getDir();
-				f.nextFrame = new GifFrame(imagePath + File.separator + name
-						+ ".png", delay);
+				f.nextFrame = new GifFrame(imagePath + File.separator + name + ".png", delay);
 				saveImage(image, name);
 			} else {
 				f.nextFrame = new GifFrame(image, delay);

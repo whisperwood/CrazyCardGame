@@ -45,7 +45,6 @@ import com.lordcard.network.cmdmgr.CmdUtils;
 
 /**
  * http请求 common.http.HttpRequest
- * 
  * @author yinhb <br/>
  *         create at 2013 2013-2-21 下午3:35:12
  */
@@ -79,9 +78,7 @@ public class HttpRequest {
 
 	/**
 	 * 获取服务器IP
-	 * 
-	 * @param getCache
-	 *            是否直接获取缓存
+	 * @param getCache 是否直接获取缓存
 	 * @return
 	 */
 	public static void getCacheServer(boolean getCache) {
@@ -91,8 +88,7 @@ public class HttpRequest {
 		if (getCache) {
 			try {
 				String cacheKey = HttpUtils.getCacheKey(url, paramMap);
-				JsonResult jsonResult = JsonHelper.fromJson(
-						GameCache.getStr(cacheKey), JsonResult.class);
+				JsonResult jsonResult = JsonHelper.fromJson(GameCache.getStr(cacheKey), JsonResult.class);
 				if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) {
 					String gameServer = jsonResult.getMethodMessage();
 					Database.GAME_SERVER = gameServer;
@@ -108,8 +104,7 @@ public class HttpRequest {
 			public void run() {
 				try {
 					String result = HttpUtils.post(url, paramMap, true);
-					JsonResult jsonResult = JsonHelper.fromJson(result,
-							JsonResult.class);
+					JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 					if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) {
 						String gameServer = jsonResult.getMethodMessage();
 						Database.GAME_SERVER = gameServer;
@@ -133,7 +128,6 @@ public class HttpRequest {
 
 	/**
 	 * 注册账号
-	 * 
 	 * @return
 	 */
 	public static String register() {
@@ -146,7 +140,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取用户信息
-	 * 
 	 * @param loginToken
 	 * @return
 	 */
@@ -172,9 +165,7 @@ public class HttpRequest {
 
 	/**
 	 * 登录具体游戏
-	 * 
-	 * @param loadRoom
-	 *            是否加载房间信息
+	 * @param loadRoom 是否加载房间信息
 	 * @return 成功:返回大厅房间信息 失败：1
 	 */
 	public static String loginGame(boolean loadRoom) {
@@ -208,10 +199,8 @@ public class HttpRequest {
 	}
 
 	/**
-	 * 房间信息是否有更新 map.put("ut", updateTime); //更新时间 map.put("ty",
-	 * updateRoomType); //更新房间类型 游戏中房间房间更新类型
-	 * all:更新所有房间,gen:普通房间,rk:复合赛房间,fast:快速赛房间[多个逗号分隔]
-	 * 
+	 * 房间信息是否有更新 map.put("ut", updateTime); //更新时间 map.put("ty", updateRoomType); //更新房间类型
+	 * 游戏中房间房间更新类型 all:更新所有房间,gen:普通房间,rk:复合赛房间,fast:快速赛房间[多个逗号分隔]
 	 * @return
 	 */
 	public static Map<String, String> roomHasChanged() {
@@ -220,11 +209,9 @@ public class HttpRequest {
 		try {
 			String url = HttpURL.HTTP_PATH + "game/cnofig/getUdConfig.sc"; // 获取房间列表更新信息的url
 			resultJson = HttpUtils.post(url, null);
-			if (!TextUtils.isEmpty(resultJson.trim())
-					&& !HttpRequest.FAIL_STATE.equals(resultJson.trim())) {
-				map = JsonHelper.fromJson(resultJson.trim(),
-						new TypeToken<Map<String, String>>() {
-						});
+			if (!TextUtils.isEmpty(resultJson.trim()) && !HttpRequest.FAIL_STATE.equals(resultJson.trim())) {
+				map = JsonHelper.fromJson(resultJson.trim(), new TypeToken<Map<String, String>>() {
+				});
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -234,7 +221,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取房间信息
-	 * 
 	 * @return
 	 */
 	public static List<Room> getRoomInfo(String roomType) {
@@ -247,11 +233,9 @@ public class HttpRequest {
 			param.put("gameType", String.valueOf(Database.GAME_TYPE));
 			resultJson = HttpUtils.post(url, param);
 			Log.i("hallResult", roomType + ":::::::::::: " + resultJson);
-			if (!TextUtils.isEmpty(resultJson.trim())
-					&& !HttpRequest.FAIL_STATE.equals(resultJson.trim())) {
-				roomList = JsonHelper.fromJson(resultJson.trim(),
-						new TypeToken<List<Room>>() {
-						});
+			if (!TextUtils.isEmpty(resultJson.trim()) && !HttpRequest.FAIL_STATE.equals(resultJson.trim())) {
+				roomList = JsonHelper.fromJson(resultJson.trim(), new TypeToken<List<Room>>() {
+				});
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -261,7 +245,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取玩家用户物品
-	 * 
 	 * @return
 	 */
 	public static GameUserGoods getGameUserGoods(boolean isCache) {
@@ -286,11 +269,9 @@ public class HttpRequest {
 
 	/**
 	 * 修改用户密码
-	 * 
 	 * @param callback
 	 */
-	public static String updatePassWord(String account, String newPwd,
-			String oldPwd) {
+	public static String updatePassWord(String account, String newPwd, String oldPwd) {
 		String url = HttpURL.HTTP_PATH + "game/user/updateCustemerPwd.sc";
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("oldPwd", EncodeUtils.MD5(oldPwd));
@@ -304,7 +285,6 @@ public class HttpRequest {
 
 	/**
 	 * 密码找回
-	 * 
 	 * @param token
 	 * @param callback
 	 */
@@ -319,7 +299,6 @@ public class HttpRequest {
 
 	/**
 	 * 加入游戏前请求
-	 * 
 	 * @param homeCode
 	 * @param passwd
 	 * @return 满足加入条件，则返回服务器地址指令 失败返回 err_rjoin 指令金豆不足 homeDetail 指令 返回房间详情
@@ -338,13 +317,11 @@ public class HttpRequest {
 
 	/**
 	 * 创建房间
-	 * 
 	 * @param limitGroupNum
 	 * @param ratio
 	 * @return
 	 */
-	public static String createRoom(int limitGroupNum, int ratio,
-			boolean isBeforeCheck) {
+	public static String createRoom(int limitGroupNum, int ratio, boolean isBeforeCheck) {
 		Room room = new Room();
 		room.setRatio(ratio);
 		room.setLimitGroupNum(limitGroupNum);
@@ -370,9 +347,7 @@ public class HttpRequest {
 
 	/**
 	 * 邀请好友
-	 * 
-	 * @param friendList
-	 *            朋友列表
+	 * @param friendList 朋友列表
 	 */
 	public static String inviteFriend(List<String> friendList) {
 		String url = HttpURL.HTTP_PATH + "game/task/inviteFriend.sc";
@@ -482,7 +457,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取消息中心推送公告
-	 * 
 	 * @return
 	 */
 	public static String getGameData() {
@@ -495,7 +469,6 @@ public class HttpRequest {
 
 	/**
 	 * 加载游戏公告
-	 * 
 	 * @Title: loadGameNotice
 	 * @param
 	 * @return void
@@ -512,7 +485,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取游戏助理消息　
-	 * 
 	 * @return
 	 */
 	public static String getAsstContent() {
@@ -525,7 +497,6 @@ public class HttpRequest {
 
 	/**
 	 * 点击按钮处理消息　
-	 * 
 	 * @return
 	 */
 	public static String clickBtn(Map<String, String> paramMap) {
@@ -568,7 +539,6 @@ public class HttpRequest {
 	// }
 	/**
 	 * 获取发短信后，获取金豆是否成功
-	 * 
 	 * @param money
 	 * @return
 	 */
@@ -582,7 +552,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取支付金额
-	 * 
 	 * @param money
 	 * @return
 	 */
@@ -592,7 +561,6 @@ public class HttpRequest {
 
 	/**
 	 * 充值接口
-	 * 
 	 * @param money
 	 * @return
 	 */
@@ -606,11 +574,9 @@ public class HttpRequest {
 
 	/**
 	 * 充值返回
-	 * 
 	 * @return
 	 */
-	public static String payCallBack(String callBackUrl,
-			Map<String, String> paramMap) {
+	public static String payCallBack(String callBackUrl, Map<String, String> paramMap) {
 		GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 		paramMap.put("loginToken", gu.getLoginToken()); // 金豆
 		// paramMap.put("signKey", Database.SIGN_KEY);
@@ -620,9 +586,7 @@ public class HttpRequest {
 
 	/**
 	 * 送豆子
-	 * 
-	 * @param presentType
-	 *            用户类型 1 新注册用户游戏赠送 2 老用户每天游戏赠送
+	 * @param presentType 用户类型 1 新注册用户游戏赠送 2 老用户每天游戏赠送
 	 * @return
 	 */
 	public static long sentBean() {
@@ -639,8 +603,7 @@ public class HttpRequest {
 			param.put("loginToken", gu.getLoginToken());
 			param.put("presentType", String.valueOf(presentType));
 			String result = HttpUtils.post(url, param);
-			JsonResult jsonResult = JsonHelper.fromJson(result,
-					JsonResult.class);
+			JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 			if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) { // 成功
 				long sendBean = Long.parseLong(jsonResult.getMethodMessage());
 				Database.SEND_BEAN = sendBean;
@@ -655,9 +618,7 @@ public class HttpRequest {
 
 	/**
 	 * 游戏排行
-	 * 
-	 * @param tokenId
-	 *            用户tokenID
+	 * @param tokenId 用户tokenID
 	 * @return
 	 */
 	public static String gameSort() {
@@ -670,7 +631,6 @@ public class HttpRequest {
 
 	/**
 	 * 添加签到信息
-	 * 
 	 * @return String 1 失败 ,0 成功
 	 */
 	public static String setSign() {
@@ -683,9 +643,7 @@ public class HttpRequest {
 
 	/**
 	 * 检查用户是否签到和签到次数
-	 * 
-	 * @return String 1 失败 {"sign":0,"signCount":0} sign:0表示未签到 ,1:已经签到
-	 *         signCount:已经签到次数
+	 * @return String 1 失败 {"sign":0,"signCount":0} sign:0表示未签到 ,1:已经签到 signCount:已经签到次数
 	 */
 	public static String checkSign() {
 		String url = HttpURL.HTTP_PATH + "/game/sign/getSignInfoByAccount.sc";
@@ -697,13 +655,10 @@ public class HttpRequest {
 
 	/**
 	 * 前台功能开关配置
-	 * 
-	 * @param type
-	 *            首页商城开关 1 ,apk下载类型 2
+	 * @param type 首页商城开关 1 ,apk下载类型 2
 	 * @param callback
 	 */
-	public static void openApiSwith(final String type,
-			final HttpCallback callback) {
+	public static void openApiSwith(final String type, final HttpCallback callback) {
 		new Thread() {
 			@Override
 			public void run() {
@@ -776,7 +731,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取我的提交问题
-	 * 
 	 * @throws
 	 */
 	public static PageQueryResult getMyAsk(int pageNo) {
@@ -788,11 +742,9 @@ public class HttpRequest {
 			pageNo = (pageNo <= 0) ? 1 : pageNo;
 			paramMap.put("pageNo", String.valueOf(pageNo));
 			String result = HttpUtils.post(url, paramMap);
-			JsonResult jsonResult = JsonHelper.fromJson(result,
-					JsonResult.class);
+			JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 			if (HttpRequest.SUCCESS_STATE.equals(jsonResult.getMethodCode())) {
-				PageQueryResult queryResult = JsonHelper.fromJson(
-						jsonResult.getMethodMessage(), PageQueryResult.class);
+				PageQueryResult queryResult = JsonHelper.fromJson(jsonResult.getMethodMessage(), PageQueryResult.class);
 				return queryResult;
 			} else {
 				DialogUtils.mesTip(jsonResult.getMethodMessage(), false);
@@ -805,7 +757,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取我的提交问题
-	 * 
 	 * @throws
 	 */
 	public static boolean submitMyAsk(String question) {
@@ -818,8 +769,7 @@ public class HttpRequest {
 			paramMap.put("question", question);
 			paramMap.put("account", gu.getAccount());
 			String result = HttpUtils.post(url, paramMap);
-			JsonResult jsonResult = JsonHelper.fromJson(result,
-					JsonResult.class);
+			JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 			if (HttpRequest.SUCCESS_STATE.equals(jsonResult.getMethodCode())) {// 成功
 				return true;
 			} else {
@@ -833,8 +783,7 @@ public class HttpRequest {
 	/**
 	 * 回调请求
 	 */
-	public static void postCallback(final String url,
-			final Map<String, String> paramMap, final HttpCallback callback) {
+	public static void postCallback(final String url, final Map<String, String> paramMap, final HttpCallback callback) {
 		new Thread() {
 			@Override
 			public void run() {
@@ -852,19 +801,16 @@ public class HttpRequest {
 	 * 游戏加入等待页面消息
 	 */
 	public static void loadJoinRoomTip() {
-		if (Database.JOIN_NOTICE_LIST != null
-				&& Database.JOIN_NOTICE_LIST.size() > 0)
+		if (Database.JOIN_NOTICE_LIST != null && Database.JOIN_NOTICE_LIST.size() > 0)
 			return;
 		ThreadPool.startWork(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					String url = HttpURL.HTTP_PATH
-							+ "game/common/getGameTipMes.sc";
+					String url = HttpURL.HTTP_PATH + "game/common/getGameTipMes.sc";
 					String result = HttpUtils.post(url, null, true);
-					Database.JOIN_NOTICE_LIST = JsonHelper.fromJson(result,
-							new TypeToken<List<NoticesVo>>() {
-							});
+					Database.JOIN_NOTICE_LIST = JsonHelper.fromJson(result, new TypeToken<List<NoticesVo>>() {
+					});
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -874,9 +820,7 @@ public class HttpRequest {
 
 	/**
 	 * 应用激活接口
-	 * 
-	 * @param batchId
-	 *            批次号
+	 * @param batchId 批次号
 	 */
 	public static String activateFromFront(String batchId) {
 		try {
@@ -901,14 +845,12 @@ public class HttpRequest {
 
 	/**
 	 * 获取激活参数
-	 * 
 	 * @return
 	 */
 	public static Map<String, String> getInterByProNames() {
 		String url = HttpURL.UG_URL + "getInterByProNames.do"; // 应用激活条件
 		Map<String, String> param = new HashMap<String, String>();
-		param.put("proNames",
-				"activate_effective_count,activate_effective_time"); // 应用ID
+		param.put("proNames", "activate_effective_count,activate_effective_time"); // 应用ID
 		String resultJson = HttpUtils.post(url, param);
 		try {
 			JSONObject result = new JSONObject(resultJson);
@@ -917,8 +859,7 @@ public class HttpRequest {
 				Map<String, String> resultMap = new HashMap<String, String>();
 				JSONArray array = new JSONArray(result.getString("jsonArray"));
 				for (int i = 0; i < array.length(); i++) {
-					Map<String, String> map = JsonHelper.fromJson(
-							array.getString(i),
+					Map<String, String> map = JsonHelper.fromJson(array.getString(i),
 							new TypeToken<Map<String, String>>() {
 							});
 					resultMap.putAll(map);
@@ -932,7 +873,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取资金池数据
-	 * 
 	 * @param roomCode
 	 * @param hallCode
 	 * @return
@@ -952,7 +892,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取比赛规则说明
-	 * 
 	 * @param roomCode
 	 * @param hallCode
 	 * @return
@@ -972,7 +911,6 @@ public class HttpRequest {
 
 	/**
 	 * 报名比赛场
-	 * 
 	 * @param hallCode
 	 * @param roomCode
 	 * @param account
@@ -996,15 +934,13 @@ public class HttpRequest {
 
 	/**
 	 * 用户是否报名报名比赛("0"未报名，"1"已报名)
-	 * 
 	 * @param roomCode
 	 * @param hallCode
 	 * @return
 	 */
 	public static String isSignUp(String roomCode) {
 		try {
-			String url = HttpURL.HTTP_PATH
-					+ "/game/playtype/checkusersignup.sc";
+			String url = HttpURL.HTTP_PATH + "/game/playtype/checkusersignup.sc";
 			Map<String, String> param = new HashMap<String, String>();
 			GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 			param.put("roomCode", roomCode);
@@ -1019,14 +955,12 @@ public class HttpRequest {
 
 	/**
 	 * 获取排名(复合赛制)
-	 * 
 	 * @param playType
 	 * @return
 	 */
 	public static String getFuheRank(String roomCode) {
 		try {
-			String url = HttpURL.HTTP_PATH
-					+ "/game/scoretrade/getlatestscoretraderank.sc";
+			String url = HttpURL.HTTP_PATH + "/game/scoretrade/getlatestscoretraderank.sc";
 			GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 			Map<String, String> param = new HashMap<String, String>();
 			param.put("roomCode", roomCode);
@@ -1054,7 +988,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取某场比赛的排名结果
-	 * 
 	 * @param playNo
 	 * @return
 	 */
@@ -1069,7 +1002,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取配置数据
-	 * 
 	 * @param playNo
 	 * @return
 	 */
@@ -1089,10 +1021,8 @@ public class HttpRequest {
 			rMap.put("loginToken", gu.getLoginToken());
 			String result = HttpUtils.post(url, rMap, true);
 			if (!TextUtils.isEmpty(result)) {
-				result = new String(result.getBytes("ISO-8859-1"),
-						Constant.CHAR);
-				JsonResult jsonresult = JsonHelper.fromJson(result,
-						JsonResult.class);
+				result = new String(result.getBytes("ISO-8859-1"), Constant.CHAR);
+				JsonResult jsonresult = JsonHelper.fromJson(result, JsonResult.class);
 				if (JsonResult.SUCCESS.equals(jsonresult.getMethodCode())) {
 					String value = jsonresult.getMethodMessage();
 					try {
@@ -1100,8 +1030,7 @@ public class HttpRequest {
 							TypeToken<HashMap<String, String>> typeToken = new TypeToken<HashMap<String, String>>() {
 							};
 							settingMap = JsonHelper.fromJson(value, typeToken);
-							GameCache.putObj(CacheKey.ALL_SETTING_KEY,
-									settingMap);
+							GameCache.putObj(CacheKey.ALL_SETTING_KEY, settingMap);
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -1114,7 +1043,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取各界面提示内容信息
-	 * 
 	 * @return
 	 */
 	public static String getTextViewMessageDate() {
@@ -1124,7 +1052,6 @@ public class HttpRequest {
 
 	/**
 	 * 获取IQ列表
-	 * 
 	 * @return
 	 */
 	public static List<GameIQ> getGameIq() {
@@ -1141,7 +1068,6 @@ public class HttpRequest {
 
 	/**
 	 * 退赛 （参数 ： code:房间编号, hallCode：房间大厅编号,account:账号，signKey:安全校验码）
-	 * 
 	 * @param roomCode
 	 * @return
 	 */
@@ -1159,7 +1085,6 @@ public class HttpRequest {
 
 	/**
 	 * 载渠道对应的配置
-	 * 
 	 * @Title: loadChannelCfg
 	 * @param @param channelId
 	 * @param @return
@@ -1173,12 +1098,9 @@ public class HttpRequest {
 			rMap.put("channelid", channelId);
 			rMap.put("game", Constant.GAME);
 			String result = HttpUtils.post(url, rMap, false);
-			JsonResult jsonResult = JsonHelper.fromJson(result,
-					JsonResult.class);
-			if (jsonResult != null
-					&& JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) { // 正确的返回数据
-				ChannelCfg cfg = JsonHelper.fromJson(
-						jsonResult.getMethodMessage(), ChannelCfg.class);
+			JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
+			if (jsonResult != null && JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) { // 正确的返回数据
+				ChannelCfg cfg = JsonHelper.fromJson(jsonResult.getMethodMessage(), ChannelCfg.class);
 				return cfg;
 			}
 		} catch (Exception e) {

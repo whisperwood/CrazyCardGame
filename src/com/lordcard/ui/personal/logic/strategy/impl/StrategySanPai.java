@@ -21,8 +21,7 @@ public class StrategySanPai implements Strategy {
 
 	@Override
 	public int check() {
-		if (ddzDataOriginal.getNowPlaying() == null
-				|| ddzDataOriginal.isInitiative() == false) {
+		if (ddzDataOriginal.getNowPlaying() == null || ddzDataOriginal.isInitiative() == false) {
 			return 0;
 		}
 		if (ddzDataOriginal.getNowPlaying().size() != 1) {
@@ -44,8 +43,7 @@ public class StrategySanPai implements Strategy {
 		ddzData = new DouDiZhuLogic(ps);
 		ddzData.setPokerNum(ddzDataOriginal.getPokerNum());
 		ddzData.setNowPlaying(this.ddzDataOriginal.getNowPlaying());
-		ddzData.setNowPlayingAttachment(this.ddzDataOriginal
-				.getNowPlayingAttachment());
+		ddzData.setNowPlayingAttachment(this.ddzDataOriginal.getNowPlayingAttachment());
 		int xiaosannum = 0;
 		for (PokerOfOnePlay poop : ddzData.getSanPai().values()) {
 			if (poop.getOnePlay().size() != 0 && poop.getMaxValue() < minValue) {

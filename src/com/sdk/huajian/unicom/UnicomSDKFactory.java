@@ -15,7 +15,6 @@ import com.sdk.util.vo.PayPoint;
 
 /**
  * 华建联通短信支付
- * 
  * @author Administrator
  */
 public class UnicomSDKFactory extends ISDKFactory {

@@ -17,7 +17,6 @@ import com.sdk.util.vo.PaySiteConfigItem;
 
 /**
  * 支付提示方式
- * 
  * @ClassName: PayTipUtils
  * @Description: TODO
  * @author yinhongbiao
@@ -30,21 +29,16 @@ public class PayTipUtils {
 
 	/**
 	 * 计费位置提示方式展示
-	 * 
 	 * @Title: showTip
-	 * @param money
-	 *            当前需要充值的金额
-	 * @param siteConfig
-	 *            计费位置的配置
-	 * @param paySiteTag
-	 *            支付的计费位置标识
+	 * @param money 当前需要充值的金额
+	 * @param siteConfig 计费位置的配置
+	 * @param paySiteTag 支付的计费位置标识
 	 * @return void
 	 * @throws
 	 */
 	public static boolean showTip(double money, String paySite) {
 		// 找到当前位置使用的计费配置
-		PaySiteConfigItem siteConfigItem = PayUtils
-				.getPaySiteUseConfig(paySite);
+		PaySiteConfigItem siteConfigItem = PayUtils.getPaySiteUseConfig(paySite);
 		if (siteConfigItem == null)
 			return false;
 		String showModel = siteConfigItem.getModel();
@@ -53,18 +47,17 @@ public class PayTipUtils {
 		{
 			paySDK(money, siteConfigItem, paySite);
 		}/*
-		 * else { if (MODEL_DIALOG.equals(showModel)) { dialog(money,
-		 * siteConfigItem, paySite); } else if (MODEL_TOAST.equals(showModel)) {
-		 * toast(money, siteConfigItem, paySite); } else if
-		 * (MODEL_SDK.equals(showModel)) { paySDK(money, siteConfigItem,
-		 * paySite); } }
-		 */
+			* else { if (MODEL_DIALOG.equals(showModel)) { dialog(money,
+			* siteConfigItem, paySite); } else if (MODEL_TOAST.equals(showModel)) {
+			* toast(money, siteConfigItem, paySite); } else if
+			* (MODEL_SDK.equals(showModel)) { paySDK(money, siteConfigItem,
+			* paySite); } }
+			*/
 		return true;
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void dialog(double money, PaySiteConfigItem siteConfigItem,
-			String paySite) {
+	public static void dialog(double money, PaySiteConfigItem siteConfigItem, String paySite) {
 		long limitBean = (long) (money * 10000);
 		// 最底充值金额限制
 		if (siteConfigItem.getMin() > money) {
@@ -77,14 +70,12 @@ public class PayTipUtils {
 		// 匹配合适的充值计费点
 		String pno = siteConfigItem.getPno();
 		String payCode = siteConfigItem.getPayCode();
-		HashMap<String, PayInit> initMap = (HashMap<String, PayInit>) GameCache
-				.getObj(CacheKey.PAY_INIT_MAP);
+		HashMap<String, PayInit> initMap = (HashMap<String, PayInit>) GameCache.getObj(CacheKey.PAY_INIT_MAP);
 		PayInit payInit = initMap.get(payCode); // 支付方式初始数据
 		if (payInit == null)
 			return;
 		// 匹配合适的充值计费点
-		PayPoint payPoint = PayUtils.matchPayPoint(pno, money,
-				payInit.getPointList());
+		PayPoint payPoint = PayUtils.matchPayPoint(pno, money, payInit.getPointList());
 		if (payPoint == null)
 			return;
 		// 组织提示文字
@@ -93,8 +84,7 @@ public class PayTipUtils {
 			GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 			msg = msg.replace("{mybean}", String.valueOf(gu.getBean()));
 			msg = msg.replace("{addbean}", String.valueOf(limitBean));
-			msg = msg
-					.replace("{addmoney}", String.valueOf(payPoint.getMoney()));
+			msg = msg.replace("{addmoney}", String.valueOf(payPoint.getMoney()));
 		}
 		final PayInit init = payInit;
 		final PayPoint point = payPoint;
@@ -103,16 +93,14 @@ public class PayTipUtils {
 		Database.currentActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				PayDialog payDialog = new PayDialog(Database.currentActivity,
-						init, point, tag, tipMsg);
+				PayDialog payDialog = new PayDialog(Database.currentActivity, init, point, tag, tipMsg);
 				payDialog.show();
 			}
 		});
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void toast(double money, PaySiteConfigItem siteConfigItem,
-			String paySite) {
+	public static void toast(double money, PaySiteConfigItem siteConfigItem, String paySite) {
 		long limitBean = (long) (money * 10000);
 		// 最底充值金额限制
 		if (siteConfigItem.getMin() > money) {
@@ -125,14 +113,12 @@ public class PayTipUtils {
 		// 匹配合适的充值计费点
 		String pno = siteConfigItem.getPno();
 		String payCode = siteConfigItem.getPayCode();
-		HashMap<String, PayInit> initMap = (HashMap<String, PayInit>) GameCache
-				.getObj(CacheKey.PAY_INIT_MAP);
+		HashMap<String, PayInit> initMap = (HashMap<String, PayInit>) GameCache.getObj(CacheKey.PAY_INIT_MAP);
 		PayInit payInit = initMap.get(payCode); // 支付方式初始数据
 		if (payInit == null)
 			return;
 		// 匹配合适的充值计费点
-		PayPoint payPoint = PayUtils.matchPayPoint(pno, money,
-				payInit.getPointList());
+		PayPoint payPoint = PayUtils.matchPayPoint(pno, money, payInit.getPointList());
 		if (payPoint == null)
 			return;
 		// 组织提示文字
@@ -142,8 +128,7 @@ public class PayTipUtils {
 			GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 			msg = msg.replace("{mybean}", String.valueOf(gu.getBean()));
 			msg = msg.replace("{addbean}", String.valueOf(limitBean));
-			msg = msg
-					.replace("{addmoney}", String.valueOf(payPoint.getMoney()));
+			msg = msg.replace("{addmoney}", String.valueOf(payPoint.getMoney()));
 		}
 		// 提示消息
 		DialogUtils.toastTip(msg, Toast.LENGTH_LONG, Gravity.CENTER);
@@ -153,7 +138,6 @@ public class PayTipUtils {
 
 	/**
 	 * 直接跳转到SDK支付
-	 * 
 	 * @Title: paySDK
 	 * @param @param money
 	 * @param @param siteConfigItem
@@ -162,8 +146,7 @@ public class PayTipUtils {
 	 * @throws
 	 */
 	@SuppressWarnings("unchecked")
-	public static void paySDK(double money, PaySiteConfigItem siteConfigItem,
-			String paySite) {
+	public static void paySDK(double money, PaySiteConfigItem siteConfigItem, String paySite) {
 		// 最低充值金额限制
 		if (siteConfigItem.getMin() > money) {
 			money = siteConfigItem.getMin();
@@ -175,14 +158,12 @@ public class PayTipUtils {
 		// 匹配合适的充值计费点
 		String pno = siteConfigItem.getPno();
 		String payCode = siteConfigItem.getPayCode();
-		HashMap<String, PayInit> initMap = (HashMap<String, PayInit>) GameCache
-				.getObj(CacheKey.PAY_INIT_MAP);
+		HashMap<String, PayInit> initMap = (HashMap<String, PayInit>) GameCache.getObj(CacheKey.PAY_INIT_MAP);
 		PayInit payInit = initMap.get(payCode); // 支付方式初始数据
 		if (payInit == null)
 			return;
 		// 匹配合适的充值计费点
-		PayPoint payPoint = PayUtils.matchPayPoint(pno, money,
-				payInit.getPointList());
+		PayPoint payPoint = PayUtils.matchPayPoint(pno, money, payInit.getPointList());
 		if (payPoint == null)
 			return;
 		// 去充值

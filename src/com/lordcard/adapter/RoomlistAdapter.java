@@ -33,7 +33,6 @@ import com.lordcard.common.util.DialogUtils;
 import com.lordcard.common.util.ImageUtil;
 import com.lordcard.common.util.JsonHelper;
 import com.lordcard.constant.CacheKey;
-import com.lordcard.constant.Constant;
 import com.lordcard.constant.Database;
 import com.lordcard.entity.GameUser;
 import com.lordcard.entity.MySelector;
@@ -78,8 +77,7 @@ public class RoomlistAdapter extends BaseAdapter {
 		this.context = context;
 		this.layoutInflater = LayoutInflater.from(context);
 		this.taskManager = taskManager;
-		if (Database.HALL_CACHE != null
-				&& null != Database.HALL_CACHE.getGameRoomList()) {
+		if (Database.HALL_CACHE != null && null != Database.HALL_CACHE.getGameRoomList()) {
 			roomlist = Database.HALL_CACHE.getGameRoomList(); // 大厅房
 		} else {
 			roomlist = new ArrayList<Room>();
@@ -127,8 +125,7 @@ public class RoomlistAdapter extends BaseAdapter {
 	 * 刷新大厅房间数据
 	 */
 	public void setRoomList() {
-		if (Database.HALL_CACHE != null
-				&& null != Database.HALL_CACHE.getGameRoomList()) {
+		if (Database.HALL_CACHE != null && null != Database.HALL_CACHE.getGameRoomList()) {
 			this.roomlist = Database.HALL_CACHE.getGameRoomList(); // 大厅房
 		} else {
 			roomlist = new ArrayList<Room>();
@@ -147,8 +144,7 @@ public class RoomlistAdapter extends BaseAdapter {
 			Random r = new Random();
 			for (int i = 0; i < viewHolders.size(); i++) {
 				ViewHolder holder = viewHolders.get(i);
-				if (holder.roomItemBg == null
-						|| holder.roomItemPersonCount == null) {
+				if (holder.roomItemBg == null || holder.roomItemPersonCount == null) {
 					continue;
 				}
 				if (!holder.loading) {
@@ -162,8 +158,7 @@ public class RoomlistAdapter extends BaseAdapter {
 			Random r = new Random();
 			for (int i = 0; i < viewHolders.size(); i++) {
 				ViewHolder holder = viewHolders.get(i);
-				if (holder.roomItemBg == null
-						|| holder.roomItemPersonCount == null) {
+				if (holder.roomItemBg == null || holder.roomItemPersonCount == null) {
 					continue;
 				}
 				if (!holder.loading) {
@@ -173,8 +168,7 @@ public class RoomlistAdapter extends BaseAdapter {
 			for (int i = 0; i < mvPersonCount; i++) {
 				int roomIndex = r.nextInt(1000) % viewHolders.size();
 				ViewHolder holder = viewHolders.get(roomIndex);
-				if (holder.roomItemBg == null
-						|| holder.roomItemPersonCount == null) {
+				if (holder.roomItemBg == null || holder.roomItemPersonCount == null) {
 					continue;
 				}
 				if (!holder.loading) {
@@ -217,10 +211,8 @@ public class RoomlistAdapter extends BaseAdapter {
 			convertView = layoutInflater.inflate(R.layout.room_item, null);
 			holder = new ViewHolder();
 			viewHolders.add(holder);
-			holder.roomItemBg = (ImageView) convertView
-					.findViewById(R.id.room_item_bg);
-			holder.roomItemPersonCount = (TextView) convertView
-					.findViewById(R.id.room_item_personCount);
+			holder.roomItemBg = (ImageView) convertView.findViewById(R.id.room_item_bg);
+			holder.roomItemPersonCount = (TextView) convertView.findViewById(R.id.room_item_personCount);
 			holder.roomItemPersonCount.setText("");
 			convertView.setTag(holder);
 		} else {
@@ -235,9 +227,8 @@ public class RoomlistAdapter extends BaseAdapter {
 			if (useDefaultImg) {
 				setDefault(holder.roomItemBg, position);
 			} else {
-				picMap = JsonHelper.fromJson(room.getResHall(),
-						new TypeToken<Map<String, String>>() {
-						});
+				picMap = JsonHelper.fromJson(room.getResHall(), new TypeToken<Map<String, String>>() {
+				});
 				String itemName = picMap.get("roomItemH");
 				String itemClickName = picMap.get("roomItemV");
 				imgClickurl = url + itemClickName;
@@ -247,17 +238,13 @@ public class RoomlistAdapter extends BaseAdapter {
 				Drawable idPressed = ImageUtil.ImageHasLocal(imgClickurl);
 				if (idNormal != null && idPressed != null) {// 根据图片链接，去本地找图片
 					StateListDrawable bg = new StateListDrawable();
-					bg.addState(new int[] { android.R.attr.state_pressed,
-							android.R.attr.state_enabled }, idPressed);
-					bg.addState(new int[] { android.R.attr.state_enabled },
-							idNormal);
+					bg.addState(new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled }, idPressed);
+					bg.addState(new int[] { android.R.attr.state_enabled }, idNormal);
 					if (imageViewSet.contains(holder.roomItemBg)) {
-						ImageUtil.releaseDrawable(holder.roomItemBg
-								.getBackground());
+						ImageUtil.releaseDrawable(holder.roomItemBg.getBackground());
 					}
 					imageViewSet.add(holder.roomItemBg);
-					SoftReference<Drawable> reference = new SoftReference<Drawable>(
-							bg);
+					SoftReference<Drawable> reference = new SoftReference<Drawable>(bg);
 					bg = null;
 					drawCacheSet.add(reference);
 					holder.roomItemBg.setBackgroundDrawable(reference.get());
@@ -266,24 +253,19 @@ public class RoomlistAdapter extends BaseAdapter {
 					holder.setCount();
 				} else {
 					final ViewHolder holder2 = holder;
-					MySelector.newSelector(imageUrl, imgClickurl,
-							room.getCode(), holder.roomItemBg,
+					MySelector.newSelector(imageUrl, imgClickurl, room.getCode(), holder.roomItemBg,
 							new DrawCallback() {
 								@Override
-								public void imageLoaded(
-										StateListDrawable bitmap, ImageView view) {
+								public void imageLoaded(StateListDrawable bitmap, ImageView view) {
 									if (null != bitmap) {
 										if (imageViewSet.contains(view)) {
-											ImageUtil.releaseDrawable(view
-													.getBackground());
+											ImageUtil.releaseDrawable(view.getBackground());
 										}
 										imageViewSet.add(view);
-										SoftReference<Drawable> reference = new SoftReference<Drawable>(
-												bitmap);
+										SoftReference<Drawable> reference = new SoftReference<Drawable>(bitmap);
 										bitmap = null;
 										drawCacheSet.add(reference);
-										view.setBackgroundDrawable(reference
-												.get());
+										view.setBackgroundDrawable(reference.get());
 										holder2.isLoading(false);
 										holder2.setDefaultPCount();
 										holder2.setCount();
@@ -291,29 +273,18 @@ public class RoomlistAdapter extends BaseAdapter {
 								}
 
 								@Override
-								public void imageLoadedDefault(ImageView view,
-										String Code) {
+								public void imageLoadedDefault(ImageView view, String Code) {
 									// 先获取原始的图片
-									String normalPath = CrashApplication
-											.getInstance()
-											.getSharedPreferences(
-													"saveImgPath",
-													Context.MODE_PRIVATE)
+									String normalPath = CrashApplication.getInstance()
+											.getSharedPreferences("saveImgPath", Context.MODE_PRIVATE)
 											.getString(Code + "N", imageUrl);
-									String pressedPath = CrashApplication
-											.getInstance()
-											.getSharedPreferences(
-													"saveImgPath",
-													Context.MODE_PRIVATE)
+									String pressedPath = CrashApplication.getInstance()
+											.getSharedPreferences("saveImgPath", Context.MODE_PRIVATE)
 											.getString(Code + "P", imgClickurl);
-									Drawable idNormal = ImageUtil
-											.ImageHasLocal(normalPath);
-									Drawable idPressed = ImageUtil
-											.ImageHasLocal(pressedPath);
+									Drawable idNormal = ImageUtil.ImageHasLocal(normalPath);
+									Drawable idPressed = ImageUtil.ImageHasLocal(pressedPath);
 									if (idNormal == null) {
-										idNormal = ImageUtil.getDrawableResId(
-												R.drawable.room_loading, true,
-												false);
+										idNormal = ImageUtil.getDrawableResId(R.drawable.room_loading, true, false);
 										ViewHolder holder = getholderByImageView(view);
 										if (holder != null) {
 											holder.isLoading(true);
@@ -322,9 +293,7 @@ public class RoomlistAdapter extends BaseAdapter {
 										// holder.clearCount();
 									}
 									if (idPressed == null) {
-										idPressed = ImageUtil.getDrawableResId(
-												R.drawable.room_loading, true,
-												false);
+										idPressed = ImageUtil.getDrawableResId(R.drawable.room_loading, true, false);
 										ViewHolder holder = getholderByImageView(view);
 										if (holder != null) {
 											holder.isLoading(true);
@@ -336,22 +305,16 @@ public class RoomlistAdapter extends BaseAdapter {
 										StateListDrawable bg = new StateListDrawable();
 										bg.addState(new int[] {
 												android.R.attr.state_pressed,
-												android.R.attr.state_enabled },
-												idPressed);
-										bg.addState(
-												new int[] { android.R.attr.state_enabled },
-												idNormal);
+												android.R.attr.state_enabled }, idPressed);
+										bg.addState(new int[] { android.R.attr.state_enabled }, idNormal);
 										if (imageViewSet.contains(view)) {
-											ImageUtil.releaseDrawable(view
-													.getBackground());
+											ImageUtil.releaseDrawable(view.getBackground());
 										}
 										imageViewSet.add(view);
-										SoftReference<Drawable> reference = new SoftReference<Drawable>(
-												bg);
+										SoftReference<Drawable> reference = new SoftReference<Drawable>(bg);
 										bg = null;
 										drawCacheSet.add(reference);
-										view.setBackgroundDrawable(reference
-												.get());
+										view.setBackgroundDrawable(reference.get());
 									}
 									setRoomPersonCount();
 								}
@@ -365,7 +328,6 @@ public class RoomlistAdapter extends BaseAdapter {
 		holder.roomItemBg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
 			}
 		});
 		return convertView;
@@ -541,7 +503,6 @@ public class RoomlistAdapter extends BaseAdapter {
 
 	/**
 	 * 设置默认图片
-	 * 
 	 * @param view
 	 * @param Code
 	 */
@@ -551,36 +512,34 @@ public class RoomlistAdapter extends BaseAdapter {
 			Drawable normal = null;
 			Drawable pressed = null;
 			switch (position) {
-			case 0:
-				normal = context.getResources().getDrawable(R.drawable.grm01);
-				pressed = context.getResources().getDrawable(R.drawable.grmv01);
-				break;
-			case 1:
-				normal = context.getResources().getDrawable(R.drawable.grm02);
-				pressed = context.getResources().getDrawable(R.drawable.grmv02);
-				break;
-			case 2:
-				normal = context.getResources().getDrawable(R.drawable.grm03);
-				pressed = context.getResources().getDrawable(R.drawable.grmv03);
-				break;
-			case 3:
-				normal = context.getResources().getDrawable(R.drawable.grm04);
-				pressed = context.getResources().getDrawable(R.drawable.grmv04);
-				break;
-			case 4:
-				normal = context.getResources().getDrawable(R.drawable.drm5);
-				pressed = context.getResources().getDrawable(R.drawable.drmv5);
-				break;
-			case 5:
-				normal = context.getResources().getDrawable(R.drawable.drm6);
-				pressed = context.getResources().getDrawable(R.drawable.drmv6);
-				break;
-			default:
-				normal = context.getResources().getDrawable(
-						R.drawable.room_loading);
-				pressed = context.getResources().getDrawable(
-						R.drawable.room_loading);
-				break;
+				case 0:
+					normal = context.getResources().getDrawable(R.drawable.grm01);
+					pressed = context.getResources().getDrawable(R.drawable.grmv01);
+					break;
+				case 1:
+					normal = context.getResources().getDrawable(R.drawable.grm02);
+					pressed = context.getResources().getDrawable(R.drawable.grmv02);
+					break;
+				case 2:
+					normal = context.getResources().getDrawable(R.drawable.grm03);
+					pressed = context.getResources().getDrawable(R.drawable.grmv03);
+					break;
+				case 3:
+					normal = context.getResources().getDrawable(R.drawable.grm04);
+					pressed = context.getResources().getDrawable(R.drawable.grmv04);
+					break;
+				case 4:
+					normal = context.getResources().getDrawable(R.drawable.drm5);
+					pressed = context.getResources().getDrawable(R.drawable.drmv5);
+					break;
+				case 5:
+					normal = context.getResources().getDrawable(R.drawable.drm6);
+					pressed = context.getResources().getDrawable(R.drawable.drmv6);
+					break;
+				default:
+					normal = context.getResources().getDrawable(R.drawable.room_loading);
+					pressed = context.getResources().getDrawable(R.drawable.room_loading);
+					break;
 			}
 			// 设置Select图片
 			StateListDrawable bg = new StateListDrawable();
@@ -591,8 +550,7 @@ public class RoomlistAdapter extends BaseAdapter {
 					normal = pressed;
 				}
 			}
-			bg.addState(new int[] { android.R.attr.state_pressed,
-					android.R.attr.state_enabled }, pressed);
+			bg.addState(new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled }, pressed);
 			bg.addState(new int[] { android.R.attr.state_enabled }, normal);
 			bg.addState(new int[] {}, normal);
 			// 设置图片
@@ -617,7 +575,6 @@ public class RoomlistAdapter extends BaseAdapter {
 
 	/**
 	 * 加入房间
-	 * 
 	 * @param room
 	 */
 	private synchronized void joinRoom(final Room room) {
@@ -635,8 +592,7 @@ public class RoomlistAdapter extends BaseAdapter {
 			Database.GAME_BG_DRAWABLEID = R.drawable.gamebg;
 			if (!Database.ZHIZHUANSIGN) {
 				Database.ZHIZHUANSIGN = true;
-				SignupDialog explainDialog = new SignupDialog(context, false,
-						room, 1) {
+				SignupDialog explainDialog = new SignupDialog(context, false, room, 1) {
 					@Override
 					public void askJoin(Room rm) {
 						// 加入游戏前校验
@@ -660,219 +616,143 @@ public class RoomlistAdapter extends BaseAdapter {
 			paramMap.put("account", gameUser.getAccount());
 			paramMap.put("code", room.getCode());
 			paramMap.put("hallCode", String.valueOf(Database.GAME_TYPE));
-			HttpRequest.postCallback(HttpURL.STOVE_ROOM_CHECK, paramMap,
-					new HttpCallback() {
-						@Override
-						public void onSucceed(Object... obj) {
-							String result = (String) obj[0];
-							if (result.trim().equals(FAIL)) {
-								return;
-							}
-							if (result.trim().equals(SIGNTIME)) {
-								Database.currentActivity
-										.runOnUiThread(new Runnable() {
+			HttpRequest.postCallback(HttpURL.STOVE_ROOM_CHECK, paramMap, new HttpCallback() {
+				@Override
+				public void onSucceed(Object... obj) {
+					String result = (String) obj[0];
+					if (result.trim().equals(FAIL)) {
+						return;
+					}
+					if (result.trim().equals(SIGNTIME)) {
+						Database.currentActivity.runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								hcsignDialog = new SignupDialog(context, false, room, 2) {
+									@Override
+									public void askJoin(Room rm) {
+										Map<String, String> paramMap = new HashMap<String, String>();
+										GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+										paramMap.put("account", gu.getAccount());
+										paramMap.put("code", rm.getCode());
+										paramMap.put("hallCode", String.valueOf(Database.GAME_TYPE));
+										HttpRequest.postCallback(HttpURL.STOVE_ROOM_SIGN, paramMap, new HttpCallback() {
 											@Override
-											public void run() {
-												hcsignDialog = new SignupDialog(
-														context, false, room, 2) {
-													@Override
-													public void askJoin(Room rm) {
-														Map<String, String> paramMap = new HashMap<String, String>();
-														GameUser gu = (GameUser) GameCache
-																.getObj(CacheKey.GAME_USER);
-														paramMap.put("account",
-																gu.getAccount());
-														paramMap.put("code",
-																rm.getCode());
-														paramMap.put(
-																"hallCode",
-																String.valueOf(Database.GAME_TYPE));
-														HttpRequest
-																.postCallback(
-																		HttpURL.STOVE_ROOM_SIGN,
-																		paramMap,
-																		new HttpCallback() {
-																			@Override
-																			public void onSucceed(
-																					Object... obj) {
-																				String result = (String) obj[0];
-																				if (result
-																						.trim()
-																						.equals(FAIL)) {
-																					dismiss();
-																				}
-																				if (result
-																						.trim()
-																						.equals(SIGNED)) {
-																					// DialogUtils.mesTip("您已经报名过，请等候赛场开赛。",
-																					// false);
-																					DialogUtils
-																							.toastTip(
-																									"您已经报名过，请等候赛场开赛。",
-																									1000,
-																									Gravity.CENTER);
-																					dismiss();
-																				}
-																				if (result
-																						.trim()
-																						.equals(SIGNSUCCED)) {
-																					// DialogUtils.mesTip("恭喜您报名成功！",
-																					// false);
-																					DialogUtils
-																							.toastTip(
-																									"恭喜您报名成功！",
-																									1000,
-																									Gravity.CENTER);
-																					dismiss();
-																				}
-																				if (result
-																						.trim()
-																						.equals(SIGNFAIL)) {
-																					DialogUtils
-																							.toastTip(
-																									"报名失败，请稍后再试！",
-																									1000,
-																									Gravity.CENTER);
-																					dismiss();
-																				}
-																				if (result
-																						.trim()
-																						.equals(LESSBEAN)) {
-																					room.setLimit(20000);
-																					JDSMSPayUtil
-																							.setContext(context);
-																					// 进入房间时金豆不足
-																					double b = RechargeUtils
-																							.calRoomJoinMoney(room); // 计算当前房间进入需要的基本金豆
-																					PayTipUtils
-																							.showTip(
-																									b,
-																									PaySite.ROOM_ITEM_CLICK); // 配置的提示方式
-																					// DialogUtils.rechargeTip(room,
-																					// false,
-																					// "报名该专场需要金豆2000，您的金豆不足。您将购买掌中游提供的20000金豆，确定后将跳转到支付界面购买，如果要购买更多金豆，请点击“其他金额购买”，您也可以通过完善资料来免费获取金豆。关闭此窗口直接返回不扣费。客服电话 4000666899。确认购买?");
-																					dismiss();
-																				}
-																			}
+											public void onSucceed(Object... obj) {
+												String result = (String) obj[0];
+												if (result.trim().equals(FAIL)) {
+													dismiss();
+												}
+												if (result.trim().equals(SIGNED)) {
+													// DialogUtils.mesTip("您已经报名过，请等候赛场开赛。",
+													// false);
+													DialogUtils.toastTip("您已经报名过，请等候赛场开赛。", 1000, Gravity.CENTER);
+													dismiss();
+												}
+												if (result.trim().equals(SIGNSUCCED)) {
+													// DialogUtils.mesTip("恭喜您报名成功！",
+													// false);
+													DialogUtils.toastTip("恭喜您报名成功！", 1000, Gravity.CENTER);
+													dismiss();
+												}
+												if (result.trim().equals(SIGNFAIL)) {
+													DialogUtils.toastTip("报名失败，请稍后再试！", 1000, Gravity.CENTER);
+													dismiss();
+												}
+												if (result.trim().equals(LESSBEAN)) {
+													room.setLimit(20000);
+													JDSMSPayUtil.setContext(context);
+													// 进入房间时金豆不足
+													double b = RechargeUtils.calRoomJoinMoney(room); // 计算当前房间进入需要的基本金豆
+													PayTipUtils.showTip(b, PaySite.ROOM_ITEM_CLICK); // 配置的提示方式
+													// DialogUtils.rechargeTip(room,
+													// false,
+													// "报名该专场需要金豆2000，您的金豆不足。您将购买掌中游提供的20000金豆，确定后将跳转到支付界面购买，如果要购买更多金豆，请点击“其他金额购买”，您也可以通过完善资料来免费获取金豆。关闭此窗口直接返回不扣费。客服电话 4000666899。确认购买?");
+													dismiss();
+												}
+											}
 
-																			@Override
-																			public void onFailed(
-																					Object... obj) {
-																			}
-																		});
-													}
-												};
-												if (Database.currentActivity
-														.getClass()
-														.equals(DoudizhuRoomListActivity.class))
-													hcsignDialog.show();
+											@Override
+											public void onFailed(Object... obj) {
 											}
 										});
+									}
+								};
+								if (Database.currentActivity.getClass().equals(DoudizhuRoomListActivity.class))
+									hcsignDialog.show();
 							}
-							if (result.trim().equals(PLAYTIME)) {// 开赛已经报名
-								// 加入游戏前校验
-								Database.currentActivity
-										.runOnUiThread(new Runnable() {
+						});
+					}
+					if (result.trim().equals(PLAYTIME)) {// 开赛已经报名
+						// 加入游戏前校验
+						Database.currentActivity.runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								FastJoinTask.joinRoom(room);
+							}
+						});
+					}
+					if (result.equals(PLAYUNSIGN)) {// 开赛时间未报名
+						Database.currentActivity.runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								SignupDialog signDialog = new SignupDialog(context, true, room, 2) {
+									@Override
+									public void askJoin(Room rm) {
+										Map<String, String> paramMap = new HashMap<String, String>();
+										GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+										paramMap.put("account", gu.getAccount());
+										paramMap.put("code", rm.getCode());
+										paramMap.put("hallCode", String.valueOf(Database.GAME_TYPE));
+										HttpRequest.postCallback(HttpURL.STOVE_ROOM_SIGN, paramMap, new HttpCallback() {
 											@Override
-											public void run() {
-												FastJoinTask.joinRoom(room);
+											public void onSucceed(Object... obj) {
+												String result = (String) obj[0];
+												if (result.trim().equals(FAIL)) {
+													dismiss();
+												}
+												if (result.trim().equals(SIGNSUCCED)) {
+													dismiss();
+													Database.currentActivity.runOnUiThread(new Runnable() {
+														@Override
+														public void run() {
+															FastJoinTask.joinRoom(room);
+														}
+													});
+												}
+												if (result.trim().equals(SIGNFAIL)) {
+													// DialogUtils.mesTip("报名失败，请稍后再试！",
+													// false);
+													DialogUtils.toastTip("报名失败，请稍后再试！", 1000, Gravity.CENTER);
+													dismiss();
+												}
+												if (result.trim().equals(LESSBEAN)) {
+													JDSMSPayUtil.setContext(context);
+													room.setLimit(20000);
+													double b = RechargeUtils.calRoomJoinMoney(room); // 计算当前房间进入需要的基本金豆
+													PayTipUtils.showTip(b, PaySite.ROOM_ITEM_CLICK); // 配置的提示方式
+													// DialogUtils.rechargeTip(room,
+													// false,
+													// "报名该专场需要金豆2000，您的金豆不足。您将购买掌中游提供的20000金豆，确定后将跳转到支付界面购买，如果要购买更多金豆，请点击“其他金额购买”，您也可以通过完善资料来免费获取金豆。关闭此窗口直接返回不扣费。客服电话 4000666899。确认购买?");
+													dismiss();
+												}
+											}
+
+											@Override
+											public void onFailed(Object... obj) {
 											}
 										});
+									}
+								};
+								signDialog.show();
 							}
-							if (result.equals(PLAYUNSIGN)) {// 开赛时间未报名
-								Database.currentActivity
-										.runOnUiThread(new Runnable() {
-											@Override
-											public void run() {
-												SignupDialog signDialog = new SignupDialog(
-														context, true, room, 2) {
-													@Override
-													public void askJoin(Room rm) {
-														Map<String, String> paramMap = new HashMap<String, String>();
-														GameUser gu = (GameUser) GameCache
-																.getObj(CacheKey.GAME_USER);
-														paramMap.put("account",
-																gu.getAccount());
-														paramMap.put("code",
-																rm.getCode());
-														paramMap.put(
-																"hallCode",
-																String.valueOf(Database.GAME_TYPE));
-														HttpRequest
-																.postCallback(
-																		HttpURL.STOVE_ROOM_SIGN,
-																		paramMap,
-																		new HttpCallback() {
-																			@Override
-																			public void onSucceed(
-																					Object... obj) {
-																				String result = (String) obj[0];
-																				if (result
-																						.trim()
-																						.equals(FAIL)) {
-																					dismiss();
-																				}
-																				if (result
-																						.trim()
-																						.equals(SIGNSUCCED)) {
-																					dismiss();
-																					Database.currentActivity
-																							.runOnUiThread(new Runnable() {
-																								@Override
-																								public void run() {
-																									FastJoinTask
-																											.joinRoom(room);
-																								}
-																							});
-																				}
-																				if (result
-																						.trim()
-																						.equals(SIGNFAIL)) {
-																					// DialogUtils.mesTip("报名失败，请稍后再试！",
-																					// false);
-																					DialogUtils
-																							.toastTip(
-																									"报名失败，请稍后再试！",
-																									1000,
-																									Gravity.CENTER);
-																					dismiss();
-																				}
-																				if (result
-																						.trim()
-																						.equals(LESSBEAN)) {
-																					JDSMSPayUtil
-																							.setContext(context);
-																					room.setLimit(20000);
-																					double b = RechargeUtils
-																							.calRoomJoinMoney(room); // 计算当前房间进入需要的基本金豆
-																					PayTipUtils
-																							.showTip(
-																									b,
-																									PaySite.ROOM_ITEM_CLICK); // 配置的提示方式
-																					// DialogUtils.rechargeTip(room,
-																					// false,
-																					// "报名该专场需要金豆2000，您的金豆不足。您将购买掌中游提供的20000金豆，确定后将跳转到支付界面购买，如果要购买更多金豆，请点击“其他金额购买”，您也可以通过完善资料来免费获取金豆。关闭此窗口直接返回不扣费。客服电话 4000666899。确认购买?");
-																					dismiss();
-																				}
-																			}
+						});
+					}
+				}
 
-																			@Override
-																			public void onFailed(
-																					Object... obj) {
-																			}
-																		});
-													}
-												};
-												signDialog.show();
-											}
-										});
-							}
-						}
-
-						@Override
-						public void onFailed(Object... obj) {
-						}
-					});
+				@Override
+				public void onFailed(Object... obj) {
+				}
+			});
 		}
 	}
 }

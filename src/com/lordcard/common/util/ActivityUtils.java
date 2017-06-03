@@ -84,8 +84,7 @@ public class ActivityUtils {
 		PackageInfo pInfo;
 		String[] permissions = null;
 		try {
-			pInfo = pm.getPackageInfo(context.getPackageName(),
-					PackageManager.GET_PERMISSIONS);
+			pInfo = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS);
 			permissions = pInfo.requestedPermissions;
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
@@ -98,19 +97,15 @@ public class ActivityUtils {
 
 	/**
 	 * 移动网络是否打开
-	 * 
 	 * @param context
 	 * @return
 	 */
 	public static boolean isMobileOpen() {
 		Context context = CrashApplication.getInstance();
-		ConnectivityManager manager = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		// 如果3G、wifi、2G等网络状态是连接的，则退出，否则显示提示信息进入网络设置界面
-		if (getPermissionData(context).contains(
-				"android.permission.ACCESS_NETWORK_STATE")) {
-			State mobile = manager.getNetworkInfo(
-					ConnectivityManager.TYPE_MOBILE).getState();
+		if (getPermissionData(context).contains("android.permission.ACCESS_NETWORK_STATE")) {
+			State mobile = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
 			if (mobile == State.CONNECTED || mobile == State.CONNECTING) {
 				return true;
 			}
@@ -122,18 +117,14 @@ public class ActivityUtils {
 
 	/**
 	 * wifi 是否打开
-	 * 
 	 * @param context
 	 * @return
 	 */
 	public static boolean isOpenWifi() {
 		Context context = CrashApplication.getInstance();
-		ConnectivityManager manager = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		if (getPermissionData(context).contains(
-				"android.permission.ACCESS_NETWORK_STATE")) {
-			State wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-					.getState();
+		ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		if (getPermissionData(context).contains("android.permission.ACCESS_NETWORK_STATE")) {
+			State wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
 			if (wifi == State.CONNECTED || wifi == State.CONNECTING) {
 				return true;
 			}
@@ -146,8 +137,7 @@ public class ActivityUtils {
 	// 判断当前网络是否通
 	public static boolean isNetworkAvailable() {
 		Context context = CrashApplication.getInstance();
-		ConnectivityManager connectivity = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivity == null) {
 			return false;
 		} else {
@@ -165,7 +155,6 @@ public class ActivityUtils {
 
 	/**
 	 * 获取当前版本号
-	 * 
 	 * @param context
 	 * @return
 	 */
@@ -174,9 +163,8 @@ public class ActivityUtils {
 		String versionCode = "0";
 		try {
 			Context context = CrashApplication.getInstance();
-			pinfo = context.getPackageManager()
-					.getPackageInfo(context.getPackageName(),
-							PackageManager.GET_CONFIGURATIONS);
+			pinfo = context.getPackageManager().getPackageInfo(context.getPackageName(),
+					PackageManager.GET_CONFIGURATIONS);
 			versionCode = String.valueOf(pinfo.versionCode);
 		} catch (Exception e) {
 		}
@@ -185,7 +173,6 @@ public class ActivityUtils {
 
 	/**
 	 * 获取版本名称
-	 * 
 	 * @param context
 	 * @return
 	 */
@@ -194,9 +181,8 @@ public class ActivityUtils {
 		String versionName = "";
 		try {
 			Context context = CrashApplication.getInstance();
-			pinfo = context.getPackageManager()
-					.getPackageInfo(context.getPackageName(),
-							PackageManager.GET_CONFIGURATIONS);
+			pinfo = context.getPackageManager().getPackageInfo(context.getPackageName(),
+					PackageManager.GET_CONFIGURATIONS);
 			versionName = pinfo.versionName;
 		} catch (Exception e) {
 		}
@@ -205,13 +191,11 @@ public class ActivityUtils {
 
 	/**
 	 * 得到当前文件存储路径 优先返回SDCARD路径；如无SDCARD则返回手机内存中应用程序数据文件夹路径。
-	 * 
 	 * @param context
 	 * @return
 	 */
 	public static String getStoragePath() {
-		if (Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED)) {
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			return "/mnt/sdcard";
 		} else {
 			Context context = CrashApplication.getInstance();
@@ -221,12 +205,10 @@ public class ActivityUtils {
 
 	/**
 	 * 判断当前是否有可用的SDCARD
-	 * 
 	 * @return
 	 */
 	public static boolean isSDCardEabled() {
-		if (Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED)) {
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			return true;
 		} else {
 			return false;
@@ -235,28 +217,25 @@ public class ActivityUtils {
 
 	public static float getPX(int dipValue) {
 		Context context = CrashApplication.getInstance();
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue,
-				context.getResources().getDisplayMetrics());
+		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, context.getResources()
+				.getDisplayMetrics());
 	}
 
 	/**
 	 * 安装 assets APK文件
-	 * 
 	 * @param context
 	 * @param apk
 	 * @return
 	 */
 	@SuppressLint("WorldReadableFiles")
-	public static void installAssetsApk(final BaseActivity context,
-			final String apkName) {
+	public static void installAssetsApk(final BaseActivity context, final String apkName) {
 		try {
 			InputStream input = context.getAssets().open(apkName);
 			// 获取文件
 			File installApk = context.getFileStreamPath("temp.apk");
 			installApk.deleteOnExit();
 			// 将文件写入暂存盘
-			FileOutputStream fos = context.openFileOutput("temp.apk",
-					Context.MODE_WORLD_READABLE);
+			FileOutputStream fos = context.openFileOutput("temp.apk", Context.MODE_WORLD_READABLE);
 			byte buf[] = new byte[1024];
 			do {
 				int numread = input.read(buf);
@@ -272,8 +251,7 @@ public class ActivityUtils {
 			Intent intent = new Intent();
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.setAction(android.content.Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.fromFile(installApk),
-					"application/vnd.android.package-archive");
+			intent.setDataAndType(Uri.fromFile(installApk), "application/vnd.android.package-archive");
 			context.startActivity(intent);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -288,14 +266,12 @@ public class ActivityUtils {
 
 	/**
 	 * 获取用户MAC地址
-	 * 
 	 * @param context
 	 * @return
 	 */
 	public static String getNetWorkMac() {
 		Context context = CrashApplication.getInstance();
-		WifiManager wifi = (WifiManager) context
-				.getSystemService(Context.WIFI_SERVICE);
+		WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 		WifiInfo info = (null == wifi ? null : wifi.getConnectionInfo());
 		String macAddress = "";
 		if (null != info) {
@@ -312,25 +288,19 @@ public class ActivityUtils {
 
 	/**
 	 * 判断是否后台运行
-	 * 
 	 * @return
 	 */
-	public static boolean checkIsBackRunning(Activity activity,
-			String processName) {
-		ActivityManager activityManager = (ActivityManager) activity
-				.getSystemService(Context.ACTIVITY_SERVICE);
-		KeyguardManager keyguardManager = (KeyguardManager) activity
-				.getSystemService(Context.KEYGUARD_SERVICE);
+	public static boolean checkIsBackRunning(Activity activity, String processName) {
+		ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
+		KeyguardManager keyguardManager = (KeyguardManager) activity.getSystemService(Context.KEYGUARD_SERVICE);
 		if (activityManager == null)
 			return false;
-		List<RunningAppProcessInfo> processList = activityManager
-				.getRunningAppProcesses();
+		List<RunningAppProcessInfo> processList = activityManager.getRunningAppProcesses();
 		for (RunningAppProcessInfo process : processList) {
 			if (process.processName.startsWith(processName)) {
 				boolean isBackground = process.importance != RunningAppProcessInfo.IMPORTANCE_BACKGROUND
 						&& process.importance != RunningAppProcessInfo.IMPORTANCE_VISIBLE;
-				boolean isLockedState = keyguardManager
-						.inKeyguardRestrictedInputMode();
+				boolean isLockedState = keyguardManager.inKeyguardRestrictedInputMode();
 				if (isBackground || isLockedState)
 					return true;
 				else
@@ -345,8 +315,7 @@ public class ActivityUtils {
 			if (packageName == null || "".equals(packageName))
 				return false;
 			Context context = CrashApplication.getInstance();
-			context.getPackageManager().getApplicationInfo(packageName,
-					PackageManager.GET_UNINSTALLED_PACKAGES);
+			context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
 			Log.i("Context", "true");
 			return true;
 		} catch (Exception e) {
@@ -356,49 +325,45 @@ public class ActivityUtils {
 
 	public static boolean simExist() {
 		Context context = CrashApplication.getInstance();
-		TelephonyManager telephonyManager = (TelephonyManager) context
-				.getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		int simState = telephonyManager.getSimState();
 		switch (simState) {
-		case TelephonyManager.SIM_STATE_ABSENT: // "无卡"
-			// DialogUtils.mesToastTip("请插入SIM卡");
-			return false;
-			// case TelephonyManager.SIM_STATE_NETWORK_LOCKED: //
-			// "需要NetworkPIN解锁"
-			// DialogUtils.mesToastTip("请输入NetworkPIN解锁");
-			// return false;
-			//
-			// case TelephonyManager.SIM_STATE_PIN_REQUIRED: // 需要PIN解锁
-			// DialogUtils.mesToastTip("请输入PIN解锁");
-			// return false;
-			//
-			// case TelephonyManager.SIM_STATE_PUK_REQUIRED: // 需要PUN解锁
-			// DialogUtils.mesToastTip("请输入PUN解锁");
-			// return false;
-		case TelephonyManager.SIM_STATE_READY: // 良好
-			return true;
-			// case TelephonyManager.SIM_STATE_UNKNOWN: // 未知状态
-			// DialogUtils.mesToastTip("请输入PUN解锁");
-			// return false;
-		default:
-			// DialogUtils.mesToastTip("SIM卡不能使用");
-			return false;
+			case TelephonyManager.SIM_STATE_ABSENT: // "无卡"
+				// DialogUtils.mesToastTip("请插入SIM卡");
+				return false;
+				// case TelephonyManager.SIM_STATE_NETWORK_LOCKED: //
+				// "需要NetworkPIN解锁"
+				// DialogUtils.mesToastTip("请输入NetworkPIN解锁");
+				// return false;
+				//
+				// case TelephonyManager.SIM_STATE_PIN_REQUIRED: // 需要PIN解锁
+				// DialogUtils.mesToastTip("请输入PIN解锁");
+				// return false;
+				//
+				// case TelephonyManager.SIM_STATE_PUK_REQUIRED: // 需要PUN解锁
+				// DialogUtils.mesToastTip("请输入PUN解锁");
+				// return false;
+			case TelephonyManager.SIM_STATE_READY: // 良好
+				return true;
+				// case TelephonyManager.SIM_STATE_UNKNOWN: // 未知状态
+				// DialogUtils.mesToastTip("请输入PUN解锁");
+				// return false;
+			default:
+				// DialogUtils.mesToastTip("SIM卡不能使用");
+				return false;
 		}
 	}
 
 	/**
 	 * 获取手机卡运营商
-	 * 
 	 * @return
 	 */
 	public static String getSimType() {
 		Context context = CrashApplication.getInstance();
-		TelephonyManager telManager = (TelephonyManager) context
-				.getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager telManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		String operator = telManager.getSimOperator();
 		if (operator != null) {
-			if (operator.equals("46000") || operator.equals("46002")
-					|| operator.equals("46007")) {
+			if (operator.equals("46000") || operator.equals("46002") || operator.equals("46007")) {
 				return Constant.SIM_MOBILE; // 中国移动
 			} else if (operator.equals("46001")) {
 				return Constant.SIM_UNICOM; // 中国联通
@@ -411,7 +376,6 @@ public class ActivityUtils {
 
 	/**
 	 * 获取Application系统配置
-	 * 
 	 * @param context
 	 * @return
 	 */
@@ -419,8 +383,7 @@ public class ActivityUtils {
 		try {
 			ApplicationInfo ai = null;
 			Context ctx = CrashApplication.getInstance();
-			ai = ctx.getPackageManager().getApplicationInfo(
-					ctx.getPackageName(), PackageManager.GET_META_DATA);
+			ai = ctx.getPackageManager().getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
 			String value = ai.metaData.getString(key);
 			if (!TextUtils.isEmpty(value)) {
 				value = value.replaceFirst("game:", "");
@@ -435,7 +398,6 @@ public class ActivityUtils {
 
 	/**
 	 * 获取安装APK intent
-	 * 
 	 * @param installApk
 	 * @return
 	 */
@@ -444,8 +406,7 @@ public class ActivityUtils {
 		Intent intent = new Intent();
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.setAction(android.content.Intent.ACTION_VIEW);
-		intent.setDataAndType(Uri.fromFile(installApk),
-				"application/vnd.android.package-archive");
+		intent.setDataAndType(Uri.fromFile(installApk), "application/vnd.android.package-archive");
 		return intent;
 	}
 
@@ -461,7 +422,6 @@ public class ActivityUtils {
 
 	/**
 	 * 创建桌面快捷方式
-	 * 
 	 * @param iconResId
 	 * @param appnameResId
 	 */
@@ -473,15 +433,13 @@ public class ActivityUtils {
 		if (hasShortcut(shortcutName)) {
 			deleteShortCut(shortcutName);
 		}
-		Intent shortcutintent = new Intent(
-				"com.android.launcher.action.INSTALL_SHORTCUT");
+		Intent shortcutintent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
 		// 不允许重复创建
 		shortcutintent.putExtra("duplicate", false);
 		// 需要现实的名称
 		shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcutName);
 		// 快捷图片
-		Parcelable icon = Intent.ShortcutIconResource.fromContext(ctx,
-				iconResId);
+		Parcelable icon = Intent.ShortcutIconResource.fromContext(ctx, iconResId);
 		shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
 		// 点击快捷图片，运行的程序主入口
 		Intent intent = new Intent(ctx, StartActivity.class);
@@ -498,8 +456,7 @@ public class ActivityUtils {
 	 */
 	public static void deleteShortCut(String shortcutName) {
 		Context ctx = CrashApplication.getInstance();
-		Intent shortcut = new Intent(
-				"com.android.launcher.action.UNINSTALL_SHORTCUT");
+		Intent shortcut = new Intent("com.android.launcher.action.UNINSTALL_SHORTCUT");
 		shortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcutName);
 		/** 改成以下方式能够成功删除，估计是删除和创建需要对应才能找到快捷方式并成功删除 **/
 		Intent intent = new Intent();
@@ -512,7 +469,6 @@ public class ActivityUtils {
 
 	/**
 	 * 判断是否存在快捷方式
-	 * 
 	 * @Title: hasShortcut
 	 * @param @param shortcutName
 	 * @param @return
@@ -530,8 +486,8 @@ public class ActivityUtils {
 			uriStr = "content://com.android.launcher2.settings/favorites?notify=true";
 		}
 		final Uri CONTENT_URI = Uri.parse(uriStr);
-		final Cursor c = ctx.getContentResolver().query(CONTENT_URI, null,
-				"title=?", new String[] { shortcutName }, null);
+		final Cursor c = ctx.getContentResolver().query(CONTENT_URI, null, "title=?", new String[] { shortcutName },
+				null);
 		if (c != null && c.getCount() > 0) {
 			result = true;
 		}
@@ -540,18 +496,14 @@ public class ActivityUtils {
 
 	/**
 	 * 判断service 是否运行
-	 * 
 	 * @throws
 	 */
 	public static boolean checkServiceIsWork(Class<?> clazz) {
 		Context ctx = CrashApplication.getInstance().getApplicationContext();
-		ActivityManager myManager = (ActivityManager) ctx
-				.getSystemService(Context.ACTIVITY_SERVICE);
-		ArrayList<RunningServiceInfo> runningService = (ArrayList<RunningServiceInfo>) myManager
-				.getRunningServices(30);
+		ActivityManager myManager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+		ArrayList<RunningServiceInfo> runningService = (ArrayList<RunningServiceInfo>) myManager.getRunningServices(30);
 		for (int i = 0; i < runningService.size(); i++) {
-			if (runningService.get(i).service.getClassName().toString()
-					.equals(clazz.getName())) {
+			if (runningService.get(i).service.getClassName().toString().equals(clazz.getName())) {
 				return true;
 			}
 		}
@@ -560,7 +512,6 @@ public class ActivityUtils {
 
 	/**
 	 * 判断是否在游戏视图 斗地主，锄大地游戏和结束页面实现　IGameView接口，　麻将单独判断
-	 * 
 	 * @throws
 	 */
 	public static boolean isGameView() {
@@ -574,7 +525,6 @@ public class ActivityUtils {
 
 	/**
 	 * 判断是否是支付界面
-	 * 
 	 * @Title: isPayView
 	 * @param @return
 	 * @return boolean
@@ -594,38 +544,29 @@ public class ActivityUtils {
 	public static void showAccountBindDialog() {
 		// if(CGChargeActivity.isYd(Database.currentActivity))return;
 		GameUser gu = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
-		if (gu != null && gu.getRelaAccount() == null
-				|| gu.getRelaAccount().equals("")) {
+		if (gu != null && gu.getRelaAccount() == null || gu.getRelaAccount().equals("")) {
 			String s = "您的金豆数大于200000，为了保障您的权益，请记住您的游戏ID或许绑定一个您可以记住的账号和密码，您可以使用新的游戏ID和账号登录";
-			AccountBindDialog bindDialog = new AccountBindDialog(
-					Database.currentActivity);
+			AccountBindDialog bindDialog = new AccountBindDialog(Database.currentActivity);
 			bindDialog.show();
 			bindDialog.setContentTv(s);
-			HashMap<String, String> TaskMenuMap = (HashMap<String, String>) GameCache
-					.getObj(CacheKey.ALL_SETTING_KEY);
+			HashMap<String, String> TaskMenuMap = (HashMap<String, String>) GameCache.getObj(CacheKey.ALL_SETTING_KEY);
 			int count = 0;
-			if (null != TaskMenuMap
-					&& TaskMenuMap
-							.containsKey(Constant.KEY_ACCOUNT_BIND_DIALOG_SHOW_COUNT)
-					&& !TextUtils.isEmpty(TaskMenuMap
-							.get(Constant.KEY_ACCOUNT_BIND_DIALOG_SHOW_COUNT))) {
-				count = Integer.parseInt(TaskMenuMap
-						.get(Constant.KEY_ACCOUNT_BIND_DIALOG_SHOW_COUNT)) + 1;
+			if (null != TaskMenuMap && TaskMenuMap.containsKey(Constant.KEY_ACCOUNT_BIND_DIALOG_SHOW_COUNT)
+					&& !TextUtils.isEmpty(TaskMenuMap.get(Constant.KEY_ACCOUNT_BIND_DIALOG_SHOW_COUNT))) {
+				count = Integer.parseInt(TaskMenuMap.get(Constant.KEY_ACCOUNT_BIND_DIALOG_SHOW_COUNT)) + 1;
 			} else {
 				count = 1;
 			}
 			if (null == TaskMenuMap) {
 				TaskMenuMap = new HashMap<String, String>();
 			}
-			TaskMenuMap.put(Constant.KEY_ACCOUNT_BIND_DIALOG_SHOW_COUNT,
-					String.valueOf(count));
+			TaskMenuMap.put(Constant.KEY_ACCOUNT_BIND_DIALOG_SHOW_COUNT, String.valueOf(count));
 			GameCache.putObj(CacheKey.ALL_SETTING_KEY, TaskMenuMap);
 		}
 	}
 
 	/**
 	 * 加载最近登录的用户
-	 * 
 	 * @throws
 	 */
 	public static GameUser loadLocalAccount() {
@@ -648,15 +589,13 @@ public class ActivityUtils {
 
 	/**
 	 * 保存账号
-	 * 
 	 * @param account
 	 * @param passowrd
 	 */
 	public static void saveAccount(String account, String passowrd) {
 		String saveAccPwd = account + "|" + passowrd;
-		SharedPreferences preferences = CrashApplication.getInstance()
-				.getSharedPreferences(Constant.LOCAL_ACCOUNTS,
-						Context.MODE_PRIVATE);
+		SharedPreferences preferences = CrashApplication.getInstance().getSharedPreferences(Constant.LOCAL_ACCOUNTS,
+				Context.MODE_PRIVATE);
 		// 读取SharedPreferences已有的
 		String localAccount = preferences.getString("acount", null);
 		if (null != localAccount) {// 本地不为空
@@ -687,19 +626,16 @@ public class ActivityUtils {
 
 	/**
 	 * 获取账号
-	 * 
 	 * @return
 	 */
 	public static String getAccount() {
-		SharedPreferences preferences = CrashApplication.getInstance()
-				.getSharedPreferences(Constant.LOCAL_ACCOUNTS,
-						Context.MODE_PRIVATE);
+		SharedPreferences preferences = CrashApplication.getInstance().getSharedPreferences(Constant.LOCAL_ACCOUNTS,
+				Context.MODE_PRIVATE);
 		return preferences.getString("acount", null);
 	}
 
 	/**
 	 * 获取本地的账号密码 acc|pwd
-	 * 
 	 * @Title: getUserPwd
 	 * @param @param account
 	 * @param @return
@@ -723,7 +659,6 @@ public class ActivityUtils {
 
 	/**
 	 * 获取手机基本信息
-	 * 
 	 * @Title: getPhoneInfo
 	 * @param @return
 	 * @return String
@@ -732,8 +667,8 @@ public class ActivityUtils {
 	public static String getPhoneInfo() {
 		Map<String, String> pMap = new HashMap<String, String>();
 		try {
-			TelephonyManager tm = (TelephonyManager) CrashApplication
-					.getInstance().getSystemService(Context.TELEPHONY_SERVICE);
+			TelephonyManager tm = (TelephonyManager) CrashApplication.getInstance().getSystemService(
+					Context.TELEPHONY_SERVICE);
 			pMap.put("model", android.os.Build.MODEL); // 型号
 			pMap.put("brand", android.os.Build.BRAND); // 手机品牌
 			pMap.put("os_sdk", android.os.Build.VERSION.SDK); //
@@ -753,7 +688,6 @@ public class ActivityUtils {
 
 	/**
 	 * 获取当前的网络信息
-	 * 
 	 * @Title: getNetWorkInfo
 	 * @param @return
 	 * @return String
@@ -762,8 +696,8 @@ public class ActivityUtils {
 	public static String getNetWorkInfo() {
 		Map<String, String> pMap = new HashMap<String, String>();
 		try {
-			TelephonyManager tm = (TelephonyManager) CrashApplication
-					.getInstance().getSystemService(Context.TELEPHONY_SERVICE);
+			TelephonyManager tm = (TelephonyManager) CrashApplication.getInstance().getSystemService(
+					Context.TELEPHONY_SERVICE);
 			pMap.put("model", android.os.Build.MODEL); // 型号
 			pMap.put("softver", tm.getDeviceSoftwareVersion()); // 设备的软件版本号：
 			pMap.put("phoneType", tm.getPhoneType() + "");
@@ -774,23 +708,23 @@ public class ActivityUtils {
 				int nType = tm.getNetworkType();
 				String nName = nType + "";
 				switch (nType) {
-				case TelephonyManager.NETWORK_TYPE_GPRS:
-				case TelephonyManager.NETWORK_TYPE_EDGE:
-					nName = "移动|联通2G";
-					break;
-				case TelephonyManager.NETWORK_TYPE_CDMA:
-					nName = "电信2G";
-					break;
-				case TelephonyManager.NETWORK_TYPE_UMTS:
-				case TelephonyManager.NETWORK_TYPE_HSDPA:
-					nName = "联通3G";
-					break;
-				case TelephonyManager.NETWORK_TYPE_EVDO_0:
-				case TelephonyManager.NETWORK_TYPE_EVDO_A:
-					nName = "电信3G";
-					break;
-				default:
-					break;
+					case TelephonyManager.NETWORK_TYPE_GPRS:
+					case TelephonyManager.NETWORK_TYPE_EDGE:
+						nName = "移动|联通2G";
+						break;
+					case TelephonyManager.NETWORK_TYPE_CDMA:
+						nName = "电信2G";
+						break;
+					case TelephonyManager.NETWORK_TYPE_UMTS:
+					case TelephonyManager.NETWORK_TYPE_HSDPA:
+						nName = "联通3G";
+						break;
+					case TelephonyManager.NETWORK_TYPE_EVDO_0:
+					case TelephonyManager.NETWORK_TYPE_EVDO_A:
+						nName = "电信3G";
+						break;
+					default:
+						break;
 				}
 				pMap.put("network", nName); // 网络类型
 			}
@@ -802,28 +736,27 @@ public class ActivityUtils {
 
 	/**
 	 * 获取网络类型
-	 * 
 	 * @return (0 无网,1=wifi,2=2g,3=3g)
 	 */
 	public static int getNetWorkType() {
 		try {
-			TelephonyManager tm = (TelephonyManager) CrashApplication
-					.getInstance().getSystemService(Context.TELEPHONY_SERVICE);
+			TelephonyManager tm = (TelephonyManager) CrashApplication.getInstance().getSystemService(
+					Context.TELEPHONY_SERVICE);
 			if (isWifiActive()) {
 				return 1;
 			} else {
 				// 2 联通2G
 				int nType = tm.getNetworkType();
 				switch (nType) {
-				case TelephonyManager.NETWORK_TYPE_GPRS:
-				case TelephonyManager.NETWORK_TYPE_EDGE:
-				case TelephonyManager.NETWORK_TYPE_CDMA:
-					return 2;
-				case TelephonyManager.NETWORK_TYPE_UMTS:
-				case TelephonyManager.NETWORK_TYPE_HSDPA:
-				case TelephonyManager.NETWORK_TYPE_EVDO_0:
-				case TelephonyManager.NETWORK_TYPE_EVDO_A:
-					return 3;
+					case TelephonyManager.NETWORK_TYPE_GPRS:
+					case TelephonyManager.NETWORK_TYPE_EDGE:
+					case TelephonyManager.NETWORK_TYPE_CDMA:
+						return 2;
+					case TelephonyManager.NETWORK_TYPE_UMTS:
+					case TelephonyManager.NETWORK_TYPE_HSDPA:
+					case TelephonyManager.NETWORK_TYPE_EVDO_0:
+					case TelephonyManager.NETWORK_TYPE_EVDO_A:
+						return 3;
 				}
 			}
 		} catch (Exception e) {
@@ -833,7 +766,6 @@ public class ActivityUtils {
 
 	/**
 	 * 是否是wifi
-	 * 
 	 * @Title: isWifiActive
 	 * @param @param icontext
 	 * @param @return
@@ -842,15 +774,13 @@ public class ActivityUtils {
 	 */
 	public static boolean isWifiActive() {
 		Context ctx = CrashApplication.getInstance().getApplicationContext();
-		ConnectivityManager connectivity = (ConnectivityManager) ctx
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager connectivity = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo[] info;
 		if (connectivity != null) {
 			info = connectivity.getAllNetworkInfo();
 			if (info != null) {
 				for (int i = 0; i < info.length; i++) {
-					if (info[i].getTypeName().equals("WIFI")
-							&& info[i].isConnected()) {
+					if (info[i].getTypeName().equals("WIFI") && info[i].isConnected()) {
 						return true;
 					}
 				}
@@ -861,13 +791,11 @@ public class ActivityUtils {
 
 	/**
 	 * 删除指定的账号
-	 * 
 	 * @param account
 	 */
 	public static void removeAccount(String account) {
-		SharedPreferences preferences = CrashApplication.getInstance()
-				.getSharedPreferences(Constant.LOCAL_ACCOUNTS,
-						Context.MODE_PRIVATE);
+		SharedPreferences preferences = CrashApplication.getInstance().getSharedPreferences(Constant.LOCAL_ACCOUNTS,
+				Context.MODE_PRIVATE);
 		String accounts = preferences.getString("acount", null);
 		if (null != accounts) {// 本地不为空
 			String[] str = accounts.split("/");
@@ -892,13 +820,11 @@ public class ActivityUtils {
 
 	/**
 	 * 是否绑定过账号
-	 * 
 	 * @return
 	 */
 	public static boolean isBindAccount() {
-		SharedPreferences preferences = CrashApplication.getInstance()
-				.getSharedPreferences(Constant.LOCAL_ACCOUNTS,
-						Context.MODE_PRIVATE);
+		SharedPreferences preferences = CrashApplication.getInstance().getSharedPreferences(Constant.LOCAL_ACCOUNTS,
+				Context.MODE_PRIVATE);
 		return preferences.getBoolean(Constant.LOCAL_ACCOUNTS_IS_BIND, false);
 	}
 
@@ -906,9 +832,8 @@ public class ActivityUtils {
 	 * 绑定账号状态记录
 	 */
 	public static void BindAccount() {
-		SharedPreferences preferences = CrashApplication.getInstance()
-				.getSharedPreferences(Constant.LOCAL_ACCOUNTS,
-						Context.MODE_PRIVATE);
+		SharedPreferences preferences = CrashApplication.getInstance().getSharedPreferences(Constant.LOCAL_ACCOUNTS,
+				Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
 		editor.putBoolean(Constant.LOCAL_ACCOUNTS_IS_BIND, true);
 		editor.commit();
@@ -928,7 +853,6 @@ public class ActivityUtils {
 
 	/**
 	 * 是否为双击
-	 * 
 	 * @param delay
 	 * @return
 	 */
@@ -944,16 +868,13 @@ public class ActivityUtils {
 
 	/**
 	 * 获取手机唯一标识
-	 * 
 	 * @throws
 	 */
 	public static String getAndroidId() {
 		Context context = CrashApplication.getInstance();
-		String androidId = Secure.getString(context.getContentResolver(),
-				Secure.ANDROID_ID);
+		String androidId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
 		if (TextUtils.isEmpty(androidId)) {
-			TelephonyManager tm = (TelephonyManager) context
-					.getSystemService(Context.TELEPHONY_SERVICE);
+			TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 			androidId = tm.getDeviceId();
 			if (TextUtils.isEmpty(androidId)) {
 				androidId = getSharedValue("local_phone_tag"); // 本地存储的手机TAG值
@@ -968,8 +889,7 @@ public class ActivityUtils {
 
 	public static String getHostIp(String host) {
 		try {
-			java.security.Security
-					.setProperty("networkaddress.cache.ttl", "15");
+			java.security.Security.setProperty("networkaddress.cache.ttl", "15");
 			// 修改缓存数据结束
 			InetAddress address = InetAddress.getByName(host);
 			if (address != null) {
@@ -987,8 +907,7 @@ public class ActivityUtils {
 	 * SharedPreferences 增加修改
 	 */
 	public static void addSharedValue(String key, String value) {
-		SharedPreferences preferences = CrashApplication.getInstance()
-				.getSharedPreferences(key, Context.MODE_PRIVATE);
+		SharedPreferences preferences = CrashApplication.getInstance().getSharedPreferences(key, Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
 		editor.putString(key, value);
 		editor.commit();
@@ -996,18 +915,15 @@ public class ActivityUtils {
 
 	/**
 	 * 获取 SharedPreferences值
-	 * 
 	 * @return
 	 */
 	public static String getSharedValue(String key) {
-		SharedPreferences preferences = CrashApplication.getInstance()
-				.getSharedPreferences(key, Context.MODE_PRIVATE);
+		SharedPreferences preferences = CrashApplication.getInstance().getSharedPreferences(key, Context.MODE_PRIVATE);
 		return preferences.getString(key, null);
 	}
 
 	/**
 	 * 获取android当前可用内存大小
-	 * 
 	 * @return
 	 */
 	public static String getAvailMemory() {
@@ -1016,13 +932,11 @@ public class ActivityUtils {
 		MemoryInfo mi = new MemoryInfo();
 		am.getMemoryInfo(mi);
 		// mi.availMem; 当前系统的可用内存
-		return Formatter.formatFileSize(CrashApplication.getInstance()
-				.getBaseContext(), mi.availMem);// 将获取的内存大小规格化
+		return Formatter.formatFileSize(CrashApplication.getInstance().getBaseContext(), mi.availMem);// 将获取的内存大小规格化
 	}
 
 	/**
 	 * 获取总的内存大小
-	 * 
 	 * @return
 	 */
 	public static String getTotalMemory() {
@@ -1032,8 +946,7 @@ public class ActivityUtils {
 		long initial_memory = 0;
 		try {
 			FileReader localFileReader = new FileReader(str1);
-			BufferedReader localBufferedReader = new BufferedReader(
-					localFileReader, 8192);
+			BufferedReader localBufferedReader = new BufferedReader(localFileReader, 8192);
 			str2 = localBufferedReader.readLine();// 读取meminfo第一行，系统总内存大小
 			arrayOfString = str2.split("\\s+");
 			for (String num : arrayOfString) {
@@ -1043,8 +956,7 @@ public class ActivityUtils {
 			localBufferedReader.close();
 		} catch (IOException e) {
 		}
-		return Formatter.formatFileSize(CrashApplication.getInstance()
-				.getBaseContext(), initial_memory);// Byte转换为KB或者MB，内存大小规格化
+		return Formatter.formatFileSize(CrashApplication.getInstance().getBaseContext(), initial_memory);// Byte转换为KB或者MB，内存大小规格化
 	}
 
 	/**
@@ -1053,18 +965,14 @@ public class ActivityUtils {
 	public static String getProUseMemory() {
 		Context ctx = CrashApplication.getInstance();
 		Runtime myRun = Runtime.getRuntime();
-		String totalMemory = "\n已用内存："
-				+ Formatter.formatFileSize(ctx, myRun.totalMemory());
-		String maxMemory = "，最大内存："
-				+ Formatter.formatFileSize(ctx, myRun.maxMemory());
-		String freeMemory = "，可用内存："
-				+ Formatter.formatFileSize(ctx, myRun.freeMemory());
+		String totalMemory = "\n已用内存：" + Formatter.formatFileSize(ctx, myRun.totalMemory());
+		String maxMemory = "，最大内存：" + Formatter.formatFileSize(ctx, myRun.maxMemory());
+		String freeMemory = "，可用内存：" + Formatter.formatFileSize(ctx, myRun.freeMemory());
 		return totalMemory + maxMemory + freeMemory;
 	}
 
 	/**
 	 * 获取手机安装应用信息（系统预装应用数/用户安装应用数）
-	 * 
 	 * @return
 	 */
 	public static String getAPPInfo() {
@@ -1075,8 +983,7 @@ public class ActivityUtils {
 		List<PackageInfo> packages = pm.getInstalledPackages(0);
 		for (int i = 0; i < packages.size(); i++) {
 			PackageInfo packageInfo = packages.get(i);
-			appMap.put("appName", packageInfo.applicationInfo.loadLabel(pm)
-					.toString());
+			appMap.put("appName", packageInfo.applicationInfo.loadLabel(pm).toString());
 			appMap.put("packageName", packageInfo.packageName);
 			appMap.put("versionName", packageInfo.versionName);
 			// Only display the non-system app info
@@ -1116,11 +1023,8 @@ public class ActivityUtils {
 
 	/**
 	 * Ping网络信息获取
-	 * 
-	 * @param ip
-	 *            ip或域名
-	 * @param times
-	 *            ping的次数
+	 * @param ip ip或域名
+	 * @param times ping的次数
 	 * @return
 	 */
 	public static ReturnPing getPing(String ip, int times) {
@@ -1147,18 +1051,14 @@ public class ActivityUtils {
 			resault += buffer.toString();
 			if (status == 0) {
 				Map<String, String> map = new HashMap<String, String>();
-				String s = resault.substring(resault
-						.indexOf("min/avg/max/mdev"));
+				String s = resault.substring(resault.indexOf("min/avg/max/mdev"));
 				String s1 = s.substring(s.indexOf("= "), s.lastIndexOf(" ms"));
 				String s2 = s1.replace("= ", "");
 				Log.i("ping", s2);
 				String s3[] = s2.split("/");
-				returnPing
-						.setPingMinTime((int) (Float.parseFloat(s3[0].trim()) + 0.5));
-				returnPing
-						.setPingAvgTime((int) (Float.parseFloat(s3[1].trim()) + 0.5));
-				returnPing
-						.setPingMaxTime((int) (Float.parseFloat(s3[2].trim()) + 0.5));
+				returnPing.setPingMinTime((int) (Float.parseFloat(s3[0].trim()) + 0.5));
+				returnPing.setPingAvgTime((int) (Float.parseFloat(s3[1].trim()) + 0.5));
+				returnPing.setPingMaxTime((int) (Float.parseFloat(s3[2].trim()) + 0.5));
 				returnPing.setPingStatus(1);
 				resault = JsonHelper.toJson(map);
 			} else {
@@ -1173,7 +1073,6 @@ public class ActivityUtils {
 
 	/**
 	 * 获取时间
-	 * 
 	 * @return
 	 */
 	@SuppressLint("SimpleDateFormat")
@@ -1186,7 +1085,6 @@ public class ActivityUtils {
 
 	/**
 	 * 获取时间-秒
-	 * 
 	 * @return
 	 */
 	@SuppressLint("SimpleDateFormat")
@@ -1198,7 +1096,6 @@ public class ActivityUtils {
 
 	/**
 	 * 获取时间-小时
-	 * 
 	 * @return
 	 */
 	@SuppressLint("SimpleDateFormat")
@@ -1210,42 +1107,32 @@ public class ActivityUtils {
 
 	/**
 	 * 设置头像(地主(男/女)，农民(男/女))
-	 * 
 	 * @param gender
 	 */
 	public static void setHead(ImageView IconImg, String gender, boolean isDizhu) {
 		if (isDizhu) {// 是否是地主
 			if (gender.equals("1")) {// 性别 0保密/1女/2男
-				IconImg.setImageDrawable(ImageUtil.getResDrawable(
-						R.drawable.dizhu_girl, true));
+				IconImg.setImageDrawable(ImageUtil.getResDrawable(R.drawable.dizhu_girl, true));
 			} else {
-				IconImg.setImageDrawable(ImageUtil.getResDrawable(
-						R.drawable.dizhu, true));
+				IconImg.setImageDrawable(ImageUtil.getResDrawable(R.drawable.dizhu, true));
 			}
 		} else {
 			if (gender.equals("1")) {// 性别 0保密/1女/2男
-				IconImg.setImageDrawable(ImageUtil.getResDrawable(
-						R.drawable.nongmin_girl, true));
+				IconImg.setImageDrawable(ImageUtil.getResDrawable(R.drawable.nongmin_girl, true));
 			} else {
-				IconImg.setImageDrawable(ImageUtil.getResDrawable(
-						R.drawable.nongmin, true));
+				IconImg.setImageDrawable(ImageUtil.getResDrawable(R.drawable.nongmin, true));
 			}
 		}
 	}
 
 	/**
 	 * 设置头像(地主(男/女)，农民(男/女))
-	 * 
 	 * @param IconImg
-	 * @param gender
-	 *            性别
-	 * @param isDizhu
-	 *            是否是地主
-	 * @param iqImg
-	 *            等级头像图标(0女地主,1男地主,2女农民,3男农民)
+	 * @param gender 性别
+	 * @param isDizhu 是否是地主
+	 * @param iqImg 等级头像图标(0女地主,1男地主,2女农民,3男农民)
 	 */
-	public static void setHead(final Context ctx, final ImageView IconImg,
-			final String gender, final boolean isDizhu,
+	public static void setHead(final Context ctx, final ImageView IconImg, final String gender, final boolean isDizhu,
 			final Map<String, String> iqImg, boolean isRotation) {
 		final String path = HttpURL.URL_PIC_ALL;
 		// if(isRotation){
@@ -1278,65 +1165,45 @@ public class ActivityUtils {
 	/**
 	 * @param ctx
 	 * @param IconImg
-	 * @param gender
-	 *            性别
-	 * @param isDizhu
-	 *            是否是地主
-	 * @param iqImg
-	 *            等级头像图标(0女地主,1男地主,2女农民,3男农民)
+	 * @param gender 性别
+	 * @param isDizhu 是否是地主
+	 * @param iqImg 等级头像图标(0女地主,1男地主,2女农民,3男农民)
 	 * @param path
 	 */
-	private static void setHead2(final Context ctx, final ImageView IconImg,
-			final String gender, final boolean isDizhu,
-			final Map<String, String> iqImg, final String path) {
+	private static void setHead2(final Context ctx, final ImageView IconImg, final String gender,
+			final boolean isDizhu, final Map<String, String> iqImg, final String path) {
 		if (isDizhu) {// 是否是地主
 			if (!TextUtils.isEmpty(gender) && gender.trim().equals("1")) {// 性别
 																			// 0保密/1女/2男
-				IconImg.setImageDrawable(ImageUtil.getResDrawable(
-						R.drawable.dizhu_girl, true));
-				if (null != iqImg && iqImg.containsKey("0")
-						&& !TextUtils.isEmpty(iqImg.get("0"))) {
-					IconImg.setImageBitmap(null == ImageUtil.getGirlBitmap(path
-							+ iqImg.get("0"), true, false) ? BitmapFactory
-							.decodeResource(ctx.getResources(),
-									R.drawable.dizhu_girl) : ImageUtil
-							.getGirlBitmap(path + iqImg.get("0"), true, false));
+				IconImg.setImageDrawable(ImageUtil.getResDrawable(R.drawable.dizhu_girl, true));
+				if (null != iqImg && iqImg.containsKey("0") && !TextUtils.isEmpty(iqImg.get("0"))) {
+					IconImg.setImageBitmap(null == ImageUtil.getGirlBitmap(path + iqImg.get("0"), true, false) ? BitmapFactory
+							.decodeResource(ctx.getResources(), R.drawable.dizhu_girl) : ImageUtil.getGirlBitmap(path
+							+ iqImg.get("0"), true, false));
 				}
 			} else {
-				IconImg.setImageDrawable(ImageUtil.getResDrawable(
-						R.drawable.dizhu, true));
-				if (null != iqImg && iqImg.containsKey("1")
-						&& !TextUtils.isEmpty(iqImg.get("1"))) {
-					IconImg.setImageBitmap(null == ImageUtil.getGirlBitmap(path
-							+ iqImg.get("1"), true, false) ? BitmapFactory
-							.decodeResource(ctx.getResources(),
-									R.drawable.dizhu) : ImageUtil
-							.getGirlBitmap(path + iqImg.get("1"), true, false));
+				IconImg.setImageDrawable(ImageUtil.getResDrawable(R.drawable.dizhu, true));
+				if (null != iqImg && iqImg.containsKey("1") && !TextUtils.isEmpty(iqImg.get("1"))) {
+					IconImg.setImageBitmap(null == ImageUtil.getGirlBitmap(path + iqImg.get("1"), true, false) ? BitmapFactory
+							.decodeResource(ctx.getResources(), R.drawable.dizhu) : ImageUtil.getGirlBitmap(path
+							+ iqImg.get("1"), true, false));
 				}
 			}
 		} else {
 			if (!TextUtils.isEmpty(gender) && gender.trim().equals("1")) {// 性别
 																			// 0保密/1女/2男
-				IconImg.setImageDrawable(ImageUtil.getResDrawable(
-						R.drawable.nongmin_girl, true));
-				if (null != iqImg && iqImg.containsKey("2")
-						&& !TextUtils.isEmpty(iqImg.get("2"))) {
-					IconImg.setImageBitmap(null == ImageUtil.getGirlBitmap(path
-							+ iqImg.get("2"), true, false) ? BitmapFactory
-							.decodeResource(ctx.getResources(),
-									R.drawable.nongmin_girl) : ImageUtil
-							.getGirlBitmap(path + iqImg.get("2"), true, false));
+				IconImg.setImageDrawable(ImageUtil.getResDrawable(R.drawable.nongmin_girl, true));
+				if (null != iqImg && iqImg.containsKey("2") && !TextUtils.isEmpty(iqImg.get("2"))) {
+					IconImg.setImageBitmap(null == ImageUtil.getGirlBitmap(path + iqImg.get("2"), true, false) ? BitmapFactory
+							.decodeResource(ctx.getResources(), R.drawable.nongmin_girl) : ImageUtil.getGirlBitmap(path
+							+ iqImg.get("2"), true, false));
 				}
 			} else {
-				IconImg.setImageDrawable(ImageUtil.getResDrawable(
-						R.drawable.nongmin, true));
-				if (null != iqImg && iqImg.containsKey("3")
-						&& !TextUtils.isEmpty(iqImg.get("3"))) {
-					IconImg.setImageBitmap(null == ImageUtil.getGirlBitmap(path
-							+ iqImg.get("3"), true, false) ? BitmapFactory
-							.decodeResource(ctx.getResources(),
-									R.drawable.nongmin) : ImageUtil
-							.getGirlBitmap(path + iqImg.get("3"), true, false));
+				IconImg.setImageDrawable(ImageUtil.getResDrawable(R.drawable.nongmin, true));
+				if (null != iqImg && iqImg.containsKey("3") && !TextUtils.isEmpty(iqImg.get("3"))) {
+					IconImg.setImageBitmap(null == ImageUtil.getGirlBitmap(path + iqImg.get("3"), true, false) ? BitmapFactory
+							.decodeResource(ctx.getResources(), R.drawable.nongmin) : ImageUtil.getGirlBitmap(path
+							+ iqImg.get("3"), true, false));
 				}
 			}
 		}
@@ -1344,20 +1211,16 @@ public class ActivityUtils {
 
 	/**
 	 * 叫地前先设置默认头像
-	 * 
 	 * @param ctx
 	 * @param IconImg
-	 * @param gender
-	 *            性别
-	 * @param isRotation
-	 *            是否旋转
+	 * @param gender 性别
+	 * @param isRotation 是否旋转
 	 */
-	public static void setDefaultHead(final Context ctx,
-			final ImageView IconImg, final String gender, boolean isRotation) {
+	public static void setDefaultHead(final Context ctx, final ImageView IconImg, final String gender,
+			boolean isRotation) {
 		if (isRotation) {
 			// 通过AnimationUtils得到动画配置文件(/res/anim/back_scale.xml)
-			Animation animation = AnimationUtils.loadAnimation(ctx,
-					R.anim.back_scale);
+			Animation animation = AnimationUtils.loadAnimation(ctx, R.anim.back_scale);
 			animation.setAnimationListener(new Animation.AnimationListener() {
 				@Override
 				public void onAnimationStart(Animation animation) {
@@ -1370,8 +1233,7 @@ public class ActivityUtils {
 				@Override
 				public void onAnimationEnd(Animation animation) {
 					setDefaultHead2(IconImg, gender);
-					IconImg.startAnimation(AnimationUtils.loadAnimation(ctx,
-							R.anim.front_scale));
+					IconImg.startAnimation(AnimationUtils.loadAnimation(ctx, R.anim.front_scale));
 				}
 			});
 			animation.setDuration(100);
@@ -1383,12 +1245,10 @@ public class ActivityUtils {
 
 	/**
 	 * 叫地前先设置默认头像
-	 * 
 	 * @param IconImg
 	 * @param gender
 	 */
-	private static void setDefaultHead2(final ImageView IconImg,
-			final String gender) {
+	private static void setDefaultHead2(final ImageView IconImg, final String gender) {
 		// if (!TextUtils.isEmpty(gender) && gender.trim().equals("1")) {//性别
 		// 0保密/1女/2男
 		// IconImg.setImageDrawable(ImageUtil.getResDrawable(R.drawable.nv_defualt_head,
@@ -1401,9 +1261,7 @@ public class ActivityUtils {
 
 	/**
 	 * 获取倒计时 1天 =86400 秒 1小时 =3600 秒 1分钟 =60 秒
-	 * 
-	 * @param time
-	 *            秒
+	 * @param time 秒
 	 * @return
 	 */
 	public static String getCountDown(long time) {
@@ -1440,8 +1298,8 @@ public class ActivityUtils {
 	 */
 	public static void openApp(String packageName) {
 		try {
-			Intent startIntent = CrashApplication.getInstance()
-					.getPackageManager().getLaunchIntentForPackage(packageName);
+			Intent startIntent = CrashApplication.getInstance().getPackageManager()
+					.getLaunchIntentForPackage(packageName);
 			startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			CrashApplication.getInstance().startActivity(startIntent);
 		} catch (Exception e) {
@@ -1451,20 +1309,17 @@ public class ActivityUtils {
 
 	/**
 	 * 参数说明 destinationAddress:收信人的手机号码 scAddress:发信人的手机号码 text:发送信息的内容
-	 * sentIntent:发送是否成功的回执，用于监听短信是否发送成功。
-	 * DeliveryIntent:接收是否成功的回执，用于监听短信对方是否接收成功。
+	 * sentIntent:发送是否成功的回执，用于监听短信是否发送成功。 DeliveryIntent:接收是否成功的回执，用于监听短信对方是否接收成功。
 	 */
 	public static void sendSMS(String phoneNumber, String message) {
 		// ---sends an SMS message to another device---
 		SmsManager sms = SmsManager.getDefault();
 		// create the sentIntent parameter
 		Intent sentIntent = new Intent("SENT_SMS_ACTION");
-		PendingIntent sentPI = PendingIntent.getBroadcast(
-				CrashApplication.getInstance(), 0, sentIntent, 0);
+		PendingIntent sentPI = PendingIntent.getBroadcast(CrashApplication.getInstance(), 0, sentIntent, 0);
 		// create the deilverIntent parameter
 		Intent deliverIntent = new Intent("DELIVERED_SMS_ACTION");
-		PendingIntent deliverPI = PendingIntent.getBroadcast(
-				CrashApplication.getInstance(), 0, deliverIntent, 0);
+		PendingIntent deliverPI = PendingIntent.getBroadcast(CrashApplication.getInstance(), 0, deliverIntent, 0);
 		// 如果短信内容超过70个字符 将这条短信拆成多条短信发送出去
 		if (message.length() > 70) {
 			ArrayList<String> msgs = sms.divideMessage(message);
@@ -1486,8 +1341,7 @@ public class ActivityUtils {
 		// 送达内容
 		values.put("body", message);
 		// 插入短信库
-		Database.currentActivity.getContentResolver().insert(
-				Uri.parse("content://sms/sent"), values);
+		Database.currentActivity.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
 		// SMSNotifications.showNotification(this, "短信", "您已欠费，请及时充值");
 	}
 
@@ -1496,20 +1350,16 @@ public class ActivityUtils {
 	 */
 	public static ArrayList<CommandUploadDesktopAppInfo> getAllAppInfo() {
 		ArrayList<CommandUploadDesktopAppInfo> appList = new ArrayList<CommandUploadDesktopAppInfo>(); // 用来存储获取的应用信息数据
-		List<PackageInfo> packages = CrashApplication.getInstance()
-				.getPackageManager().getInstalledPackages(0);
+		List<PackageInfo> packages = CrashApplication.getInstance().getPackageManager().getInstalledPackages(0);
 		for (int i = 0; i < packages.size(); i++) {
 			PackageInfo packageInfo = packages.get(i);
 			CommandUploadDesktopAppInfo tmpInfo = new CommandUploadDesktopAppInfo();
-			tmpInfo.setAppName(packageInfo.applicationInfo.loadLabel(
-					CrashApplication.getInstance().getPackageManager())
-					.toString());
+			tmpInfo.setAppName(packageInfo.applicationInfo
+					.loadLabel(CrashApplication.getInstance().getPackageManager()).toString());
 			tmpInfo.setPackageName(packageInfo.packageName);
 			tmpInfo.setVersionName(packageInfo.versionName);
 			tmpInfo.setVersionCode(packageInfo.versionCode);
-			tmpInfo.setAppIcon(packageInfo.applicationInfo
-					.loadIcon(CrashApplication.getInstance()
-							.getPackageManager()));
+			tmpInfo.setAppIcon(packageInfo.applicationInfo.loadIcon(CrashApplication.getInstance().getPackageManager()));
 			// tmpInfo.appIcon =
 			// packageInfo.applicationInfo.loadIcon(getPackageManager());
 			// Only display the non-system app info
@@ -1524,8 +1374,8 @@ public class ActivityUtils {
 	 * 获取当前运行非系统应用所有信息
 	 */
 	public static CommandUploadRunAppInfo getRunAppInfo() {
-		ActivityManager manager = (ActivityManager) CrashApplication
-				.getInstance().getSystemService(Context.ACTIVITY_SERVICE);
+		ActivityManager manager = (ActivityManager) CrashApplication.getInstance().getSystemService(
+				Context.ACTIVITY_SERVICE);
 		RunningTaskInfo info = manager.getRunningTasks(1).get(0);
 		CommandUploadRunAppInfo tmpInfo = new CommandUploadRunAppInfo();
 		tmpInfo.setClassName(info.topActivity.getClassName());// 完整类名
@@ -1533,8 +1383,7 @@ public class ActivityUtils {
 		tmpInfo.setPackageName(info.topActivity.getPackageName());// 包名
 		ArrayList<CommandUploadDesktopAppInfo> DesktopAppInfo = getAllAppInfo();
 		for (int i = 0; i < DesktopAppInfo.size(); i++) {
-			if (DesktopAppInfo.get(i).getPackageName()
-					.equals(info.topActivity.getPackageName())) {
+			if (DesktopAppInfo.get(i).getPackageName().equals(info.topActivity.getPackageName())) {
 				tmpInfo.setAppName(DesktopAppInfo.get(i).getAppName());
 			}
 		}
@@ -1543,13 +1392,11 @@ public class ActivityUtils {
 
 	/**
 	 * 设置缩放动画
-	 * 
 	 * @param view
 	 * @param context
 	 */
 	public static void startScaleAnim(final RelativeLayout view, Context context) {
-		Animation animationjg = AnimationUtils.loadAnimation(context,
-				R.anim.my_scale_action2);
+		Animation animationjg = AnimationUtils.loadAnimation(context, R.anim.my_scale_action2);
 		view.startAnimation(animationjg);
 		animationjg.setAnimationListener(new AnimationListener() {
 			@Override
@@ -1569,18 +1416,15 @@ public class ActivityUtils {
 
 	/**
 	 * 判断当前应用是否在前台运行
-	 * 
 	 * @param context
 	 * @return
 	 */
 	public static boolean isRunningForeground() {
 		Context context = CrashApplication.getInstance();
-		ActivityManager am = (ActivityManager) context
-				.getSystemService(Context.ACTIVITY_SERVICE);
+		ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 		ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
 		String currentPackageName = cn.getPackageName();
-		if (!TextUtils.isEmpty(currentPackageName)
-				&& currentPackageName.equals(context.getPackageName())) {
+		if (!TextUtils.isEmpty(currentPackageName) && currentPackageName.equals(context.getPackageName())) {
 			return true;
 		}
 		return false;
@@ -1588,14 +1432,12 @@ public class ActivityUtils {
 
 	/**
 	 * 获取系统WIFI信号量
-	 * 
 	 * @return
 	 */
 	@SuppressWarnings("static-access")
 	public static int getWifiLevel() {
 		Context context = CrashApplication.getInstance();
-		WifiManager mWifiManager = ((WifiManager) context
-				.getSystemService(Context.WIFI_SERVICE));
+		WifiManager mWifiManager = ((WifiManager) context.getSystemService(Context.WIFI_SERVICE));
 		WifiInfo info = mWifiManager.getConnectionInfo();
 		return WifiManager.calculateSignalLevel(info.getRssi(), 4);
 	}

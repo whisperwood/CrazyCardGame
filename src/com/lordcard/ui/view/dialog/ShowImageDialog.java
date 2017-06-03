@@ -16,8 +16,7 @@ public class ShowImageDialog extends Dialog {
 		super(context, theme);
 	}
 
-	public ShowImageDialog(Activity context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	public ShowImageDialog(Activity context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 	}
 

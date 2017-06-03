@@ -6,8 +6,7 @@ public class ConfigUtils {
 	protected static Properties properties = new Properties();
 	static {
 		try {
-			properties.load(ConfigUtils.class.getClassLoader()
-					.getResourceAsStream("config.properties"));
+			properties.load(ConfigUtils.class.getClassLoader().getResourceAsStream("config.properties"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -15,7 +14,6 @@ public class ConfigUtils {
 
 	/**
 	 * 返回配置值
-	 * 
 	 * @param key
 	 * @return 2012 2012-6-11
 	 */

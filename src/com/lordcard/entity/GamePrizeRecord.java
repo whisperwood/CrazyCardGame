@@ -29,8 +29,7 @@ public class GamePrizeRecord {
 	@SerializedName("rn")
 	private String roomName;
 
-	public GamePrizeRecord(String time, String rank, String prize,
-			String roomName) {
+	public GamePrizeRecord(String time, String rank, String prize, String roomName) {
 		this.time = time;
 		this.rank = rank;
 		this.prize = prize;

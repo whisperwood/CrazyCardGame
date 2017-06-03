@@ -33,7 +33,6 @@ public class ClientAdapter {
 
 	/**
 	 * Socket异常
-	 * 
 	 * @Title: socketException
 	 * @param
 	 * @return void
@@ -49,7 +48,6 @@ public class ClientAdapter {
 
 	/**
 	 * socket关闭时的处理
-	 * 
 	 * @Title: socketClosed
 	 * @param
 	 * @return void
@@ -63,7 +61,6 @@ public class ClientAdapter {
 
 	/**
 	 * 接收消息处理
-	 * 
 	 * @Title: messageReceived
 	 * @param @param msg 收到的消息
 	 * @return void
@@ -79,7 +76,6 @@ public class ClientAdapter {
 
 	/**
 	 * 发送消息
-	 * 
 	 * @Title: sendMsg
 	 * @param @param msg
 	 * @return void
@@ -93,7 +89,6 @@ public class ClientAdapter {
 
 	/**
 	 * 主动关闭的操作
-	 * 
 	 * @Title: close
 	 * @param
 	 * @return void

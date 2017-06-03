@@ -36,18 +36,14 @@ import com.lordcard.network.base.ThreadPool;
 
 /**
  * com.game.module.common.util.HttpUtils
- * 
  * @author yinhb <br/>
  *         create at 2013 2013-1-25 下午03:50:20
  */
 public class HttpUtils {
 	/**
 	 * 提交业务指令
-	 * 
-	 * @param uri
-	 *            请求的相对地址
-	 * @param postCmd
-	 *            CmdDetail 的json数据
+	 * @param uri 请求的相对地址
+	 * @param postCmd CmdDetail 的json数据
 	 * @return
 	 */
 	public static String postCmd(String uri, String postCmd) {
@@ -59,11 +55,8 @@ public class HttpUtils {
 
 	/**
 	 * post请求 默认结果不缓存
-	 * 
-	 * @param url
-	 *            post url
-	 * @param paramMap
-	 *            post参数
+	 * @param url post url
+	 * @param paramMap post参数
 	 * @return
 	 */
 	public static String post(String url, Map<String, String> paramMap) {
@@ -72,7 +65,6 @@ public class HttpUtils {
 
 	/**
 	 * 获取请求缓存的键值
-	 * 
 	 * @param url
 	 * @param paramMap
 	 * @return
@@ -90,17 +82,12 @@ public class HttpUtils {
 
 	/**
 	 * post请求
-	 * 
-	 * @param url
-	 *            post url
-	 * @param paramMap
-	 *            post参数
-	 * @param isCache
-	 *            结果是否缓存 (缓存后下次请求将直接取缓存数据,继续的请求获取的数据用来更新缓存) true:缓存 false:不缓存
+	 * @param url post url
+	 * @param paramMap post参数
+	 * @param isCache 结果是否缓存 (缓存后下次请求将直接取缓存数据,继续的请求获取的数据用来更新缓存) true:缓存 false:不缓存
 	 * @return
 	 */
-	public static String post(final String url,
-			final Map<String, String> paramMap, boolean isCache) {
+	public static String post(final String url, final Map<String, String> paramMap, boolean isCache) {
 		String result = null;
 		final String cacheKey = getCacheKey(url, paramMap);
 		// 如果为空 则是url 和param都是空, 无效的请求
@@ -120,8 +107,7 @@ public class HttpUtils {
 			if (result != null && !"null".equals(result) && result.length() > 0) { // 缓存请求的结果数据
 				boolean isTrueResult = true;
 				try {
-					JsonResult jsonResult = JsonHelper.fromJson(result,
-							JsonResult.class);
+					JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 					if (!JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) { // 正确的返回数据
 																					// 可以缓存
 						isTrueResult = false;
@@ -148,15 +134,12 @@ public class HttpUtils {
 					try {
 						// 将请求的结果同步到缓存
 						String synResult = doPost(url, paramMap);
-						if (synResult != null && !"null".equals(synResult)
-								&& synResult.length() > 0) { // 缓存请求的结果数据
+						if (synResult != null && !"null".equals(synResult) && synResult.length() > 0) { // 缓存请求的结果数据
 							boolean isTrueResult = true;
 							try {
-								JsonResult jsonResult = JsonHelper.fromJson(
-										synResult, JsonResult.class);
-								if (!JsonResult.SUCCESS.equals(jsonResult
-										.getMethodCode())) { // 正确的返回数据
-																// 可以缓存
+								JsonResult jsonResult = JsonHelper.fromJson(synResult, JsonResult.class);
+								if (!JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) { // 正确的返回数据
+																								// 可以缓存
 									isTrueResult = false;
 								}
 							} catch (Exception e) {
@@ -179,8 +162,7 @@ public class HttpUtils {
 		HttpPost httpost = new HttpPost(url);
 		try {
 			// httpost.setHeader("Connection", "Keep-Alive");
-			httpost.setHeader("Content-Type",
-					"application/x-www-form-urlencoded; charset=utf-8");
+			httpost.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			// post参数
 			List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 			if (paramMap == null) {
@@ -213,7 +195,6 @@ public class HttpUtils {
 
 	/**
 	 * 返回的结果处理
-	 * 
 	 * @param result
 	 * @return
 	 */

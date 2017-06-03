@@ -4,7 +4,6 @@ import com.lordcard.network.http.HttpURL;
 
 /**
  * 移动ＭＭ弱联网支付相关配置
- * 
  * @author yinhb 2013-12-9 下午2:03:41
  */
 public class JDSMSConfig {
@@ -13,8 +12,7 @@ public class JDSMSConfig {
 	/** 当前支付的订单号 */
 	public static String PAY_ORDER = null;
 	/** 订单生成地址 */
-	public static final String PAY_ORDER_URL = HttpURL.HTTP_PATH
-			+ "game/jd/addPayOrder.sc";
+	public static final String PAY_ORDER_URL = HttpURL.HTTP_PATH + "game/jd/addPayOrder.sc";
 	// /** 成功回调成地址 */
 	// public static final String PAY_CALLBACK_URL = HttpURL.HTTP_PATH +
 	// "game/mm/callback.sc";

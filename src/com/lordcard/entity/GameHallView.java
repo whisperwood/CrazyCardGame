@@ -13,7 +13,6 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 房间大厅 com.frame.game.vo.GameHallView
- * 
  * @author yinhb <br/>
  *         create at 2013 2013-1-17 下午04:40:10
  */

@@ -22,11 +22,9 @@ public class PhoneStatReceiver extends BroadcastReceiver {
 		if (flag) {
 			flag = false;
 			// 获取电话通讯服务
-			TelephonyManager tpm = (TelephonyManager) context
-					.getSystemService(Context.TELEPHONY_SERVICE);
+			TelephonyManager tpm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 			// 创建一个监听对象，监听电话状态改变事件
-			tpm.listen(new GamePhoneStateListener(context),
-					PhoneStateListener.LISTEN_CALL_STATE);
+			tpm.listen(new GamePhoneStateListener(context), PhoneStateListener.LISTEN_CALL_STATE);
 		}
 	}
 }

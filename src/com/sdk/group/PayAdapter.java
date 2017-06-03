@@ -50,17 +50,14 @@ public class PayAdapter extends BaseAdapter {
 		ViewHolder holder;
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = mInflater
-					.inflate(R.layout.pay_ab_listview_item, null);
-			holder.guideItem = (Button) convertView
-					.findViewById(R.id.ab_item_btn);
+			convertView = mInflater.inflate(R.layout.pay_ab_listview_item, null);
+			holder.guideItem = (Button) convertView.findViewById(R.id.ab_item_btn);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		PayPoint point = pointlist.get(position);
-		holder.guideItem
-				.setText(point.getName() + "=" + point.getMoney() + "元");
+		holder.guideItem.setText(point.getName() + "=" + point.getMoney() + "元");
 		holder.guideItem.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -34,8 +34,7 @@ public class DigtailStoveDialog extends Dialog implements OnClickListener {
 	// super(context, cancelable, cancelListener);
 	// this.context = context;
 	// }
-	public DigtailStoveDialog(Context context, int theme,
-			GoodsTypeDetail digiDetail) {
+	public DigtailStoveDialog(Context context, int theme, GoodsTypeDetail digiDetail) {
 		super(context, theme);
 		this.context = context;
 		this.digiDetail = digiDetail;
@@ -46,8 +45,7 @@ public class DigtailStoveDialog extends Dialog implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.good_stove_dialog);
 		mainLayout = (LinearLayout) findViewById(R.id.stovedigital_layout);
-		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(
-				R.drawable.liaotian_bj_1, true));
+		mainLayout.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.liaotian_bj_1, true));
 		mainLayout.setOnClickListener(null);
 		mst.adjustView(mainLayout);
 		layout(context);
@@ -61,7 +59,6 @@ public class DigtailStoveDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	private void layout(final Context context) {
@@ -75,13 +72,13 @@ public class DigtailStoveDialog extends Dialog implements OnClickListener {
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
 				switch (msg.what) {
-				case 1001:
-					if (null != stoveTip && null != tempBitmap) {
-						stoveTip.setImageBitmap(tempBitmap);
-					}
-					break;
-				default:
-					break;
+					case 1001:
+						if (null != stoveTip && null != tempBitmap) {
+							stoveTip.setImageBitmap(tempBitmap);
+						}
+						break;
+					default:
+						break;
 				}
 			}
 		};
@@ -122,7 +119,6 @@ public class DigtailStoveDialog extends Dialog implements OnClickListener {
 	}
 	/**
 	 * 设置图片
-	 * 
 	 * @param path
 	 */
 	// private synchronized void setImgNoCache(final String path) {

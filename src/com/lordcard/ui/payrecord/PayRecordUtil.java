@@ -35,19 +35,16 @@ public class PayRecordUtil {
 	public static final String ORDER_TYPE = "order_type";
 	public static final String PRE_ORDER_NO = "pre_order_no";
 
-	public static List<Map<String, String>> listRecord(
-			List<PayRecordOrder> payRecordOrders) {
+	public static List<Map<String, String>> listRecord(List<PayRecordOrder> payRecordOrders) {
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		if (null == payRecordOrders)
 			return list;
 		Map<String, String> map = null;
 		for (int i = 0; i < payRecordOrders.size(); i++) {
 			PayRecordOrder payRecordOrder = payRecordOrders.get(i);
-			String datePay = payRecordOrder.getCreateTime().substring(0, 10)
-					.replaceAll("-", "/");
+			String datePay = payRecordOrder.getCreateTime().substring(0, 10).replaceAll("-", "/");
 			String money = String.valueOf((long) payRecordOrder.getMoney());
-			String beans = PatternUtils.formatIqBeans(payRecordOrder
-					.getBaseBean() + payRecordOrder.getWinBean());
+			String beans = PatternUtils.formatIqBeans(payRecordOrder.getBaseBean() + payRecordOrder.getWinBean());
 			/** 0,200,400分别代表待充值，已充值，失败 **/
 			String payStatus = payRecordOrder.getPayStatus();
 			if (payStatus.equals("400")) {

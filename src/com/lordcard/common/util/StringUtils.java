@@ -8,7 +8,6 @@ import java.util.zip.GZIPOutputStream;
 public class StringUtils {
 	/**
 	 * 字符串压缩
-	 * 
 	 * @param str
 	 * @return
 	 */
@@ -30,7 +29,6 @@ public class StringUtils {
 
 	/**
 	 * 解压缩
-	 * 
 	 * @param str
 	 * @return
 	 */
@@ -40,8 +38,7 @@ public class StringUtils {
 				return str;
 			}
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			ByteArrayInputStream in = new ByteArrayInputStream(
-					str.getBytes("ISO-8859-1"));
+			ByteArrayInputStream in = new ByteArrayInputStream(str.getBytes("ISO-8859-1"));
 			GZIPInputStream gunzip = new GZIPInputStream(in);
 			byte[] buffer = new byte[256];
 			int n;

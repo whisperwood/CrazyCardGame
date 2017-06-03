@@ -10,7 +10,6 @@ import com.google.gson.annotations.Expose;
 
 /**
  * 通用Json请求参数 com.game.module.thirdapi.ac.JsonParam
- * 
  * @author yinhb <br/>
  *         create at 2013 2013-1-25 上午10:53:04
  */

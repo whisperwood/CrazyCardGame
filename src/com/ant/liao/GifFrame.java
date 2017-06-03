@@ -5,11 +5,8 @@ import android.graphics.Bitmap;
 public class GifFrame {
 	/**
 	 * 构造函数
-	 * 
-	 * @param im
-	 *            图片
-	 * @param del
-	 *            延时
+	 * @param im 图片
+	 * @param del 延时
 	 */
 	public GifFrame(Bitmap im, int del) {
 		image = im;

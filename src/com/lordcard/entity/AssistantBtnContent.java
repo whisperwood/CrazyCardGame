@@ -46,8 +46,7 @@ public class AssistantBtnContent {
 	}
 
 	/**
-	 * @param display
-	 *            the display to set
+	 * @param display the display to set
 	 */
 	public void setDisplay(Integer display) {
 		this.display = display;
@@ -61,8 +60,7 @@ public class AssistantBtnContent {
 	}
 
 	/**
-	 * @param isRand
-	 *            the isRand to set
+	 * @param isRand the isRand to set
 	 */
 	public void setIsRand(Integer isRand) {
 		this.isRand = isRand;
@@ -76,8 +74,7 @@ public class AssistantBtnContent {
 	}
 
 	/**
-	 * @param asstBtns
-	 *            the asstBtns to set
+	 * @param asstBtns the asstBtns to set
 	 */
 	public void setAsstBtns(List<AssistantBtn> asstBtns) {
 		this.asstBtns = asstBtns;

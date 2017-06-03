@@ -17,7 +17,6 @@ import com.lordcard.ui.personal.logic.ConfigUtils;
 public class ChannelUtils {
 	/**
 	 * 获取统计用的appkey
-	 * 
 	 * @Title: getUappKey
 	 * @param @return
 	 * @return String
@@ -38,7 +37,6 @@ public class ChannelUtils {
 
 	/**
 	 * 获取自定义的渠道名称
-	 * 
 	 * @Title: getUChannel
 	 * @param @return
 	 * @return String
@@ -59,7 +57,6 @@ public class ChannelUtils {
 
 	/**
 	 * 服务器配置的目录名称
-	 * 
 	 * @Title: getSerCfgName
 	 * @param @return
 	 * @return String
@@ -80,7 +77,6 @@ public class ChannelUtils {
 
 	/**
 	 * 更新包目录地址
-	 * 
 	 * @Title: getSerDir
 	 * @param @return
 	 * @return String
@@ -101,7 +97,6 @@ public class ChannelUtils {
 
 	/**
 	 * 获取激活批次号
-	 * 
 	 * @Title: getBatchId
 	 * @param @return
 	 * @return String
@@ -122,7 +117,6 @@ public class ChannelUtils {
 
 	/**
 	 * 获取MM的渠道商 ID
-	 * 
 	 * @Title: getMMChannel
 	 * @param @return
 	 * @return String
@@ -173,15 +167,13 @@ public class ChannelUtils {
 		InputStreamReader reader = null;
 		BufferedReader bufReader = null;
 		try {
-			inputStream = ConfigUtils.class.getClassLoader()
-					.getResourceAsStream("mmiap.xml");
+			inputStream = ConfigUtils.class.getClassLoader().getResourceAsStream("mmiap.xml");
 			reader = new InputStreamReader(inputStream, Constant.CHAR);
 			bufReader = new BufferedReader(reader);
 			StringBuilder result = new StringBuilder();
 			String readLink = null;
 			while ((readLink = bufReader.readLine()) != null) {
-				readLink = new String(readLink.getBytes("ISO-8859-1"),
-						Constant.CHAR);
+				readLink = new String(readLink.getBytes("ISO-8859-1"), Constant.CHAR);
 				result.append(readLink.toLowerCase());
 			}
 			int start = result.indexOf("<channel>");
@@ -213,7 +205,6 @@ public class ChannelUtils {
 
 	/**
 	 * 加载渠道配置，需在子线程中执行
-	 * 
 	 * @Title: loadChannelCfg
 	 * @param
 	 * @return void

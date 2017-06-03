@@ -7,7 +7,6 @@ import com.lordcard.common.util.DialogUtils;
 
 /**
  * 更新界面：进度条消失和显示结果文字
- * 
  * @author Administrator
  */
 public class IAPHandler extends Handler {
@@ -24,19 +23,19 @@ public class IAPHandler extends Handler {
 		super.handleMessage(msg);
 		int what = msg.what;
 		switch (what) {
-		case INIT_FINISH:
-			break;
-		case SUCCESS:
-			DialogUtils.toastTip(String.valueOf(msg.obj));
-			break;
-		case FAIL:
-			DialogUtils.toastTip(String.valueOf(msg.obj));
-			break;
-		case FAIL_TOKENID:
-			DialogUtils.toastTip(String.valueOf(msg.obj));
-			break;
-		default:
-			break;
+			case INIT_FINISH:
+				break;
+			case SUCCESS:
+				DialogUtils.toastTip(String.valueOf(msg.obj));
+				break;
+			case FAIL:
+				DialogUtils.toastTip(String.valueOf(msg.obj));
+				break;
+			case FAIL_TOKENID:
+				DialogUtils.toastTip(String.valueOf(msg.obj));
+				break;
+			default:
+				break;
 		}
 	}
 }

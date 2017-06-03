@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 斗地主房间
- * 
  * @author admin
  */
 public class Room {
@@ -108,8 +107,7 @@ public class Room {
 	public Room() {
 	}
 
-	public Room(String code, String name, int homeType, String msg,
-			int registFee) {
+	public Room(String code, String name, int homeType, String msg, int registFee) {
 		super();
 		this.code = code;
 		this.name = name;
@@ -119,24 +117,16 @@ public class Room {
 	}
 
 	/**
-	 * @param code
-	 *            房间编号
-	 * @param limit
-	 *            最低进入限制
-	 * @param basePoint
-	 *            低数
-	 * @param ratio
-	 *            最低倍数
-	 * @param homeType
-	 *            房间类型
-	 * @param registFee
-	 *            报名费
-	 * @param explanation
-	 *            环境说明
+	 * @param code 房间编号
+	 * @param limit 最低进入限制
+	 * @param basePoint 低数
+	 * @param ratio 最低倍数
+	 * @param homeType 房间类型
+	 * @param registFee 报名费
+	 * @param explanation 环境说明
 	 */
-	public Room(String code, long limit, String enter, int basePoint,
-			int ratio, int homeType, String name, int registFee,
-			String explanation) {
+	public Room(String code, long limit, String enter, int basePoint, int ratio, int homeType, String name,
+			int registFee, String explanation) {
 		super();
 		this.code = code;
 		this.limit = limit;

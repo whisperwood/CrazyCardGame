@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 游戏大厅 com.frame.game.entity.GameHall
- * 
  * @author yinhb <br/>
  *         create at 2013 2013-1-17 下午03:19:00
  */

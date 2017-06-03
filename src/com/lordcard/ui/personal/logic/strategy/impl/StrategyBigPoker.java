@@ -13,9 +13,7 @@ import com.lordcard.ui.personal.logic.PokerUtil;
 import com.lordcard.ui.personal.logic.strategy.interfaces.Strategy;
 
 /**
- * 此策略计算某手牌出后，自己手中的牌是否能够再吃回来，目前算法是相同牌型，如果有比当前牌大5的，就加分，加分策略为，比当前牌（最大的牌）的value大多少，
- * 就加多少个点
- * 
+ * 此策略计算某手牌出后，自己手中的牌是否能够再吃回来，目前算法是相同牌型，如果有比当前牌大5的，就加分，加分策略为，比当前牌（最大的牌）的value大多少， 就加多少个点
  * @author lenovo-win7
  */
 public class StrategyBigPoker implements Strategy {
@@ -53,15 +51,13 @@ public class StrategyBigPoker implements Strategy {
 				allofPokers.remove(playedPokers.get(j));
 			}
 		}
-		List<Poker> ps = sort(ddzData.getNowPlaying(),
-				ddzData.getNowPlayingAttachment());
+		List<Poker> ps = sort(ddzData.getNowPlaying(), ddzData.getNowPlayingAttachment());
 		int type = DoudizhuRule.checkpai(ps);
 		if (type == DoudizhuRule.zhadan || type == DoudizhuRule.wangzha) {
 			return 0;
 		}
 		int maxValue = max(ddzData.getNowPlaying());
-		Map<Integer, PokerOfOnePlay> play = PokerUtil.whichArray(ddzData,
-				ps.size(), type);
+		Map<Integer, PokerOfOnePlay> play = PokerUtil.whichArray(ddzData, ps.size(), type);
 		//
 		for (int i = 17; i >= maxValue; --i) {
 			if (play.containsKey(i)) {
@@ -89,7 +85,6 @@ public class StrategyBigPoker implements Strategy {
 
 	/**
 	 * 将牌从大到小排序
-	 * 
 	 * @param ps
 	 */
 	private List<Poker> sort(List<Poker> playing, List<Poker> attachment) {

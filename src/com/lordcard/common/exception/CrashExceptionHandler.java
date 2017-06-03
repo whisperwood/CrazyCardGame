@@ -24,16 +24,13 @@ import android.os.Build;
 import android.util.Log;
 
 import com.lordcard.common.util.ActivityPool;
-import com.lordcard.common.util.ActivityUtils;
 import com.lordcard.common.util.DateUtil;
 import com.lordcard.constant.Constant;
-import com.lordcard.constant.Database;
 import com.lordcard.network.http.HttpRequest;
 
 /**
  * UncaughtException处理类,当程序发生Uncaught异常的时候,有该类来接管程序,并记录发送错误报告.
  * common.exception.CrashExceptionHandler
- * 
  * @author Administrator <br/>
  *         create at 2012 2012-12-15 下午12:00:47
  */
@@ -63,7 +60,6 @@ public class CrashExceptionHandler implements UncaughtExceptionHandler {
 
 	/**
 	 * 初始化
-	 * 
 	 * @param context
 	 */
 	public void init(Context context) {
@@ -92,7 +88,6 @@ public class CrashExceptionHandler implements UncaughtExceptionHandler {
 
 	/**
 	 * 自定义错误处理,收集错误信息 发送错误报告等操作均在此完成.
-	 * 
 	 * @param ex
 	 * @return true:如果处理了该异常信息;否则返回false.
 	 */
@@ -110,17 +105,14 @@ public class CrashExceptionHandler implements UncaughtExceptionHandler {
 
 	/**
 	 * 收集设备参数信息
-	 * 
 	 * @param ctx
 	 */
 	public void collectDeviceInfo(Context ctx) {
 		try {
 			PackageManager pm = ctx.getPackageManager();
-			PackageInfo pi = pm.getPackageInfo(ctx.getPackageName(),
-					PackageManager.GET_ACTIVITIES);
+			PackageInfo pi = pm.getPackageInfo(ctx.getPackageName(), PackageManager.GET_ACTIVITIES);
 			if (pi != null) {
-				String versionName = pi.versionName == null ? "null"
-						: pi.versionName;
+				String versionName = pi.versionName == null ? "null" : pi.versionName;
 				String versionCode = pi.versionCode + "";
 				infos.put("versionName", versionName);
 				infos.put("versionCode", versionCode);
@@ -139,7 +131,6 @@ public class CrashExceptionHandler implements UncaughtExceptionHandler {
 
 	/**
 	 * 保存错误信息到文件中
-	 * 
 	 * @param ex
 	 * @return 返回文件名称,便于将文件传送到服务器
 	 */
@@ -186,7 +177,6 @@ public class CrashExceptionHandler implements UncaughtExceptionHandler {
 				};
 			}.start();
 			if (!isExtends) {
-				
 			}
 		} catch (Exception e) {
 			Log.e(Constant.LOG_TAG, "an error occured while writing file...", e);

@@ -46,15 +46,13 @@ public class DataCentreBean {
 	/* DDL操作 */
 	// 创建表结构SQL
 	public String createTable() {
-		return "create table if not exists "
-				+ TABLE_NAME
+		return "create table if not exists " + TABLE_NAME
 				+ " (id text primary key,content text,race text,click text,time integer,title text)";
 	}
 
 	// 删除表结构SQL
 	public String dropTable() {
-		return "drop table if exists "
-				+ TABLE_NAME
+		return "drop table if exists " + TABLE_NAME
 				+ " (id integer primary key,content text,race text,click text,time integer)";
 	}
 
@@ -62,8 +60,7 @@ public class DataCentreBean {
 	/* 插入 */
 	public long save(DBHelper dbHelper, ContentValues values, String[] id) {
 		long size = 0;
-		if (DataCentreBean.getInstance().findListId(LoginActivity.dbHelper, id)
-				.size() != 0) {
+		if (DataCentreBean.getInstance().findListId(LoginActivity.dbHelper, id).size() != 0) {
 			return 0;
 		} else {
 			try {
@@ -81,12 +78,9 @@ public class DataCentreBean {
 
 	/**
 	 * 更新
-	 * 
 	 * @param dbHelper
-	 * @param Values
-	 *            条件值
-	 * @param newValues
-	 *            一般为String[],可根据自己的实际情况调整
+	 * @param Values 条件值
+	 * @param newValues 一般为String[],可根据自己的实际情况调整
 	 * @return 更新的记录
 	 */
 	public long update(DBHelper dbHelper, String[] Values, String[] newValues) {
@@ -122,14 +116,12 @@ public class DataCentreBean {
 	}
 
 	/* 获取数据库集合数据 游戏助理用 */
-	public List<HashMap<String, Object>> findList(DBHelper dbHelper,
-			String[] race) {
+	public List<HashMap<String, Object>> findList(DBHelper dbHelper, String[] race) {
 		Cursor cursor = null;
 		List<HashMap<String, Object>> list = null;
 		try {
 			dbHelper.open();
-			cursor = dbHelper.findList(TABLE_NAME, null, "race=?", race, null,
-					null, null, null);
+			cursor = dbHelper.findList(TABLE_NAME, null, "race=?", race, null, null, null, null);
 			list = cursorList(cursor, dbHelper);
 		} catch (Exception e) {
 		} finally {
@@ -143,14 +135,12 @@ public class DataCentreBean {
 		return list;
 	}
 
-	public List<HashMap<String, Object>> findListclick(DBHelper dbHelper,
-			String[] click) {
+	public List<HashMap<String, Object>> findListclick(DBHelper dbHelper, String[] click) {
 		List<HashMap<String, Object>> list = null;
 		Cursor cursor = null;
 		try {
 			dbHelper.open();
-			cursor = dbHelper.findList(TABLE_NAME, null, "click=?", click,
-					null, null, null, null);
+			cursor = dbHelper.findList(TABLE_NAME, null, "click=?", click, null, null, null, null);
 			list = cursorList(cursor, dbHelper);
 		} catch (Exception e) {
 		} finally {
@@ -165,14 +155,12 @@ public class DataCentreBean {
 	}
 
 	/* 查找id */
-	public List<HashMap<String, Object>> findListId(DBHelper dbHelper,
-			String[] id) {
+	public List<HashMap<String, Object>> findListId(DBHelper dbHelper, String[] id) {
 		List<HashMap<String, Object>> list = null;
 		Cursor cursor = null;
 		try {
 			dbHelper.open();
-			cursor = dbHelper.findList(TABLE_NAME, null, "id=?", id, null,
-					null, null, null);
+			cursor = dbHelper.findList(TABLE_NAME, null, "id=?", id, null, null, null, null);
 			list = cursorList(cursor, dbHelper);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -188,14 +176,12 @@ public class DataCentreBean {
 	}
 
 	/* 获取数据库集合数据 */
-	public List<HashMap<String, Object>> findList2(DBHelper dbHelper,
-			String[] race) {
+	public List<HashMap<String, Object>> findList2(DBHelper dbHelper, String[] race) {
 		List<HashMap<String, Object>> list = null;
 		Cursor cursor = null;
 		try {
 			dbHelper.open();
-			cursor = dbHelper.findList(TABLE_NAME, null, "race=?", race, null,
-					null, DATA_TIME + " desc", "0,30");
+			cursor = dbHelper.findList(TABLE_NAME, null, "race=?", race, null, null, DATA_TIME + " desc", "0,30");
 			list = cursorList(cursor, dbHelper);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -211,15 +197,13 @@ public class DataCentreBean {
 	}
 
 	/* 游标转换为集合 */
-	private List<HashMap<String, Object>> cursorList(Cursor cursor,
-			DBHelper dbHelper) {
+	private List<HashMap<String, Object>> cursorList(Cursor cursor, DBHelper dbHelper) {
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		/* 有记录 */
 		while (cursor.moveToNext()) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			String id = cursor.getString(cursor.getColumnIndex(DATA_ID));
-			String content = cursor.getString(cursor
-					.getColumnIndex(DATA_CONTENT));
+			String content = cursor.getString(cursor.getColumnIndex(DATA_CONTENT));
 			String race = cursor.getString(cursor.getColumnIndex(DATA_RACE));
 			String click = cursor.getString(cursor.getColumnIndex(DATA_CLICK));
 			String time = cursor.getString(cursor.getColumnIndex(DATA_TIME));

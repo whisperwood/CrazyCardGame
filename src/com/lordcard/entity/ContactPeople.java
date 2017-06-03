@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable;
 
 /**
  * 联系人信息 model.ContactPeople
- * 
  * @author Administrator <br/>
  *         create at 2013 2013-3-19 下午12:10:01
  */

@@ -15,8 +15,7 @@ public class PreferenceHelper {
 	}
 
 	public static void create(Context context2) {
-		setting = context2
-				.getSharedPreferences("Setting", Context.MODE_PRIVATE);
+		setting = context2.getSharedPreferences("Setting", Context.MODE_PRIVATE);
 		editor = setting.edit();
 	}
 

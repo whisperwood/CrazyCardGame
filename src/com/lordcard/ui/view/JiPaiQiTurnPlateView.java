@@ -88,8 +88,7 @@ public class JiPaiQiTurnPlateView extends View {
 		cardHeight = RecordPorkerView.dip2px(context, cardHeight, mst);
 		cardWidth = RecordPorkerView.dip2px(context, cardWidth, mst);
 		avatarSize = RecordPorkerView.dip2px(context, avatarSize, mst);
-		avatar = BitmapFactory.decodeResource(getContext().getResources(),
-				R.drawable.nongmin);
+		avatar = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.nongmin);
 		location = Location.Top_Right;
 		cardList = new ArrayList<List<Poker>>();
 	}
@@ -105,9 +104,8 @@ public class JiPaiQiTurnPlateView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		// canvas.drawColor(Color.GREEN);
-		centerPosition = (location.equals(Location.Top_Left) ? (new PointF(
-				centerGap, centerGap)) : (new PointF(getWidth() - centerGap,
-				centerGap)));
+		centerPosition = (location.equals(Location.Top_Left) ? (new PointF(centerGap, centerGap)) : (new PointF(
+				getWidth() - centerGap, centerGap)));
 		if (null != cardList && cardList.size() != 0) {
 			/** 旋转角度 **/
 			angle += plusDegree;
@@ -120,11 +118,9 @@ public class JiPaiQiTurnPlateView extends View {
 				cardCount += list.size();
 			}
 			mCardCount = cardCount;
-			tempAngle = (location.equals(Location.Top_Left)) ? angle
-					: (angle + cardCount * cardGapDegree);
+			tempAngle = (location.equals(Location.Top_Left)) ? angle : (angle + cardCount * cardGapDegree);
 			for (int i = cardList.size() - 1; i >= 0; i--) {
-				int j = (location.equals(Location.Top_Left)) ? i : cardList
-						.size() - 1 - i;
+				int j = (location.equals(Location.Top_Left)) ? i : cardList.size() - 1 - i;
 				for (Poker mPoker : cardList.get(j)) {
 					/** 如果是第一个则不旋转 **/
 					if (location.equals(Location.Top_Left)) {
@@ -135,26 +131,20 @@ public class JiPaiQiTurnPlateView extends View {
 							tempAngle -= cardGapDegree;
 					}
 					count++;
-					templeBitmap = RecordPorkerView.scaleBitmap(BitmapFactory
-							.decodeResource(getContext().getResources(),
-									mPoker.getBitpamResID()), new Point(
-							cardWidth, cardHeight));
+					templeBitmap = RecordPorkerView.scaleBitmap(
+							BitmapFactory.decodeResource(getContext().getResources(), mPoker.getBitpamResID()),
+							new Point(cardWidth, cardHeight));
 					/** 将角度转换为弧度 **/
 					tempRadians = Math.PI / 180 * tempAngle;
-					currentCardPosition.x = (float) (Math.cos(tempRadians)
-							* radius + centerPosition.x);
-					currentCardPosition.y = (float) (Math.sin(tempRadians)
-							* radius + centerPosition.y);
+					currentCardPosition.x = (float) (Math.cos(tempRadians) * radius + centerPosition.x);
+					currentCardPosition.y = (float) (Math.sin(tempRadians) * radius + centerPosition.y);
 					/** 绘制扑克 **/
 					canvas.save();
 					float degree = Float.valueOf(tempAngle.toString()) - 90;
 					/** 根据位置转换旋转角度 **/
-					canvas.rotate(degree, currentCardPosition.x,
-							currentCardPosition.y);
-					canvas.drawBitmap(templeBitmap, currentCardPosition.x
-							- templeBitmap.getWidth() / 2f,
-							currentCardPosition.y - templeBitmap.getHeight()
-									/ 2, paint);
+					canvas.rotate(degree, currentCardPosition.x, currentCardPosition.y);
+					canvas.drawBitmap(templeBitmap, currentCardPosition.x - templeBitmap.getWidth() / 2f,
+							currentCardPosition.y - templeBitmap.getHeight() / 2, paint);
 					canvas.restore();
 				}
 			}
@@ -164,17 +154,14 @@ public class JiPaiQiTurnPlateView extends View {
 		canvas.save();
 		if (null != avatar) {
 			if (avatar.getHeight() != avatarSize)
-				avatar = RecordPorkerView.scaleBitmap(avatar, new Point(
-						avatarSize, avatarSize));
-			canvas.drawBitmap(avatar,
-					centerPosition.x - avatar.getWidth() / 2f, centerPosition.y
-							- avatar.getHeight() / 2f, paint);
+				avatar = RecordPorkerView.scaleBitmap(avatar, new Point(avatarSize, avatarSize));
+			canvas.drawBitmap(avatar, centerPosition.x - avatar.getWidth() / 2f, centerPosition.y - avatar.getHeight()
+					/ 2f, paint);
 		}
 		// 绘制圆环
 		mPaint.setARGB(60, 16, 16, 16);
 		mPaint.setStrokeWidth(ringWidth);
-		canvas.drawCircle(centerPosition.x, centerPosition.y, innerCircle + 1
-				+ ringWidth / 2, mPaint);
+		canvas.drawCircle(centerPosition.x, centerPosition.y, innerCircle + 1 + ringWidth / 2, mPaint);
 		mPaint.setARGB(255, 0, 0, 0);
 		plusDegree = 0d;
 	}
@@ -189,51 +176,45 @@ public class JiPaiQiTurnPlateView extends View {
 		if (getVisibility() != View.VISIBLE)
 			return;
 		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			touchPosition.x = event.getRawX();
-			touchPosition.y = event.getRawY();
-			break;
-		case MotionEvent.ACTION_MOVE:
-			float gap = 0f;
-			if (Math.abs(event.getRawX() - touchPosition.x) > Math.abs(event
-					.getRawY() - touchPosition.y)) {
-				gap = touchPosition.x - event.getRawX();
-			} else {
-				if (location.equals(Location.Top_Right))
-					gap = touchPosition.y - event.getRawY();
-				else
-					gap = event.getRawY() - touchPosition.y;
-			}
-			touchPosition.x = event.getRawX();
-			touchPosition.y = event.getRawY();
-			plusDegree = (double) gap / rate;
-			invalidate();
-			break;
-		case MotionEvent.ACTION_UP:
-			if (location.equals(Location.Top_Left)) {
-				/** 判断上下分界线 **/
-				if (angle + plusDegree < 90
-						|| (mCardCount - 1) * cardGapDegree < 90) {
-					plusDegree = 90 - angle;// 使用angle==90;
-				} else if ((angle + plusDegree > (mCardCount - 1)
-						* cardGapDegree)) {
-					plusDegree = (double) ((mCardCount - 1) * cardGapDegree - angle);
+			case MotionEvent.ACTION_DOWN:
+				touchPosition.x = event.getRawX();
+				touchPosition.y = event.getRawY();
+				break;
+			case MotionEvent.ACTION_MOVE:
+				float gap = 0f;
+				if (Math.abs(event.getRawX() - touchPosition.x) > Math.abs(event.getRawY() - touchPosition.y)) {
+					gap = touchPosition.x - event.getRawX();
+				} else {
+					if (location.equals(Location.Top_Right))
+						gap = touchPosition.y - event.getRawY();
+					else
+						gap = event.getRawY() - touchPosition.y;
 				}
-			} else if (location.equals(Location.Top_Right)) {
-				/** 判断上下分界线 **/
-				if (angle + plusDegree > 90
-						|| (mCardCount - 1) * cardGapDegree < 90) {
-					plusDegree = 90 - angle;// 使用angle==90;
-				} else if ((angle + plusDegree + (mCardCount - 1)
-						* cardGapDegree) < 180) {
-					plusDegree = (double) (180 - (mCardCount - 1)
-							* cardGapDegree - angle);
+				touchPosition.x = event.getRawX();
+				touchPosition.y = event.getRawY();
+				plusDegree = (double) gap / rate;
+				invalidate();
+				break;
+			case MotionEvent.ACTION_UP:
+				if (location.equals(Location.Top_Left)) {
+					/** 判断上下分界线 **/
+					if (angle + plusDegree < 90 || (mCardCount - 1) * cardGapDegree < 90) {
+						plusDegree = 90 - angle;// 使用angle==90;
+					} else if ((angle + plusDegree > (mCardCount - 1) * cardGapDegree)) {
+						plusDegree = (double) ((mCardCount - 1) * cardGapDegree - angle);
+					}
+				} else if (location.equals(Location.Top_Right)) {
+					/** 判断上下分界线 **/
+					if (angle + plusDegree > 90 || (mCardCount - 1) * cardGapDegree < 90) {
+						plusDegree = 90 - angle;// 使用angle==90;
+					} else if ((angle + plusDegree + (mCardCount - 1) * cardGapDegree) < 180) {
+						plusDegree = (double) (180 - (mCardCount - 1) * cardGapDegree - angle);
+					}
 				}
-			}
-			invalidate();
-			break;
-		default:
-			break;
+				invalidate();
+				break;
+			default:
+				break;
 		}
 	}
 

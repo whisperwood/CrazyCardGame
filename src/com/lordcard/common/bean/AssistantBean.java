@@ -79,8 +79,7 @@ public class AssistantBean {
 	/* 插入 */
 	public long save(DBHelper dbHelper, ContentValues values, String[] id) {
 		long size = 0;
-		if (AssistantBean.getInstance().findList(LoginActivity.dbHelper, id)
-				.size() != 0) {
+		if (AssistantBean.getInstance().findList(LoginActivity.dbHelper, id).size() != 0) {
 			return 0;
 		} else {
 			try {
@@ -97,12 +96,9 @@ public class AssistantBean {
 
 	/**
 	 * 更新
-	 * 
 	 * @param dbHelper
-	 * @param oldValues
-	 *            一般为Map,可根据自己的实际情况调整
-	 * @param newValues
-	 *            一般为String[],可根据自己的实际情况调整
+	 * @param oldValues 一般为Map,可根据自己的实际情况调整
+	 * @param newValues 一般为String[],可根据自己的实际情况调整
 	 * @return 更新的记录
 	 */
 	public long update(DBHelper dbHelper, String[] Values, String[] newValues) {
@@ -121,8 +117,7 @@ public class AssistantBean {
 		return size;
 	}
 
-	public long updateJson(DBHelper dbHelper, String[] Values,
-			String[] newValues) {
+	public long updateJson(DBHelper dbHelper, String[] Values, String[] newValues) {
 		long size = 0;
 		try {
 			dbHelper.open();
@@ -158,8 +153,7 @@ public class AssistantBean {
 		List<HashMap<String, Object>> list = null;
 		try {
 			dbHelper.open();
-			cursor = dbHelper.findInfo(TABLE_NAME, null, null, null, null,
-					null, AS_LEVEL + " desc", null);
+			cursor = dbHelper.findInfo(TABLE_NAME, null, null, null, null, null, AS_LEVEL + " desc", null);
 			list = cursor2List(cursor, dbHelper);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -180,8 +174,7 @@ public class AssistantBean {
 		Cursor cursor = null;
 		try {
 			dbHelper.open();
-			cursor = dbHelper.findList(TABLE_NAME, null, null, null, null,
-					null, AS_LEVEL + " desc", "0,1");
+			cursor = dbHelper.findList(TABLE_NAME, null, null, null, null, null, AS_LEVEL + " desc", "0,1");
 			list = cursor2List(cursor, dbHelper);
 		} catch (Exception e) {
 		} finally {
@@ -201,8 +194,7 @@ public class AssistantBean {
 		Cursor cursor = null;
 		try {
 			dbHelper.open();
-			cursor = dbHelper.findList(TABLE_NAME, null, "id=?", id, null,
-					null, null, null);
+			cursor = dbHelper.findList(TABLE_NAME, null, "id=?", id, null, null, null, null);
 			list = cursor2List(cursor, dbHelper);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -214,14 +206,12 @@ public class AssistantBean {
 	}
 
 	/* 查找Type 根据level和order */
-	public List<HashMap<String, Object>> findListType(DBHelper dbHelper,
-			String[] type) {
+	public List<HashMap<String, Object>> findListType(DBHelper dbHelper, String[] type) {
 		List<HashMap<String, Object>> list = null;
 		Cursor cursor = null;
 		try {
 			dbHelper.open();
-			cursor = dbHelper.findList(TABLE_NAME, null, "type=?", type, null,
-					null, "level desc,aorder", "0,1");
+			cursor = dbHelper.findList(TABLE_NAME, null, "type=?", type, null, null, "level desc,aorder", "0,1");
 			list = cursor2List(cursor, dbHelper);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -233,8 +223,7 @@ public class AssistantBean {
 	}
 
 	/* 游标转换为集合 */
-	private List<HashMap<String, Object>> cursor2List(Cursor cursor,
-			DBHelper dbHelper) {
+	private List<HashMap<String, Object>> cursor2List(Cursor cursor, DBHelper dbHelper) {
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
@@ -247,22 +236,14 @@ public class AssistantBean {
 				int level = cursor.getInt(cursor.getColumnIndex(AS_LEVEL));
 				int id = cursor.getInt(cursor.getColumnIndex(AS_ID));
 				String icon = cursor.getString(cursor.getColumnIndex(AS_ICON));
-				String xicon = cursor.getString(cursor
-						.getColumnIndex(AS_SMALL_ICON));
-				String display = cursor.getString(cursor
-						.getColumnIndex(AS_DISPLAY));
-				String content = cursor.getString(cursor
-						.getColumnIndex(AS_CONTENT));
-				String btnAc = cursor
-						.getString(cursor.getColumnIndex(AS_BTNAC));
-				String condition = cursor.getString(cursor
-						.getColumnIndex(AS_CONDITION));
-				String title = cursor
-						.getString(cursor.getColumnIndex(AS_TITLE));
-				String joinCode = cursor.getString(cursor
-						.getColumnIndex(AS_JOINCODE));
-				String pushTime = cursor.getString(cursor
-						.getColumnIndex(AS_PUSHTIME));
+				String xicon = cursor.getString(cursor.getColumnIndex(AS_SMALL_ICON));
+				String display = cursor.getString(cursor.getColumnIndex(AS_DISPLAY));
+				String content = cursor.getString(cursor.getColumnIndex(AS_CONTENT));
+				String btnAc = cursor.getString(cursor.getColumnIndex(AS_BTNAC));
+				String condition = cursor.getString(cursor.getColumnIndex(AS_CONDITION));
+				String title = cursor.getString(cursor.getColumnIndex(AS_TITLE));
+				String joinCode = cursor.getString(cursor.getColumnIndex(AS_JOINCODE));
+				String pushTime = cursor.getString(cursor.getColumnIndex(AS_PUSHTIME));
 				int type = cursor.getInt(cursor.getColumnIndex(AS_TYPE));
 				int aorder = cursor.getInt(cursor.getColumnIndex(AS_ORDER));
 				map.put(AS_ID, id);

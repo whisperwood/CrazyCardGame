@@ -12,7 +12,6 @@ import com.sdk.util.vo.PayPoint;
 
 /**
  * 通用短信支付，直接发送短信
- * 
  * @author Administrator
  */
 public class SmsSDKFactory extends ISDKFactory {

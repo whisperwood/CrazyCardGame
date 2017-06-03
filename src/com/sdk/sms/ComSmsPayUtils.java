@@ -31,18 +31,14 @@ public class ComSmsPayUtils {
 				paramMap.put("payTag", paySiteTag); // 充值的标识位
 				paramMap.put("smsCode", value); // 业务代码
 				// 后台生成订单
-				String resultJson = HttpRequest.addPayOrder(
-						SmsConfig.COMSMS_URL, paramMap);
+				String resultJson = HttpRequest.addPayOrder(SmsConfig.COMSMS_URL, paramMap);
 				if (TextUtils.isEmpty(resultJson)) {
 					return;
 				}
-				JsonResult result = JsonHelper.fromJson(resultJson,
-						JsonResult.class);
+				JsonResult result = JsonHelper.fromJson(resultJson, JsonResult.class);
 				if (JsonResult.SUCCESS.equals(result.getMethodCode())) {
-					SmsOrder order = JsonHelper.fromJson(
-							result.getMethodMessage(), SmsOrder.class);
-					SmsUtil.goPay(point.getSmsCall(), order.getSmsTxt(), order,
-							paySiteTag);
+					SmsOrder order = JsonHelper.fromJson(result.getMethodMessage(), SmsOrder.class);
+					SmsUtil.goPay(point.getSmsCall(), order.getSmsTxt(), order, paySiteTag);
 				} else {
 					DialogUtils.mesTip(result.getMethodMessage(), true);
 				}

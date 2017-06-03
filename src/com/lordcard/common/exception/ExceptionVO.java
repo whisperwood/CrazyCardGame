@@ -11,7 +11,6 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * common.exception.ExceptionVO
- * 
  * @author Administrator <br/>
  *         create at 2012 2012-12-15 下午12:25:51
  */

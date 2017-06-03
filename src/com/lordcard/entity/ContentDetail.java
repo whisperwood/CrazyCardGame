@@ -30,8 +30,7 @@ public class ContentDetail {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -45,8 +44,7 @@ public class ContentDetail {
 	}
 
 	/**
-	 * @param title
-	 *            the title to set
+	 * @param title the title to set
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -63,8 +61,7 @@ public class ContentDetail {
 	}
 
 	/**
-	 * @param description
-	 *            the description to set
+	 * @param description the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;

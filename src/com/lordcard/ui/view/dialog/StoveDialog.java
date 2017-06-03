@@ -38,7 +38,6 @@ import com.lordcard.network.http.GameCache;
 import com.lordcard.network.http.HttpURL;
 import com.lordcard.network.http.HttpUtils;
 
-
 public class StoveDialog extends Dialog implements OnClickListener {
 	private Context context;
 	private List<Goods> userCountGoods;
@@ -59,8 +58,7 @@ public class StoveDialog extends Dialog implements OnClickListener {
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	private RelativeLayout layout;
 
-	protected StoveDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected StoveDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
@@ -70,8 +68,7 @@ public class StoveDialog extends Dialog implements OnClickListener {
 		this.context = context;
 	}
 
-	public StoveDialog(Context context, int dialog, String goodsName,
-			Integer type, String goodsid, Integer goodscount,
+	public StoveDialog(Context context, int dialog, String goodsName, Integer type, String goodsid, Integer goodscount,
 			List<GoodsPart> goods) {
 		super(context, dialog);
 		goodstuff = new ArrayList<GoodsPart>();
@@ -100,7 +97,6 @@ public class StoveDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	private void layout(final Context context) {
@@ -119,19 +115,16 @@ public class StoveDialog extends Dialog implements OnClickListener {
 		new Thread() {
 			@Override
 			public void run() {
-				GameUser cacheUser = (GameUser) GameCache
-						.getObj(CacheKey.GAME_USER);
+				GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 				Map<String, String> paramMap = new HashMap<String, String>();
 				paramMap.put("loginToken", cacheUser.getLoginToken());
 				paramMap.put("goodsId", typeid);
 				paramMap.put("count", String.valueOf(goodscount));
 				paramMap.put("type", String.valueOf(type));
 				try {
-					String result = HttpUtils.post(HttpURL.STOVE_CHECK_URL,
-							paramMap);
-					stove_check_count = JsonHelper.fromJson(result,
-							new TypeToken<List<Goods>>() {
-							});
+					String result = HttpUtils.post(HttpURL.STOVE_CHECK_URL, paramMap);
+					stove_check_count = JsonHelper.fromJson(result, new TypeToken<List<Goods>>() {
+					});
 					userCountGoods = stove_check_count;
 					Database.currentActivity.runOnUiThread(new Runnable() {
 						@Override
@@ -140,11 +133,9 @@ public class StoveDialog extends Dialog implements OnClickListener {
 							if (goodstuff != null && userCountGoods != null) {
 								isEnough = true;
 								for (int i = 0; i < goodstuff.size(); i++) {
-									if (goodstuff.size() > i
-											&& userCountGoods.size() > i) {
-										if (goodstuff.get(i).getFromCount()
-												.intValue() > userCountGoods
-												.get(i).getCouponNum()) {
+									if (goodstuff.size() > i && userCountGoods.size() > i) {
+										if (goodstuff.get(i).getFromCount().intValue() > userCountGoods.get(i)
+												.getCouponNum()) {
 											isEnough = false;
 										}
 									}
@@ -153,10 +144,8 @@ public class StoveDialog extends Dialog implements OnClickListener {
 							// 查找等级在物品列表中的位置
 							int indext = -1;
 							FOR: for (int i = 0; i < goodstuff.size(); i++) {
-								if (!TextUtils.isEmpty(goodstuff.get(i)
-										.getFromName())
-										&& "等级".equals(goodstuff.get(i)
-												.getFromName().trim())) {
+								if (!TextUtils.isEmpty(goodstuff.get(i).getFromName())
+										&& "等级".equals(goodstuff.get(i).getFromName().trim())) {
 									indext = i;
 									break FOR;
 								}
@@ -164,29 +153,22 @@ public class StoveDialog extends Dialog implements OnClickListener {
 							// 将等级的值提取出来手动设置到对话框，并且删除对应列表中的记录，以防止物品列表再次显示
 							if (indext != -1) {
 								if (indext < userCountGoods.size()) {
-									zhishangNowTv.setText(""
-											+ userCountGoods.get(indext)
-													.getCouponNum());
+									zhishangNowTv.setText("" + userCountGoods.get(indext).getCouponNum());
 								}
-								zhishangNeedTv.setText(""
-										+ goodstuff.get(indext).getFromCount()
-												.toString());
+								zhishangNeedTv.setText("" + goodstuff.get(indext).getFromCount().toString());
 								zhishangLl.setVisibility(View.VISIBLE);
 								userCountGoods.remove(indext);
 								goodstuff.remove(indext);
 							}
 							if (isEnough) {
-								stoveResultText.setBackgroundDrawable(ImageUtil
-										.getResDrawable(R.drawable.enough, true));
+								stoveResultText.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.enough, true));
 								stoveButton.setVisibility(View.VISIBLE);
 							} else {
-								stoveResultText.setBackgroundDrawable(ImageUtil
-										.getResDrawable(R.drawable.unenough,
-												true));
+								stoveResultText.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.unenough,
+										true));
 								stoveButton.setVisibility(View.INVISIBLE);
 							}
-							stoveStuffAdapter = new StoveStuffAdapter(context,
-									goodstuff, userCountGoods);
+							stoveStuffAdapter = new StoveStuffAdapter(context, goodstuff, userCountGoods);
 							stoveStuffList.setAdapter(stoveStuffAdapter);
 						}
 					});
@@ -199,16 +181,15 @@ public class StoveDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.stove_stuff_btn:
-			GameUser cacheUser = (GameUser) GameCache
-					.getObj(CacheKey.GAME_USER);
-			stove(typeid, cacheUser.getLoginToken());
-			break;
-		case R.id.dialog_close_btn:
-			dismiss();
-			break;
-		default:
-			break;
+			case R.id.stove_stuff_btn:
+				GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+				stove(typeid, cacheUser.getLoginToken());
+				break;
+			case R.id.dialog_close_btn:
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -216,23 +197,20 @@ public class StoveDialog extends Dialog implements OnClickListener {
 		new Thread() {
 			@Override
 			public void run() {
-				GameUser cacheUser = (GameUser) GameCache
-						.getObj(CacheKey.GAME_USER);
+				GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 				Map<String, String> paramMap = new HashMap<String, String>();
 				paramMap.put("loginToken", cacheUser.getLoginToken());
 				paramMap.put("goodsId", typeid);
 				paramMap.put("count", String.valueOf(goodscount));
 				paramMap.put("type", String.valueOf(type));
 				try {
-					String result = HttpUtils.post(HttpURL.STOVE_RESULT_URL,
-							paramMap);
+					String result = HttpUtils.post(HttpURL.STOVE_RESULT_URL, paramMap);
 					Looper.prepare();
 					if (result.equals("0")) {
 						Database.currentActivity.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								Toast.makeText(context, "恭喜您成功合成",
-										Toast.LENGTH_SHORT).show();
+								Toast.makeText(context, "恭喜您成功合成", Toast.LENGTH_SHORT).show();
 								dismiss();
 							}
 						});
@@ -241,8 +219,7 @@ public class StoveDialog extends Dialog implements OnClickListener {
 						Database.currentActivity.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								Toast.makeText(context, "合成失败，请确认你的数据正确",
-										Toast.LENGTH_SHORT).show();
+								Toast.makeText(context, "合成失败，请确认你的数据正确", Toast.LENGTH_SHORT).show();
 								dismiss();
 							}
 						});
@@ -270,8 +247,7 @@ public class StoveDialog extends Dialog implements OnClickListener {
 		private List<GoodsPart> datalist;
 		private List<Goods> userCount;
 
-		public StoveStuffAdapter(Context context, List<GoodsPart> datalist,
-				List<Goods> userCountGoods) {
+		public StoveStuffAdapter(Context context, List<GoodsPart> datalist, List<Goods> userCountGoods) {
 			this.mInflater = LayoutInflater.from(context);
 			this.datalist = datalist;
 			this.userCount = userCountGoods;
@@ -301,30 +277,23 @@ public class StoveDialog extends Dialog implements OnClickListener {
 		}
 
 		@Override
-		public View getView(final int position, View convertView,
-				ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
 			if (convertView == null) {
 				holder = new ViewHolder();
-				convertView = mInflater
-						.inflate(R.layout.stove_stuff_item, null);
-				holder.stoveGoodsName = (TextView) convertView
-						.findViewById(R.id.stove_stuff_name);
-				holder.stoveStuffCount = (TextView) convertView
-						.findViewById(R.id.stove_stuff_count);
-				holder.stoveStuffNeed = (TextView) convertView
-						.findViewById(R.id.stove_stuff_need);
+				convertView = mInflater.inflate(R.layout.stove_stuff_item, null);
+				holder.stoveGoodsName = (TextView) convertView.findViewById(R.id.stove_stuff_name);
+				holder.stoveStuffCount = (TextView) convertView.findViewById(R.id.stove_stuff_count);
+				holder.stoveStuffNeed = (TextView) convertView.findViewById(R.id.stove_stuff_need);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			holder.stoveGoodsName.setText(datalist.get(position).getFromName());
 			if (userCount != null && userCount.size() > 0) {
-				holder.stoveStuffCount.setText(userCount.get(position)
-						.getCouponNum() + "");// 此处需要跟后台商量
+				holder.stoveStuffCount.setText(userCount.get(position).getCouponNum() + "");// 此处需要跟后台商量
 			}
-			holder.stoveStuffNeed.setText(datalist.get(position).getFromCount()
-					.toString());
+			holder.stoveStuffNeed.setText(datalist.get(position).getFromCount().toString());
 			return convertView;
 		}
 

@@ -58,8 +58,7 @@ public class GoodsType {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setValue(String value) {
 		this.value = value;
@@ -73,8 +72,7 @@ public class GoodsType {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setProps(String props) {
 		this.props = props;
@@ -88,8 +86,7 @@ public class GoodsType {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -103,8 +100,7 @@ public class GoodsType {
 	}
 
 	/**
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -118,8 +114,7 @@ public class GoodsType {
 	}
 
 	/**
-	 * @param picPath
-	 *            the picPath to set
+	 * @param picPath the picPath to set
 	 */
 	public void setPicPath(String picPath) {
 		this.picPath = picPath;
@@ -133,8 +128,7 @@ public class GoodsType {
 	}
 
 	/**
-	 * @param title
-	 *            the title to set
+	 * @param title the title to set
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -148,8 +142,7 @@ public class GoodsType {
 	}
 
 	/**
-	 * @param orderNum
-	 *            the orderNum to set
+	 * @param orderNum the orderNum to set
 	 */
 	public void setOrderNum(Integer orderNum) {
 		this.orderNum = orderNum;
@@ -163,8 +156,7 @@ public class GoodsType {
 	}
 
 	/**
-	 * @param description
-	 *            the description to set
+	 * @param description the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -178,8 +170,7 @@ public class GoodsType {
 	}
 
 	/**
-	 * @param display
-	 *            the display to set
+	 * @param display the display to set
 	 */
 	public void setDisplay(Integer display) {
 		this.display = display;

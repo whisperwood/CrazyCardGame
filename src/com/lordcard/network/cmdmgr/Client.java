@@ -58,7 +58,6 @@ public class Client implements GameClient {
 
 	/**
 	 * 开始游戏
-	 * 
 	 * @Title: startGame
 	 * @param
 	 * @return void
@@ -73,8 +72,7 @@ public class Client implements GameClient {
 					// ///////////////////////////////////直接发送，不用校验返回////////////////////////
 					CmdDetail tcmd = cmdqueue.poll(); // 先取出来
 					// 判断是否可处理的命令
-					if (tcmd == null || TextUtils.isEmpty(tcmd.getCmd())
-							|| tcmd.isHasDo()) {
+					if (tcmd == null || TextUtils.isEmpty(tcmd.getCmd()) || tcmd.isHasDo()) {
 						continue;
 					}
 					// ///////////////////////////////////加入序列发送，需要校验消息返回////////////////////////
@@ -87,11 +85,9 @@ public class Client implements GameClient {
 					// continue;
 					// }
 					// 发送的时间差
-					long sendSpace = System.currentTimeMillis()
-							- tcmd.getTime();
+					long sendSpace = System.currentTimeMillis() - tcmd.getTime();
 					// 没有处理的消息 或者需要重发的消息
-					if (tcmd.getTime() == 0
-							|| sendSpace > SocketConfig.SOCKET_RE_TIME) {
+					if (tcmd.getTime() == 0 || sendSpace > SocketConfig.SOCKET_RE_TIME) {
 						cmd = tcmd;
 						break;
 					}
@@ -106,9 +102,8 @@ public class Client implements GameClient {
 					if (!cmd.isHasDo()) {
 						cmd.setTime(System.currentTimeMillis()); // 更新发送时间
 						cmd.setCount(cmd.getCount() + 1); // 记录发送次数
-						hasWithCmdList.add(DateUtil.getTimesDate() + ":out_"
-								+ cmd.getSeq() + "_" + cmd.getCount() + "_"
-								+ cmd.getCmd());
+						hasWithCmdList.add(DateUtil.getTimesDate() + ":out_" + cmd.getSeq() + "_" + cmd.getCount()
+								+ "_" + cmd.getCmd());
 						sendMsg(cmd.toJson());
 					}
 				}
@@ -119,7 +114,6 @@ public class Client implements GameClient {
 
 	/**
 	 * 接收消息处理
-	 * 
 	 * @Title: messageReceived
 	 * @param @param msg 收到的消息
 	 * @return void
@@ -144,8 +138,7 @@ public class Client implements GameClient {
 			}
 			if (CmdUtils.CMD_ERR_RJOIN.equals(cmd)) { // 玩家加入时，服务器暂停维护提示
 				if (CmdUtils.CMD_SER_STOP.equals(detail.getDetail())) {
-					String tipMsg = CrashApplication.getInstance()
-							.getResources().getString(R.string.gs_update);
+					String tipMsg = CrashApplication.getInstance().getResources().getString(R.string.gs_update);
 					DialogUtils.mesToastTip(tipMsg);
 					ActivityUtils.finishAcitivity();
 					return;
@@ -192,7 +185,6 @@ public class Client implements GameClient {
 
 	/**
 	 * 重连游戏
-	 * 
 	 * @Title: relinkGame
 	 * @param
 	 * @return void
@@ -258,7 +250,6 @@ public class Client implements GameClient {
 
 	/**
 	 * 一局结束
-	 * 
 	 * @Title: gameOver
 	 * @param
 	 * @return void
@@ -277,7 +268,6 @@ public class Client implements GameClient {
 
 	/**
 	 * Client销毁
-	 * 
 	 * @Title: destory
 	 * @param
 	 * @return void
@@ -295,7 +285,6 @@ public class Client implements GameClient {
 
 	/**
 	 * 发送消息
-	 * 
 	 * @Title: sendMsg
 	 * @param @param detail
 	 * @return void
@@ -310,15 +299,13 @@ public class Client implements GameClient {
 			cmdqueue.add(detail);
 			seqCmdMap.put("out_" + detail.getSeq(), detail);
 		} else {
-			hasWithCmdList.add(DateUtil.getTimesDate() + ":out_"
-					+ detail.getCmd());
+			hasWithCmdList.add(DateUtil.getTimesDate() + ":out_" + detail.getCmd());
 			sendMsg(detail.toJson());
 		}
 	}
 
 	/**
 	 * 发送消息
-	 * 
 	 * @Title: sendMsg
 	 * @param @param msg
 	 * @return void
@@ -332,7 +319,6 @@ public class Client implements GameClient {
 
 	/**
 	 * 消息处理超时
-	 * 
 	 * @Title: doWithCmdTimeOut
 	 * @param
 	 * @return void
@@ -345,7 +331,6 @@ public class Client implements GameClient {
 
 	/**
 	 * 连接失败
-	 * 
 	 * @Title: connectFail
 	 * @param
 	 * @return void
@@ -357,7 +342,6 @@ public class Client implements GameClient {
 
 	/**
 	 * 是否在连接判断
-	 * 
 	 * @Title: isConnected
 	 * @param @return
 	 * @return boolean
@@ -370,7 +354,6 @@ public class Client implements GameClient {
 
 	/**
 	 * socket关闭时的处理
-	 * 
 	 * @Title: socketClosed
 	 * @param
 	 * @return void
@@ -380,8 +363,7 @@ public class Client implements GameClient {
 	public void socketClosed() {
 		Log.d(Constant.LOG_TAG, "===== socket 关闭了 =====" + this.status);
 		// 正在游戏时断线 || this.status == STARTING
-		if ((this.status == PLAYING || this.status == STARTING)
-				&& ActivityUtils.isGameView()) { // 正在打牌时自动重连
+		if ((this.status == PLAYING || this.status == STARTING) && ActivityUtils.isGameView()) { // 正在打牌时自动重连
 			relinkGame();
 		} else {
 			if (this.status == STARTING) {
@@ -397,7 +379,6 @@ public class Client implements GameClient {
 
 	/**
 	 * Socket异常
-	 * 
 	 * @Title: socketException
 	 * @param
 	 * @return void
@@ -415,7 +396,6 @@ public class Client implements GameClient {
 
 	/**
 	 * 心跳检测超时
-	 * 
 	 * @Title: waitTimeOut
 	 * @param
 	 * @return void

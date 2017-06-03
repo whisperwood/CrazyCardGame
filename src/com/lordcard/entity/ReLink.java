@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 重连数据
- * 
  * @ClassName: ReLink
  * @Description: TODO
  * @author yinhongbiao

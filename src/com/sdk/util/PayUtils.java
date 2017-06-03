@@ -25,7 +25,6 @@ import com.sdk.util.vo.PaySiteConfigItem;
 
 /**
  * 支付相关公共操作
- * 
  * @ClassName: PayUtils
  * @Description: TODO
  * @author yinhongbiao
@@ -34,7 +33,6 @@ import com.sdk.util.vo.PaySiteConfigItem;
 public class PayUtils {
 	/**
 	 * 加载支付初始数据
-	 * 
 	 * @Title: loadPayInitParam
 	 * @param
 	 * @return void
@@ -50,23 +48,20 @@ public class PayUtils {
 			Map<String, String> paramMap = new HashMap<String, String>();
 			paramMap.put("payCodes", payCodes);
 			String result = HttpUtils.post(url, paramMap, true);
-			JsonResult jsonResult = JsonHelper.fromJson(result,
-					JsonResult.class);
+			JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 			if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) { // 正确的返回数据
 				String msg = jsonResult.getMethodMessage();
 				// 支付方式对应的初始配置文件
 				TypeToken<Map<String, String>> typeToken = new TypeToken<Map<String, String>>() {
 				};
 				// key:支付方式的payCode value:支付初始数据 init
-				Map<String, String> payInitMap = JsonHelper.fromJson(msg,
-						typeToken);
+				Map<String, String> payInitMap = JsonHelper.fromJson(msg, typeToken);
 				// 转成对象缓存
 				HashMap<String, PayInit> initMap = new HashMap<String, PayInit>();
 				if (payInitMap != null && !payInitMap.isEmpty()) {
 					for (String key : payInitMap.keySet()) {
 						try {
-							PayInit init = JsonHelper.fromJson(
-									payInitMap.get(key), PayInit.class);
+							PayInit init = JsonHelper.fromJson(payInitMap.get(key), PayInit.class);
 							initMap.put(key, init);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -82,7 +77,6 @@ public class PayUtils {
 
 	/**
 	 * 加载计费点配置数据
-	 * 
 	 * @Title: loadPaySiteConfig
 	 * @param
 	 * @return void
@@ -95,15 +89,13 @@ public class PayUtils {
 			paramMap.put("game", Constant.GAME);
 			paramMap.put("version", ActivityUtils.getVersionName());
 			String result = HttpUtils.post(url, paramMap, true);
-			JsonResult jsonResult = JsonHelper.fromJson(result,
-					JsonResult.class);
+			JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 			if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) { // 正确的返回数据
 				String msg = jsonResult.getMethodMessage();
 				// 计费位置支付配置数据
 				TypeToken<ArrayList<PaySiteConfig>> typeToken = new TypeToken<ArrayList<PaySiteConfig>>() {
 				};
-				ArrayList<PaySiteConfig> siteList = JsonHelper.fromJson(msg,
-						typeToken);
+				ArrayList<PaySiteConfig> siteList = JsonHelper.fromJson(msg, typeToken);
 				if (siteList != null) {
 					TypeToken<HashMap<String, ArrayList<PaySiteConfigItem>>> siteToken = new TypeToken<HashMap<String, ArrayList<PaySiteConfigItem>>>() {
 					};
@@ -111,8 +103,8 @@ public class PayUtils {
 					for (PaySiteConfig paySiteConfig : siteList) {
 						// 将配置数据转成对象
 						String payConf = paySiteConfig.getPayconf();
-						HashMap<String, ArrayList<PaySiteConfigItem>> siteItemMap = JsonHelper
-								.fromJson(payConf, siteToken);
+						HashMap<String, ArrayList<PaySiteConfigItem>> siteItemMap = JsonHelper.fromJson(payConf,
+								siteToken);
 						paySiteConfig.setSiteItemMap(siteItemMap);
 						sitemap.put(paySiteConfig.getSite(), paySiteConfig);
 					}
@@ -126,7 +118,6 @@ public class PayUtils {
 
 	/**
 	 * 获取计费位置当前有效的支付配置
-	 * 
 	 * @Title: getPaySiteUseConfig
 	 * @param @param paySite
 	 * @param @return
@@ -138,8 +129,7 @@ public class PayUtils {
 		if (siteConfig == null)
 			return null;
 		String simType = GameCache.getStr(Constant.SIM_KEY);
-		HashMap<String, ArrayList<PaySiteConfigItem>> siteMap = siteConfig
-				.getSiteItemMap();
+		HashMap<String, ArrayList<PaySiteConfigItem>> siteMap = siteConfig.getSiteItemMap();
 		if (siteMap == null)
 			return null;
 		// 指定类型sim卡的配置
@@ -159,7 +149,6 @@ public class PayUtils {
 
 	/**
 	 * 获取计费点
-	 * 
 	 * @Title: getPayPoint
 	 * @param @return
 	 * @return List<PayPoint>
@@ -173,8 +162,7 @@ public class PayUtils {
 		if (siteConfigItem == null)
 			return null;
 		String payCode = siteConfigItem.getPayCode();
-		HashMap<String, PayInit> initMap = (HashMap<String, PayInit>) GameCache
-				.getObj(CacheKey.PAY_INIT_MAP);
+		HashMap<String, PayInit> initMap = (HashMap<String, PayInit>) GameCache.getObj(CacheKey.PAY_INIT_MAP);
 		PayInit payInit = initMap.get(payCode); // 支付方式初始数据
 		if (payInit == null)
 			return null;
@@ -186,7 +174,6 @@ public class PayUtils {
 
 	/**
 	 * 匹配充值计费点
-	 * 
 	 * @Title: matchPayPoint
 	 * @param @param pno
 	 * @param @param money
@@ -195,8 +182,7 @@ public class PayUtils {
 	 * @return PayPoint
 	 * @throws
 	 */
-	public static PayPoint matchPayPoint(String pno, double money,
-			List<PayPoint> pointList) {
+	public static PayPoint matchPayPoint(String pno, double money, List<PayPoint> pointList) {
 		// 计费点根据充值的金额升序排
 		SortUtils<PayPoint> compator = new SortUtils<PayPoint>();
 		compator.sort(pointList, "money", SortUtils.Sort.ASC);
@@ -226,7 +212,6 @@ public class PayUtils {
 
 	/**
 	 * 找到计费位置对应的计费点，没有则为空
-	 * 
 	 * @Title: getPaySitePoint
 	 * @param @param paySite
 	 * @param @return
@@ -245,8 +230,7 @@ public class PayUtils {
 			return null;
 		}
 		String payCode = siteConfigItem.getPayCode();
-		HashMap<String, PayInit> initMap = (HashMap<String, PayInit>) GameCache
-				.getObj(CacheKey.PAY_INIT_MAP);
+		HashMap<String, PayInit> initMap = (HashMap<String, PayInit>) GameCache.getObj(CacheKey.PAY_INIT_MAP);
 		PayInit payInit = initMap.get(payCode); // 支付方式初始数据
 		if (payInit == null)
 			return null;

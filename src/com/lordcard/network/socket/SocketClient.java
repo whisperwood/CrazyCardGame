@@ -37,8 +37,7 @@ public class SocketClient {
 			bootstrap.setOption("reuseAddress", true);
 			bootstrap.setOption("soLinger", SocketConfig.SOLINGER);
 			bootstrap.setOption("connectTimeoutMillis", SocketConfig.TIME_OUT); // 超时时间
-			ChannelFuture future = bootstrap.connect(new InetSocketAddress(
-					host, port));
+			ChannelFuture future = bootstrap.connect(new InetSocketAddress(host, port));
 			future.awaitUninterruptibly(); // 等待返回的ChannelFuture
 			if (future.isSuccess()) { // 以确定建立连接的尝试是否成功。
 				HBMgr.startHb(clientAdapter.getGameClient());
@@ -52,8 +51,7 @@ public class SocketClient {
 		}
 	}
 
-	private static class ServerPipelineFactory implements
-			ChannelPipelineFactory {
+	private static class ServerPipelineFactory implements ChannelPipelineFactory {
 		private SocketClient socketClient;
 		private OrderedMemoryAwareThreadPoolExecutor executor;
 
@@ -86,7 +84,6 @@ public class SocketClient {
 
 	/**
 	 * 解析服务器返回的指令列表
-	 * 
 	 * @param str
 	 * @return
 	 */
@@ -108,7 +105,6 @@ public class SocketClient {
 
 	/**
 	 * 是否在连接判断
-	 * 
 	 * @Title: isConnected
 	 * @param @return
 	 * @return boolean
@@ -123,7 +119,6 @@ public class SocketClient {
 
 	/**
 	 * 接收消息处理
-	 * 
 	 * @Title: messageReceived
 	 * @param @param msg 收到的消息
 	 * @return void
@@ -140,7 +135,6 @@ public class SocketClient {
 
 	/**
 	 * Socket异常
-	 * 
 	 * @Title: socketException
 	 * @param
 	 * @return void
@@ -152,7 +146,6 @@ public class SocketClient {
 
 	/**
 	 * socket关闭时的处理
-	 * 
 	 * @Title: socketClosed
 	 * @param
 	 * @return void
@@ -164,7 +157,6 @@ public class SocketClient {
 
 	/**
 	 * 发送消息
-	 * 
 	 * @Title: sendMsg
 	 * @param @param msg
 	 * @return void
@@ -173,8 +165,7 @@ public class SocketClient {
 	public void sendMsg(String msg) {
 		try {
 			if (!TextUtils.isEmpty(msg) && isConnected()) {
-				Log.d(Constant.LOG_TAG, "===> : " + channel.getId() + " | "
-						+ msg);
+				Log.d(Constant.LOG_TAG, "===> : " + channel.getId() + " | " + msg);
 				channel.write(msg);
 			}
 		} catch (Exception e) {
@@ -184,7 +175,6 @@ public class SocketClient {
 
 	/**
 	 * 主动关闭的操作
-	 * 
 	 * @Title: close
 	 * @param
 	 * @return void

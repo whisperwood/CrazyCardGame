@@ -11,7 +11,6 @@ public class ActivityPool {
 
 	/**
 	 * 加入队列
-	 * 
 	 * @throws
 	 */
 	public static void push(Activity activity) {
@@ -30,15 +29,13 @@ public class ActivityPool {
 
 	/**
 	 * 删除
-	 * 
 	 * @throws
 	 */
 	public static void remove(Activity activity) {
 		String key = activity.getClass().getName();
 		if (activityPool.containsKey(key)) {
 			activityPool.remove(key);
-			Log.d("ActivityPool", "activityPool:" + activityPool.size()
-					+ "    删除：" + key);
+			Log.d("ActivityPool", "activityPool:" + activityPool.size() + "    删除：" + key);
 		}
 		activity = null;
 	}

@@ -8,7 +8,6 @@ import com.lordcard.constant.Constant;
 
 /**
  * 心跳管理
- * 
  * @ClassName: HBMgr
  * @date 2013-9-16 下午3:23:22
  */
@@ -56,7 +55,6 @@ public class HBMgr {
 
 	/**
 	 * 更新心跳时间
-	 * 
 	 * @Title: refreshHB
 	 * @param
 	 * @return void

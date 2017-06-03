@@ -63,8 +63,7 @@ public class DownloadImg {
 		return bytes;
 	}
 
-	public static void saveFileFromBytes(byte[] b, File outputFile)
-			throws Exception {
+	public static void saveFileFromBytes(byte[] b, File outputFile) throws Exception {
 		BufferedOutputStream stream = null;
 		FileOutputStream fstream = new FileOutputStream(outputFile);
 		stream = new BufferedOutputStream(fstream);

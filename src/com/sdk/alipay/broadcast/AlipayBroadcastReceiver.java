@@ -14,8 +14,7 @@ public class AlipayBroadcastReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		// 接收广播
 		if (intent.getAction().equals("com.xrl.creditcard.install")) {
-			SharedPreferences mPerferences = PreferenceManager
-					.getDefaultSharedPreferences(context);
+			SharedPreferences mPerferences = PreferenceManager.getDefaultSharedPreferences(context);
 			SharedPreferences.Editor mEditor = mPerferences.edit();
 			mEditor.putBoolean(NEWEST_SERVICE, true);
 			Log.v("AlipayBroadcastReceiver", "支付宝服务已经安装");

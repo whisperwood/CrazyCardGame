@@ -15,7 +15,6 @@ import com.lordcard.constant.Constant;
 
 /**
  * 消息接收处理
- * 
  * @ClassName: SocketHandler
  * @Description: TODO
  * @author yinhongbiao
@@ -29,15 +28,13 @@ public class SocketHandler extends SimpleChannelUpstreamHandler {
 	}
 
 	@Override
-	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
-			throws Exception {
+	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
 		super.channelConnected(ctx, e);
 		ctx.getChannel().write("h" + ComUtils.randomNum(10) + ";");
 	}
 
 	@Override
-	public void channelClosed(ChannelHandlerContext ctx, ChannelStateEvent e)
-			throws Exception {
+	public void channelClosed(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
 		super.channelClosed(ctx, e);
 		Log.d(Constant.LOG_TAG, "channel关闭了 : " + ctx.getChannel().getId());
 		if (socketClient != null) {
@@ -50,11 +47,9 @@ public class SocketHandler extends SimpleChannelUpstreamHandler {
 	 * 网络异常
 	 */
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
-			throws Exception {
+	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
 		e.getCause().printStackTrace();
-		Log.d(Constant.LOG_TAG, "client exceptionCaught : "
-				+ e.getChannel().getId());
+		Log.d(Constant.LOG_TAG, "client exceptionCaught : " + e.getChannel().getId());
 		Log.d(Constant.LOG_TAG, e.getCause().getMessage());
 		LogUtil.err("socket 网络中断异常", e.getCause());
 		if (socketClient != null) {
@@ -66,8 +61,7 @@ public class SocketHandler extends SimpleChannelUpstreamHandler {
 	 * 接收消息
 	 */
 	@Override
-	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
-			throws Exception {
+	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 		if (socketClient == null || !socketClient.isConnected()) {
 			return;
 		}

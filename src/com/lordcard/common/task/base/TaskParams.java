@@ -7,7 +7,6 @@ import org.json.JSONException;
 
 /**
  * 暂未使用，待观察是否今后需要此类
- * 
  * @author lds
  */
 public class TaskParams {
@@ -38,25 +37,18 @@ public class TaskParams {
 
 	/**
 	 * Get the boolean value associated with a key.
-	 * 
-	 * @param key
-	 *            A key string.
+	 * @param key A key string.
 	 * @return The truth.
-	 * @throws HttpException
-	 *             if the value is not a Boolean or the String "true" or
-	 *             "false".
+	 * @throws HttpException if the value is not a Boolean or the String "true" or "false".
 	 */
 	public boolean getBoolean(String key) throws HttpException {
 		Object object = get(key);
 		if (object == null)
 			return false;
-		if (object.equals(Boolean.FALSE)
-				|| (object instanceof String && ((String) object)
-						.equalsIgnoreCase("false"))) {
+		if (object.equals(Boolean.FALSE) || (object instanceof String && ((String) object).equalsIgnoreCase("false"))) {
 			return false;
 		} else if (object.equals(Boolean.TRUE)
-				|| (object instanceof String && ((String) object)
-						.equalsIgnoreCase("true"))) {
+				|| (object instanceof String && ((String) object).equalsIgnoreCase("true"))) {
 			return true;
 		}
 		throw new HttpException(key + " is not a Boolean.");
@@ -64,19 +56,15 @@ public class TaskParams {
 
 	/**
 	 * Get the double value associated with a key.
-	 * 
-	 * @param key
-	 *            A key string.
+	 * @param key A key string.
 	 * @return The numeric value.
-	 * @throws HttpException
-	 *             if the key is not found or if the value is not a Number
-	 *             object and cannot be converted to a number.
+	 * @throws HttpException if the key is not found or if the value is not a Number object and
+	 *             cannot be converted to a number.
 	 */
 	public double getDouble(String key) throws HttpException {
 		Object object = get(key);
 		try {
-			return object instanceof Number ? ((Number) object).doubleValue()
-					: Double.parseDouble((String) object);
+			return object instanceof Number ? ((Number) object).doubleValue() : Double.parseDouble((String) object);
 		} catch (Exception e) {
 			throw new HttpException(key + " is not a number.");
 		}
@@ -84,19 +72,15 @@ public class TaskParams {
 
 	/**
 	 * Get the int value associated with a key.
-	 * 
-	 * @param key
-	 *            A key string.
+	 * @param key A key string.
 	 * @return The integer value.
-	 * @throws HttpException
-	 *             if the key is not found or if the value cannot be converted
-	 *             to an integer.
+	 * @throws HttpException if the key is not found or if the value cannot be converted to an
+	 *             integer.
 	 */
 	public int getInt(String key) throws HttpException {
 		Object object = get(key);
 		try {
-			return object instanceof Number ? ((Number) object).intValue()
-					: Integer.parseInt((String) object);
+			return object instanceof Number ? ((Number) object).intValue() : Integer.parseInt((String) object);
 		} catch (Exception e) {
 			throw new HttpException(key + " is not an int.");
 		}
@@ -104,12 +88,9 @@ public class TaskParams {
 
 	/**
 	 * Get the string associated with a key.
-	 * 
-	 * @param key
-	 *            A key string.
+	 * @param key A key string.
 	 * @return A string which is the value.
-	 * @throws JSONException
-	 *             if the key is not found.
+	 * @throws JSONException if the key is not found.
 	 */
 	public String getString(String key) throws HttpException {
 		Object object = get(key);
@@ -118,9 +99,7 @@ public class TaskParams {
 
 	/**
 	 * Determine if the JSONObject contains a specific key.
-	 * 
-	 * @param key
-	 *            A key string.
+	 * @param key A key string.
 	 * @return true if the key exists in the JSONObject.
 	 */
 	public boolean has(String key) {

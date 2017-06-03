@@ -9,7 +9,6 @@ public interface GameClient {
 
 	/**
 	 * Socket异常
-	 * 
 	 * @Title: socketException
 	 * @param
 	 * @return void
@@ -19,7 +18,6 @@ public interface GameClient {
 
 	/**
 	 * socket关闭时的处理
-	 * 
 	 * @Title: socketClosed
 	 * @param
 	 * @return void
@@ -29,7 +27,6 @@ public interface GameClient {
 
 	/**
 	 * 发送消息
-	 * 
 	 * @Title: sendMsg
 	 * @param @param msg
 	 * @return void
@@ -39,7 +36,6 @@ public interface GameClient {
 
 	/**
 	 * 接收消息处理
-	 * 
 	 * @Title: messageReceived
 	 * @param @param msg 收到的消息
 	 * @return void

@@ -27,8 +27,7 @@ public class PreRechargeEndGameDialog extends BaseDialog {
 	private TextView textPrerechargeMount = null;
 	private Context context;
 
-	public PreRechargeEndGameDialog(Context context,
-			PayRecordOrder payRecordOrder, Handler handler) {
+	public PreRechargeEndGameDialog(Context context, PayRecordOrder payRecordOrder, Handler handler) {
 		super(context, R.style.process_dialog_black);
 		mHandler = handler;
 		mPayRecordOrder = payRecordOrder;
@@ -51,29 +50,20 @@ public class PreRechargeEndGameDialog extends BaseDialog {
 		setContentView(R.layout.pre_recharge_endgame);
 		/** Get the view top layout **/
 		mainLayout = findViewById(R.id.pre_recharge_root_end);
-		long iqBeansNum = mPayRecordOrder.getBaseBean()
-				+ mPayRecordOrder.getWinBean();
-		textViewPrerechargeDescriptionOne = (TextView) mainLayout
-				.findViewById(R.id.beans_notice);
-		textViewPrerechargeDescriptionOne.setText(getStringWithParams(
-				R.string.text_prerecharge_description_one,
+		long iqBeansNum = mPayRecordOrder.getBaseBean() + mPayRecordOrder.getWinBean();
+		textViewPrerechargeDescriptionOne = (TextView) mainLayout.findViewById(R.id.beans_notice);
+		textViewPrerechargeDescriptionOne.setText(getStringWithParams(R.string.text_prerecharge_description_one,
 				PatternUtils.formatIqBeans(iqBeansNum)));
-		textViewPrerechargeDescriptionTwo = (TextView) mainLayout
-				.findViewById(R.id.pre_recharge_beans);
+		textViewPrerechargeDescriptionTwo = (TextView) mainLayout.findViewById(R.id.pre_recharge_beans);
 		iqBeansNum = mPayRecordOrder.getBaseBean();
-		textViewPrerechargeDescriptionTwo.setText(getStringWithParams(
-				R.string.text_prerecharge_description_two,
+		textViewPrerechargeDescriptionTwo.setText(getStringWithParams(R.string.text_prerecharge_description_two,
 				PatternUtils.formatIqBeans(iqBeansNum)));
-		textViewPrerechargeDescriptionThree = (TextView) mainLayout
-				.findViewById(R.id.win_beans);
+		textViewPrerechargeDescriptionThree = (TextView) mainLayout.findViewById(R.id.win_beans);
 		iqBeansNum = mPayRecordOrder.getWinBean();
-		textViewPrerechargeDescriptionThree.setText(getStringWithParams(
-				R.string.text_prerecharge_description_three,
+		textViewPrerechargeDescriptionThree.setText(getStringWithParams(R.string.text_prerecharge_description_three,
 				PatternUtils.formatIqBeans(iqBeansNum)));
-		textPrerechargeMount = (TextView) mainLayout
-				.findViewById(R.id.pre_recharge_text_price);
-		textPrerechargeMount.setText(getStringWithParams(
-				R.string.text_charge_yuan, (int) mPayRecordOrder.getMoney()));
+		textPrerechargeMount = (TextView) mainLayout.findViewById(R.id.pre_recharge_text_price);
+		textPrerechargeMount.setText(getStringWithParams(R.string.text_charge_yuan, (int) mPayRecordOrder.getMoney()));
 		/** Initialize buttons for dialog **/
 		initButtons(null, (Button) mainLayout.findViewById(R.id.charge),
 				(Button) findViewById(R.id.pre_recharge_ingame_btn_cancel));
@@ -83,22 +73,22 @@ public class PreRechargeEndGameDialog extends BaseDialog {
 	public void onClick(View v) {
 		int id = v.getId();
 		switch (id) {
-		case R.id.charge:
-			mHandler.sendEmptyMessage(GameEndDialog.ENABLE_DIALOG);
-			// SDKFactory.fastPay((int)
-			// PrerechargeManager.mPayRecordOrder.getMoney(),
-			// SDKConstant.PRRECHARGE);
-			JDSMSPayUtil.setContext(context);
-			double money = PrerechargeManager.mPayRecordOrder.getMoney();
-			PayTipUtils.showTip(money, PaySite.PREPARERECHARGE); // 配置的提示方式
-			dismiss();
-			break;
-		case R.id.pre_recharge_ingame_btn_cancel:
-			mHandler.sendEmptyMessage(GameEndDialog.ENABLE_DIALOG);
-			dismiss();
-			break;
-		default:
-			break;
+			case R.id.charge:
+				mHandler.sendEmptyMessage(GameEndDialog.ENABLE_DIALOG);
+				// SDKFactory.fastPay((int)
+				// PrerechargeManager.mPayRecordOrder.getMoney(),
+				// SDKConstant.PRRECHARGE);
+				JDSMSPayUtil.setContext(context);
+				double money = PrerechargeManager.mPayRecordOrder.getMoney();
+				PayTipUtils.showTip(money, PaySite.PREPARERECHARGE); // 配置的提示方式
+				dismiss();
+				break;
+			case R.id.pre_recharge_ingame_btn_cancel:
+				mHandler.sendEmptyMessage(GameEndDialog.ENABLE_DIALOG);
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -111,7 +101,6 @@ public class PreRechargeEndGameDialog extends BaseDialog {
 
 	/**
 	 * Give mHandler a instance from Depend On Activity
-	 * 
 	 * @param handler
 	 */
 	public void setDependOnActivityHandler(Handler handler) {

@@ -41,8 +41,7 @@ import com.lordcard.constant.Database;
 import com.lordcard.network.http.HttpURL;
 import com.lordcard.ui.base.BaseActivity;
 
-public class ShowGirlActivity extends BaseActivity implements
-		OnGestureListener, OnClickListener {
+public class ShowGirlActivity extends BaseActivity implements OnGestureListener, OnClickListener {
 	LinearLayout layout = null;
 	ImageView imageView = null;
 	Button pullButton;
@@ -86,9 +85,8 @@ public class ShowGirlActivity extends BaseActivity implements
 		if (Database.TOOL != null && Database.TOOL.getType().equals("1")) {
 			girlList = new ArrayList<Map<String, String>>();
 			try {
-				girlList = JsonHelper.fromJson(Database.TOOL.getContent(),
-						new TypeToken<List<Map<String, String>>>() {
-						});
+				girlList = JsonHelper.fromJson(Database.TOOL.getContent(), new TypeToken<List<Map<String, String>>>() {
+				});
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -96,18 +94,13 @@ public class ShowGirlActivity extends BaseActivity implements
 				ImageView image = new ImageView(this);
 				girlView.add(image);
 			}
-			boolean sdCardExist = Environment.getExternalStorageState().equals(
-					Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+			boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 			for (int i = 0; i < girlList.size(); i++) {
-				if (null != ImageUtil.getGirlBitmap(
-						girlList.get(i).get("path"),
-						ActivityUtils.isWifiActive(), true)) {
+				if (null != ImageUtil.getGirlBitmap(girlList.get(i).get("path"), ActivityUtils.isWifiActive(), true)) {
 					allContent.add(girlList.get(i).get("desc"));
 				} else {
 					if (ActivityUtils.isWifiActive()) {
-						ImageUtil.downMMImg(
-								HttpURL.URL_PIC_ALL
-										+ girlList.get(i).get("path"), null);
+						ImageUtil.downMMImg(HttpURL.URL_PIC_ALL + girlList.get(i).get("path"), null);
 					}
 				}
 			}
@@ -118,16 +111,13 @@ public class ShowGirlActivity extends BaseActivity implements
 			if (point < 0) {
 				point = girlList.size() - 1;
 			}
-			Drawable draw1 = ImageUtil
-					.getcutBitmap(
-							HttpURL.URL_PIC_ALL + girlList.get(i).get("path"),
-							ActivityUtils.isWifiActive());
+			Drawable draw1 = ImageUtil.getcutBitmap(HttpURL.URL_PIC_ALL + girlList.get(i).get("path"),
+					ActivityUtils.isWifiActive());
 			if (null != draw1) {
 				girlView.get(i).setBackgroundDrawable(draw1);
 			}
 			girlView.get(i).setScaleType(ImageView.ScaleType.FIT_XY);
-			viewFlipper.addView(girlView.get(i), new LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+			viewFlipper.addView(girlView.get(i), new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		}
 		refresh();
 		readdView();
@@ -160,8 +150,7 @@ public class ShowGirlActivity extends BaseActivity implements
 					public void run() {
 						if (viewFlipper != null && girlList != null) {
 							canFlipper = true;
-							int curId = ShowGirlActivity.this.viewFlipper
-									.getDisplayedChild();
+							int curId = ShowGirlActivity.this.viewFlipper.getDisplayedChild();
 							int point = curPage - 1;
 							int postion = curPage + 1;
 							int curpoint = curId - 1;
@@ -178,33 +167,22 @@ public class ShowGirlActivity extends BaseActivity implements
 							if (curpostion > 2) {
 								curpostion = 0;
 							}
-							Drawable draw = ImageUtil.getcutBitmap(
-									HttpURL.URL_PIC_ALL
-											+ girlList.get(point).get("path"),
-									ActivityUtils.isWifiActive());
+							Drawable draw = ImageUtil.getcutBitmap(HttpURL.URL_PIC_ALL
+									+ girlList.get(point).get("path"), ActivityUtils.isWifiActive());
 							if (null != draw) {
-								ShowGirlActivity.this.viewFlipper.getChildAt(
-										curpoint).setBackgroundDrawable(draw);
+								ShowGirlActivity.this.viewFlipper.getChildAt(curpoint).setBackgroundDrawable(draw);
 							}
-							Drawable draw1 = ImageUtil
-									.getcutBitmap(
-											HttpURL.URL_PIC_ALL
-													+ girlList.get(postion)
-															.get("path"),
-											ActivityUtils.isWifiActive());
+							Drawable draw1 = ImageUtil.getcutBitmap(
+									HttpURL.URL_PIC_ALL + girlList.get(postion).get("path"),
+									ActivityUtils.isWifiActive());
 							if (null != draw1) {
-								ShowGirlActivity.this.viewFlipper.getChildAt(
-										curpostion)
-										.setBackgroundDrawable(draw1);
+								ShowGirlActivity.this.viewFlipper.getChildAt(curpostion).setBackgroundDrawable(draw1);
 							}
 							Log.d("forTag", " curId : " + curId);
 							for (int i = 0; i < girlList.size(); i++) {
 								if (i == point || i == curPage || i == postion) {
 								} else {
-									ImageUtil
-											.clearsingleCache(HttpURL.URL_PIC_ALL
-													+ girlList.get(i).get(
-															"path"));
+									ImageUtil.clearsingleCache(HttpURL.URL_PIC_ALL + girlList.get(i).get("path"));
 								}
 							}
 						}
@@ -218,26 +196,24 @@ public class ShowGirlActivity extends BaseActivity implements
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.login_sliding_handle:
-			clicknum++;
-			if (clicknum % 2 == 1) {
-				pullButton.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.gone_button, true));
-				topLayout.setVisibility(View.VISIBLE);
-			} else {
-				topLayout.setVisibility(View.GONE);
-				pullButton.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.pull_button, true));
-			}
-			break;
-		case R.id.close_buttom:
-			girlButtom.setVisibility(View.GONE);
-			break;
-		case R.id.back_btn:
-			finish();
-			break;
-		default:
-			break;
+			case R.id.login_sliding_handle:
+				clicknum++;
+				if (clicknum % 2 == 1) {
+					pullButton.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gone_button, true));
+					topLayout.setVisibility(View.VISIBLE);
+				} else {
+					topLayout.setVisibility(View.GONE);
+					pullButton.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.pull_button, true));
+				}
+				break;
+			case R.id.close_buttom:
+				girlButtom.setVisibility(View.GONE);
+				break;
+			case R.id.back_btn:
+				finish();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -248,18 +224,15 @@ public class ShowGirlActivity extends BaseActivity implements
 	}
 
 	@Override
-	public boolean onFling(MotionEvent arg0, MotionEvent arg1, float arg2,
-			float arg3) {
+	public boolean onFling(MotionEvent arg0, MotionEvent arg1, float arg2, float arg3) {
 		// 对手指滑动的距离进行了计算，如果滑动距离大于120像素，就做切换动作，否则不做任何切换动作。
 		// 从左向右滑动
 		if (arg0.getX() - arg1.getX() > 120) {
 			// 添加动画
 			if (canFlipper) {
 				canFlipper = false;
-				this.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(
-						this, R.anim.push_left_in));
-				this.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(
-						this, R.anim.push_left_out));
+				this.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_in));
+				this.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_out));
 				this.viewFlipper.showNext();
 				curPage = curPage + 1;
 				if (curPage >= girlList.size()) {
@@ -273,10 +246,8 @@ public class ShowGirlActivity extends BaseActivity implements
 		else if (arg0.getX() - arg1.getX() < -120) {
 			if (canFlipper) {
 				canFlipper = false;
-				this.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(
-						this, R.anim.push_right_in));
-				this.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(
-						this, R.anim.push_right_out));
+				this.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_right_in));
+				this.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_right_out));
 				this.viewFlipper.showPrevious();
 				curPage = curPage - 1;
 				if (curPage < 0) {
@@ -296,8 +267,7 @@ public class ShowGirlActivity extends BaseActivity implements
 	}
 
 	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 		// TODO Auto-generated method stub
 		return false;
 	}
