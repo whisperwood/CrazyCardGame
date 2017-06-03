@@ -14,6 +14,10 @@ import android.util.Log;
 import android.util.SparseIntArray;
 
 import com.lordcard.common.exception.CrashApplication;
+import com.lordcard.common.exception.LogUtil;
+import com.lordcard.constant.CacheKey;
+import com.lordcard.entity.GameUser;
+import com.lordcard.network.http.GameCache;
 import com.lordcard.ui.view.dialog.LotteryDialog;
 
 @SuppressLint("UseSparseArrays")
@@ -31,44 +35,134 @@ public class AudioPlayUtils {
 	private static AudioManager audioManager;
 	private static Context context;
 	private SparseIntArray soundPoolMap = null;
-
+	private int[][] soundGenders = new int[][] {
+			new int[] {
+					// 男声
+					R.raw.nan_bomb,
+					R.raw.nan_bujiao,
+					R.raw.nan_1fen,
+					R.raw.nan_2fen,
+					R.raw.nan_3fen,
+					R.raw.nan_pass,
+					R.raw.nan_3dai0,
+					R.raw.nan_3dai1,
+					R.raw.nan_3dai2,
+					R.raw.nan_4dai2,
+					R.raw.nan_4dai22,
+					R.raw.nan_feiji,
+					R.raw.nan_liandui,
+					R.raw.nan_shunzi,
+					R.raw.nan_wangzha,
+					R.raw.nan_jiabei,
+					R.raw.nan_bujiabei,
+					// 单张 男
+					R.raw.m_1_3,
+					R.raw.m_1_4,
+					R.raw.m_1_5,
+					R.raw.m_1_6,
+					R.raw.m_1_7,
+					R.raw.m_1_8,
+					R.raw.m_1_9,
+					R.raw.m_1_10,
+					R.raw.m_1_11,
+					R.raw.m_1_12,
+					R.raw.m_1_13,
+					R.raw.m_1_14,
+					R.raw.m_1_15,
+					R.raw.m_1_16,
+					R.raw.m_1_17,
+					// 对牌男
+					R.raw.m_2_3,
+					R.raw.m_2_4,
+					R.raw.m_2_5,
+					R.raw.m_2_6,
+					R.raw.m_2_7,
+					R.raw.m_2_8,
+					R.raw.m_2_9,
+					R.raw.m_2_10,
+					R.raw.m_2_11,
+					R.raw.m_2_12,
+					R.raw.m_2_13,
+					R.raw.m_2_14,
+					R.raw.m_2_15,
+					// 三张男
+					R.raw.m_tuple3,
+					R.raw.m_tuple4,
+					R.raw.m_tuple5,
+					R.raw.m_tuple6,
+					R.raw.m_tuple7,
+					R.raw.m_tuple8,
+					R.raw.m_tuple9,
+					R.raw.m_tuple10,
+					R.raw.m_tuple11,
+					R.raw.m_tuple12,
+					R.raw.m_tuple13,
+					R.raw.m_tuple14,
+					R.raw.m_tuple15, },
+			new int[] {
+					// 女
+					R.raw.nv_bomb,
+					R.raw.nv_bujiao,
+					R.raw.nv_1fen,
+					R.raw.nv_2fen,
+					R.raw.nv_3fen,
+					R.raw.nv_pass,
+					R.raw.nv_3dai0,
+					R.raw.nv_3dai1,
+					R.raw.nv_3dai2,
+					R.raw.nv_4dai2,
+					R.raw.nv_4dai22,
+					R.raw.nv_feiji,
+					R.raw.nv_liandui,
+					R.raw.nv_shunzi,
+					R.raw.nv_wangzha,
+					R.raw.nv_jiabei,
+					R.raw.nv_bujiabei,
+					// 单张女
+					R.raw.w_1_3,
+					R.raw.w_1_4,
+					R.raw.w_1_5,
+					R.raw.w_1_6,
+					R.raw.w_1_7,
+					R.raw.w_1_8,
+					R.raw.w_1_9,
+					R.raw.w_1_10,
+					R.raw.w_1_11,
+					R.raw.w_1_12,
+					R.raw.w_1_13,
+					R.raw.w_1_14,
+					R.raw.w_1_15,
+					R.raw.w_1_16,
+					R.raw.w_1_17,
+					// 对牌女
+					R.raw.w_2_3,
+					R.raw.w_2_4,
+					R.raw.w_2_5,
+					R.raw.w_2_6,
+					R.raw.w_2_7,
+					R.raw.w_2_8,
+					R.raw.w_2_9,
+					R.raw.w_2_10,
+					R.raw.w_2_11,
+					R.raw.w_2_12,
+					R.raw.w_2_13,
+					R.raw.w_2_14,
+					R.raw.w_2_15,
+					// 三张女
+					R.raw.w_tuple3,
+					R.raw.w_tuple4,
+					R.raw.w_tuple5,
+					R.raw.w_tuple6,
+					R.raw.w_tuple7,
+					R.raw.w_tuple8,
+					R.raw.w_tuple9,
+					R.raw.w_tuple10,
+					R.raw.w_tuple11,
+					R.raw.w_tuple12,
+					R.raw.w_tuple13,
+					R.raw.w_tuple14,
+					R.raw.w_tuple15 } };
 	private int soundId[] = new int[] {
-			// 男声
-			R.raw.nan_bomb,
-			R.raw.nan_bujiao,
-			R.raw.nan_1fen,
-			R.raw.nan_2fen,
-			R.raw.nan_3fen,
-			R.raw.nan_pass,
-			R.raw.nan_3dai0,
-			R.raw.nan_3dai1,
-			R.raw.nan_3dai2,
-			R.raw.nan_4dai2,
-			R.raw.nan_4dai22,
-			R.raw.nan_feiji,
-			R.raw.nan_liandui,
-			R.raw.nan_shunzi,
-			R.raw.nan_wangzha,
-			R.raw.nan_jiabei,
-			R.raw.nan_bujiabei,
-			// 女
-			R.raw.nv_bomb,
-			R.raw.nv_bujiao,
-			R.raw.nv_1fen,
-			R.raw.nv_2fen,
-			R.raw.nv_3fen,
-			R.raw.nv_pass,
-			R.raw.nv_3dai0,
-			R.raw.nv_3dai1,
-			R.raw.nv_3dai2,
-			R.raw.nv_4dai2,
-			R.raw.nv_4dai22,
-			R.raw.nv_feiji,
-			R.raw.nv_liandui,
-			R.raw.nv_shunzi,
-			R.raw.nv_wangzha,
-			R.raw.nv_jiabei,
-			R.raw.nv_bujiabei,
 			// 其他
 			R.raw.start,
 			R.raw.audio_warn,
@@ -77,95 +171,7 @@ public class AudioPlayUtils {
 			R.raw.warn,
 			R.raw.win,
 			R.raw.planeeffect,
-			R.raw.get_glod,
-			// 单张 男
-			R.raw.m_1_3,
-			R.raw.m_1_4,
-			R.raw.m_1_5,
-			R.raw.m_1_6,
-			R.raw.m_1_7,
-			R.raw.m_1_8,
-			R.raw.m_1_9,
-			R.raw.m_1_10,
-			R.raw.m_1_11,
-			R.raw.m_1_12,
-			R.raw.m_1_13,
-			R.raw.m_1_14,
-			R.raw.m_1_15,
-			R.raw.m_1_16,
-			R.raw.m_1_17,
-			// 单张女
-			R.raw.w_1_3,
-			R.raw.w_1_4,
-			R.raw.w_1_5,
-			R.raw.w_1_6,
-			R.raw.w_1_7,
-			R.raw.w_1_8,
-			R.raw.w_1_9,
-			R.raw.w_1_10,
-			R.raw.w_1_11,
-			R.raw.w_1_12,
-			R.raw.w_1_13,
-			R.raw.w_1_14,
-			R.raw.w_1_15,
-			R.raw.w_1_16,
-			R.raw.w_1_17,
-			// 对牌男
-			R.raw.m_2_3,
-			R.raw.m_2_4,
-			R.raw.m_2_5,
-			R.raw.m_2_6,
-			R.raw.m_2_7,
-			R.raw.m_2_8,
-			R.raw.m_2_9,
-			R.raw.m_2_10,
-			R.raw.m_2_11,
-			R.raw.m_2_12,
-			R.raw.m_2_13,
-			R.raw.m_2_14,
-			R.raw.m_2_15,
-			// 对牌女
-			R.raw.w_2_3,
-			R.raw.w_2_4,
-			R.raw.w_2_5,
-			R.raw.w_2_6,
-			R.raw.w_2_7,
-			R.raw.w_2_8,
-			R.raw.w_2_9,
-			R.raw.w_2_10,
-			R.raw.w_2_11,
-			R.raw.w_2_12,
-			R.raw.w_2_13,
-			R.raw.w_2_14,
-			R.raw.w_2_15,
-			// 三张男
-			R.raw.m_tuple3,
-			R.raw.m_tuple4,
-			R.raw.m_tuple5,
-			R.raw.m_tuple6,
-			R.raw.m_tuple7,
-			R.raw.m_tuple8,
-			R.raw.m_tuple9,
-			R.raw.m_tuple10,
-			R.raw.m_tuple11,
-			R.raw.m_tuple12,
-			R.raw.m_tuple13,
-			R.raw.m_tuple14,
-			R.raw.m_tuple15,
-			// 三张女
-			R.raw.w_tuple3,
-			R.raw.w_tuple4,
-			R.raw.w_tuple5,
-			R.raw.w_tuple6,
-			R.raw.w_tuple7,
-			R.raw.w_tuple8,
-			R.raw.w_tuple9,
-			R.raw.w_tuple10,
-			R.raw.w_tuple11,
-			R.raw.w_tuple12,
-			R.raw.w_tuple13,
-			R.raw.w_tuple14,
-			R.raw.w_tuple15 };
+			R.raw.get_glod, };
 
 	public boolean isBgisPlaying() {
 		return BgisPlaying;
@@ -175,19 +181,20 @@ public class AudioPlayUtils {
 		long t1 = System.currentTimeMillis();
 		this.mediaPlayer = new MediaPlayer();
 		this.mediaPlayer2 = new MediaPlayer();
-		System.out.println("costMills1:" + (System.currentTimeMillis() - t1));
 		this.soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 100);
-		System.out.println("costMills2:" + (System.currentTimeMillis() - t1));
 		lotIngId = soundPool.load(context, R.raw.lot_ing, 1);
-		System.out.println("costMills3:" + (System.currentTimeMillis() - t1));
 		lotEndId = soundPool.load(context, R.raw.lot_end, 1);
-		System.out.println("costMills4:" + (System.currentTimeMillis() - t1));
 		soundPoolMap = new SparseIntArray();
-		Log.d(TAG, "costMills5:" + (System.currentTimeMillis() - t1));
 		for (int i = 0; i < soundId.length; i++) {
 			soundPoolMap.put(soundId[i], soundPool.load(context, soundId[i], 1));
 		}
-		System.out.println("costMills6:" + (System.currentTimeMillis() - t1) + " soundId.len:" + soundId.length);
+		
+		int[] genderSouds = soundGenders[1];
+		for (int i = 0; i < genderSouds.length; i++) {
+			soundPoolMap.put(genderSouds[i], soundPool.load(context, genderSouds[i], 1));
+		}
+		
+		System.out.println("AudioPlayUtils init costMills:" + (System.currentTimeMillis() - t1) + " soundId.len:" + soundId.length);
 	}
 
 	/**
@@ -405,6 +412,7 @@ public class AudioPlayUtils {
 				mediaPlayer2.stop();
 				mediaPlayer2.release();
 				BgisPlaying = false;
+				AudioPlayUtils.isPlay = false;
 			} catch (Exception e) {
 				Log.d("eden", "----------停播音乐错误");
 			}

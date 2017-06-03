@@ -8,6 +8,15 @@
     android:gravity="center_vertical"
     android:orientation="horizontal" >
 
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/ad_unit_id_banner3" >
+    </com.google.android.gms.ads.AdView>
+
     <com.lordcard.entity.XiaHorizontalScrollView
         android:id="@+id/horizontal"
         android:layout_width="wrap_content"
@@ -39,15 +48,6 @@
                 android:numColumns="3"
                 android:scrollbars="none" >
             </GridView>
-
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/adView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                ads:adSize="BANNER"
-                ads:adUnitId="@string/ad_unit_id_banner3" >
-            </com.google.android.gms.ads.AdView>
         </LinearLayout>
     </com.lordcard.entity.XiaHorizontalScrollView>
 

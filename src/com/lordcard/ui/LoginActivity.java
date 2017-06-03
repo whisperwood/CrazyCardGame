@@ -192,6 +192,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 		taskManager.addTask(gameNoticeTask);
 		mst.adjustView(gameBg);
 		GoogleAdsHelper.getInstance().showBanner(gameBg);
+		GameCache.putStr(Constant.GAME_NAME_CACHE, "武则天");
 	}
 
 	@Override
@@ -289,8 +290,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 	@Override
 	public void onResume() {
 		super.onResume();
-		accountTv.setText(TextUtils.isEmpty(GameCache.getStr(Constant.GAME_NAME_CACHE)) ? "武则天" : GameCache
-				.getStr(Constant.GAME_NAME_CACHE)); // 账号
+		accountTv.setText(GameCache.getStr(Constant.GAME_NAME_CACHE)); // 账号
 		goldTv.setText(checkBeans()); // 金豆
 		goldbean.setNum(Integer.parseInt(checkBeans()));
 		AudioReadDataUtils.playOrStopBgMusic(this);
@@ -299,7 +299,6 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 	@Override
 	public void onPause() {
 		super.onPause();
-		AudioPlayUtils.isPlay = false;
 		AudioPlayUtils.getInstance().stopBgMusic();
 		AudioPlayUtils.getInstance().stopMusic();
 	}
@@ -316,7 +315,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 				account = gameUser.getRelaAccount();
 			}
 			// accountTv.setText(account); // 账号
-			accountTv.setText("武则天"); // 账号
+			accountTv.setText(GameCache.getStr(Constant.GAME_NAME_CACHE)); // 账号
 			goldTv.setText(PatternUtils.changeZhidou(0 > gameUser.getBean() ? 0 : gameUser.getBean())); // 金豆
 			String localBean = GameCache.getStr(Constant.GAME_BEAN_CACHE);
 			goldTv.setText(localBean);

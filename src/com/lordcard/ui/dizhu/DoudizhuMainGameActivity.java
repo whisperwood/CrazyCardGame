@@ -149,7 +149,9 @@ import com.sdk.util.PaySite;
 import com.sdk.util.PayTipUtils;
 import com.sdk.util.RechargeUtils;
 
-@SuppressLint({ "HandlerLeak", "UseSparseArrays" })
+@SuppressLint({
+		"HandlerLeak",
+		"UseSparseArrays" })
 public class DoudizhuMainGameActivity extends BaseActivity implements IGameView, OnTouchListener, HasTiShiListenner,
 		OnGestureListener, InitMainGameInterface {
 	/** 动画-无结束监听 */
@@ -1158,7 +1160,10 @@ public class DoudizhuMainGameActivity extends BaseActivity implements IGameView,
 		if (null == userPlayCardRecordMap || userPlayCardRecordMap.size() != 3)
 			return;
 		List<Poker> mPokers = new ArrayList<Poker>();
-		int orders[] = new int[] { mySelfOrder, getPerOrder(mySelfOrder), getNextOrder(mySelfOrder) };
+		int orders[] = new int[] {
+				mySelfOrder,
+				getPerOrder(mySelfOrder),
+				getNextOrder(mySelfOrder) };
 		for (int order : orders) {
 			mPokers.clear();
 			GameUser gameUser = Database.userMap.get(order);
@@ -7088,10 +7093,7 @@ public class DoudizhuMainGameActivity extends BaseActivity implements IGameView,
 					}
 				});
 			} else if (list.get(position).getType().equals("-1")) {
-				iv.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.game_items_pic, true));
-				// Resources res = getResources();
-				// iv.setImageBitmap(BitmapFactory.decodeResource(res,
-				// R.drawable.game_items_pic));
+				iv.setBackgroundDrawable(ImageUtil.getResDrawableByName("game_items_pic_"+position,true,true));
 			}
 			return convertView;
 		}

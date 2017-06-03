@@ -467,4 +467,19 @@ public class GameUser implements Serializable {
 	public void setDiamSum(Long diamSum) {
 		this.diamSum = diamSum;
 	}
+
+	@Override
+	public String toString() {
+		return "GameUser [account=" + account + ", relaAccount=" + relaAccount + ", nickname=" + nickname + ", type="
+				+ type + ", bean=" + bean + ", gameServer=" + gameServer + ", cusName=" + cusName + ", userPwd="
+				+ userPwd + ", md5Pwd=" + md5Pwd + ", confirmPwd=" + confirmPwd + ", gender=" + gender + ", phoneNum="
+				+ phoneNum + ", email=" + email + ", isUpdatedPwd=" + isUpdatedPwd + ", createDate=" + createDate
+				+ ", updateDate=" + updateDate + ", headImage=" + headImage + ", sortOrder=" + sortOrder + ", authKey="
+				+ authKey + ", roomTime=" + roomTime + ", hasWin=" + hasWin + ", jiPaiQiTime=" + jiPaiQiTime
+				+ ", needWin=" + needWin + ", overTime=" + overTime + ", loginToken=" + loginToken + ", gameType="
+				+ gameType + ", isPlay=" + isPlay + ", roomName=" + roomName + ", round=" + round + ", level=" + level
+				+ ", rank=" + rank + ", cred=" + cred + ", iq=" + iq + ", iqImg=" + iqImg + ", title=" + title
+				+ ", intellect=" + intellect + ", nextIntellect=" + nextIntellect + ", levelImg=" + levelImg
+				+ ", diamSum=" + diamSum + ", tipMes=" + tipMes + "]";
+	}
 }

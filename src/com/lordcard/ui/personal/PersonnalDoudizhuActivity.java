@@ -3,6 +3,7 @@ package com.lordcard.ui.personal;
 import com.beauty.lord.R;
 import com.beauty.lord.R.color;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -74,6 +75,7 @@ import com.lordcard.common.task.GenericTask;
 import com.lordcard.common.util.ActivityPool;
 import com.lordcard.common.util.ActivityUtils;
 import com.lordcard.common.util.AudioPlayUtils;
+import com.lordcard.common.util.AudioReadDataUtils;
 import com.lordcard.common.util.DialogUtils;
 import com.lordcard.common.util.ImageUtil;
 import com.lordcard.common.util.ImageUtil.ImageCallback;
@@ -125,7 +127,9 @@ import com.lordcard.ui.view.dialog.ChatDialog;
 import com.lordcard.ui.view.dialog.PhotoDialog;
 import com.lordcard.ui.view.dialog.SettingDialog;
 
-@SuppressLint({ "HandlerLeak", "UseSparseArrays" })
+@SuppressLint({
+		"HandlerLeak",
+		"UseSparseArrays" })
 public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView, OnTouchListener, HasTiShiListenner,
 		OnGestureListener, InitMainGameInterface {
 	private static final String TAG = "PersonnalDoudizhuActivity";
@@ -234,7 +238,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 	private List<Map<String, String>> girlList;
 	private GoodsValuesAdapter valueAdapter;
 	private GridView girlimgList;
-	private LinearLayout gridlLayout;
+	private ViewGroup gridlLayout;
 	private List<GamePropsType> toolList, usetool;
 	private ViewFlipper viewFlipper = null;
 	private GestureDetector gestureDetector = null;
@@ -600,10 +604,21 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 										}
 									}
 								}
+								int count = 0;
+								Field[] fields = R.drawable.class.getDeclaredFields();
+								System.out.println("fields.len:"+fields.length);
+								for (Field field : fields) {
+									if (field.getName().contains("game_items_pic")) {
+										count++;
+									}
+								}
+								System.out.println("count:"+count);
 								// 新建一个道具复原，type为"-1"
-								GamePropsType reback = new GamePropsType();
-								reback.setType("-1");
-								toolList.add(reback);
+								for (int i = 0; i < count; i++) {
+									GamePropsType reback = new GamePropsType();
+									reback.setType("-1");
+									toolList.add(reback);
+								}
 							}
 							if (isShow) {
 								getPopupWindow();
@@ -640,8 +655,8 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 		popupWindow.setFocusable(true);
 		girlimgList = (GridView) popupWindow_view.findViewById(R.id.valuesgrid);
 		girlimgList.setSelector(new ColorDrawable(Color.TRANSPARENT));
-		gridlLayout = (LinearLayout) popupWindow_view.findViewById(R.id.grid_layout);
-		gridlLayout.setGravity(Gravity.CENTER_VERTICAL);
+		gridlLayout = (ViewGroup) popupWindow_view.findViewById(R.id.grid_layout);
+		
 		int space = 6;
 		int numColumn = 95;
 		int size = toolList.size();
@@ -675,6 +690,8 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 						girls = null;
 						valueAdapter = null;
 						viewFlipper.setVisibility(View.INVISIBLE);
+						doudizhuBackGround.setBackgroundDrawable(ImageUtil.getResDrawableByName("gamebg_" + posision,
+								true, false));
 					}
 				} catch (Exception e) {
 				}
@@ -892,7 +909,10 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 		if (null == userPlayCardRecordMap || userPlayCardRecordMap.size() != 3)
 			return;
 		List<Poker> mPokers = new ArrayList<Poker>();
-		int orders[] = new int[] { mySelfOrder, getPerOrder(mySelfOrder), getNextOrder(mySelfOrder) };
+		int orders[] = new int[] {
+				mySelfOrder,
+				getPerOrder(mySelfOrder),
+				getNextOrder(mySelfOrder) };
 		for (int order : orders) {
 			mPokers.clear();
 			GameUser gameUser = Database.userMap.get(order);
@@ -1241,8 +1261,6 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 			popThread.interrupt();
 			// popThread = null;
 		}
-		AudioPlayUtils.getInstance().stopMusic();
-		AudioPlayUtils.getInstance().stopBgMusic();
 		gameWaitLayout.closeTimer();
 		if (gameWaitLayout != null) {
 			gameWaitLayout.onDestory();
@@ -1839,7 +1857,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 			}
 		};
 		// 设置游戏的背景
-		doudizhuBackGround.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gamebg_1, false));
+		doudizhuBackGround.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.gamebg_0, false));
 		// 设置选定的背景图
 		if (!TextUtils.isEmpty(GameCache.getStr(Constant.GAME_BACKGROUND))) {
 			initViewFlipper(GameCache.getStr(Constant.GAME_BACKGROUND));
@@ -5146,10 +5164,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 					}
 				});
 			} else if (list.get(position).getType().equals("-1")) {
-				iv.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.game_items_pic, true));
-				// Resources res = getResources();
-				// iv.setImageBitmap(BitmapFactory.decodeResource(res,
-				// R.drawable.game_items_pic));
+				iv.setBackgroundDrawable(ImageUtil.getResDrawableByName("game_items_pic_" + position, false, true));
 			}
 			return convertView;
 		}
@@ -5246,8 +5261,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 		ClientUser user1 = new ClientUser();
 		user1.setOrder(1);
 		user1.setGender("1");
-		user1.setName(TextUtils.isEmpty(GameCache.getStr(Constant.GAME_NAME_CACHE)) ? "武则天" : GameCache
-				.getStr(Constant.GAME_NAME_CACHE)); // 自己
+		user1.setName(GameCache.getStr(Constant.GAME_NAME_CACHE)); // 自己
 		ClientUser user2 = new ClientUser();
 		user2.setOrder(2);
 		user2.setName(clientNames.get(0));
