@@ -11,27 +11,23 @@ import java.util.regex.Pattern;
 
 /**
  * 正则表达式验证 util.PatternUtils
- * 
  * @author yinhb <br/>
  *         create at 2012 2012-11-6 下午10:49:32
  */
 public class PatternUtils {
 	/**
 	 * 手机号码验证
-	 * 
 	 * @param mobiles
 	 * @return
 	 */
 	public static boolean validMobiles(String mobiles) {
-		Pattern p = Pattern
-				.compile("^13[0-9]{9}|15[012356789][0-9]{8}|18[0256789][0-9]{8}|147[0-9]{8}$");
+		Pattern p = Pattern.compile("^13[0-9]{9}|15[012356789][0-9]{8}|18[0256789][0-9]{8}|147[0-9]{8}$");
 		Matcher m = p.matcher(mobiles);
 		return m.matches();
 	}
 
 	/**
 	 * 邮箱验证
-	 * 
 	 * @param mobilesi
 	 * @return
 	 */
@@ -48,7 +44,6 @@ public class PatternUtils {
 
 	/**
 	 * 是否存在非法字符 true:存在 false:不存在
-	 * 
 	 * @param words
 	 * @return
 	 */
@@ -64,7 +59,6 @@ public class PatternUtils {
 
 	/**
 	 * 校验字符串是否是由数字组成。。是返回true，否则返回false
-	 * 
 	 * @param str
 	 * @return
 	 */
@@ -75,7 +69,6 @@ public class PatternUtils {
 
 	/**
 	 * 去除字符串的空格/换行符/制表符/回车
-	 * 
 	 * @Title: replaceBlank
 	 * @Description: TODO
 	 * @param @param str
@@ -90,7 +83,6 @@ public class PatternUtils {
 
 	/**
 	 * 金豆转换（大于100000显示x万）
-	 * 
 	 * @param zhidou
 	 * @return
 	 */
@@ -110,9 +102,7 @@ public class PatternUtils {
 
 	/**
 	 * Format IQBeans
-	 * 
-	 * @param iqBeans
-	 *            IQBeans Number
+	 * @param iqBeans IQBeans Number
 	 * @return Format string
 	 */
 	public static String formatIqBeans(long iqBeans) {
@@ -142,47 +132,45 @@ public class PatternUtils {
 
 	/**
 	 * 把小写数字转为大写
-	 * 
-	 * @param num
-	 *            小写数字
+	 * @param num 小写数字
 	 * @return resultString 转换后的大写数字
 	 */
 	public static String changeLowcaseToUppercase(int num) {
 		String resultString = null;
 		switch (num) {
-		case 0:
-			resultString = "零";
-			break;
-		case 1:
-			resultString = "壹";
-			break;
-		case 2:
-			resultString = "贰";
-			break;
-		case 3:
-			resultString = "叄";
-			break;
-		case 4:
-			resultString = "肆";
-			break;
-		case 5:
-			resultString = "伍";
-			break;
-		case 6:
-			resultString = "陆";
-			break;
-		case 7:
-			resultString = "柒";
-			break;
-		case 8:
-			resultString = "捌";
-			break;
-		case 9:
-			resultString = "玖";
-			break;
-		case 10:
-			resultString = "十";
-			break;
+			case 0:
+				resultString = "零";
+				break;
+			case 1:
+				resultString = "壹";
+				break;
+			case 2:
+				resultString = "贰";
+				break;
+			case 3:
+				resultString = "叄";
+				break;
+			case 4:
+				resultString = "肆";
+				break;
+			case 5:
+				resultString = "伍";
+				break;
+			case 6:
+				resultString = "陆";
+				break;
+			case 7:
+				resultString = "柒";
+				break;
+			case 8:
+				resultString = "捌";
+				break;
+			case 9:
+				resultString = "玖";
+				break;
+			case 10:
+				resultString = "十";
+				break;
 		}
 		return resultString;
 	}

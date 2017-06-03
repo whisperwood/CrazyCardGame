@@ -20,7 +20,6 @@ import com.lordcard.common.util.JsonHelper;
 import com.lordcard.common.util.MultiScreenTool;
 import com.lordcard.entity.Room;
 
-
 public abstract class SignupDialog extends Dialog implements OnClickListener {
 	private Context context;
 	// private RelativeLayout sign_bg;
@@ -34,8 +33,7 @@ public abstract class SignupDialog extends Dialog implements OnClickListener {
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	private LinearLayout layout;
 
-	protected SignupDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected SignupDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
@@ -61,7 +59,6 @@ public abstract class SignupDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	private void layout(final Context context) {
@@ -83,14 +80,12 @@ public abstract class SignupDialog extends Dialog implements OnClickListener {
 		} else if (type == 2) {
 			signBase.setText("" + room.getBasePoint());
 			Map<String, String> timeMap = new HashMap<String, String>();
-			timeMap = JsonHelper.fromJson(room.getStartRace(),
-					new TypeToken<Map<String, String>>() {
-					});
+			timeMap = JsonHelper.fromJson(room.getStartRace(), new TypeToken<Map<String, String>>() {
+			});
 			signFee.setText(timeMap.get("signUp") + "金豆");
 			signTimesLayout.setVisibility(View.GONE);
 			signdeitailLayout.setVisibility(View.VISIBLE);
-			signTime.setText("每天" + timeMap.get("startDate") + "准时开赛，"
-					+ timeMap.get("endDate") + "结束。");
+			signTime.setText("每天" + timeMap.get("startDate") + "准时开赛，" + timeMap.get("endDate") + "结束。");
 			if (isPlayTime) {
 				signOkBtn.setText("加  入");
 				signText.setText("合成剂专场,玩家可报名参加该专场比赛，每场赢家奖合成剂（平民奖一瓶，地主奖2瓶）。现在是加入时间，点击加入可直接进入专场。");
@@ -106,15 +101,15 @@ public abstract class SignupDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.sign_btn:
-			mst.unRegisterView(layout);
-			askJoin(room);
-			break;
-		case R.id.sign_cancel_btn:
-			dismiss();
-			break;
-		default:
-			break;
+			case R.id.sign_btn:
+				mst.unRegisterView(layout);
+				askJoin(room);
+				break;
+			case R.id.sign_cancel_btn:
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 

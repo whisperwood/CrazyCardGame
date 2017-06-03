@@ -25,12 +25,10 @@ public class AudioReadDataUtils {
 					int currentVolume = audiomanage.getStreamVolume(AudioManager.STREAM_MUSIC);
 					if (currentVolume > 70)
 						currentVolume = 70;
-					AudioPlayUtils.getInstance().SetVoice(
-							sharedPreferences.getInt("music", currentVolume));// 如果没有设置过音量，就获取系统的音量
+					AudioPlayUtils.getInstance().SetVoice(sharedPreferences.getInt("music", currentVolume));// 如果没有设置过音量，就获取系统的音量
 					AudioPlayUtils.getInstance().playBgMusic(R.raw.mg_bg);
 				}
 			};
 		}.start();
 	};
-
 }

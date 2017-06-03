@@ -53,8 +53,7 @@ public class SortUtils<T> {
 	}
 
 	/**
-	 * 获取比较器 根据传入的字段名通过反射动态获取value并进行比较 且通过传入的sort确定排序方式
-	 * 注意：如果集合中有null成员，则无论升降排序，其都将排至集合尾部
+	 * 获取比较器 根据传入的字段名通过反射动态获取value并进行比较 且通过传入的sort确定排序方式 注意：如果集合中有null成员，则无论升降排序，其都将排至集合尾部
 	 */
 	private Comparator<T> getComparator(final String sortField, final Sort sort) {
 		return new Comparator<T>() {
@@ -74,12 +73,12 @@ public class SortUtils<T> {
 						return -1;
 					int rank = SortUtils.compare(o1, o2);
 					switch (sort) {
-					case ASC:
-						return rank;
-					case DESC:
-						return -rank;
-					default:
-						return 0;
+						case ASC:
+							return rank;
+						case DESC:
+							return -rank;
+						default:
+							return 0;
 					}
 				} catch (NoSuchFieldException e) {
 					e.printStackTrace();
@@ -103,13 +102,9 @@ public class SortUtils<T> {
 	 * 否则toString()，然后调用String的compareTo()方法进行比较
 	 * 如果集合中有null成员，则无论升降排序，其都将排至集合尾部
 	 * </pre>
-	 * 
-	 * @param list
-	 *            排序集合
-	 * @param sortField
-	 *            排序字段
-	 * @param sort
-	 *            排序方式
+	 * @param list 排序集合
+	 * @param sortField 排序字段
+	 * @param sort 排序方式
 	 */
 	public void sort(List<T> list, String sortField, Sort sort) {
 		Collections.sort(list, getComparator(sortField, sort));

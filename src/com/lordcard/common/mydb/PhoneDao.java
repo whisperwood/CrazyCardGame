@@ -15,7 +15,6 @@ public class PhoneDao {
 
 	/**
 	 * 取所有的加密手机号
-	 * 
 	 * @param table
 	 * @param columns
 	 * @return
@@ -26,13 +25,11 @@ public class PhoneDao {
 				return null;
 			}
 			List<String> md5PhoneList = new ArrayList<String>();
-			Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE,
-					null);
+			Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE, null);
 			if (cursor != null) {
 				if (cursor.moveToFirst()) {
 					do {
-						md5PhoneList.add(cursor.getString(cursor
-								.getColumnIndex(MD5_PHONE)));
+						md5PhoneList.add(cursor.getString(cursor.getColumnIndex(MD5_PHONE)));
 					} while (cursor.moveToNext());
 				}
 			}
@@ -56,7 +53,6 @@ public class PhoneDao {
 
 	/**
 	 * 增加
-	 * 
 	 * @param people
 	 */
 	public static void add(ContactPeople people, SQLiteDatabase sqLiteDatabase) {

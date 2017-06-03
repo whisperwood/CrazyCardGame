@@ -6,8 +6,8 @@ import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 
 public class SocketConfig {
-	public static ChannelFactory CHANNEL_FACTORY = new NioClientSocketChannelFactory(
-			Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
+	public static ChannelFactory CHANNEL_FACTORY = new NioClientSocketChannelFactory(Executors.newCachedThreadPool(),
+			Executors.newCachedThreadPool());
 	public static int TIME_OUT = 4000; // socket超时时间4秒
 	public static int SOLINGER = 1;
 	public static boolean isOpenHB = true; // 是否开启心跳检测

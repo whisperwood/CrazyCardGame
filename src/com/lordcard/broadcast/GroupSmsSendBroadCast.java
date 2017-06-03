@@ -30,34 +30,32 @@ public class GroupSmsSendBroadCast extends BroadcastReceiver {
 	public void onReceive(final Context context, Intent intent) {
 		if (Constant.ACTION_SMS_ORDER.equals(intent.getAction())) {
 			switch (getResultCode()) {
-			case Activity.RESULT_OK:
-				DialogUtils.toastTip("订单已经提交，金豆即将到账......!");
-				final Map<String, String> paramMap = new HashMap<String, String>();
-				GameUser gameUser = (GameUser) GameCache
-						.getObj(CacheKey.GAME_USER);
-				paramMap.put("loginToken", gameUser.getLoginToken());
-				paramMap.put("orderNo", intent.getStringExtra("orderno"));
-				ThreadPool.startWork(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							String resultJson2 = HttpRequest.getdou(paramMap);
-							// 1失败
-							if (HttpRequest.SUCCESS_STATE.equals(resultJson2)) {
-								DialogUtils.toastTip("您购买的金豆已经到账，请查收");
-							} else {
-								DialogUtils
-										.toastTip("订单已提交，金豆到账后可在充值记录中查看。话费不足，超过月限额等可能导致购买失败。有疑问请打客服热线。");
+				case Activity.RESULT_OK:
+					DialogUtils.toastTip("订单已经提交，金豆即将到账......!");
+					final Map<String, String> paramMap = new HashMap<String, String>();
+					GameUser gameUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+					paramMap.put("loginToken", gameUser.getLoginToken());
+					paramMap.put("orderNo", intent.getStringExtra("orderno"));
+					ThreadPool.startWork(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								String resultJson2 = HttpRequest.getdou(paramMap);
+								// 1失败
+								if (HttpRequest.SUCCESS_STATE.equals(resultJson2)) {
+									DialogUtils.toastTip("您购买的金豆已经到账，请查收");
+								} else {
+									DialogUtils.toastTip("订单已提交，金豆到账后可在充值记录中查看。话费不足，超过月限额等可能导致购买失败。有疑问请打客服热线。");
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
 							}
-						} catch (Exception e) {
-							e.printStackTrace();
 						}
-					}
-				});
-				break;
-			default:
-				DialogUtils.toastTip("订单提交失败");
-				break;
+					});
+					break;
+				default:
+					DialogUtils.toastTip("订单提交失败");
+					break;
 			}
 		}
 	}

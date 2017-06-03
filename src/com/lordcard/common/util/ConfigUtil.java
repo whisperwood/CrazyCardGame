@@ -9,8 +9,7 @@ public class ConfigUtil {
 	protected static Properties properties = new Properties();
 	static {
 		try {
-			properties.load(CrashApplication.getInstance().getResources()
-					.getAssets().open(fileName));
+			properties.load(CrashApplication.getInstance().getResources().getAssets().open(fileName));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -18,7 +17,6 @@ public class ConfigUtil {
 
 	/**
 	 * 返回配置值
-	 * 
 	 * @param key
 	 * @return 2012 2012-6-11
 	 */

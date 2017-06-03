@@ -23,8 +23,8 @@ public class GameCommandCheck {
 	private Map<String, String> commandTermMap; // 指令条件
 	/** {"pingUrl":"www.baidu.com","pingCount":5,"nextAction":2} */
 	/**
-	 * String pingUrl; // ping地址(域名、IP) Integer pingCount; // ping次数 Integer
-	 * nextAction; // 接到下次相同命令时(1=终止当前命令，执行新命令,2=忽略新命令，直到当前命令执行完毕)
+	 * String pingUrl; // ping地址(域名、IP) Integer pingCount; // ping次数 Integer nextAction; //
+	 * 接到下次相同命令时(1=终止当前命令，执行新命令,2=忽略新命令，直到当前命令执行完毕)
 	 */
 	@Expose
 	@SerializedName("commandContent")

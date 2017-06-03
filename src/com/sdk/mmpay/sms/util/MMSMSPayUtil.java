@@ -38,8 +38,7 @@ public class MMSMSPayUtil {
 					purchase = SMSPurchase.getInstance();
 					String appId = payInit.getAppId();
 					String appKey = payInit.getAppkey();
-					purchase.setAppInfo(appId, appKey,
-							PurchaseSkin.SKIN_SYSTEM_TWO);
+					purchase.setAppInfo(appId, appKey, PurchaseSkin.SKIN_SYSTEM_TWO);
 					purchase.smsInit(ctx, mListener);
 				} catch (Exception e) {
 				}
@@ -49,7 +48,6 @@ public class MMSMSPayUtil {
 
 	/**
 	 * mm支付开始支付
-	 * 
 	 * @Title: goPay
 	 * @param payPoint
 	 * @return void
@@ -69,15 +67,10 @@ public class MMSMSPayUtil {
 					paramMap.put("payFromType", paySiteTag); // 充值的标识位
 					/** 判断是不是预充值 **/
 					if (PaySite.PREPARERECHARGE.equalsIgnoreCase(paySiteTag)
-							&& null != PrerechargeManager.mPayRecordOrder
-									.getPreOrderNo()) {
-						paramMap.put(
-								PrerechargeManager.PRERECHARGE_ORDER_PARAMS_PREORDERNO,
-								PrerechargeManager.mPayRecordOrder
-										.getPreOrderNo());
-						paramMap.put(
-								PrerechargeManager.PRERECHARGE_ORDER_PARAMS_PREORDERTYPE,
-								"1");
+							&& null != PrerechargeManager.mPayRecordOrder.getPreOrderNo()) {
+						paramMap.put(PrerechargeManager.PRERECHARGE_ORDER_PARAMS_PREORDERNO,
+								PrerechargeManager.mPayRecordOrder.getPreOrderNo());
+						paramMap.put(PrerechargeManager.PRERECHARGE_ORDER_PARAMS_PREORDERTYPE, "1");
 					}
 					if (Assistant.ASSID != null && Assistant.BTNCODE != null) {
 						paramMap.put("asstId", Assistant.ASSID);
@@ -86,24 +79,19 @@ public class MMSMSPayUtil {
 						Assistant.BTNCODE = null;
 					}
 					if (Database.JOIN_ROOM != null) {
-						paramMap.put("payFromItem",
-								Database.JOIN_ROOM.getCode());
+						paramMap.put("payFromItem", Database.JOIN_ROOM.getCode());
 					}
-					String resultJson = HttpRequest.addPayOrder(
-							MMSMSConfig.PAY_ORDER_URL, paramMap);
-					JsonResult result = JsonHelper.fromJson(resultJson,
-							JsonResult.class);
+					String resultJson = HttpRequest.addPayOrder(MMSMSConfig.PAY_ORDER_URL, paramMap);
+					JsonResult result = JsonHelper.fromJson(resultJson, JsonResult.class);
 					if (JsonResult.SUCCESS.equals(result.getMethodCode())) {
-						MMOrder mmorder = JsonHelper.fromJson(
-								result.getMethodMessage(), MMOrder.class);
+						MMOrder mmorder = JsonHelper.fromJson(result.getMethodMessage(), MMOrder.class);
 						MMSMSConfig.PAY_ORDER = mmorder.getOrderNo();
 						Database.currentActivity.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
 								mListener.setPayTo(PaySite.ON_LINE);
 								mListener.setPayPoint(point);
-								purchase.smsOrder(Database.currentActivity,
-										point.getValue(), mListener);
+								purchase.smsOrder(Database.currentActivity, point.getValue(), mListener);
 							}
 						});
 					} else {

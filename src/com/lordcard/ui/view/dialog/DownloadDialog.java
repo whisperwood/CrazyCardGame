@@ -27,7 +27,6 @@ import com.lordcard.network.http.HttpURL;
 
 /**
  * com.lordcard.ui.view.dialog.AlertDialog
- * 
  * @author Administrator <br/>
  *         create at 2013 2013-3-25 下午5:32:42
  */
@@ -63,19 +62,19 @@ public class DownloadDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.single_common_cancel:
-			DialogUtils.toastTip("你可以到物品囊启动物品的下载");
-			dismiss();
-			break;
-		case R.id.single_common_ok:
-			DialogUtils.toastTip("你物品正在下载到物品囊");
-			for (int i = 0; i < list.size(); i++) {
-				ImageUtil.downMMImg(HttpURL.URL_PIC_ALL + list.get(i), null);
-			}
-			dismiss();
-			break;
-		default:
-			break;
+			case R.id.single_common_cancel:
+				DialogUtils.toastTip("你可以到物品囊启动物品的下载");
+				dismiss();
+				break;
+			case R.id.single_common_ok:
+				DialogUtils.toastTip("你物品正在下载到物品囊");
+				for (int i = 0; i < list.size(); i++) {
+					ImageUtil.downMMImg(HttpURL.URL_PIC_ALL + list.get(i), null);
+				}
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 

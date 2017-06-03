@@ -21,11 +21,8 @@ public class DateUtil {
 
 	/**
 	 * 日期转换为字符串
-	 * 
-	 * @param date
-	 *            日期
-	 * @param format
-	 *            日期格式
+	 * @param date 日期
+	 * @param format 日期格式
 	 * @return 指定格式的日期字符串
 	 */
 	public static String formatDateByFormat(Date date, String format) {
@@ -43,7 +40,6 @@ public class DateUtil {
 
 	/**
 	 * 转换为默认格式(yyyy-MM-dd)的日期字符串
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -53,7 +49,6 @@ public class DateUtil {
 
 	/**
 	 * 转换为目录格式(yyyy/MM/dd/)的日期字符串
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -63,7 +58,6 @@ public class DateUtil {
 
 	/**
 	 * 转换为完整格式(yyyy-MM-dd HH:mm:ss)的日期字符串
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -73,7 +67,6 @@ public class DateUtil {
 
 	/**
 	 * 转换为时分秒格式(HH:mm:ss)的日期字符串
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -87,7 +80,6 @@ public class DateUtil {
 
 	/**
 	 * 转换为时分秒格式(HH:mm:ss)的日期字符串
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -97,11 +89,8 @@ public class DateUtil {
 
 	/**
 	 * 日期格式字符串转换为日期对象
-	 * 
-	 * @param strDate
-	 *            日期格式字符串
-	 * @param pattern
-	 *            日期对象
+	 * @param strDate 日期格式字符串
+	 * @param pattern 日期对象
 	 * @return
 	 */
 	public static Date parseDate(String strDate, String pattern) {
@@ -117,7 +106,6 @@ public class DateUtil {
 
 	/**
 	 * 字符串转换为默认格式(yyyy-MM-dd)日期对象
-	 * 
 	 * @param date
 	 * @return
 	 * @throws Exception
@@ -128,7 +116,6 @@ public class DateUtil {
 
 	/**
 	 * 字符串转换为完整格式(yyyy-MM-dd HH:mm:ss)日期对象
-	 * 
 	 * @param date
 	 * @return
 	 * @throws Exception
@@ -139,7 +126,6 @@ public class DateUtil {
 
 	/**
 	 * 获得当前时间
-	 * 
 	 * @return
 	 */
 	public static Date getCurrentDate() {
@@ -149,7 +135,6 @@ public class DateUtil {
 
 	/**
 	 * 获取年份
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -161,7 +146,6 @@ public class DateUtil {
 
 	/**
 	 * 获取月份
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -173,7 +157,6 @@ public class DateUtil {
 
 	/**
 	 * 获取星期
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -190,7 +173,6 @@ public class DateUtil {
 
 	/**
 	 * 获取日期(多少号)
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -202,7 +184,6 @@ public class DateUtil {
 
 	/**
 	 * 获取当前时间(小时)
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -214,7 +195,6 @@ public class DateUtil {
 
 	/**
 	 * 获取当前时间(分)
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -226,7 +206,6 @@ public class DateUtil {
 
 	/**
 	 * 获取当前时间(秒)
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -238,7 +217,6 @@ public class DateUtil {
 
 	/**
 	 * 获取当前毫秒
-	 * 
 	 * @param date
 	 * @return
 	 */
@@ -250,11 +228,8 @@ public class DateUtil {
 
 	/**
 	 * 日期增加
-	 * 
-	 * @param date
-	 *            Date
-	 * @param day
-	 *            int
+	 * @param date Date
+	 * @param day int
 	 * @return Date
 	 */
 	public static Date addDate(Date date, int day) {
@@ -265,11 +240,8 @@ public class DateUtil {
 
 	/**
 	 * 日期相减(返回天数)
-	 * 
-	 * @param date
-	 *            Date
-	 * @param date1
-	 *            Date
+	 * @param date Date
+	 * @param date1 Date
 	 * @return int 相差的天数
 	 */
 	public static int diffDate(Date date, Date date1) {
@@ -278,11 +250,8 @@ public class DateUtil {
 
 	/**
 	 * 日期相减(返回秒值)
-	 * 
-	 * @param date
-	 *            Date
-	 * @param date1
-	 *            Date
+	 * @param date Date
+	 * @param date1 Date
 	 * @return int
 	 * @author
 	 */
@@ -292,7 +261,6 @@ public class DateUtil {
 
 	/**
 	 * 获取系统当前日期(格式：yyyy-MM-dd)
-	 * 
 	 * @return
 	 */
 	public static String getNowDate() {

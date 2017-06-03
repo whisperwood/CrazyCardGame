@@ -58,11 +58,9 @@ public class ImageUtil {
 	public static ConcurrentHashMap<String, WeakReference<GifView>> gigViewMap = new ConcurrentHashMap<String, WeakReference<GifView>>();
 	public static ConcurrentHashMap<String, WeakReference<Bitmap>> girlbitMapCacheMap = new ConcurrentHashMap<String, WeakReference<Bitmap>>();
 	public static ConcurrentHashMap<String, WeakReference<Bitmap>> headMapCacheMap = new ConcurrentHashMap<String, WeakReference<Bitmap>>();
-	public final static String cachePath = Environment
-			.getExternalStorageDirectory().getPath()
+	public final static String cachePath = Environment.getExternalStorageDirectory().getPath()
 			+ "/com.qianqian360.game/cache/";
-	public final static String chatPath = Environment
-			.getExternalStorageDirectory().getPath()
+	public final static String chatPath = Environment.getExternalStorageDirectory().getPath()
 			+ "/com.qianqian360.game/cache/chat/";
 
 	// public final static String cachePath = "/mnt/sdcard/game/cache/";
@@ -77,14 +75,11 @@ public class ImageUtil {
 
 	/**
 	 * @param drawableId
-	 * @param isCache
-	 *            是否做缓存
-	 * @param isDistortion
-	 *            是否失真
+	 * @param isCache 是否做缓存
+	 * @param isDistortion 是否失真
 	 * @return
 	 */
-	public static Drawable getDrawFromProject(int drawableId, boolean isCache,
-			boolean isDistortion) {
+	public static Drawable getDrawFromProject(int drawableId, boolean isCache, boolean isDistortion) {
 		Context ctx = CrashApplication.getInstance();
 		BitmapFactory.Options opt = new BitmapFactory.Options();
 		// opt.inSampleSize = 2;
@@ -98,23 +93,18 @@ public class ImageUtil {
 		Bitmap bitmap = getBitmapByKey(String.valueOf(drawableId));
 		if (bitmap == null) {
 			try {
-				if (ctx == null
-						|| ctx.getResources() == null
-						|| ctx.getResources().openRawResource(drawableId) == null) {
+				if (ctx == null || ctx.getResources() == null || ctx.getResources().openRawResource(drawableId) == null) {
 					Log.w("", "");
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			bitmap = BitmapFactory.decodeStream(ctx.getResources()
-					.openRawResource(drawableId), null, opt);
+			bitmap = BitmapFactory.decodeStream(ctx.getResources().openRawResource(drawableId), null, opt);
 			bitmap = addBitMap2Cache(String.valueOf(drawableId), bitmap);
 		}
-		BitmapDrawable bitmapDrawable = new BitmapDrawable(ctx.getResources(),
-				bitmap);
+		BitmapDrawable bitmapDrawable = new BitmapDrawable(ctx.getResources(), bitmap);
 		if (isCache) {
-			WeakReference<Drawable> softDrawable = new WeakReference<Drawable>(
-					bitmapDrawable);
+			WeakReference<Drawable> softDrawable = new WeakReference<Drawable>(bitmapDrawable);
 			bitmapDrawable = null;
 			bitmap = null;
 			drawableWeakMap.put(String.valueOf(drawableId), softDrawable);
@@ -127,16 +117,12 @@ public class ImageUtil {
 
 	/**
 	 * 获取Drawable图片资源
-	 * 
 	 * @param drawableId
-	 * @param isCache
-	 *            是否做缓存
-	 * @param isDistortion
-	 *            是否失真
+	 * @param isCache 是否做缓存
+	 * @param isDistortion 是否失真
 	 * @return
 	 */
-	public static Drawable getDrawableResId(int drawableId, boolean isCache,
-			boolean isDistortion) {
+	public static Drawable getDrawableResId(int drawableId, boolean isCache, boolean isDistortion) {
 		String key = String.valueOf(drawableId);
 		Drawable drawable = getDrawableByKey(key);
 		if (drawable != null)
@@ -146,7 +132,6 @@ public class ImageUtil {
 
 	/**
 	 * 获取缓存的tDrawable值
-	 * 
 	 * @Title: getDrawableByKey
 	 * @param @param key
 	 * @param @return
@@ -174,7 +159,6 @@ public class ImageUtil {
 
 	/**
 	 * 增加图片到缓存
-	 * 
 	 * @Title: addDrawable2Cache
 	 * @param @param drawableId
 	 * @param @param drawable
@@ -182,8 +166,7 @@ public class ImageUtil {
 	 * @throws
 	 */
 	public static Drawable addDrawable2Cache(String key, Drawable drawable) {
-		WeakReference<Drawable> softDrawable = new WeakReference<Drawable>(
-				drawable);
+		WeakReference<Drawable> softDrawable = new WeakReference<Drawable>(drawable);
 		drawable = null;
 		drawableWeakMap.put(key, softDrawable);
 		return softDrawable.get();
@@ -209,8 +192,7 @@ public class ImageUtil {
 	 * 回收指定的bitMap
 	 */
 	public static void clearsingleCache(String path) {
-		if (null != girlbitMapCacheMap && girlbitMapCacheMap.size() > 0
-				&& girlbitMapCacheMap.contains(path)) {
+		if (null != girlbitMapCacheMap && girlbitMapCacheMap.size() > 0 && girlbitMapCacheMap.contains(path)) {
 			WeakReference<Bitmap> bitmapRef = girlbitMapCacheMap.remove(path);
 			;
 			if (null != bitmapRef) {
@@ -230,8 +212,7 @@ public class ImageUtil {
 	public static void clearGirlBitMapCache() {
 		if (null != girlbitMapCacheMap && girlbitMapCacheMap.size() > 0) {
 			for (String bitMapKey : girlbitMapCacheMap.keySet()) {
-				WeakReference<Bitmap> bitmapRef = girlbitMapCacheMap
-						.get(bitMapKey);
+				WeakReference<Bitmap> bitmapRef = girlbitMapCacheMap.get(bitMapKey);
 				Bitmap bitmap = bitmapRef.get();
 				if (null != bitmap && !bitmap.isRecycled()) {
 					bitmap.recycle();
@@ -246,7 +227,6 @@ public class ImageUtil {
 
 	/**
 	 * 获取本地图片（返回null 则表明不存在）
-	 * 
 	 * @param path
 	 * @return
 	 */
@@ -260,8 +240,7 @@ public class ImageUtil {
 			String picName = convertUrlToFileName(path);
 			if (!TextUtils.isEmpty(picName)) {
 				// res目录是否有图片
-				bitmap = getBitmapFromResources(picName.substring(0,
-						picName.lastIndexOf(".")));
+				bitmap = getBitmapFromResources(picName.substring(0, picName.lastIndexOf(".")));
 			}
 		} catch (Exception e) {
 			bitmap = null;
@@ -269,8 +248,7 @@ public class ImageUtil {
 		if (bitmap != null) {
 			return new BitmapDrawable(bitmap);
 		}
-		boolean sdCardExist = Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+		boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 		if (sdCardExist) {
 			// SD卡是否有图片
 			bitmap = getImageFromSdCard(path);
@@ -290,8 +268,7 @@ public class ImageUtil {
 	public static void clearHeadMapCache() {
 		if (null != headMapCacheMap && headMapCacheMap.size() > 0) {
 			for (String bitMapKey : headMapCacheMap.keySet()) {
-				WeakReference<Bitmap> bitmapRef = headMapCacheMap
-						.get(bitMapKey);
+				WeakReference<Bitmap> bitmapRef = headMapCacheMap.get(bitMapKey);
 				Bitmap bitmap = bitmapRef.get();
 				if (null != bitmap && !bitmap.isRecycled()) {
 					bitmap.recycle();
@@ -306,7 +283,6 @@ public class ImageUtil {
 
 	/**
 	 * 从缓存获取图片
-	 * 
 	 * @param key
 	 * @return
 	 */
@@ -336,7 +312,6 @@ public class ImageUtil {
 
 	/**
 	 * 获取控件Select图片
-	 * 
 	 * @param path
 	 * @return
 	 */
@@ -348,8 +323,7 @@ public class ImageUtil {
 		try {
 			String picName = convertUrlToFileName(path);
 			if (!TextUtils.isEmpty(picName)) {
-				bitmap = getBitmapFromResources(picName.substring(0,
-						picName.lastIndexOf(".")));
+				bitmap = getBitmapFromResources(picName.substring(0, picName.lastIndexOf(".")));
 			}
 		} catch (Exception e) {
 			bitmap = null;
@@ -357,8 +331,7 @@ public class ImageUtil {
 		if (null != bitmap) {
 			return bitmap;
 		}
-		boolean sdCardExist = Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+		boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 		Bitmap bitmapCache = null;
 		if (sdCardExist) {
 			bitmapCache = getImageFromSdCard(path);
@@ -369,8 +342,7 @@ public class ImageUtil {
 			bitmap = bitmapCache;
 		}
 		if (null != bitmap) {
-			WeakReference<Bitmap> weakReference = new WeakReference<Bitmap>(
-					bitmap);
+			WeakReference<Bitmap> weakReference = new WeakReference<Bitmap>(bitmap);
 			bitMapCacheMap.put(path, weakReference);
 			bitmap = null;
 			return weakReference.get();
@@ -383,7 +355,6 @@ public class ImageUtil {
 
 	/**
 	 * 增加BitMap 到缓存
-	 * 
 	 * @Title: addBitMap2Cache
 	 * @param @param bitMapId
 	 * @param @param bitmap
@@ -399,7 +370,6 @@ public class ImageUtil {
 
 	/**
 	 * 从网络上获取图片
-	 * 
 	 * @Title: getBitMapFromNetWork
 	 * @param @param path
 	 * @param @return
@@ -407,24 +377,21 @@ public class ImageUtil {
 	 * @throws
 	 */
 	public static Bitmap getBitMapFromNetWork(String path) {
-		boolean sdCardExist = Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+		boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 		byte[] data = null;
 		try {
 			data = DownloadUtils.getImage(path);
 			if (data != null && data.length != 0) {
 				BitmapFactory.Options options = new BitmapFactory.Options();
 				options.inPreferredConfig = Bitmap.Config.RGB_565;
-				Bitmap tempBitmap = BitmapFactory.decodeByteArray(data, 0,
-						data.length, options);
+				Bitmap tempBitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
 				// 判断sd卡是否存在
 				if (sdCardExist) {
 					saveImageToSdCard(path, tempBitmap);
 				} else {
 					saveImageToData(path, tempBitmap);
 				}
-				WeakReference<Bitmap> weakReference = new WeakReference<Bitmap>(
-						tempBitmap);
+				WeakReference<Bitmap> weakReference = new WeakReference<Bitmap>(tempBitmap);
 				bitMapCacheMap.put(path, weakReference);
 				tempBitmap = null;
 				return weakReference.get();
@@ -437,10 +404,8 @@ public class ImageUtil {
 
 	/**
 	 * 根据图片ID获取缓存的图片资源
-	 * 
 	 * @param drawableId
-	 * @param isDistortion
-	 *            图片是否设置失真true:是 false:否
+	 * @param isDistortion 图片是否设置失真true:是 false:否
 	 * @return
 	 */
 	public static Drawable getResDrawable(int drawableId, boolean isDistortion) {
@@ -458,18 +423,14 @@ public class ImageUtil {
 	// }
 	/**
 	 * 根据图片名称获取缓存的图片资源
-	 * 
 	 * @param name
 	 * @param isCache
-	 * @param isDistortion
-	 *            图片是否设置失真
+	 * @param isDistortion 图片是否设置失真
 	 * @return
 	 */
-	public static Drawable getResDrawableByName(String name, boolean isCache,
-			boolean isDistortion) {
+	public static Drawable getResDrawableByName(String name, boolean isCache, boolean isDistortion) {
 		Context context = CrashApplication.getInstance();
-		int drawableId = context.getResources().getIdentifier(name, "drawable",
-				context.getPackageName());
+		int drawableId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
 		if (drawableId == 0) {
 			return null;
 		}
@@ -478,27 +439,23 @@ public class ImageUtil {
 
 	/**
 	 * 根据图片名称从资源中获取Bitmap
-	 * 
 	 * @param name
 	 * @return
 	 */
 	public static Bitmap getBitmapFromResources(String name) {
 		Context context = CrashApplication.getInstance();
-		int drawableId = context.getResources().getIdentifier(name, "drawable",
-				context.getPackageName());
+		int drawableId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
 		Resources res = context.getResources();
 		return BitmapFactory.decodeResource(res, drawableId);
 	}
 
 	/**
 	 * 设置大奖赛奖品图片
-	 * 
 	 * @param filename
 	 * @param imageview
 	 * @param imageCallback
 	 */
-	public static void setImg(final String path, final ImageView imageview,
-			final ImageCallback imageCallback) {
+	public static void setImg(final String path, final ImageView imageview, final ImageCallback imageCallback) {
 		Bitmap bitmap = getBitmap(path, false);
 		final Handler handler = new Handler() {
 			@Override
@@ -524,13 +481,11 @@ public class ImageUtil {
 
 	/**
 	 * 设置图片
-	 * 
 	 * @param path
 	 * @param imageview
 	 * @param imageCallback
 	 */
-	public static void setImgs(final String path, final ViewGroup imageview,
-			final ImageGroupCallback ImageGroupCallback) {
+	public static void setImgs(final String path, final ViewGroup imageview, final ImageGroupCallback ImageGroupCallback) {
 		Bitmap bitmap = getBitmap(path, false);
 		final Handler handler = new Handler() {
 			@Override
@@ -554,8 +509,7 @@ public class ImageUtil {
 		}
 	}
 
-	public static void replaceImg(final String path, final ImageView imageview,
-			final ImageCallback imageCallback) {
+	public static void replaceImg(final String path, final ImageView imageview, final ImageCallback imageCallback) {
 		final Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
@@ -575,17 +529,14 @@ public class ImageUtil {
 				if (data != null && data.length != 0) {
 					BitmapFactory.Options options = new BitmapFactory.Options();
 					options.inPreferredConfig = Bitmap.Config.RGB_565;
-					Bitmap tempBitmap = BitmapFactory.decodeByteArray(data, 0,
-							data.length, options);
-					boolean sdCardExist = Environment.getExternalStorageState()
-							.equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+					Bitmap tempBitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
+					boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 					if (sdCardExist) {
 						saveImageToSdCard(path, tempBitmap);
 					} else {
 						saveImageToData(path, tempBitmap);
 					}
-					WeakReference<Bitmap> reference = new WeakReference<Bitmap>(
-							tempBitmap);
+					WeakReference<Bitmap> reference = new WeakReference<Bitmap>(tempBitmap);
 					bitMapCacheMap.put(path, reference);
 					tempBitmap = null;
 					Message message = handler.obtainMessage(0, reference.get());
@@ -597,14 +548,12 @@ public class ImageUtil {
 
 	/**
 	 * 获取Gif动画图片
-	 * 
 	 * @param name
 	 * @return
 	 */
 	public static GifView getGifDrawable(String name) {
 		Context context = CrashApplication.getInstance();
-		int drawableId = context.getResources().getIdentifier(name, "drawable",
-				context.getPackageName());
+		int drawableId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
 		if (drawableId == 0) {
 			return null;
 		}
@@ -630,7 +579,6 @@ public class ImageUtil {
 
 	/**
 	 * 获取Gif动画图片
-	 * 
 	 * @param context
 	 * @param drawableId
 	 * @return
@@ -668,13 +616,11 @@ public class ImageUtil {
 		AnimationDrawable animationDrawable = null;
 		animationDrawable = new AnimationDrawable();
 		for (int i = 0; i < 4; i++) {
-			Drawable drawable = ImageUtil.getResDrawableByName("star" + i,
-					true, true);
+			Drawable drawable = ImageUtil.getResDrawableByName("star" + i, true, true);
 			animationDrawable.addFrame(drawable, 300);
 		}
 		for (int i = 2; i >= 0; i--) {
-			Drawable drawable = ImageUtil.getResDrawableByName("star" + i,
-					true, true);
+			Drawable drawable = ImageUtil.getResDrawableByName("star" + i, true, true);
 			animationDrawable.addFrame(drawable, 300);
 		}
 		animationDrawable.setOneShot(false); // 设置是否循环播放 false:循环播放
@@ -683,7 +629,6 @@ public class ImageUtil {
 
 	/**
 	 * 获取Animation动画
-	 * 
 	 * @param name
 	 * @return
 	 */
@@ -736,7 +681,6 @@ public class ImageUtil {
 
 	/**
 	 * 释放动画的图片
-	 * 
 	 * @Title: releaseAnimDrawable
 	 * @param @param animationDrawable
 	 * @return void
@@ -758,7 +702,6 @@ public class ImageUtil {
 
 	/**
 	 * 图片保存到内存中
-	 * 
 	 * @param cachePath
 	 * @param imageURL
 	 * @param bitmap
@@ -766,9 +709,8 @@ public class ImageUtil {
 	@SuppressLint("WorldReadableFiles")
 	public static void saveImageToData(String imageURL, Bitmap bitmap) {
 		try {
-			FileOutputStream outStream = Database.currentActivity
-					.openFileOutput(convertUrlToFileName(imageURL),
-							Context.MODE_WORLD_READABLE);
+			FileOutputStream outStream = Database.currentActivity.openFileOutput(convertUrlToFileName(imageURL),
+					Context.MODE_WORLD_READABLE);
 			Bitmap.CompressFormat localCompressFormat = Bitmap.CompressFormat.PNG;
 			bitmap.compress(localCompressFormat, 100, outStream);
 			outStream.close();
@@ -779,15 +721,12 @@ public class ImageUtil {
 
 	/**
 	 * 获取美女图鉴或头像Select图片
-	 * 
 	 * @param path
 	 * @param fromNetWork
-	 * @param isgrils
-	 *            true:美女图鉴，false:头像
+	 * @param isgrils true:美女图鉴，false:头像
 	 * @return
 	 */
-	public static Bitmap getGirlBitmap(String path, boolean fromNetWork,
-			boolean isgrils) {
+	public static Bitmap getGirlBitmap(String path, boolean fromNetWork, boolean isgrils) {
 		Bitmap bitmap = getGirlBitmapByKey(path);
 		if (bitmap != null) {
 			return bitmap;
@@ -795,15 +734,13 @@ public class ImageUtil {
 		try {
 			String picName = convertUrlToFileName(path);
 			if (!TextUtils.isEmpty(picName)) {
-				bitmap = getBitmapFromResources(picName.substring(0,
-						picName.lastIndexOf(".")));
+				bitmap = getBitmapFromResources(picName.substring(0, picName.lastIndexOf(".")));
 			}
 		} catch (Exception e) {
 			bitmap = null;
 		}
 		Bitmap bitmapCache = null;
-		boolean sdCardExist = Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+		boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 		if (sdCardExist) {
 			bitmapCache = getImageFromSdCard(path);
 		} else {
@@ -813,8 +750,7 @@ public class ImageUtil {
 			bitmap = bitmapCache;
 		}
 		if (null != bitmap) {
-			WeakReference<Bitmap> weakReference = new WeakReference<Bitmap>(
-					bitmap);
+			WeakReference<Bitmap> weakReference = new WeakReference<Bitmap>(bitmap);
 			if (isgrils) {
 				girlbitMapCacheMap.put(path, weakReference);
 			} else {
@@ -831,7 +767,6 @@ public class ImageUtil {
 
 	/**
 	 * 内存中取图片
-	 * 
 	 * @param cachePath
 	 * @param imageURL
 	 * @param bitmap
@@ -839,8 +774,7 @@ public class ImageUtil {
 	public static Bitmap getImageFromData(String imageURL) {
 		try {
 			String localIconNormal = convertUrlToFileName(imageURL);
-			FileInputStream localStream = Database.currentActivity
-					.openFileInput(localIconNormal);
+			FileInputStream localStream = Database.currentActivity.openFileInput(localIconNormal);
 			Bitmap bitmap = BitmapFactory.decodeStream(localStream);
 			return bitmap;
 		} catch (Exception e) {
@@ -850,7 +784,6 @@ public class ImageUtil {
 
 	/**
 	 * 图片保存到SdCard中
-	 * 
 	 * @param cachePath
 	 * @param imageURL
 	 * @param bitmap
@@ -878,7 +811,6 @@ public class ImageUtil {
 
 	/**
 	 * 从SdCard中取图片
-	 * 
 	 * @param cachePath
 	 * @param imageURL
 	 * @return
@@ -894,12 +826,10 @@ public class ImageUtil {
 
 	/**
 	 * 美女图鉴 下载美女图
-	 * 
 	 * @param path
 	 */
 	public static void downMMImg(final String path, final Handler mHandler) {
-		boolean sdCardExist = Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+		boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 		boolean download = false;
 		if (sdCardExist) {
 			if (!ImageFromSdCardExist(path) && null == getImageFromData(path)) {
@@ -925,18 +855,14 @@ public class ImageUtil {
 					if (data != null && data.length != 0) {
 						BitmapFactory.Options options = new BitmapFactory.Options();
 						options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-						Bitmap tempBitmap = BitmapFactory.decodeByteArray(data,
-								0, data.length, options);
-						boolean sdCardExist = Environment
-								.getExternalStorageState().equals(
-										Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+						Bitmap tempBitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
+						boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 						if (sdCardExist) {
 							saveImageToSdCard(path, tempBitmap);
 						} else {
 							saveImageToData(path, tempBitmap);
 						}
-						if (convertUrlToFileName(path).equals(
-								convertUrlToFileName(Database.LASTPIC))) {
+						if (convertUrlToFileName(path).equals(convertUrlToFileName(Database.LASTPIC))) {
 							DialogUtils.mesToastTip("您的图集已经下载完成！");
 							if (null != mHandler) {
 								mHandler.sendEmptyMessage(BagDialog.DOWN_MEI_NU_OK);
@@ -951,7 +877,6 @@ public class ImageUtil {
 
 	/**
 	 * 从SdCard中判断有无图片
-	 * 
 	 * @param cachePath
 	 * @param imageURL
 	 * @return
@@ -967,7 +892,6 @@ public class ImageUtil {
 
 	/**
 	 * 获取图片名包括后缀
-	 * 
 	 * @param url
 	 * @return
 	 */
@@ -980,7 +904,6 @@ public class ImageUtil {
 
 	/**
 	 * 下载图片到SD卡
-	 * 
 	 * @param path
 	 * @return
 	 */
@@ -997,15 +920,12 @@ public class ImageUtil {
 				if (data != null && data.length != 0) {
 					BitmapFactory.Options options = new BitmapFactory.Options();
 					options.inPreferredConfig = Bitmap.Config.RGB_565;
-					Bitmap tempBitmap = BitmapFactory.decodeByteArray(data, 0,
-							data.length, options);
-					boolean sdCardExist = Environment.getExternalStorageState()
-							.equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+					Bitmap tempBitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
+					boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 					if (sdCardExist) {
 						saveImageToSdCard(path, tempBitmap);
 					}
-					bitMapCacheMap.put(path, new WeakReference<Bitmap>(
-							tempBitmap));
+					bitMapCacheMap.put(path, new WeakReference<Bitmap>(tempBitmap));
 				}
 			}
 		}.start();
@@ -1013,11 +933,8 @@ public class ImageUtil {
 
 	/**
 	 * 剪切图片，根据屏幕分辨率
-	 * 
-	 * @param newWidth
-	 *            宽度
-	 * @param newHeight
-	 *            高度
+	 * @param newWidth 宽度
+	 * @param newHeight 高度
 	 * @return
 	 */
 	public static BitmapDrawable getcutBitmap(String path, boolean fromNetWork) {
@@ -1028,16 +945,13 @@ public class ImageUtil {
 			int cutwidth = 0;
 			int cutheight = 0;
 			if ((Database.SCREEN_WIDTH * height) < (width * Database.SCREEN_HEIGHT)) {
-				cutwidth = (Database.SCREEN_WIDTH * height)
-						/ Database.SCREEN_HEIGHT;
+				cutwidth = (Database.SCREEN_WIDTH * height) / Database.SCREEN_HEIGHT;
 				cutheight = height;
 			} else {
 				cutwidth = width;
-				cutheight = (Database.SCREEN_HEIGHT * width)
-						/ Database.SCREEN_WIDTH;
+				cutheight = (Database.SCREEN_HEIGHT * width) / Database.SCREEN_WIDTH;
 			}
-			Bitmap newbmp = Bitmap.createBitmap(beforeimg, 0, 0, cutwidth - 1,
-					cutheight - 1);
+			Bitmap newbmp = Bitmap.createBitmap(beforeimg, 0, 0, cutwidth - 1, cutheight - 1);
 			if (newbmp != beforeimg) {
 				beforeimg.recycle();
 				beforeimg = null;
@@ -1052,15 +966,11 @@ public class ImageUtil {
 
 	/**
 	 * 缩放图片
-	 * 
-	 * @param newWidth
-	 *            宽度
-	 * @param newHeight
-	 *            高度
+	 * @param newWidth 宽度
+	 * @param newHeight 高度
 	 * @return
 	 */
-	public static Bitmap resizeBitmap(Bitmap bitmap, float newWidth,
-			float newHeight) {
+	public static Bitmap resizeBitmap(Bitmap bitmap, float newWidth, float newHeight) {
 		int width = bitmap.getWidth();
 		int height = bitmap.getHeight();
 		// 计算缩放率，新尺寸除原始尺寸
@@ -1070,8 +980,7 @@ public class ImageUtil {
 		// 缩放图片动作
 		matrix.postScale(scaleWidth, scaleHeight);
 		// 创建新的图片
-		Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height,
-				matrix, true);
+		Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
 		return newBitmap;
 	}
 
@@ -1112,7 +1021,6 @@ public class ImageUtil {
 	// }
 	/**
 	 * 获取美女说话的文字
-	 * 
 	 * @param grilNmae
 	 * @return
 	 */
@@ -1140,29 +1048,27 @@ public class ImageUtil {
 
 	/**
 	 * 比赛类型
-	 * 
 	 * @param num
 	 * @return
 	 */
 	public static String getGameType(int num) {
 		String result = "";
 		switch (num) {
-		case 1:
-			result = "预赛";
-			break;
-		case 2:
-			result = "半决赛";
-			break;
-		case 3:
-			result = "决赛";
-			break;
+			case 1:
+				result = "预赛";
+				break;
+			case 2:
+				result = "半决赛";
+				break;
+			case 3:
+				result = "决赛";
+				break;
 		}
 		return result;
 	}
 
 	/**
 	 * Drawable转Bitmap
-	 * 
 	 * @param drawable
 	 * @return
 	 */

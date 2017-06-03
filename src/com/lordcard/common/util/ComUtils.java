@@ -19,13 +19,11 @@ import android.annotation.SuppressLint;
 public class ComUtils {
 	/**
 	 * 随机获取UUID字符串(无中划线)
-	 * 
 	 * @return UUID字符串
 	 */
 	public synchronized static String getUUID() {
 		String uuid = UUID.randomUUID().toString();
-		return uuid.substring(0, 8) + uuid.substring(9, 13)
-				+ uuid.substring(14, 18) + uuid.substring(19, 23)
+		return uuid.substring(0, 8) + uuid.substring(9, 13) + uuid.substring(14, 18) + uuid.substring(19, 23)
 				+ uuid.substring(24);
 	}
 
@@ -39,7 +37,6 @@ public class ComUtils {
 
 	/**
 	 * 产生多个不重复的随机数
-	 * 
 	 * @throws
 	 */
 	public static int[] randomNums(int total) {
@@ -70,7 +67,6 @@ public class ComUtils {
 
 	/**
 	 * 获取随机编号
-	 * 
 	 * @return
 	 */
 	@SuppressLint("SimpleDateFormat")

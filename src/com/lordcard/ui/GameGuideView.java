@@ -42,10 +42,8 @@ public class GameGuideView extends Activity implements OnGestureListener {
 		// 添加用于切换的图片;
 		for (int i = 0; i < imageId.length; i++) {
 			ImageView mImageView = new ImageView(this);
-			mImageView.setBackgroundDrawable(ImageUtil.getResDrawable(
-					imageId[i], false));
-			mImageView.setLayoutParams(new LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+			mImageView.setBackgroundDrawable(ImageUtil.getResDrawable(imageId[i], false));
+			mImageView.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 			mViewFlipper.addView(mImageView);
 		}
 	}
@@ -56,17 +54,14 @@ public class GameGuideView extends Activity implements OnGestureListener {
 	}
 
 	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 		if (e1.getX() - e2.getX() > 120) {// 向右滑动
 			if (mViewFlipper.getDisplayedChild() == imageId.length - 1) {
 				mViewFlipper.stopFlipping();
 				goToLogin();
 			} else {
-				mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,
-						R.anim.push_left_in));
-				mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,
-						R.anim.push_left_out));
+				mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_in));
+				mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_out));
 				mViewFlipper.showNext();
 			}
 		} else if (e2.getX() - e1.getX() > 120) {// 向左滑动
@@ -74,10 +69,8 @@ public class GameGuideView extends Activity implements OnGestureListener {
 				mViewFlipper.stopFlipping();
 				Toast.makeText(this, "亲，已经是第一张了", 500).show();
 			} else {
-				mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,
-						R.anim.push_right_in));
-				mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,
-						R.anim.push_right_out));
+				mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_right_in));
+				mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_right_out));
 				mViewFlipper.showPrevious();
 			}
 		}
@@ -89,8 +82,7 @@ public class GameGuideView extends Activity implements OnGestureListener {
 	}
 
 	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 		return false;
 	}
 

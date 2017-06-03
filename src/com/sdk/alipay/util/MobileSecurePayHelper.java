@@ -67,10 +67,8 @@ public class MobileSecurePayHelper {
 		final String cachePath = cacheDir.getAbsolutePath() + "/temp.apk";
 		if (!isMobile_spExist) {
 			// 捆绑安装
-			retrieveApkFromAssets(mContext, AliConfig.ALIPAY_PLUGIN_NAME,
-					cachePath);
-			mProgress = BaseHelper.showProgress(mContext, null, "正在检测安全支付服务版本",
-					false, true);
+			retrieveApkFromAssets(mContext, AliConfig.ALIPAY_PLUGIN_NAME, cachePath);
+			mProgress = BaseHelper.showProgress(mContext, null, "正在检测安全支付服务版本", false, true);
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -93,37 +91,30 @@ public class MobileSecurePayHelper {
 
 	/**
 	 * 提示安装支付宝安全支付服务对话框
-	 * 
 	 * @param context
 	 * @param cachePath
 	 */
-	public void showInstallConfirmDialog(final Context context,
-			final String cachePath) {
+	public void showInstallConfirmDialog(final Context context, final String cachePath) {
 		AlertDialog.Builder tDialog = new AlertDialog.Builder(context);
 		tDialog.setIcon(R.drawable.info);
-		tDialog.setTitle(context.getResources().getString(
-				R.string.confirm_install_hint));
-		tDialog.setMessage(context.getResources().getString(
-				R.string.confirm_install));
-		tDialog.setPositiveButton(R.string.Ensure,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// 修改apk权限
-						BaseHelper.chmod("777", cachePath);
-						// install the apk.
-						Intent intent = new Intent(Intent.ACTION_VIEW);
-						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						intent.setDataAndType(Uri.parse("file://" + cachePath),
-								"application/vnd.android.package-archive");
-						Intent bIntent = new Intent();
-						bIntent.setAction("com.xrl.creditcard.install");
-						context.sendBroadcast(bIntent);
-						context.startActivity(intent);
-					}
-				});
-		tDialog.setNegativeButton(
-				context.getResources().getString(R.string.Cancel),
+		tDialog.setTitle(context.getResources().getString(R.string.confirm_install_hint));
+		tDialog.setMessage(context.getResources().getString(R.string.confirm_install));
+		tDialog.setPositiveButton(R.string.Ensure, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// 修改apk权限
+				BaseHelper.chmod("777", cachePath);
+				// install the apk.
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.setDataAndType(Uri.parse("file://" + cachePath), "application/vnd.android.package-archive");
+				Intent bIntent = new Intent();
+				bIntent.setAction("com.xrl.creditcard.install");
+				context.sendBroadcast(bIntent);
+				context.startActivity(intent);
+			}
+		});
+		tDialog.setNegativeButton(context.getResources().getString(R.string.Cancel),
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -148,8 +139,7 @@ public class MobileSecurePayHelper {
 
 	//
 	// 捆绑安装
-	public boolean retrieveApkFromAssets(Context context, String fileName,
-			String path) {
+	public boolean retrieveApkFromAssets(Context context, String fileName, String path) {
 		boolean bRet = false;
 		try {
 			InputStream is = context.getAssets().open(fileName);
@@ -172,15 +162,12 @@ public class MobileSecurePayHelper {
 
 	/**
 	 * 获取未安装的APK信息
-	 * 
 	 * @param context
-	 * @param archiveFilePath
-	 *            APK文件的路径。如：/sdcard/download/XX.apk
+	 * @param archiveFilePath APK文件的路径。如：/sdcard/download/XX.apk
 	 */
 	public static PackageInfo getApkInfo(Context context, String archiveFilePath) {
 		PackageManager pm = context.getPackageManager();
-		PackageInfo apkInfo = pm.getPackageArchiveInfo(archiveFilePath,
-				PackageManager.GET_META_DATA);
+		PackageInfo apkInfo = pm.getPackageArchiveInfo(archiveFilePath, PackageManager.GET_META_DATA);
 		return apkInfo;
 	}
 
@@ -227,8 +214,7 @@ public class MobileSecurePayHelper {
 		try {
 			String response = null;
 			synchronized (nM) {
-				response = nM.SendAndWaitResponse(content,
-						AliConfig.ALI_APP_URL);
+				response = nM.SendAndWaitResponse(content, AliConfig.ALI_APP_URL);
 			}
 			jsonResponse = new JSONObject(response);
 		} catch (Exception e) {
@@ -240,8 +226,7 @@ public class MobileSecurePayHelper {
 
 	//
 	// 动态下载
-	public boolean retrieveApkFromNet(Context context, String strurl,
-			String filename) {
+	public boolean retrieveApkFromNet(Context context, String strurl, String filename) {
 		boolean bRet = false;
 		try {
 			NetworkManager nM = new NetworkManager(this.mContext);
@@ -272,13 +257,13 @@ public class MobileSecurePayHelper {
 		public void handleMessage(Message msg) {
 			try {
 				switch (msg.what) {
-				case AlixId.RQF_INSTALL_CHECK: {
-					// 关闭进度对话框
-					closeProgress();
-					String cachePath = (String) msg.obj;
-					showInstallConfirmDialog(mContext, cachePath);
-				}
-					break;
+					case AlixId.RQF_INSTALL_CHECK: {
+						// 关闭进度对话框
+						closeProgress();
+						String cachePath = (String) msg.obj;
+						showInstallConfirmDialog(mContext, cachePath);
+					}
+						break;
 				}
 				super.handleMessage(msg);
 			} catch (Exception e) {

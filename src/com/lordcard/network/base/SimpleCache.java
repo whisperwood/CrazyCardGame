@@ -77,8 +77,7 @@ public class SimpleCache {
 	}
 
 	public static SimpleCache get(File cacheDir, long max_zise, int max_count) {
-		SimpleCache manager = mInstanceMap.get(cacheDir.getAbsoluteFile()
-				+ myPid());
+		SimpleCache manager = mInstanceMap.get(cacheDir.getAbsoluteFile() + myPid());
 		if (manager == null) {
 			manager = new SimpleCache(cacheDir, max_zise, max_count);
 			mInstanceMap.put(cacheDir.getAbsolutePath() + myPid(), manager);
@@ -92,8 +91,7 @@ public class SimpleCache {
 
 	private SimpleCache(File cacheDir, long max_size, int max_count) {
 		if (!cacheDir.exists() && !cacheDir.mkdirs()) {
-			throw new RuntimeException("can't make dirs in "
-					+ cacheDir.getAbsolutePath());
+			throw new RuntimeException("can't make dirs in " + cacheDir.getAbsolutePath());
 		}
 		mCache = new ACacheManager(cacheDir, max_size, max_count);
 	}
@@ -103,11 +101,8 @@ public class SimpleCache {
 	// =======================================
 	/**
 	 * 保存 String数据 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的String数据
+	 * @param key 保存的key
+	 * @param value 保存的String数据
 	 */
 	public void put(String key, String value) {
 		File file = mCache.newFile(key);
@@ -132,13 +127,9 @@ public class SimpleCache {
 
 	/**
 	 * 保存 String数据 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的String数据
-	 * @param saveTime
-	 *            保存的时间，单位：秒
+	 * @param key 保存的key
+	 * @param value 保存的String数据
+	 * @param saveTime 保存的时间，单位：秒
 	 */
 	public void put(String key, String value, int saveTime) {
 		put(key, Utils.newStringWithDateInfo(saveTime, value));
@@ -146,7 +137,6 @@ public class SimpleCache {
 
 	/**
 	 * 读取 String数据
-	 * 
 	 * @param key
 	 * @return String 数据
 	 */
@@ -190,11 +180,8 @@ public class SimpleCache {
 	// =======================================
 	/**
 	 * 保存 JSONObject数据 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的JSON数据
+	 * @param key 保存的key
+	 * @param value 保存的JSON数据
 	 */
 	public void put(String key, JSONObject value) {
 		put(key, value.toString());
@@ -202,13 +189,9 @@ public class SimpleCache {
 
 	/**
 	 * 保存 JSONObject数据 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的JSONObject数据
-	 * @param saveTime
-	 *            保存的时间，单位：秒
+	 * @param key 保存的key
+	 * @param value 保存的JSONObject数据
+	 * @param saveTime 保存的时间，单位：秒
 	 */
 	public void put(String key, JSONObject value, int saveTime) {
 		put(key, value.toString(), saveTime);
@@ -216,7 +199,6 @@ public class SimpleCache {
 
 	/**
 	 * 读取JSONObject数据
-	 * 
 	 * @param key
 	 * @return JSONObject数据
 	 */
@@ -236,11 +218,8 @@ public class SimpleCache {
 	// =======================================
 	/**
 	 * 保存 JSONArray数据 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的JSONArray数据
+	 * @param key 保存的key
+	 * @param value 保存的JSONArray数据
 	 */
 	public void put(String key, JSONArray value) {
 		put(key, value.toString());
@@ -248,13 +227,9 @@ public class SimpleCache {
 
 	/**
 	 * 保存 JSONArray数据 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的JSONArray数据
-	 * @param saveTime
-	 *            保存的时间，单位：秒
+	 * @param key 保存的key
+	 * @param value 保存的JSONArray数据
+	 * @param saveTime 保存的时间，单位：秒
 	 */
 	public void put(String key, JSONArray value, int saveTime) {
 		put(key, value.toString(), saveTime);
@@ -262,7 +237,6 @@ public class SimpleCache {
 
 	/**
 	 * 读取JSONArray数据
-	 * 
 	 * @param key
 	 * @return JSONArray数据
 	 */
@@ -282,11 +256,8 @@ public class SimpleCache {
 	// =======================================
 	/**
 	 * 保存 byte数据 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的数据
+	 * @param key 保存的key
+	 * @param value 保存的数据
 	 */
 	public void put(String key, byte[] value) {
 		File file = mCache.newFile(key);
@@ -311,13 +282,9 @@ public class SimpleCache {
 
 	/**
 	 * 保存 byte数据 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的数据
-	 * @param saveTime
-	 *            保存的时间，单位：秒
+	 * @param key 保存的key
+	 * @param value 保存的数据
+	 * @param saveTime 保存的时间，单位：秒
 	 */
 	public void put(String key, byte[] value, int saveTime) {
 		put(key, Utils.newByteArrayWithDateInfo(saveTime, value));
@@ -325,7 +292,6 @@ public class SimpleCache {
 
 	/**
 	 * 获取 byte 数据
-	 * 
 	 * @param key
 	 * @return byte 数据
 	 */
@@ -366,11 +332,8 @@ public class SimpleCache {
 	// =======================================
 	/**
 	 * 保存 Serializable数据 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的value
+	 * @param key 保存的key
+	 * @param value 保存的value
 	 */
 	public void put(String key, Serializable value) {
 		put(key, value, -1);
@@ -378,13 +341,9 @@ public class SimpleCache {
 
 	/**
 	 * 保存 Serializable数据到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的value
-	 * @param saveTime
-	 *            保存的时间，单位：秒
+	 * @param key 保存的key
+	 * @param value 保存的value
+	 * @param saveTime 保存的时间，单位：秒
 	 */
 	public void put(String key, Serializable value, int saveTime) {
 		ByteArrayOutputStream baos = null;
@@ -411,7 +370,6 @@ public class SimpleCache {
 
 	/**
 	 * 读取 Serializable数据
-	 * 
 	 * @param key
 	 * @return Serializable 数据
 	 */
@@ -451,11 +409,8 @@ public class SimpleCache {
 	// =======================================
 	/**
 	 * 保存 bitmap 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的bitmap数据
+	 * @param key 保存的key
+	 * @param value 保存的bitmap数据
 	 */
 	public void put(String key, Bitmap value) {
 		put(key, Utils.Bitmap2Bytes(value));
@@ -463,13 +418,9 @@ public class SimpleCache {
 
 	/**
 	 * 保存 bitmap 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的 bitmap 数据
-	 * @param saveTime
-	 *            保存的时间，单位：秒
+	 * @param key 保存的key
+	 * @param value 保存的 bitmap 数据
+	 * @param saveTime 保存的时间，单位：秒
 	 */
 	public void put(String key, Bitmap value, int saveTime) {
 		put(key, Utils.Bitmap2Bytes(value), saveTime);
@@ -477,7 +428,6 @@ public class SimpleCache {
 
 	/**
 	 * 读取 bitmap 数据
-	 * 
 	 * @param key
 	 * @return bitmap 数据
 	 */
@@ -493,11 +443,8 @@ public class SimpleCache {
 	// =======================================
 	/**
 	 * 保存 drawable 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的drawable数据
+	 * @param key 保存的key
+	 * @param value 保存的drawable数据
 	 */
 	public void put(String key, Drawable value) {
 		put(key, Utils.drawable2Bitmap(value));
@@ -505,13 +452,9 @@ public class SimpleCache {
 
 	/**
 	 * 保存 drawable 到 缓存中
-	 * 
-	 * @param key
-	 *            保存的key
-	 * @param value
-	 *            保存的 drawable 数据
-	 * @param saveTime
-	 *            保存的时间，单位：秒
+	 * @param key 保存的key
+	 * @param value 保存的 drawable 数据
+	 * @param saveTime 保存的时间，单位：秒
 	 */
 	public void put(String key, Drawable value, int saveTime) {
 		put(key, Utils.drawable2Bitmap(value), saveTime);
@@ -519,7 +462,6 @@ public class SimpleCache {
 
 	/**
 	 * 读取 Drawable 数据
-	 * 
 	 * @param key
 	 * @return Drawable 数据
 	 */
@@ -532,7 +474,6 @@ public class SimpleCache {
 
 	/**
 	 * 获取缓存文件
-	 * 
 	 * @param key
 	 * @return value 缓存的文件
 	 */
@@ -545,7 +486,6 @@ public class SimpleCache {
 
 	/**
 	 * 移除某个key
-	 * 
 	 * @param key
 	 * @return 是否移除成功
 	 */
@@ -570,8 +510,7 @@ public class SimpleCache {
 		private final AtomicInteger cacheCount;
 		private final long sizeLimit;
 		private final int countLimit;
-		private final Map<File, Long> lastUsageDates = Collections
-				.synchronizedMap(new HashMap<File, Long>());
+		private final Map<File, Long> lastUsageDates = Collections.synchronizedMap(new HashMap<File, Long>());
 		protected File cacheDir;
 
 		private ACacheManager(File cacheDir, long sizeLimit, int countLimit) {
@@ -597,8 +536,7 @@ public class SimpleCache {
 						for (File cachedFile : cachedFiles) {
 							size += calculateSize(cachedFile);
 							count += 1;
-							lastUsageDates.put(cachedFile,
-									cachedFile.lastModified());
+							lastUsageDates.put(cachedFile, cachedFile.lastModified());
 						}
 						cacheSize.set(size);
 						cacheCount.set(count);
@@ -657,7 +595,6 @@ public class SimpleCache {
 
 		/**
 		 * 移除旧的文件
-		 * 
 		 * @return
 		 */
 		private long removeNext() {
@@ -701,7 +638,6 @@ public class SimpleCache {
 	private static class Utils {
 		/**
 		 * 判断缓存的String数据是否到期
-		 * 
 		 * @param str
 		 * @return true：到期了 false：还没有到期
 		 */
@@ -711,7 +647,6 @@ public class SimpleCache {
 
 		/**
 		 * 判断缓存的byte数据是否到期
-		 * 
 		 * @param data
 		 * @return true：到期了 false：还没有到期
 		 */
@@ -720,8 +655,7 @@ public class SimpleCache {
 			if (strs != null && strs.length == 2) {
 				String saveTimeStr = strs[0];
 				while (saveTimeStr.startsWith("0")) {
-					saveTimeStr = saveTimeStr
-							.substring(1, saveTimeStr.length());
+					saveTimeStr = saveTimeStr.substring(1, saveTimeStr.length());
 				}
 				long saveTime = Long.valueOf(saveTimeStr);
 				long deleteAfter = Long.valueOf(strs[1]);
@@ -746,30 +680,26 @@ public class SimpleCache {
 
 		private static String clearDateInfo(String strInfo) {
 			if (strInfo != null && hasDateInfo(strInfo.getBytes())) {
-				strInfo = strInfo.substring(strInfo.indexOf(mSeparator) + 1,
-						strInfo.length());
+				strInfo = strInfo.substring(strInfo.indexOf(mSeparator) + 1, strInfo.length());
 			}
 			return strInfo;
 		}
 
 		private static byte[] clearDateInfo(byte[] data) {
 			if (hasDateInfo(data)) {
-				return copyOfRange(data, indexOf(data, mSeparator) + 1,
-						data.length);
+				return copyOfRange(data, indexOf(data, mSeparator) + 1, data.length);
 			}
 			return data;
 		}
 
 		private static boolean hasDateInfo(byte[] data) {
-			return data != null && data.length > 15 && data[13] == '-'
-					&& indexOf(data, mSeparator) > 14;
+			return data != null && data.length > 15 && data[13] == '-' && indexOf(data, mSeparator) > 14;
 		}
 
 		private static String[] getDateInfoFromDate(byte[] data) {
 			if (hasDateInfo(data)) {
 				String saveDate = new String(copyOfRange(data, 0, 13));
-				String deleteAfter = new String(copyOfRange(data, 14,
-						indexOf(data, mSeparator)));
+				String deleteAfter = new String(copyOfRange(data, 14, indexOf(data, mSeparator)));
 				return new String[] { saveDate, deleteAfter };
 			}
 			return null;
@@ -789,8 +719,7 @@ public class SimpleCache {
 			if (newLength < 0)
 				throw new IllegalArgumentException(from + " > " + to);
 			byte[] copy = new byte[newLength];
-			System.arraycopy(original, from, copy, 0,
-					Math.min(original.length - from, newLength));
+			System.arraycopy(original, from, copy, 0, Math.min(original.length - from, newLength));
 			return copy;
 		}
 

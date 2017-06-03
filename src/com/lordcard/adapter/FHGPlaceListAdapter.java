@@ -55,7 +55,6 @@ import com.sdk.util.PayTipUtils;
 
 /**
  * 复合赛场Adapter
- * 
  * @author Administrator
  */
 public class FHGPlaceListAdapter extends BaseAdapter {
@@ -71,8 +70,7 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 	public static final int WHAT_JOIN_SUCCESS = 11003; // 报名成功
 	public static final String POSITION = "position";
 	private Map<String, String> picMap;
-	private TaskFeedback feedback = TaskFeedback
-			.getInstance(TaskFeedback.DIALOG_MODE);
+	private TaskFeedback feedback = TaskFeedback.getInstance(TaskFeedback.DIALOG_MODE);
 	private Context context;
 	private List<Room> gamePlaceDate;
 	private LayoutInflater layoutInflater = null;
@@ -86,14 +84,12 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 	/**
 	 * @param context
 	 * @param taskManager
-	 * @param isFuhe
-	 *            是否是复合赛场 true:复合赛场，false:普通赛场
+	 * @param isFuhe 是否是复合赛场 true:复合赛场，false:普通赛场
 	 * @param handler
 	 * @param rightList
 	 */
 	@SuppressLint("HandlerLeak")
-	public FHGPlaceListAdapter(Context context, TaskManager taskManager,
-			final Handler handler) {
+	public FHGPlaceListAdapter(Context context, TaskManager taskManager, final Handler handler) {
 		this.handler = handler;
 		this.context = context;
 		this.taskManager = taskManager;
@@ -106,31 +102,29 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
 				switch (msg.what) {
-				case WHAT1:// 复合赛制报名
-					int position = (Integer) msg.getData().get(POSITION);
-					joinFuhe(position);
-					break;
-				// case WHAT2:// 普通赛制报名
-				// int position1 = (Integer) msg.getData().get(POSITION);
-				// joinPutong(position1);
-				// break;
-				case WHAT_JOIN_SUCCESS:
-					try {
-						int po = msg.getData().getInt(POSITION);
-						String roomCode = gamePlaceDate.get(po).getCode();
-						for (int i = 0, count = Database.ROOM_SIGN_UP.size(); i < count; i++) {
-							if (roomCode.equals(Database.ROOM_SIGN_UP.get(i)
-									.getRoomCode())) {
-								Database.ROOM_SIGN_UP.get(i).setSignUp("1");
+					case WHAT1:// 复合赛制报名
+						int position = (Integer) msg.getData().get(POSITION);
+						joinFuhe(position);
+						break;
+					// case WHAT2:// 普通赛制报名
+					// int position1 = (Integer) msg.getData().get(POSITION);
+					// joinPutong(position1);
+					// break;
+					case WHAT_JOIN_SUCCESS:
+						try {
+							int po = msg.getData().getInt(POSITION);
+							String roomCode = gamePlaceDate.get(po).getCode();
+							for (int i = 0, count = Database.ROOM_SIGN_UP.size(); i < count; i++) {
+								if (roomCode.equals(Database.ROOM_SIGN_UP.get(i).getRoomCode())) {
+									Database.ROOM_SIGN_UP.get(i).setSignUp("1");
+								}
 							}
+							signUpBtnList.get(roomCode).setBackgroundResource(R.drawable.green_btn_bg);
+							signUpBtnList.get(roomCode).setText("参赛");
+							handler.sendEmptyMessage(DoudizhuRoomListActivity.HANDLER_WHAT_ROOM_LIST_REFRESH_SORT);
+						} catch (Exception e) {
 						}
-						signUpBtnList.get(roomCode).setBackgroundResource(
-								R.drawable.green_btn_bg);
-						signUpBtnList.get(roomCode).setText("参赛");
-						handler.sendEmptyMessage(DoudizhuRoomListActivity.HANDLER_WHAT_ROOM_LIST_REFRESH_SORT);
-					} catch (Exception e) {
-					}
-					break;
+						break;
 				}
 			}
 		};
@@ -159,7 +153,6 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 
 	/**
 	 * 初始化数据
-	 * 
 	 * @param isFuhe
 	 * @param rightList
 	 */
@@ -172,8 +165,7 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 				}
 				gamePlaceDate = new ArrayList<Room>();
 				// 符合赛制
-				List<Room> gamePlaceDate1 = Database.HALL_CACHE
-						.getSortRoomList();
+				List<Room> gamePlaceDate1 = Database.HALL_CACHE.getSortRoomList();
 				if (null != Database.SORT_EXPLAIN) {
 					Database.SORT_EXPLAIN.clear();
 					Database.SORT_EXPLAIN = null;
@@ -207,31 +199,20 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder mViewHolder;
 		if (null == convertView) {
-			convertView = layoutInflater
-					.inflate(R.layout.game_place_item, null);
+			convertView = layoutInflater.inflate(R.layout.game_place_item, null);
 			mViewHolder = new ViewHolder();
-			mViewHolder.prizebg = (ImageView) convertView
-					.findViewById(R.id.game_pi_bg_iv);
-			mViewHolder.maxPrizeTv = (TextView) convertView
-					.findViewById(R.id.game_pi_max_prize_tv);
-			mViewHolder.prizePoolTv = (TextView) convertView
-					.findViewById(R.id.game_pi_zhidou_tv);
-			mViewHolder.titalIv = (ImageView) convertView
-					.findViewById(R.id.game_pi_bg_tital_iv);
+			mViewHolder.prizebg = (ImageView) convertView.findViewById(R.id.game_pi_bg_iv);
+			mViewHolder.maxPrizeTv = (TextView) convertView.findViewById(R.id.game_pi_max_prize_tv);
+			mViewHolder.prizePoolTv = (TextView) convertView.findViewById(R.id.game_pi_zhidou_tv);
+			mViewHolder.titalIv = (ImageView) convertView.findViewById(R.id.game_pi_bg_tital_iv);
 			// mViewHolder.prizebeanIv = (ImageView)
 			// convertView.findViewById(R.id.game_pi_prize_bean_iv);
-			mViewHolder.refreshBtn = (Button) convertView
-					.findViewById(R.id.game_pi_refresh_ib);
-			mViewHolder.expBtn = (Button) convertView
-					.findViewById(R.id.game_pi_explanation_btn);
-			mViewHolder.signUpBtn = (Button) convertView
-					.findViewById(R.id.game_pi_sign_up_btn);
-			mViewHolder.timeDesc = (TextView) convertView
-					.findViewById(R.id.game_pi_bg_time_desc);
-			mViewHolder.timeText = (TextView) convertView
-					.findViewById(R.id.game_pi_bg_time_text);
-			mViewHolder.timeSlip = (TextView) convertView
-					.findViewById(R.id.game_pi_bg_slip);
+			mViewHolder.refreshBtn = (Button) convertView.findViewById(R.id.game_pi_refresh_ib);
+			mViewHolder.expBtn = (Button) convertView.findViewById(R.id.game_pi_explanation_btn);
+			mViewHolder.signUpBtn = (Button) convertView.findViewById(R.id.game_pi_sign_up_btn);
+			mViewHolder.timeDesc = (TextView) convertView.findViewById(R.id.game_pi_bg_time_desc);
+			mViewHolder.timeText = (TextView) convertView.findViewById(R.id.game_pi_bg_time_text);
+			mViewHolder.timeSlip = (TextView) convertView.findViewById(R.id.game_pi_bg_slip);
 			convertView.setTag(mViewHolder);
 		} else {
 			mViewHolder = (ViewHolder) convertView.getTag();
@@ -244,8 +225,7 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 			if (null != room.getPrizePool()) {
 				zhidou += room.getPrizePool() + "金豆";
 			}
-			if (null != room.getMaxAward()
-					&& !"".equals(room.getMaxAward().trim())) {
+			if (null != room.getMaxAward() && !"".equals(room.getMaxAward().trim())) {
 				zhidou += "," + room.getMaxAward().trim();
 			}
 			mViewHolder.prizePoolTv.setText("奖金池:");
@@ -257,11 +237,9 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 					if (room.getCode().equals(roomSignup.getRoomCode())) {// 存在此房间的报名状态
 						if (roomSignup.getSignUp().equals("0")) {
 							mViewHolder.signUpBtn.setText("报名");
-							mViewHolder.signUpBtn
-									.setBackgroundResource(R.drawable.red_ok_btn);
+							mViewHolder.signUpBtn.setBackgroundResource(R.drawable.red_ok_btn);
 						} else if (roomSignup.getSignUp().equals("1")) {
-							mViewHolder.signUpBtn
-									.setBackgroundResource(R.drawable.green_btn_bg);
+							mViewHolder.signUpBtn.setBackgroundResource(R.drawable.green_btn_bg);
 							mViewHolder.signUpBtn.setText("参赛");
 						}
 					}
@@ -270,41 +248,34 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 			refreshTvList.put(room.getCode(), mViewHolder.maxPrizeTv);
 			signUpBtnList.put(room.getCode(), mViewHolder.signUpBtn);
 			try {
-				picMap = JsonHelper.fromJson(room.getResHall(),
-						new TypeToken<Map<String, String>>() {
-						});
+				picMap = JsonHelper.fromJson(room.getResHall(), new TypeToken<Map<String, String>>() {
+				});
 				String itemName = picMap.get("roomItemH");
 				String itemClickName = picMap.get("roomItemV");
 				String url = room.getResHallUrl();
 				String imgClickurl = url + itemClickName;
 				String imageUrl = url + itemName;
-				ImageUtil.setImg(imageUrl, mViewHolder.prizebg,
-						new ImageCallback() {
-							@Override
-							public void imageLoaded(Bitmap bitmap,
-									ImageView view) {
-								view.setScaleType(ScaleType.FIT_XY);
-								view.setImageBitmap(bitmap);
-							}
-						});// 底图
-				ImageUtil.setImg(imgClickurl, mViewHolder.titalIv,
-						new ImageCallback() {
-							@Override
-							public void imageLoaded(Bitmap bitmap,
-									ImageView view) {
-								view.setScaleType(ScaleType.FIT_XY);
-								view.setImageBitmap(bitmap);
-							}
-						});// 房间名
+				ImageUtil.setImg(imageUrl, mViewHolder.prizebg, new ImageCallback() {
+					@Override
+					public void imageLoaded(Bitmap bitmap, ImageView view) {
+						view.setScaleType(ScaleType.FIT_XY);
+						view.setImageBitmap(bitmap);
+					}
+				});// 底图
+				ImageUtil.setImg(imgClickurl, mViewHolder.titalIv, new ImageCallback() {
+					@Override
+					public void imageLoaded(Bitmap bitmap, ImageView view) {
+						view.setScaleType(ScaleType.FIT_XY);
+						view.setImageBitmap(bitmap);
+					}
+				});// 房间名
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if (null != ruleDetail.getTimeDesc()
-					&& !"".equals(ruleDetail.getTimeDesc().trim())) {
+			if (null != ruleDetail.getTimeDesc() && !"".equals(ruleDetail.getTimeDesc().trim())) {
 				mViewHolder.timeDesc.setText(ruleDetail.getTimeDesc());
 			}
-			if (null != ruleDetail.getTimeText()
-					&& !"".equals(ruleDetail.getTimeText().trim())) {
+			if (null != ruleDetail.getTimeText() && !"".equals(ruleDetail.getTimeText().trim())) {
 				mViewHolder.timeText.setText(ruleDetail.getTimeText());
 			} else {
 				mViewHolder.timeSlip.setVisibility(View.GONE);
@@ -316,21 +287,18 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 		mViewHolder.refreshBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
 			}
 		});
 		// 详情
 		mViewHolder.expBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
 			}
 		});
 		// 报名
 		mViewHolder.signUpBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
 			}
 		});
 		return convertView;
@@ -353,32 +321,28 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 
 	/**
 	 * 弹出详情
-	 * 
 	 * @param position
 	 */
-	private void showDetailDialog(int position,
-			GameRoomRuleDetail roomRuleDetail) {
+	private void showDetailDialog(int position, GameRoomRuleDetail roomRuleDetail) {
 		if ((System.currentTimeMillis() - Constant.CLICK_TIME) >= Constant.SPACING_TIME) {
 			Constant.CLICK_TIME = System.currentTimeMillis();
 			String SignUp = "0";
 			if (null != Database.ROOM_SIGN_UP) {
 				for (int i = 0, count = Database.ROOM_SIGN_UP.size(); i < count; i++) {
 					RoomSignup roomSignup = Database.ROOM_SIGN_UP.get(i);
-					if (gamePlaceDate.get(position).getCode()
-							.equals(roomSignup.getRoomCode())) {// 存在此房间的报名状态
+					if (gamePlaceDate.get(position).getCode().equals(roomSignup.getRoomCode())) {// 存在此房间的报名状态
 						SignUp = roomSignup.getSignUp();
 					}
 				}
 			}
-			DetailDialog smd = new DetailDialog(context, roomRuleDetail, true,
-					gamePlaceDate.get(position), position, mHandler, SignUp);
+			DetailDialog smd = new DetailDialog(context, roomRuleDetail, true, gamePlaceDate.get(position), position,
+					mHandler, SignUp);
 			smd.show();
 		}
 	}
 
 	/**
 	 * 复合赛制报名
-	 * 
 	 * @param position
 	 */
 	private synchronized void joinFuhe(int position1) {
@@ -395,7 +359,6 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 
 	/**
 	 * 获取比赛规则说明
-	 * 
 	 * @author Administrator
 	 */
 	private class GetGameRuleTask extends AsyncTask<String, Void, String> {
@@ -417,13 +380,11 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 			super.onPostExecute(result);
 			try {
 				if (!TextUtils.isEmpty(result) && !"fail".equals(result)) {
-					GameRoomRuleDetail gameHallView = JsonHelper.fromJson(
-							result, GameRoomRuleDetail.class);
+					GameRoomRuleDetail gameHallView = JsonHelper.fromJson(result, GameRoomRuleDetail.class);
 					Database.SORT_EXPLAIN.put(roomCode, gameHallView);
 					showDetailDialog(position, gameHallView);
 				} else {
-					Toast.makeText(context, "详情信息获取失败，请稍后再试",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, "详情信息获取失败，请稍后再试", Toast.LENGTH_SHORT).show();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -433,7 +394,6 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 
 	/**
 	 * 复合场报名
-	 * 
 	 * @author Administrator
 	 */
 	@SuppressWarnings("unused")
@@ -449,9 +409,8 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 				Room room = (Room) param.get("joinRoom");
 				int position = (Integer) param.get("position");
 				String result = HttpRequest.signUp(room.getCode()).trim();
-				Map<String, String> map = JsonHelper.fromJson(result,
-						new TypeToken<Map<String, String>>() {
-						});
+				Map<String, String> map = JsonHelper.fromJson(result, new TypeToken<Map<String, String>>() {
+				});
 				String status = null;
 				String stopTime = null;
 				if (map.containsKey("status")) {
@@ -470,47 +429,37 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 						msg.what = WHAT_JOIN_SUCCESS;
 						mHandler.sendMessage(msg);
 						// Toast.makeText(context, map.get("mes"), 1000).show();
-						DialogUtils.toastTip(map.get("mes"), 1000,
-								Gravity.CENTER);
+						DialogUtils.toastTip(map.get("mes"), 1000, Gravity.CENTER);
 						handler.sendEmptyMessage(DoudizhuRoomListActivity.HANDLER_WHAT_ROOM_LIST_GET_SIGN_UP);
 						// 添加报名的赛场倒计时
 						GameTimeVo gt = new GameTimeVo();
 						if (map.containsKey("startTime")) {
-							gt.setStartTime(Long.parseLong(map.get("startTime")
-									.trim()));
+							gt.setStartTime(Long.parseLong(map.get("startTime").trim()));
 						}
 						if (map.containsKey("stopTime")) {
-							gt.setEndTime(Long.parseLong(map.get("stopTime")
-									.trim()));
+							gt.setEndTime(Long.parseLong(map.get("stopTime").trim()));
 						}
 						gt.setRoomCode(room.getCode());
 						gt.setRoomName(room.getName());
-						NotificationService.roomStartTimeMap.put(
-								map.get("playNo").trim(), gt);
-						NotificationService.roomEndTimeMap.put(map
-								.get("playNo").trim(), gt);
+						NotificationService.roomStartTimeMap.put(map.get("playNo").trim(), gt);
+						NotificationService.roomEndTimeMap.put(map.get("playNo").trim(), gt);
 					}
-					if (status.equals(NOT_APPLYTERM)
-							|| status.equals(NOT_APPLYFEE)) {
+					if (status.equals(NOT_APPLYTERM) || status.equals(NOT_APPLYFEE)) {
 						// DialogUtils.toastTip("报名失败，请查看详情！");
 						if ("5".equals(map.get("tp"))) {// 金豆不足
 							if (map.containsKey("mn") && map.containsKey("pc")) {
 								if (!TextUtils.isEmpty(map.get("mn").trim())) {
 									JDSMSPayUtil.setContext(context);
-									int money = Integer.parseInt(map.get("mn")
-											.trim());
-									PayTipUtils.showTip(money,
-											PaySite.GAME_SIGN_UP); // 配置的提示方式
+									int money = Integer.parseInt(map.get("mn").trim());
+									PayTipUtils.showTip(money, PaySite.GAME_SIGN_UP); // 配置的提示方式
 									// PlayViewUtils.openFastPayDialog(map.get("mn").trim(),
 									// map.get("pc").trim());
 								}
 							} else if (map.containsKey("bean")) { // 需要充值的金豆
 								if (!TextUtils.isEmpty(map.get("bean").trim())) {
 									JDSMSPayUtil.setContext(context);
-									int money = Integer.parseInt(map
-											.get("bean").trim()) / 10000;
-									PayTipUtils.showTip(money,
-											PaySite.GAME_SIGN_UP); // 配置的提示方式
+									int money = Integer.parseInt(map.get("bean").trim()) / 10000;
+									PayTipUtils.showTip(money, PaySite.GAME_SIGN_UP); // 配置的提示方式
 								}
 							}
 						} else {// 其他条件不足
@@ -525,8 +474,7 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 						msg.what = WHAT_JOIN_SUCCESS;
 						mHandler.sendMessage(msg);
 						// DialogUtils.toastTip("您已经报名，现在不是参赛时间，请在相应时间入场比赛！");
-						DialogUtils.toastTip(map.get("mes"), 1000,
-								Gravity.CENTER);
+						DialogUtils.toastTip(map.get("mes"), 1000, Gravity.CENTER);
 					}
 					if (status.equals(JOIN_MATCHTIME)) {
 						joinRoom(room);
@@ -546,7 +494,6 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 
 	/**
 	 * 加入房间
-	 * 
 	 * @param room
 	 */
 	private synchronized void joinRoom(final Room room) {
@@ -563,7 +510,6 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 
 	/**
 	 * 刷新奖金池
-	 * 
 	 * @author Administrator
 	 */
 	public class RefreshGoldTask extends AsyncTask<Integer, Void, String> {
@@ -572,8 +518,7 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 		@Override
 		protected String doInBackground(Integer... params) {
 			this.position = params[0];
-			return HttpRequest.getPrizePool(gamePlaceDate.get(position)
-					.getCode());
+			return HttpRequest.getPrizePool(gamePlaceDate.get(position).getCode());
 		}
 
 		@Override
@@ -582,25 +527,19 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 			try {
 				if (null != result && !"1".equals(result)) {
 					// {"prizePool":"10000","maxAward":"美女一个"}
-					Map<String, String> map = JsonHelper.fromJson(result,
-							new TypeToken<Map<String, String>>() {
-							});
+					Map<String, String> map = JsonHelper.fromJson(result, new TypeToken<Map<String, String>>() {
+					});
 					String zhidou = "";
-					if (map.containsKey("prizePool")
-							&& !"".equals(map.get("prizePool").trim())) {
+					if (map.containsKey("prizePool") && !"".equals(map.get("prizePool").trim())) {
 						zhidou += map.get("prizePool").trim() + "金豆";
-						long pool = Integer.parseInt(map.get("prizePool")
-								.trim());
+						long pool = Integer.parseInt(map.get("prizePool").trim());
 						gamePlaceDate.get(position).setPrizePool(pool);
 					}
-					if (map.containsKey("maxAward")
-							&& !"".equals(map.get("maxAward").trim())) {
+					if (map.containsKey("maxAward") && !"".equals(map.get("maxAward").trim())) {
 						zhidou += "," + map.get("maxAward");
-						gamePlaceDate.get(position).setMaxAward(
-								map.get("maxAward").trim());
+						gamePlaceDate.get(position).setMaxAward(map.get("maxAward").trim());
 					}
-					refreshTvList.get(gamePlaceDate.get(position).getCode())
-							.setText(zhidou);
+					refreshTvList.get(gamePlaceDate.get(position).getCode()).setText(zhidou);
 					handler.sendEmptyMessage(DoudizhuRoomListActivity.HANDLER_WHAT_ROOM_LIST_REFRESH_SORT);
 				}
 			} catch (Exception e) {
@@ -610,7 +549,6 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 
 	/**
 	 * 更新报名状态
-	 * 
 	 * @param roomSignUp
 	 */
 	public void ChangeSignUp() {
@@ -621,11 +559,9 @@ public class FHGPlaceListAdapter extends BaseAdapter {
 				if (signUpBtnList.containsKey(roomCode)) {// 存在此房间的报名状态
 					if (roomSignup.getSignUp().equals("0")) {
 						signUpBtnList.get(roomCode).setText("报名");
-						signUpBtnList.get(roomCode).setBackgroundResource(
-								R.drawable.red_ok_btn);
+						signUpBtnList.get(roomCode).setBackgroundResource(R.drawable.red_ok_btn);
 					} else if (roomSignup.getSignUp().equals("1")) {
-						signUpBtnList.get(roomCode).setBackgroundResource(
-								R.drawable.green_btn_bg);
+						signUpBtnList.get(roomCode).setBackgroundResource(R.drawable.green_btn_bg);
 						signUpBtnList.get(roomCode).setText("参赛");
 					}
 				}

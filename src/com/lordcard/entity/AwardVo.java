@@ -2,7 +2,6 @@ package com.lordcard.entity;
 
 /**
  * 奖励方案Vo
- * 
  * @author Administrator
  */
 public class AwardVo {

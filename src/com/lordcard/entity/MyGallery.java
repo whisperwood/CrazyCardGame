@@ -23,8 +23,7 @@ public class MyGallery extends Gallery {
 	}
 
 	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 		if (velocityX > 0) {
 			super.onKeyDown(KeyEvent.KEYCODE_DPAD_LEFT, null);
 		} else {

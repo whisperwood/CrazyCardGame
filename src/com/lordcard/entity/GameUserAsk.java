@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 用户反馈用解答
- * 
  * @ClassName: GameUserAsk
  * @Description: TODO
  * @author zhenggang

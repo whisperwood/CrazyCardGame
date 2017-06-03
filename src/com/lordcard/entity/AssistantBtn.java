@@ -31,8 +31,7 @@ public class AssistantBtn {
 	}
 
 	/**
-	 * @param code
-	 *            the code to set
+	 * @param code the code to set
 	 */
 	public void setCode(String code) {
 		this.code = code;
@@ -46,8 +45,7 @@ public class AssistantBtn {
 	}
 
 	/**
-	 * @param btnText
-	 *            the btnText to set
+	 * @param btnText the btnText to set
 	 */
 	public void setBtnText(String btnText) {
 		this.btnText = btnText;
@@ -61,8 +59,7 @@ public class AssistantBtn {
 	}
 
 	/**
-	 * @param actions
-	 *            the actions to set
+	 * @param actions the actions to set
 	 */
 	public void setActions(List<AssistantAction> actions) {
 		this.actions = actions;

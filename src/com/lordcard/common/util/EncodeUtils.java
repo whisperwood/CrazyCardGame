@@ -25,8 +25,7 @@ public class EncodeUtils {
 		try {
 			return URLDecoder.decode(input, encoding);
 		} catch (UnsupportedEncodingException e) {
-			throw new IllegalArgumentException(
-					"Unsupported Encoding Exception", e);
+			throw new IllegalArgumentException("Unsupported Encoding Exception", e);
 		}
 	}
 
@@ -64,9 +63,7 @@ public class EncodeUtils {
 
 	/**
 	 * 对字符串进行MD5加密
-	 * 
-	 * @param plainText
-	 *            String
+	 * @param plainText String
 	 * @return String
 	 */
 	public static String MD5(String plainText) {

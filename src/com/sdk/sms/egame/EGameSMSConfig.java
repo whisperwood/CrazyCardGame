@@ -8,6 +8,5 @@ public class EGameSMSConfig {
 	/** 当前支付的订单号 */
 	public static String PAY_ORDER = null;
 	/** 订单生成地址 */
-	public static final String PAY_ORDER_URL = HttpURL.HTTP_PATH
-			+ "game/egame/addPayOrder.sc";
+	public static final String PAY_ORDER_URL = HttpURL.HTTP_PATH + "game/egame/addPayOrder.sc";
 }

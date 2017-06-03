@@ -2,7 +2,6 @@ package com.lordcard.ui.base;
 
 /**
  * 登录界面接口
- * 
  * @ClassName: ILoginView
  * @Description: TODO
  * @author yinhongbiao

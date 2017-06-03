@@ -29,8 +29,7 @@ public class TiLa implements Serializable {
 	public TiLa() {
 	}
 
-	public TiLa(String id, int ratio, Integer nextOrder, Boolean nextCan,
-			Integer order) {
+	public TiLa(String id, int ratio, Integer nextOrder, Boolean nextCan, Integer order) {
 		this.id = id;
 		this.ratio = ratio;
 		this.nextOrder = nextOrder;
@@ -80,7 +79,6 @@ public class TiLa implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TiLa [id=" + id + ", ratio=" + ratio + ", nextOrder="
-				+ nextOrder + ", nextCan=" + nextCan + "]";
+		return "TiLa [id=" + id + ", ratio=" + ratio + ", nextOrder=" + nextOrder + ", nextCan=" + nextCan + "]";
 	}
 }

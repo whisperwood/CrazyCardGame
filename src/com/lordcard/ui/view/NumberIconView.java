@@ -17,6 +17,7 @@ public class NumberIconView extends View {
 	public NumberIconView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
+
 	public void setNum(int num) {
 		this.num = num;
 		int len = String.valueOf(num).length();
@@ -27,9 +28,11 @@ public class NumberIconView extends View {
 		}
 		requestLayout();
 	}
+
 	public int getNum() {
 		return num;
 	}
+
 	@Override
 	protected void onDraw(Canvas canvas) {
 		int height = getHeight();
@@ -44,6 +47,7 @@ public class NumberIconView extends View {
 			offsetY = (height - d.getIntrinsicHeight()) / 2f;
 		}
 	}
+
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		int measuredWidth = 0;

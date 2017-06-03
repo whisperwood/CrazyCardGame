@@ -50,8 +50,7 @@ public class AlignLeftGallery extends Gallery {
 	}
 
 	private void setAttributesValue(Context context, AttributeSet attrs) {
-		TypedArray typedArray = context.obtainStyledAttributes(attrs,
-				new int[] { attr.paddingLeft });
+		TypedArray typedArray = context.obtainStyledAttributes(attrs, new int[] { attr.paddingLeft });
 		mPaddingLeft = typedArray.getDimensionPixelSize(0, 0);
 		typedArray.recycle();
 	}
@@ -68,8 +67,7 @@ public class AlignLeftGallery extends Gallery {
 			firstChildPaddingLeft = getChildAt(0).getPaddingLeft();
 			flag = false;
 		}
-		offsetX = firstChildWidth / 2 + firstChildPaddingLeft + mPaddingLeft
-				- mWidth / 2;
+		offsetX = firstChildWidth / 2 + firstChildPaddingLeft + mPaddingLeft - mWidth / 2;
 		mCamera.translate(offsetX, 0f, 0f);
 		mCamera.getMatrix(imageMatrix);
 		mCamera.restore();
@@ -84,8 +82,7 @@ public class AlignLeftGallery extends Gallery {
 	public boolean onSingleTapUp(MotionEvent e) {
 		Log.i(TAG, "onSingleTapUp----------------------");
 		try {
-			Field f = AlignLeftGallery.class.getSuperclass().getDeclaredField(
-					"mDownTouchPosition");
+			Field f = AlignLeftGallery.class.getSuperclass().getDeclaredField("mDownTouchPosition");
 			f.setAccessible(true);
 			int position = f.getInt(this);
 			Log.i(TAG, "mDownTouchPosition = " + position);
@@ -118,8 +115,7 @@ public class AlignLeftGallery extends Gallery {
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		Log.i(TAG, "onSizeChanged------- w = " + w + " h = " + h + "oldw = "
-				+ oldw + "oldh = " + oldh);
+		Log.i(TAG, "onSizeChanged------- w = " + w + " h = " + h + "oldw = " + oldw + "oldh = " + oldh);
 		if (!flag) {
 			mWidth = w;
 			getLayoutParams().width = mWidth;

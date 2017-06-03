@@ -12,7 +12,6 @@ public class ClientCmdMgr {
 
 	/**
 	 * 建立连接
-	 * 
 	 * @Title: start
 	 * @param @param ip
 	 * @param @param port
@@ -54,7 +53,6 @@ public class ClientCmdMgr {
 
 	/**
 	 * Client 结束(退出游戏界面)
-	 * 
 	 * @Title: destory
 	 * @param
 	 * @return void
@@ -69,7 +67,6 @@ public class ClientCmdMgr {
 
 	/**
 	 * 设置Client状态
-	 * 
 	 * @Title: setClientStatus
 	 * @param
 	 * @return void
@@ -83,7 +80,6 @@ public class ClientCmdMgr {
 
 	/**
 	 * 重连次数归零
-	 * 
 	 * @Title: resetRelinkCount
 	 * @param
 	 * @return void
@@ -95,7 +91,6 @@ public class ClientCmdMgr {
 
 	/**
 	 * 发送消息
-	 * 
 	 * @Title: sendCmd
 	 * @param @param detail
 	 * @return void
@@ -109,7 +104,6 @@ public class ClientCmdMgr {
 
 	/**
 	 * 一局结束
-	 * 
 	 * @Title: gameOver
 	 * @param
 	 * @return void

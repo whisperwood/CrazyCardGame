@@ -11,9 +11,34 @@ import android.view.View;
 
 public class MyLetterListView extends View {
 	OnTouchingLetterChangedListener onTouchingLetterChangedListener;
-	String[] b = { "#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
-			"L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
-			"Y", "Z" };
+	String[] b = {
+			"#",
+			"A",
+			"B",
+			"C",
+			"D",
+			"E",
+			"F",
+			"G",
+			"H",
+			"I",
+			"J",
+			"K",
+			"L",
+			"M",
+			"N",
+			"O",
+			"P",
+			"Q",
+			"R",
+			"S",
+			"T",
+			"U",
+			"V",
+			"W",
+			"X",
+			"Y",
+			"Z" };
 	int choose = -1;
 	Paint paint = new Paint();
 	boolean showBkg = false;
@@ -63,30 +88,30 @@ public class MyLetterListView extends View {
 		final OnTouchingLetterChangedListener listener = onTouchingLetterChangedListener;
 		final int c = (int) (y / getHeight() * b.length);
 		switch (action) {
-		case MotionEvent.ACTION_DOWN:
-			showBkg = true;
-			if (oldChoose != c && listener != null) {
-				if (c > 0 && c < b.length) {
-					listener.onTouchingLetterChanged(b[c]);
-					choose = c;
-					invalidate();
+			case MotionEvent.ACTION_DOWN:
+				showBkg = true;
+				if (oldChoose != c && listener != null) {
+					if (c > 0 && c < b.length) {
+						listener.onTouchingLetterChanged(b[c]);
+						choose = c;
+						invalidate();
+					}
 				}
-			}
-			break;
-		case MotionEvent.ACTION_MOVE:
-			if (oldChoose != c && listener != null) {
-				if (c > 0 && c < b.length) {
-					listener.onTouchingLetterChanged(b[c]);
-					choose = c;
-					invalidate();
+				break;
+			case MotionEvent.ACTION_MOVE:
+				if (oldChoose != c && listener != null) {
+					if (c > 0 && c < b.length) {
+						listener.onTouchingLetterChanged(b[c]);
+						choose = c;
+						invalidate();
+					}
 				}
-			}
-			break;
-		case MotionEvent.ACTION_UP:
-			showBkg = false;
-			choose = -1;
-			invalidate();
-			break;
+				break;
+			case MotionEvent.ACTION_UP:
+				showBkg = false;
+				choose = -1;
+				invalidate();
+				break;
 		}
 		return true;
 	}
@@ -96,8 +121,7 @@ public class MyLetterListView extends View {
 		return super.onTouchEvent(event);
 	}
 
-	public void setOnTouchingLetterChangedListener(
-			OnTouchingLetterChangedListener onTouchingLetterChangedListener) {
+	public void setOnTouchingLetterChangedListener(OnTouchingLetterChangedListener onTouchingLetterChangedListener) {
 		this.onTouchingLetterChangedListener = onTouchingLetterChangedListener;
 	}
 

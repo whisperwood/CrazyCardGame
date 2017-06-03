@@ -10,7 +10,6 @@ import com.sdk.util.PayUtils;
 public class GameHttpTask {
 	/**
 	 * 校验默认的初始配置是否有效
-	 * 
 	 * @Title: checkInitCfg
 	 * @param
 	 * @return void

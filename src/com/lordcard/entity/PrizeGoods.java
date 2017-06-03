@@ -40,8 +40,7 @@ public class PrizeGoods {
 	}
 
 	/**
-	 * @param goodsCode
-	 *            the goodsCode to set
+	 * @param goodsCode the goodsCode to set
 	 */
 	public void setGoodsCode(String goodsCode) {
 		this.goodsCode = goodsCode;
@@ -55,8 +54,7 @@ public class PrizeGoods {
 	}
 
 	/**
-	 * @param count
-	 *            the count to set
+	 * @param count the count to set
 	 */
 	public void setCount(Integer count) {
 		this.count = count;
@@ -70,8 +68,7 @@ public class PrizeGoods {
 	}
 
 	/**
-	 * @param goodsName
-	 *            the goodsName to set
+	 * @param goodsName the goodsName to set
 	 */
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
@@ -85,8 +82,7 @@ public class PrizeGoods {
 	}
 
 	/**
-	 * @param unit
-	 *            the unit to set
+	 * @param unit the unit to set
 	 */
 	public void setUnit(String unit) {
 		this.unit = unit;

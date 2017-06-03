@@ -8,7 +8,6 @@ import com.sdk.util.vo.PaySiteConfig;
 
 /**
  * 计费位置配置数据
- * 
  * @ClassName: PaySite
  * @Description: TODO
  * @author yinhongbiao
@@ -34,7 +33,6 @@ public class PaySite {
 
 	/**
 	 * 根据计费位置获取位置的配置
-	 * 
 	 * @Title: getSiteMap
 	 * @param @param site
 	 * @param @return
@@ -43,8 +41,7 @@ public class PaySite {
 	 */
 	@SuppressWarnings("unchecked")
 	public static PaySiteConfig getSiteMap(String site) {
-		HashMap<String, PaySiteConfig> map = (HashMap<String, PaySiteConfig>) GameCache
-				.getObj(CacheKey.PAY_SITE_MAP);
+		HashMap<String, PaySiteConfig> map = (HashMap<String, PaySiteConfig>) GameCache.getObj(CacheKey.PAY_SITE_MAP);
 		if (map != null) {
 			return map.get(site);
 		}

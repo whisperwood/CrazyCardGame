@@ -37,7 +37,6 @@ import com.lordcard.constant.Constant;
 
 /**
  * com.lordcard.ui.view.dialog.AlertDialog
- * 
  * @author Administrator <br/>
  *         create at 2013 2013-3-25 下午5:32:42
  */
@@ -56,8 +55,7 @@ public class UpdateDialog extends Dialog implements OnClickListener {
 	private LinearLayout layout;
 	private Button ok;
 
-	public UpdateDialog(List<String> listContent, Context context,
-			boolean canCancel) {
+	public UpdateDialog(List<String> listContent, Context context, boolean canCancel) {
 		super(context, R.style.dialog);
 		this.listContent = listContent;
 		this.context = context;
@@ -90,18 +88,15 @@ public class UpdateDialog extends Dialog implements OnClickListener {
 		if (!canCancel) {
 			bottomLl.setVisibility(View.GONE);
 			quickIstallationBtn.setVisibility(View.VISIBLE);
-			boolean sdCardExist = Environment.getExternalStorageState().equals(
-					Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
-			SharedPreferences sharedsaveData = CrashApplication.getInstance()
-					.getSharedPreferences(Constant.UPDATECODE,
-							Context.MODE_PRIVATE);
+			boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+			SharedPreferences sharedsaveData = CrashApplication.getInstance().getSharedPreferences(Constant.UPDATECODE,
+					Context.MODE_PRIVATE);
 			int saveCode = sharedsaveData.getInt(Constant.SAVECODE, 0);
 			File file = null;
 			boolean isQuick = false;
 			if (saveCode == UPVersion.versionCode) {
 				if (sdCardExist) {
-					file = new File(Environment.getExternalStorageDirectory(),
-							UPVersion.apkName);
+					file = new File(Environment.getExternalStorageDirectory(), UPVersion.apkName);
 					if (file.exists()) {
 						// DialogUtils.mesToastTip("SD卡有包！");
 						isQuick = true;
@@ -138,37 +133,36 @@ public class UpdateDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.common_cancel:// 取消
-			mst.unRegisterView(layout);
-			dismiss();
-			// “下次不再提醒”复选框被勾上
-			if (box.isChecked()) {
-				prefrences = CrashApplication.getInstance()
-						.getSharedPreferences(Constant.UPDATECODE,
-								Context.MODE_PRIVATE);
-				Editor editor2 = prefrences.edit();
-				// 把当前服务器的版本保存在本地(标志之后都不更新这个版本了)
-				editor2.putInt(Constant.VERSIONCODE, UPVersion.versionCode);
-				editor2.commit();
-			}
-			cancelClick();
-			break;
-		case R.id.common_ok:// 确定
-		case R.id.ud_quick_installation_btn:// 一键安装
-			if (canCancel) {
+			case R.id.common_cancel:// 取消
 				mst.unRegisterView(layout);
 				dismiss();
-			}
-			okClick();
-			break;
-		case R.id.ud_layout:// 一键安装的状态时点击对话框的任何一个位置都可以安装
-		case R.id.up_null_tv:
-			if (!canCancel) {
+				// “下次不再提醒”复选框被勾上
+				if (box.isChecked()) {
+					prefrences = CrashApplication.getInstance().getSharedPreferences(Constant.UPDATECODE,
+							Context.MODE_PRIVATE);
+					Editor editor2 = prefrences.edit();
+					// 把当前服务器的版本保存在本地(标志之后都不更新这个版本了)
+					editor2.putInt(Constant.VERSIONCODE, UPVersion.versionCode);
+					editor2.commit();
+				}
+				cancelClick();
+				break;
+			case R.id.common_ok:// 确定
+			case R.id.ud_quick_installation_btn:// 一键安装
+				if (canCancel) {
+					mst.unRegisterView(layout);
+					dismiss();
+				}
 				okClick();
-			}
-			break;
-		default:
-			break;
+				break;
+			case R.id.ud_layout:// 一键安装的状态时点击对话框的任何一个位置都可以安装
+			case R.id.up_null_tv:
+				if (!canCancel) {
+					okClick();
+				}
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -178,9 +172,8 @@ public class UpdateDialog extends Dialog implements OnClickListener {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (canCancel) {
 				if (box.isChecked()) {
-					prefrences = CrashApplication.getInstance()
-							.getSharedPreferences(Constant.UPDATECODE,
-									Context.MODE_PRIVATE);
+					prefrences = CrashApplication.getInstance().getSharedPreferences(Constant.UPDATECODE,
+							Context.MODE_PRIVATE);
 					Editor editor2 = prefrences.edit();
 					editor2.putInt(Constant.VERSIONCODE, UPVersion.versionCode);
 					editor2.commit();
@@ -247,8 +240,7 @@ public class UpdateDialog extends Dialog implements OnClickListener {
 			if (null == convertView) {
 				mViewHolder = new ViewHolder();
 				convertView = mInflater.inflate(R.layout.text_list_item, null);
-				mViewHolder.text = (TextView) convertView
-						.findViewById(R.id.evalues_text);
+				mViewHolder.text = (TextView) convertView.findViewById(R.id.evalues_text);
 				convertView.setTag(mViewHolder);
 			} else {
 				mViewHolder = (ViewHolder) convertView.getTag();

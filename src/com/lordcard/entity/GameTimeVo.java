@@ -2,7 +2,6 @@ package com.lordcard.entity;
 
 /**
  * 比赛场倒计时(开赛倒计时，比赛结束倒计时)
- * 
  * @author Administrator
  */
 public class GameTimeVo {

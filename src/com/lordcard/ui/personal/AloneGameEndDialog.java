@@ -50,12 +50,10 @@ import com.lordcard.ui.view.dialog.IqGradeDialog;
 
 /**
  * 比赛场游戏结束界面
- * 
  * @author Administrator
  */
 @SuppressLint("HandlerLeak")
-public class AloneGameEndDialog extends Dialog implements IGameView,
-		android.view.View.OnClickListener {
+public class AloneGameEndDialog extends Dialog implements IGameView, android.view.View.OnClickListener {
 	private static final int EXIT = 1212;
 	private static final int GO_BACK = 1211;
 	private static final int GO_AGAIN = 1213;
@@ -88,8 +86,7 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 	private IqGradeDialog mIqGradeDialog = null;
 	private AutoTask goOutTask, showUpgradeTask, showUpgradeTask2;
 
-	public AloneGameEndDialog(Context context, List<PlayAlone> list, int order,
-			Handler handler) {
+	public AloneGameEndDialog(Context context, List<PlayAlone> list, int order, Handler handler) {
 		super(context, R.style.process_dialog);
 		this.context = context;
 		// this.list = list;
@@ -108,65 +105,59 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
 				switch (msg.what) {
-				case EXIT:
-					handler.sendEmptyMessage(24);
-					dismiss();
-					release();
-					break;
-				case VISIBLE_VIEW:
-					handler.sendEmptyMessage(23);
-					break;
-				case GO_BACK:// 返回游戏大厅
-					release();
-					handler.sendEmptyMessage(25);
-					dismiss();
-					break;
-				case GO_AGAIN:// 再来一局
-					dismiss();
-					release();
-					handler.sendEmptyMessage(26);
-					break;
-				case SHOW_IQ_GRADE_MIN:// 显示IQ升级对话框(小级)
-					String result = msg.getData()
-							.getString("getCelebratedText");
-					boolean isDiZhu = msg.getData().getBoolean("isCall", false);
-					String gender = Database.userMap.get(order).getGender();// 性别
-																			// 0保密1女2男
-					Map<String, String> headPath = Database.userMap.get(order)
-							.getIqImg();
-					GameIqUpgradeDialog mGameIqUpgradeDialog = new GameIqUpgradeDialog(
-							context, mHandler, result, gender, isDiZhu,
-							headPath, GED_SHOW_IQ_GRADE_MAX);
-					android.view.WindowManager.LayoutParams lay = mGameIqUpgradeDialog
-							.getWindow().getAttributes();
-					setParams(lay);
-					Window window = mGameIqUpgradeDialog.getWindow();
-					window.setGravity(Gravity.CENTER); // 此处可以设置dialog显示的位置
-					window.setWindowAnimations(R.style.mystyle2); // 添加动画
-					mGameIqUpgradeDialog.show();
-					break;
-				case GED_SHOW_IQ_GRADE_MAX:// 升级(大级)
-					if (null == mIqGradeDialog || !mIqGradeDialog.isShowing()) {
-						// 弹出等级等级对话框
-						int iq = -1;
-						GameUser cacheUser = (GameUser) GameCache
-								.getObj(CacheKey.GAME_USER);
-						if (null != cacheUser) {
-							iq = cacheUser.getIq();
+					case EXIT:
+						handler.sendEmptyMessage(24);
+						dismiss();
+						release();
+						break;
+					case VISIBLE_VIEW:
+						handler.sendEmptyMessage(23);
+						break;
+					case GO_BACK:// 返回游戏大厅
+						release();
+						handler.sendEmptyMessage(25);
+						dismiss();
+						break;
+					case GO_AGAIN:// 再来一局
+						dismiss();
+						release();
+						handler.sendEmptyMessage(26);
+						break;
+					case SHOW_IQ_GRADE_MIN:// 显示IQ升级对话框(小级)
+						String result = msg.getData().getString("getCelebratedText");
+						boolean isDiZhu = msg.getData().getBoolean("isCall", false);
+						String gender = Database.userMap.get(order).getGender();// 性别
+																				// 0保密1女2男
+						Map<String, String> headPath = Database.userMap.get(order).getIqImg();
+						GameIqUpgradeDialog mGameIqUpgradeDialog = new GameIqUpgradeDialog(context, mHandler, result,
+								gender, isDiZhu, headPath, GED_SHOW_IQ_GRADE_MAX);
+						android.view.WindowManager.LayoutParams lay = mGameIqUpgradeDialog.getWindow().getAttributes();
+						setParams(lay);
+						Window window = mGameIqUpgradeDialog.getWindow();
+						window.setGravity(Gravity.CENTER); // 此处可以设置dialog显示的位置
+						window.setWindowAnimations(R.style.mystyle2); // 添加动画
+						mGameIqUpgradeDialog.show();
+						break;
+					case GED_SHOW_IQ_GRADE_MAX:// 升级(大级)
+						if (null == mIqGradeDialog || !mIqGradeDialog.isShowing()) {
+							// 弹出等级等级对话框
+							int iq = -1;
+							GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+							if (null != cacheUser) {
+								iq = cacheUser.getIq();
+							}
+							mIqGradeDialog = new IqGradeDialog(context, iq);
+							mIqGradeDialog.setContentView(R.layout.iq_grade_dialog);
+							android.view.WindowManager.LayoutParams lay1 = mIqGradeDialog.getWindow().getAttributes();
+							setParams(lay1);
+							Window window1 = mIqGradeDialog.getWindow();
+							window1.setGravity(Gravity.BOTTOM); // 此处可以设置dialog显示的位置
+							window1.setWindowAnimations(R.style.mystyle); // 添加动画
+							mIqGradeDialog.show();
 						}
-						mIqGradeDialog = new IqGradeDialog(context, iq);
-						mIqGradeDialog.setContentView(R.layout.iq_grade_dialog);
-						android.view.WindowManager.LayoutParams lay1 = mIqGradeDialog
-								.getWindow().getAttributes();
-						setParams(lay1);
-						Window window1 = mIqGradeDialog.getWindow();
-						window1.setGravity(Gravity.BOTTOM); // 此处可以设置dialog显示的位置
-						window1.setWindowAnimations(R.style.mystyle); // 添加动画
-						mIqGradeDialog.show();
-					}
-					break;
-				default:
-					break;
+						break;
+					default:
+						break;
 				}
 			}
 		};
@@ -214,8 +205,7 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 		mBeiShuList = (ListView) findViewById(R.id.beishu_list);
 		againBtn.setOnClickListener(this);
 		backBtn.setOnClickListener(this);
-		mainLayout.findViewById(R.id.dzed_recharge_btn).setVisibility(
-				View.INVISIBLE);
+		mainLayout.findViewById(R.id.dzed_recharge_btn).setVisibility(View.INVISIBLE);
 	}
 
 	/**
@@ -248,31 +238,26 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 		for (PlayAlone end : users) {
 			// 如果是自己的顺序
 			if (end.getOrder() == order) {
-				Log.i("item", "第一项" + "isdizhu:" + isdizhu + "  dizhuStove:"
-						+ dizhuStove + "  onlyDizhu:" + onlyDizhu);
+				Log.i("item", "第一项" + "isdizhu:" + isdizhu + "  dizhuStove:" + dizhuStove + "  onlyDizhu:" + onlyDizhu);
 				theFirstItem(isdizhu, dizhuStove, onlyDizhu, end);
 			} else if (nextPlay == -1) {
 				theSecondItem(isdizhu, dizhuStove, onlyDizhu, end);
-				Log.i("item", "第二项" + "isdizhu:" + isdizhu + "  dizhuStove:"
-						+ dizhuStove + "  onlyDizhu:" + onlyDizhu);
+				Log.i("item", "第二项" + "isdizhu:" + isdizhu + "  dizhuStove:" + dizhuStove + "  onlyDizhu:" + onlyDizhu);
 			} else {
 				theThreeItem(isdizhu, dizhuStove, onlyDizhu, end);
-				Log.i("item", "第三项" + "isdizhu:" + isdizhu + "  dizhuStove:"
-						+ dizhuStove + "  onlyDizhu:" + onlyDizhu);
+				Log.i("item", "第三项" + "isdizhu:" + isdizhu + "  dizhuStove:" + dizhuStove + "  onlyDizhu:" + onlyDizhu);
 			}
 		}
 	}
 
 	/**
 	 * 设置第一项的数据
-	 * 
 	 * @param isdizhu
 	 * @param dizhuStove
 	 * @param onlyDizhu
 	 * @param end
 	 */
-	private void theFirstItem(boolean isdizhu, boolean dizhuStove,
-			boolean onlyDizhu, final PlayAlone end) {
+	private void theFirstItem(boolean isdizhu, boolean dizhuStove, boolean onlyDizhu, final PlayAlone end) {
 		// cardSpace = 15;
 		zhiDouTv1.setText(String.valueOf(end.getPayment()));
 		nameTv1.setText(end.getNickMap().get(end.getOrder()));
@@ -280,14 +265,10 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 		AudioPlayUtils.isGameEnd = true;
 		nowZhiDouTv.setText("" + end.getBean());
 		ZhiShangTv.setText("" + 0);
-		beiShu.add(new BeiShu(R.drawable.game_end_dibei, "底倍", end
-				.getBaseRatio()));
-		beiShu.add(new BeiShu(R.drawable.game_end_zhadan, "炸弹", end
-				.getBombRatio()));
-		beiShu.add(new BeiShu(R.drawable.game_end_spring, "春天", end
-				.getSpringRatio()));
-		beiShu.add(new BeiShu(R.drawable.game_end_jiaofen, "叫分", end
-				.getCallRatio()));
+		beiShu.add(new BeiShu(R.drawable.game_end_dibei, "底倍", end.getBaseRatio()));
+		beiShu.add(new BeiShu(R.drawable.game_end_zhadan, "炸弹", end.getBombRatio()));
+		beiShu.add(new BeiShu(R.drawable.game_end_spring, "春天", end.getSpringRatio()));
+		beiShu.add(new BeiShu(R.drawable.game_end_jiaofen, "叫分", end.getCallRatio()));
 		beishuNumber = String.valueOf(end.getRatio());
 		zongBeiShuTv.setText(beishuNumber);
 		diShuTv.setText(String.valueOf("600"));
@@ -322,20 +303,16 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 			ActivityUtils.setHead(headIv1, "0", true);
 			if (isdizhu) { // 地主赢
 				findViewById(R.id.dzed_lose_win).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.game_end_dialog_win_text, true));
+						ImageUtil.getResDrawable(R.drawable.game_end_dialog_win_text, true));
 				findViewById(R.id.dzed_lose_win_top_iv).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.iq_grade_dialog_win_bg, true));
+						ImageUtil.getResDrawable(R.drawable.iq_grade_dialog_win_bg, true));
 				AudioPlayUtils.getInstance().playMusic(false, R.raw.win); // 胜利
 				setTitalSex("0", true, true);
 			} else {
 				findViewById(R.id.dzed_lose_win).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.game_end_dialog_lose_text, true));
+						ImageUtil.getResDrawable(R.drawable.game_end_dialog_lose_text, true));
 				findViewById(R.id.dzed_lose_win_top_iv).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.iq_grade_dialog_lose_bg, true));
+						ImageUtil.getResDrawable(R.drawable.iq_grade_dialog_lose_bg, true));
 				AudioPlayUtils.getInstance().playMusic(false, R.raw.lose); // 失败
 				setTitalSex("0", false, false);
 			}
@@ -343,20 +320,16 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 			ActivityUtils.setHead(headIv1, "0", false);
 			if (isdizhu) { // 地主赢
 				findViewById(R.id.dzed_lose_win).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.game_end_dialog_lose_text, true));
+						ImageUtil.getResDrawable(R.drawable.game_end_dialog_lose_text, true));
 				findViewById(R.id.dzed_lose_win_top_iv).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.iq_grade_dialog_lose_bg, true));
+						ImageUtil.getResDrawable(R.drawable.iq_grade_dialog_lose_bg, true));
 				AudioPlayUtils.getInstance().playMusic(false, R.raw.lose); // 失败
 				setTitalSex("0", true, false);
 			} else {
 				findViewById(R.id.dzed_lose_win).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.game_end_dialog_win_text, true));
+						ImageUtil.getResDrawable(R.drawable.game_end_dialog_win_text, true));
 				findViewById(R.id.dzed_lose_win_top_iv).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.iq_grade_dialog_win_bg, true));
+						ImageUtil.getResDrawable(R.drawable.iq_grade_dialog_win_bg, true));
 				AudioPlayUtils.getInstance().playMusic(false, R.raw.win);
 				setTitalSex("0", false, true);
 			}
@@ -366,8 +339,7 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 
 	private void setParams(android.view.WindowManager.LayoutParams lay) {
 		DisplayMetrics dm = new DisplayMetrics();
-		((Activity) context).getWindowManager().getDefaultDisplay()
-				.getMetrics(dm);
+		((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
 		Rect rect = new Rect();
 		View view = getWindow().getDecorView();
 		view.getWindowVisibleDisplayFrame(rect);
@@ -377,13 +349,9 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 
 	/**
 	 * 设置标题人物图片
-	 * 
-	 * @param gender
-	 *            性别
-	 * @param isDizhu
-	 *            是否是地主
-	 * @param iswin
-	 *            是否赢
+	 * @param gender 性别
+	 * @param isDizhu 是否是地主
+	 * @param iswin 是否赢
 	 */
 	private void setTitalSex(String gender, boolean isDizhu, boolean iswin) {
 		String loadAnim;
@@ -437,14 +405,12 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 
 	/**
 	 * 设置第三项的数据
-	 * 
 	 * @param isdizhu
 	 * @param dizhuStove
 	 * @param onlyDizhu
 	 * @param end
 	 */
-	private void theThreeItem(boolean isdizhu, boolean dizhuStove,
-			boolean onlyDizhu, PlayAlone end) {
+	private void theThreeItem(boolean isdizhu, boolean dizhuStove, boolean onlyDizhu, PlayAlone end) {
 		// cardSpace = 15;
 		zhiDouTv3.setText(String.valueOf(end.getPayment()));
 		nameTv3.setText(end.getNickMap().get(end.getOrder()));
@@ -460,14 +426,12 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 
 	/**
 	 * 设置第二项的数据
-	 * 
 	 * @param isdizhu
 	 * @param dizhuStove
 	 * @param onlyDizhu
 	 * @param end
 	 */
-	private void theSecondItem(boolean isdizhu, boolean dizhuStove,
-			boolean onlyDizhu, PlayAlone end) {
+	private void theSecondItem(boolean isdizhu, boolean dizhuStove, boolean onlyDizhu, PlayAlone end) {
 		// cardSpace = 15;
 		nextPlay = end.getOrder();
 		zhiDouTv2.setText(String.valueOf(end.getPayment()));
@@ -494,15 +458,15 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.dzed_again:// 再来一局
-			mHandler.sendEmptyMessage(GO_AGAIN);
-			break;
-		case R.id.dzed_back:// 返回大厅
-			mHandler.sendEmptyMessage(GO_BACK);
-			// 发消息关闭游戏界面
-			break;
-		default:
-			break;
+			case R.id.dzed_again:// 再来一局
+				mHandler.sendEmptyMessage(GO_AGAIN);
+				break;
+			case R.id.dzed_back:// 返回大厅
+				mHandler.sendEmptyMessage(GO_BACK);
+				// 发消息关闭游戏界面
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -532,21 +496,16 @@ public class AloneGameEndDialog extends Dialog implements IGameView,
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (null == convertView) {
-				convertView = layoutInflater.inflate(
-						R.layout.game_end_dialog_left_list_item, null);
+				convertView = layoutInflater.inflate(R.layout.game_end_dialog_left_list_item, null);
 				holder = new ViewHolder();
-				holder.iconIv = (ImageView) convertView
-						.findViewById(R.id.gedlli_icon_iv);
-				holder.nameTv = (TextView) convertView
-						.findViewById(R.id.gedlli_name_tv);
-				holder.numTv = (TextView) convertView
-						.findViewById(R.id.gedlli_num_tv);
+				holder.iconIv = (ImageView) convertView.findViewById(R.id.gedlli_icon_iv);
+				holder.nameTv = (TextView) convertView.findViewById(R.id.gedlli_name_tv);
+				holder.numTv = (TextView) convertView.findViewById(R.id.gedlli_num_tv);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			holder.iconIv.setBackgroundResource(beiShu.get(position)
-					.getIcomId());
+			holder.iconIv.setBackgroundResource(beiShu.get(position).getIcomId());
 			holder.nameTv.setText(beiShu.get(position).getName());
 			holder.numTv.setText("" + beiShu.get(position).getNum());
 			return convertView;

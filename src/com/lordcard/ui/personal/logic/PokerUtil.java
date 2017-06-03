@@ -136,53 +136,48 @@ public class PokerUtil {
 
 	/**
 	 * 给出对应类型的牌所在的map
-	 * 
-	 * @param ddzData
-	 *            斗地主数据结构
-	 * @param cardNum
-	 *            牌数量
-	 * @param cardType
-	 *            牌类型
+	 * @param ddzData 斗地主数据结构
+	 * @param cardNum 牌数量
+	 * @param cardType 牌类型
 	 * @return
 	 */
-	public static Map<Integer, PokerOfOnePlay> whichArray(
-			DouDiZhuLogic ddzData, int cardNum, int cardType) {
+	public static Map<Integer, PokerOfOnePlay> whichArray(DouDiZhuLogic ddzData, int cardNum, int cardType) {
 		Map<Integer, PokerOfOnePlay> play = null;
 		switch (cardType) {
-		case DoudizhuRule.Danpai:
-			play = ddzData.getSanPai();
-			break;
-		case DoudizhuRule.Yidui:
-			play = ddzData.getDuiZi();
-			break;
-		case DoudizhuRule.Santiao:
-		case DoudizhuRule.Sandaiyi:
-		case DoudizhuRule.Sandaier:
-			play = ddzData.getSanZhang();
-			break;
-		case DoudizhuRule.zhadan:
-		case DoudizhuRule.wangzha:
-			play = ddzData.getZhaDan();
-			break;
-		case DoudizhuRule.sidaiyi:
-		case DoudizhuRule.sidaier:
-			play = ddzData.getSiZhang();
-			break;
-		case DoudizhuRule.feiji:
-			play = ddzData.getFeiJi().get(cardNum / 3);
-			break;
-		case DoudizhuRule.feijidaisan:
-			play = ddzData.getFeiJi().get(cardNum / 4);
-			break;
-		case DoudizhuRule.feijidaidui:
-			play = ddzData.getFeiJi().get(cardNum / 5);
-			break;
-		case DoudizhuRule.liandui:
-			play = ddzData.getLianDui().get(cardNum / 2);
-			break;
-		case DoudizhuRule.shunzi:
-			play = ddzData.getShunZi().get(cardNum);
-			break;
+			case DoudizhuRule.Danpai:
+				play = ddzData.getSanPai();
+				break;
+			case DoudizhuRule.Yidui:
+				play = ddzData.getDuiZi();
+				break;
+			case DoudizhuRule.Santiao:
+			case DoudizhuRule.Sandaiyi:
+			case DoudizhuRule.Sandaier:
+				play = ddzData.getSanZhang();
+				break;
+			case DoudizhuRule.zhadan:
+			case DoudizhuRule.wangzha:
+				play = ddzData.getZhaDan();
+				break;
+			case DoudizhuRule.sidaiyi:
+			case DoudizhuRule.sidaier:
+				play = ddzData.getSiZhang();
+				break;
+			case DoudizhuRule.feiji:
+				play = ddzData.getFeiJi().get(cardNum / 3);
+				break;
+			case DoudizhuRule.feijidaisan:
+				play = ddzData.getFeiJi().get(cardNum / 4);
+				break;
+			case DoudizhuRule.feijidaidui:
+				play = ddzData.getFeiJi().get(cardNum / 5);
+				break;
+			case DoudizhuRule.liandui:
+				play = ddzData.getLianDui().get(cardNum / 2);
+				break;
+			case DoudizhuRule.shunzi:
+				play = ddzData.getShunZi().get(cardNum);
+				break;
 		}
 		return play;
 	}

@@ -79,8 +79,7 @@ public class AssistantAction {
 	}
 
 	/**
-	 * @param ac
-	 *            the ac to set
+	 * @param ac the ac to set
 	 */
 	public void setAc(String ac) {
 		this.ac = ac;
@@ -94,8 +93,7 @@ public class AssistantAction {
 	}
 
 	/**
-	 * @param remark
-	 *            the remark to set
+	 * @param remark the remark to set
 	 */
 	public void setRemark(String remark) {
 		this.remark = remark;
@@ -109,8 +107,7 @@ public class AssistantAction {
 	}
 
 	/**
-	 * @param goodsHands
-	 *            the goodsHands to set
+	 * @param goodsHands the goodsHands to set
 	 */
 	public void setGoodsHands(List<GoodsGet> goodsHands) {
 		this.goodsHands = goodsHands;
@@ -124,8 +121,7 @@ public class AssistantAction {
 	}
 
 	/**
-	 * @param requestUrl
-	 *            the requestUrl to set
+	 * @param requestUrl the requestUrl to set
 	 */
 	public void setRequestUrl(String requestUrl) {
 		this.requestUrl = requestUrl;

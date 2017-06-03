@@ -10,7 +10,6 @@ import com.lordcard.network.cmdmgr.CmdDetail;
 
 /**
  * interfaces.ICallback
- * 
  * @author yinhb <br/>
  *         create at 2012 2012-11-22 下午2:49:36
  */

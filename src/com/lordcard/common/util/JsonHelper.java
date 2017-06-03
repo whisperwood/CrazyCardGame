@@ -10,8 +10,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class JsonHelper {
 	private static Gson getGson() {
-		return new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
-				.create();
+		return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 	}
 
 	public static <T> T fromJson(String json, Class<T> clazz) {

@@ -7,7 +7,6 @@ import com.sdk.vac.util.VACPayUtil;
 
 /**
  * 联通沃商店支付
- * 
  * @author yinhb 2013-12-2 下午4:09:33
  */
 public class VACSDKFactory extends ISDKFactory {

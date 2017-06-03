@@ -2,7 +2,6 @@ package com.lordcard.constant;
 
 /**
  * 系统常量类
- * 
  * @author yinhb
  */
 public class Constant {
@@ -68,14 +67,11 @@ public class Constant {
 	/** 爱是商城 包名 */
 	public static final String PACKAGE_NAME_SHOP = "til.mall.activity";
 	/** 爱是商城 首页 */
-	public static final String THREE_URI_SHOP_START = PACKAGE_NAME_SHOP
-			+ ".WelcomeActivity";
+	public static final String THREE_URI_SHOP_START = PACKAGE_NAME_SHOP + ".WelcomeActivity";
 	/** 爱是商城商品详情 */
-	public static final String THREE_URI_SHOP_DETAIL = PACKAGE_NAME_SHOP
-			+ ".bileMallItemDetailActivity";
+	public static final String THREE_URI_SHOP_DETAIL = PACKAGE_NAME_SHOP + ".bileMallItemDetailActivity";
 	/** 爱是商城资讯 */
-	public static final String THREE_URI_SHOP_NEW = PACKAGE_NAME_SHOP
-			+ ".wsItemDetailActivity";
+	public static final String THREE_URI_SHOP_NEW = PACKAGE_NAME_SHOP + ".wsItemDetailActivity";
 	/** 短信发送广播 */
 	public static final String ACTION_SMS_SEND = "com.lord.card.broadcast.sms.send";
 	/** 短信发送广播 */

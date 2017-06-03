@@ -46,8 +46,7 @@ public class GoodsExchange {
 	}
 
 	/**
-	 * @param typeId
-	 *            the typeId to set
+	 * @param typeId the typeId to set
 	 */
 	public void setTypeId(String typeId) {
 		this.typeId = typeId;
@@ -61,8 +60,7 @@ public class GoodsExchange {
 	}
 
 	/**
-	 * @param typeName
-	 *            the typeName to set
+	 * @param typeName the typeName to set
 	 */
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
@@ -76,8 +74,7 @@ public class GoodsExchange {
 	}
 
 	/**
-	 * @param count
-	 *            the count to set
+	 * @param count the count to set
 	 */
 	public void setCount(Integer count) {
 		this.count = count;
@@ -91,8 +88,7 @@ public class GoodsExchange {
 	}
 
 	/**
-	 * @param goodsParts
-	 *            the goodsParts to set
+	 * @param goodsParts the goodsParts to set
 	 */
 	public void setGoodsParts(List<GoodsPart> goodsParts) {
 		this.goodsParts = goodsParts;
@@ -106,8 +102,7 @@ public class GoodsExchange {
 	}
 
 	/**
-	 * @param picPath
-	 *            the picPath to set
+	 * @param picPath the picPath to set
 	 */
 	public void setPicPath(String picPath) {
 		this.picPath = picPath;
@@ -121,8 +116,7 @@ public class GoodsExchange {
 	}
 
 	/**
-	 * @param type
-	 *            the type to set
+	 * @param type the type to set
 	 */
 	public void setType(Integer type) {
 		this.type = type;
@@ -142,8 +136,7 @@ public class GoodsExchange {
 	// return display;
 	// }
 	/**
-	 * @param display
-	 *            the display to set
+	 * @param display the display to set
 	 */
 	// public void setDisplay(Integer display) {
 	// this.display = display;

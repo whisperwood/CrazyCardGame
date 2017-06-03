@@ -20,7 +20,6 @@ import com.lordcard.common.util.MultiScreenTool;
 
 /**
  * IQ升级提示对话框
- * 
  * @author Administrator
  */
 public class GameIqUpgradeDialog extends Dialog implements OnClickListener {
@@ -42,8 +41,7 @@ public class GameIqUpgradeDialog extends Dialog implements OnClickListener {
 		this.context = context;
 	}
 
-	public GameIqUpgradeDialog(Context context, Handler handler,
-			String content, String gender, boolean isDiZhu,
+	public GameIqUpgradeDialog(Context context, Handler handler, String content, String gender, boolean isDiZhu,
 			Map<String, String> headPath, int what) {
 		super(context, R.style.dialog);
 		this.context = context;
@@ -64,7 +62,6 @@ public class GameIqUpgradeDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	private void layout(final Context context) {
@@ -73,8 +70,7 @@ public class GameIqUpgradeDialog extends Dialog implements OnClickListener {
 		contentTv.setText("" + content);
 		headIv = (ImageView) findViewById(R.id.giud_head_iv);
 		if (!TextUtils.isEmpty(gender) && null != headPath) {
-			ActivityUtils.setHead(context, headIv, gender, isDiZhu, headPath,
-					false);// 设置头像
+			ActivityUtils.setHead(context, headIv, gender, isDiZhu, headPath, false);// 设置头像
 		}
 		helpBtn = (Button) findViewById(R.id.giud_help);
 		helpBtn.setOnClickListener(this);
@@ -89,14 +85,14 @@ public class GameIqUpgradeDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.giud_help:// 帮助
-			handler.sendEmptyMessage(what);
-			break;
-		case R.id.giud_accept:// 接受
-			dismiss();
-			break;
-		default:
-			break;
+			case R.id.giud_help:// 帮助
+				handler.sendEmptyMessage(what);
+				break;
+			case R.id.giud_accept:// 接受
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 

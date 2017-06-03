@@ -17,9 +17,9 @@ public abstract class TaskFeedback implements Feedback {
 
 	public static TaskFeedback getInstance(int type) {
 		switch (type) {
-		case DIALOG_MODE:
-			_instance = DialogFeedback.getInstance();
-			break;
+			case DIALOG_MODE:
+				_instance = DialogFeedback.getInstance();
+				break;
 		}
 		return _instance;
 	}
@@ -85,8 +85,7 @@ class DialogFeedback extends TaskFeedback {
 		if (_dialog != null) {
 			_dialog.dismiss();
 		}
-		Toast toast = Toast.makeText(Database.currentActivity, prompt,
-				Toast.LENGTH_LONG);
+		Toast toast = Toast.makeText(Database.currentActivity, prompt, Toast.LENGTH_LONG);
 		toast.show();
 	}
 

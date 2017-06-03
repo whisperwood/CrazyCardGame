@@ -18,8 +18,7 @@ public class FastJoinTask {
 			Bundle bundle = new Bundle();
 			bundle.putInt("type", Constant.FASTJOIN_TYPE);
 			Intent intent = new Intent();
-			intent.setClass(Database.currentActivity,
-					DoudizhuMainGameActivity.class);
+			intent.setClass(Database.currentActivity, DoudizhuMainGameActivity.class);
 			intent.putExtras(bundle);
 			Database.currentActivity.startActivity(intent);
 		} catch (Exception e) {
@@ -33,8 +32,7 @@ public class FastJoinTask {
 			Database.JOIN_ROOM_RATIO = room.getRatio();
 			Database.JOIN_ROOM_BASEPOINT = room.getBasePoint();
 			Intent intent = new Intent();
-			intent.setClass(Database.currentActivity,
-					DoudizhuMainGameActivity.class);
+			intent.setClass(Database.currentActivity, DoudizhuMainGameActivity.class);
 			Database.currentActivity.startActivity(intent);
 		} catch (Exception e) {
 		} finally {

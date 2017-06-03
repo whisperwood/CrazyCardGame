@@ -31,8 +31,7 @@ public class GameUserAddress {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -46,8 +45,7 @@ public class GameUserAddress {
 	}
 
 	/**
-	 * @param account
-	 *            the account to set
+	 * @param account the account to set
 	 */
 	public void setAccount(String account) {
 		this.account = account;
@@ -61,8 +59,7 @@ public class GameUserAddress {
 	}
 
 	/**
-	 * @param addressee
-	 *            the addressee to set
+	 * @param addressee the addressee to set
 	 */
 	public void setAddressee(String addressee) {
 		this.addressee = addressee;
@@ -76,8 +73,7 @@ public class GameUserAddress {
 	}
 
 	/**
-	 * @param address
-	 *            the address to set
+	 * @param address the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
@@ -91,8 +87,7 @@ public class GameUserAddress {
 	}
 
 	/**
-	 * @param zip
-	 *            the zip to set
+	 * @param zip the zip to set
 	 */
 	public void setZip(String zip) {
 		this.zip = zip;
@@ -106,8 +101,7 @@ public class GameUserAddress {
 	}
 
 	/**
-	 * @param phone
-	 *            the phone to set
+	 * @param phone the phone to set
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
@@ -121,8 +115,7 @@ public class GameUserAddress {
 	}
 
 	/**
-	 * @param createTime
-	 *            the createTime to set
+	 * @param createTime the createTime to set
 	 */
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;

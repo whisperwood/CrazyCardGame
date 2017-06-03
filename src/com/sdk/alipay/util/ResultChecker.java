@@ -61,8 +61,7 @@ public class ResultChecker {
 	public boolean isPayOk() {
 		boolean isPayOk = false;
 		String success = getSuccess();
-		if ("true".equalsIgnoreCase(success)
-				&& checkSign() == RESULT_CHECK_SIGN_SUCCEED)
+		if ("true".equalsIgnoreCase(success) && checkSign() == RESULT_CHECK_SIGN_SUCCEED)
 			isPayOk = true;
 		return isPayOk;
 	}

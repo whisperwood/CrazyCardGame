@@ -43,16 +43,13 @@ public class NetworkManager {
 	 * 检查代理，是否cnwap接入
 	 */
 	private void detectProxy() {
-		ConnectivityManager cm = (ConnectivityManager) mContext
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
-		if (ni != null && ni.isAvailable()
-				&& ni.getType() == ConnectivityManager.TYPE_MOBILE) {
+		if (ni != null && ni.isAvailable() && ni.getType() == ConnectivityManager.TYPE_MOBILE) {
 			String proxyHost = android.net.Proxy.getDefaultHost();
 			int port = android.net.Proxy.getDefaultPort();
 			if (proxyHost != null) {
-				final InetSocketAddress sa = new InetSocketAddress(proxyHost,
-						port);
+				final InetSocketAddress sa = new InetSocketAddress(proxyHost, port);
 				mProxy = new Proxy(Proxy.Type.HTTP, sa);
 			}
 		}
@@ -71,11 +68,8 @@ public class NetworkManager {
 
 	/**
 	 * 发送和接收数据
-	 * 
-	 * @param strReqData
-	 *            请求数据
-	 * @param strUrl
-	 *            请求地址
+	 * @param strReqData 请求数据
+	 * @param strUrl 请求地址
 	 * @return
 	 */
 	public String SendAndWaitResponse(String strReqData, String strUrl) {
@@ -97,8 +91,7 @@ public class NetworkManager {
 			httpConnect.setConnectTimeout(connectTimeout);
 			httpConnect.setReadTimeout(readTimeout);
 			httpConnect.setDoOutput(true);
-			httpConnect.addRequestProperty("Content-type",
-					"application/x-www-form-urlencoded;charset=utf-8");
+			httpConnect.addRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 			httpConnect.connect();
 			OutputStream os = httpConnect.getOutputStream();
 			p_entity.writeTo(os);
@@ -115,13 +108,9 @@ public class NetworkManager {
 
 	/**
 	 * 下载文件
-	 * 
-	 * @param context
-	 *            上下文环境
-	 * @param strurl
-	 *            下载地址
-	 * @param path
-	 *            下载路径
+	 * @param context 上下文环境
+	 * @param strurl 下载地址
+	 * @param path 下载路径
 	 * @return
 	 */
 	public boolean urlDownloadToFile(Context context, String strurl, String path) {

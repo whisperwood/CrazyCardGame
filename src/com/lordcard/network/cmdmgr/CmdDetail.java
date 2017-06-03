@@ -37,8 +37,7 @@ public class CmdDetail implements Serializable {
 	@SerializedName("vs")
 	private String version; // 版本号
 	/**
-	 * 聊天时 0为聊天，1为思考，2为表情、3为美女
-	 * {cmd:"chat",detail:"{type:1,value:\"12\",fromUserId:645}"} 打牌时
+	 * 聊天时 0为聊天，1为思考，2为表情、3为美女 {cmd:"chat",detail:"{type:1,value:\"12\",fromUserId:645}"} 打牌时
 	 * 0:普通消息，1:打牌业务消息
 	 */
 	@Expose
@@ -205,7 +204,6 @@ public class CmdDetail implements Serializable {
 	 */
 	/**
 	 * 转成json字符串
-	 * 
 	 * @return
 	 */
 	public String toJson() {

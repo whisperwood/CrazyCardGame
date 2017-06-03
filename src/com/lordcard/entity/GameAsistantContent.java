@@ -143,8 +143,7 @@ public class GameAsistantContent {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -158,8 +157,7 @@ public class GameAsistantContent {
 	}
 
 	/**
-	 * @param asstIcon
-	 *            the asstIcon to set
+	 * @param asstIcon the asstIcon to set
 	 */
 	public void setAsstIcon(String asstIcon) {
 		this.asstIcon = asstIcon;
@@ -173,8 +171,7 @@ public class GameAsistantContent {
 	}
 
 	/**
-	 * @param display
-	 *            the display to set
+	 * @param display the display to set
 	 */
 	public void setDisplay(Integer display) {
 		this.display = display;
@@ -188,8 +185,7 @@ public class GameAsistantContent {
 	}
 
 	/**
-	 * @param content
-	 *            the content to set
+	 * @param content the content to set
 	 */
 	public void setContent(String content) {
 		this.content = content;
@@ -203,8 +199,7 @@ public class GameAsistantContent {
 	}
 
 	/**
-	 * @param btnAc
-	 *            the btnAc to set
+	 * @param btnAc the btnAc to set
 	 */
 	public void setBtnAc(String btnAc) {
 		this.btnAc = btnAc;

@@ -10,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-
 import com.lordcard.common.exception.CrashApplication;
 import com.lordcard.common.util.DialogUtils;
 import com.lordcard.common.util.JsonHelper;
@@ -21,7 +20,6 @@ import com.lordcard.network.http.HttpRequest;
 
 /**
  * 切换账号对话框
- * 
  * @ClassName: ChangeAccountDialog
  * @Description: TODO
  * @author zhenggang
@@ -47,7 +45,6 @@ public class FindPwdDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	private void layout() {
@@ -64,16 +61,16 @@ public class FindPwdDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.login_dl_login_btn:// 确定
-			mst.unRegisterView(findViewById(R.id.gamelogin_dialog_layout));
-			okClick();
-			break;
-		case R.id.login_dl_close_btn:// 退出
-			mst.unRegisterView(findViewById(R.id.gamelogin_dialog_layout));
-			dismiss();
-			break;
-		default:
-			break;
+			case R.id.login_dl_login_btn:// 确定
+				mst.unRegisterView(findViewById(R.id.gamelogin_dialog_layout));
+				okClick();
+				break;
+			case R.id.login_dl_close_btn:// 退出
+				mst.unRegisterView(findViewById(R.id.gamelogin_dialog_layout));
+				dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -99,7 +96,6 @@ public class FindPwdDialog extends Dialog implements OnClickListener {
 
 	/**
 	 * 密码找回
-	 * 
 	 * @param map
 	 */
 	public void fetrievePwd(final String account, final String email) {
@@ -107,8 +103,7 @@ public class FindPwdDialog extends Dialog implements OnClickListener {
 			@Override
 			public void run() {
 				String result = HttpRequest.fetrievePwd(account, email);
-				JsonResult jsonResult = JsonHelper.fromJson(result,
-						JsonResult.class);
+				JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 				if (JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) {
 					DialogUtils.mesTip(jsonResult.getMethodMessage(), false);
 				} else {

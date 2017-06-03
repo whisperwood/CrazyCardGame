@@ -2,7 +2,6 @@ package com.sdk.constant;
 
 /**
  * sdk公共系统常量类
- * 
  * @author yinhb
  */
 public class SDKConstant {

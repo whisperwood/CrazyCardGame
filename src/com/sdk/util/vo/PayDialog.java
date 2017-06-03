@@ -26,8 +26,7 @@ public class PayDialog extends Dialog {
 	private String paySiteTag;
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 
-	public PayDialog(Context context, PayInit payInit, PayPoint payPoint,
-			String paySiteTag, String tipMsg) {
+	public PayDialog(Context context, PayInit payInit, PayPoint payPoint, String paySiteTag, String tipMsg) {
 		super(context, R.style.dialog);
 		this.context = context;
 		this.payInit = payInit;
@@ -102,8 +101,7 @@ public class PayDialog extends Dialog {
 	public void finishGameAcitivity() {
 		if (Database.currentActivity != null) {
 			// 游戏页面
-			if (ActivityUtils.isGameView()
-					&& !PaySite.SINGLE_GAME_CLICK.equals(paySiteTag)) {
+			if (ActivityUtils.isGameView() && !PaySite.SINGLE_GAME_CLICK.equals(paySiteTag)) {
 				Database.currentActivity.finish();
 				return;
 			}

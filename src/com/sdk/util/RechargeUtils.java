@@ -5,7 +5,6 @@ import com.lordcard.entity.Room;
 public class RechargeUtils {
 	/**
 	 * 计算当前房间需默认需要充值的金额
-	 * 
 	 * @Title: calculateMoney
 	 * @param @param room
 	 * @param @return

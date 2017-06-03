@@ -6,12 +6,10 @@ interface MatchHander {
 
 public class Match {
 	/**
-	 * 09. * 百分之多少之内匹配错误可以接受 10. * a与ab匹配为百分之50的错误率。 11. * @param percent
-	 * 设置匹配百分比 12. * @param src 字符串1 13. * @param dest 字符串2 14. * @param hander
-	 * 匹配规则 15. * @return 16.
+	 * 09. * 百分之多少之内匹配错误可以接受 10. * a与ab匹配为百分之50的错误率。 11. * @param percent 设置匹配百分比 12. * @param src
+	 * 字符串1 13. * @param dest 字符串2 14. * @param hander 匹配规则 15. * @return 16.
 	 */
-	public static boolean match(double percent, String src, String dest,
-			MatchHander hander) {
+	public static boolean match(double percent, String src, String dest, MatchHander hander) {
 		char[] csrc = src.toCharArray();
 		char[] cdest = dest.toCharArray();
 		double score = 0;
@@ -22,12 +20,10 @@ public class Match {
 	}
 
 	/**
-	 * 28. * 几个错误的字符可以接受 29. * a与ab为1个字符错误可以接受 30. * @param percent 设置匹配百分比 31.
-	 * * @param src 字符串1 32. * @param dest 字符串2 33. * @param hander 匹配规则 34. * @return
-	 * 35.
+	 * 28. * 几个错误的字符可以接受 29. * a与ab为1个字符错误可以接受 30. * @param percent 设置匹配百分比 31. * @param src 字符串1
+	 * 32. * @param dest 字符串2 33. * @param hander 匹配规则 34. * @return 35.
 	 */
-	public static boolean match(int errorNum, String src, String dest,
-			MatchHander hander) {
+	public static boolean match(int errorNum, String src, String dest, MatchHander hander) {
 		char[] csrc = src.toCharArray();
 		char[] cdest = dest.toCharArray();
 		int score = 0;
@@ -38,8 +34,7 @@ public class Match {
 	}
 
 	/**
-	 * 46. * 2个字符串75%匹配成功返回true 47. * @param src 48. * @param dest 49. * @return
-	 * 50.
+	 * 46. * 2个字符串75%匹配成功返回true 47. * @param src 48. * @param dest 49. * @return 50.
 	 */
 	public static boolean match(double percent, String src, String dest) {
 		return match(percent, src, dest, new MatchHander() {
@@ -51,8 +46,8 @@ public class Match {
 	}
 
 	/**
-	 * 60. * 2个字符串错几个字符可以接受 61. * @param errorNum 62. * @param src 63. * @param
-	 * dest 64. * @return 65.
+	 * 60. * 2个字符串错几个字符可以接受 61. * @param errorNum 62. * @param src 63. * @param dest 64. * @return
+	 * 65.
 	 */
 	public static boolean match(int errorNum, String src, String dest) {
 		return match(errorNum, src, dest, new MatchHander() {
@@ -64,11 +59,10 @@ public class Match {
 	}
 
 	/**
-	 * 76. * 使用递归方法匹配字符串 77. * @param csrc 78. * @param i 79. * @param cdest 80.
-	 * * @param j 81. * @param hander 82. * @return 83.
+	 * 76. * 使用递归方法匹配字符串 77. * @param csrc 78. * @param i 79. * @param cdest 80. * @param j 81. * @param
+	 * hander 82. * @return 83.
 	 */
-	private static int cal(char[] csrc, int i, char[] cdest, int j,
-			MatchHander hander) {
+	private static int cal(char[] csrc, int i, char[] cdest, int j, MatchHander hander) {
 		int score = 0;
 		if (i >= csrc.length || j >= cdest.length)
 			return 0;

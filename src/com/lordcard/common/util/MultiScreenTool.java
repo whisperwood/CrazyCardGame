@@ -33,7 +33,6 @@ public class MultiScreenTool {
 
 	/**
 	 * 此函数在系统启动的第一个Activity的OnCreate中调用
-	 * 
 	 * @param act
 	 */
 	private MultiScreenTool(int width, int height, float nowDensity) {
@@ -44,7 +43,6 @@ public class MultiScreenTool {
 
 	/**
 	 * 对此工具进行初始化，使用singleTonVertical或者singleTonHorizontal进行获取实例前，必须调用此函数一次
-	 * 
 	 * @param act
 	 */
 	public static void init(Activity act) {
@@ -72,10 +70,8 @@ public class MultiScreenTool {
 		dm2.ydpi = dm.xdpi;
 		dm2.density = dm.density;
 		// Log.i("DisplayMetrics","xdpi: "+dm2.xdpi+"ydpi: "+dm2.ydpi+"heightPixels: "+dm2.heightPixels+"widthPixels: "+dm2.widthPixels);
-		instanceVertical = new MultiScreenTool(Constant.DEFAULT_WIDTH,
-				Constant.DEFAULT_HEIGHT, dm.density);
-		instanceHorizontal = new MultiScreenTool(Constant.DEFAULT_HEIGHT,
-				Constant.DEFAULT_WIDTH, dm.density);
+		instanceVertical = new MultiScreenTool(Constant.DEFAULT_WIDTH, Constant.DEFAULT_HEIGHT, dm.density);
+		instanceHorizontal = new MultiScreenTool(Constant.DEFAULT_HEIGHT, Constant.DEFAULT_WIDTH, dm.density);
 		if (dm.widthPixels < dm.heightPixels) {
 			// 当前竖屏
 			instanceVertical.displayMetrics = dm;
@@ -85,15 +81,12 @@ public class MultiScreenTool {
 			instanceHorizontal.displayMetrics = dm;
 			instanceVertical.displayMetrics = dm2;
 		}
-		instanceVertical.tagId = act.getResources().getIdentifier(
-				"view_tag_id", "id", act.getPackageName());
-		instanceHorizontal.tagId = act.getResources().getIdentifier(
-				"view_tag_id", "id", act.getPackageName());
+		instanceVertical.tagId = act.getResources().getIdentifier("view_tag_id", "id", act.getPackageName());
+		instanceHorizontal.tagId = act.getResources().getIdentifier("view_tag_id", "id", act.getPackageName());
 	}
 
 	/**
 	 * 其他地方不要使用new,而是调用此函数来获取实例
-	 * 
 	 * @return
 	 */
 	public static MultiScreenTool singleTonVertical() {
@@ -110,7 +103,6 @@ public class MultiScreenTool {
 
 	/**
 	 * 其他地方不要使用new,而是调用此函数来获取实例
-	 * 
 	 * @return
 	 */
 	public static MultiScreenTool singleTonHolizontal() {
@@ -127,7 +119,6 @@ public class MultiScreenTool {
 
 	/**
 	 * 取得屏幕X方向的像素值px
-	 * 
 	 * @return
 	 */
 	public int getScreenXDp() {
@@ -137,7 +128,6 @@ public class MultiScreenTool {
 
 	/**
 	 * 取屏幕Y方向的像素值px
-	 * 
 	 * @return
 	 */
 	public int getScreenYDp() {
@@ -146,14 +136,11 @@ public class MultiScreenTool {
 
 	/**
 	 * 输入一个X方向的数值，返回一个经过调整、适应多屏幕的px值
-	 * 
-	 * @param xInPx
-	 *            X方向的px值
+	 * @param xInPx X方向的px值
 	 * @return 适应多屏幕的像素值px
 	 */
 	public int adjustX(int xInPx) {
-		int ret = (int) (xInPx * displayMetrics.widthPixels / this.defaultX
-				* this.defaultDensity / this.nowDensity + 0.5f);
+		int ret = (int) (xInPx * displayMetrics.widthPixels / this.defaultX * this.defaultDensity / this.nowDensity + 0.5f);
 		if (ret > displayMetrics.widthPixels) {
 			ret = displayMetrics.widthPixels;
 		}
@@ -162,14 +149,11 @@ public class MultiScreenTool {
 
 	/**
 	 * 输入一个X方向的数值，返回一个经过调整、适应多屏幕的px值
-	 * 
-	 * @param xInPx
-	 *            X方向的px值
+	 * @param xInPx X方向的px值
 	 * @return 适应多屏幕的像素值px
 	 */
 	private float adjustXInFloat(float xInPx) {
-		float ret = xInPx * displayMetrics.widthPixels / this.defaultX
-				* this.defaultDensity / this.nowDensity + 0.5f;
+		float ret = xInPx * displayMetrics.widthPixels / this.defaultX * this.defaultDensity / this.nowDensity + 0.5f;
 		if (ret > displayMetrics.widthPixels) {
 			ret = displayMetrics.widthPixels;
 		}
@@ -178,14 +162,11 @@ public class MultiScreenTool {
 
 	/**
 	 * 输入一个Y方向的数值，返回一个经过调整、适应多屏幕的px值
-	 * 
-	 * @param yInPx
-	 *            Y方向的px值
+	 * @param yInPx Y方向的px值
 	 * @return 适应多屏幕的像素值px
 	 */
 	public int adjustY(int yInPx) {
-		int ret = (int) (yInPx * displayMetrics.heightPixels / this.defaultY
-				* this.defaultDensity / this.nowDensity + 0.5f);
+		int ret = (int) (yInPx * displayMetrics.heightPixels / this.defaultY * this.defaultDensity / this.nowDensity + 0.5f);
 		if (ret > displayMetrics.heightPixels) {
 			ret = displayMetrics.heightPixels;
 		}
@@ -194,9 +175,7 @@ public class MultiScreenTool {
 
 	/**
 	 * 输入一个X方向的数值，返回一个经过调整、适应多屏幕的px值
-	 * 
-	 * @param xInPx
-	 *            X方向的px值
+	 * @param xInPx X方向的px值
 	 * @return 适应多屏幕的像素值px
 	 */
 	public int adjustXIgnoreDensity(int xInPx) {
@@ -209,9 +188,7 @@ public class MultiScreenTool {
 
 	/**
 	 * 输入一个Y方向的数值，返回一个经过调整、适应多屏幕的px值
-	 * 
-	 * @param yInPx
-	 *            Y方向的px值
+	 * @param yInPx Y方向的px值
 	 * @return 适应多屏幕的像素值px
 	 */
 	public int adjustYIgnoreDensity(int yInPx) {
@@ -228,10 +205,8 @@ public class MultiScreenTool {
 
 	/**
 	 * 调整某个View的位置、大小以适应多屏幕
-	 * 
 	 * @param view
-	 * @param addOnHierarchyChangeListener
-	 *            是否添加UI变动监听器
+	 * @param addOnHierarchyChangeListener 是否添加UI变动监听器
 	 */
 	public void adjustView(View view, boolean addOnHierarchyChangeListener) {
 		if (view.getLayoutParams() == null) {
@@ -250,8 +225,7 @@ public class MultiScreenTool {
 			}
 			// 所有可能有adapter的
 			if (addOnHierarchyChangeListener) {
-				vg.setOnHierarchyChangeListener(new HierarchyChangeListener(
-						this));
+				vg.setOnHierarchyChangeListener(new HierarchyChangeListener(this));
 			}
 		}
 		// System.out.printf(view.hashCode() + "");
@@ -270,8 +244,7 @@ public class MultiScreenTool {
 		// boolean hasAdjust = false;
 		// 调整layout 参数
 		if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-			ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) view
-					.getLayoutParams();
+			ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
 			// Log.i("MultiScreenTool", "density=" + displayMetrics.density +
 			// "width=" + lp.width +
 			// "height=" + lp.height + "leftMargin="
@@ -308,10 +281,8 @@ public class MultiScreenTool {
 			// lp.rightMargin);
 			view.setLayoutParams(lp);
 			// 调整padding参数
-			view.setPadding(this.adjustX(view.getPaddingLeft()),
-					this.adjustY(view.getPaddingTop()),
-					this.adjustX(view.getPaddingRight()),
-					this.adjustY(view.getPaddingBottom()));
+			view.setPadding(this.adjustX(view.getPaddingLeft()), this.adjustY(view.getPaddingTop()),
+					this.adjustX(view.getPaddingRight()), this.adjustY(view.getPaddingBottom()));
 		} else if (view.getLayoutParams() instanceof ViewGroup.LayoutParams) {
 			ViewGroup.LayoutParams lp = view.getLayoutParams();
 			// view.getd
@@ -335,10 +306,8 @@ public class MultiScreenTool {
 			}
 			view.setLayoutParams(lp);
 			// 调整padding参数
-			view.setPadding(this.adjustX(view.getPaddingLeft()),
-					this.adjustY(view.getPaddingTop()),
-					this.adjustX(view.getPaddingRight()),
-					this.adjustY(view.getPaddingBottom()));
+			view.setPadding(this.adjustX(view.getPaddingLeft()), this.adjustY(view.getPaddingTop()),
+					this.adjustX(view.getPaddingRight()), this.adjustY(view.getPaddingBottom()));
 		} else {
 			// Log.i("MultiScreenTool",
 			// "MultiScreenTool: 以下layoutparams（）类型没有处理" +
@@ -366,7 +335,6 @@ public class MultiScreenTool {
 
 	/**
 	 * 将某个view及下面的所有子view的登记信息从登记表中清除，后面窗口重新初始化时才能调整
-	 * 
 	 * @param view
 	 */
 	public void unRegisterView(View view) {
@@ -396,11 +364,9 @@ public class MultiScreenTool {
 
 	/**
 	 * 调整ImageView，这张ImageView中一般取不到图片的宽和高，所以使用adjustView无法调整
-	 * 
 	 * @param view
 	 */
-	public ViewGroup.LayoutParams getAdjustLayoutParamsForImageView(
-			ImageView view) {
+	public ViewGroup.LayoutParams getAdjustLayoutParamsForImageView(ImageView view) {
 		if (view.getTag(tagId) != null) {
 			return view.getLayoutParams();
 		} else {
@@ -410,16 +376,13 @@ public class MultiScreenTool {
 		bgWidth = this.adjustXIgnoreDensity(bgWidth);
 		int bgHight = view.getBackground().getMinimumHeight();
 		bgHight = this.adjustYIgnoreDensity(bgHight);
-		ViewGroup.LayoutParams rlp = new ViewGroup.LayoutParams(bgWidth,
-				bgHight);
+		ViewGroup.LayoutParams rlp = new ViewGroup.LayoutParams(bgWidth, bgHight);
 		return rlp;
 	}
 
 	/**
 	 * 检查屏幕尺寸是否变化（有些平板，横竖转换转换后其高宽和原来不一样）
-	 * 
-	 * @param act
-	 *            调用的activity
+	 * @param act 调用的activity
 	 */
 	// public void checkWidthAndHeight(Activity act) {
 	public void checkWidthAndHeight() {

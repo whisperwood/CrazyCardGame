@@ -15,7 +15,6 @@ import com.lordcard.network.http.GameCache;
 
 /**
  * 请求排名记录线程
- * 
  * @author Administrator
  */
 public class GetRankTask extends GenericTask {
@@ -28,8 +27,7 @@ public class GetRankTask extends GenericTask {
 			CmdUtils.sendGetRankCmd(gu.getLoginToken());
 			return TaskResult.OK;
 		} catch (Exception e) {
-			DialogUtils.mesTip(context.getString(R.string.link_server_fail),
-					true);
+			DialogUtils.mesTip(context.getString(R.string.link_server_fail), true);
 			return TaskResult.FAILED;
 		}
 	}

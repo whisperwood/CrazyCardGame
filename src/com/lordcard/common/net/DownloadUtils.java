@@ -38,7 +38,6 @@ public class DownloadUtils {
 
 	/**
 	 * 通过输入url得到图片字节数组
-	 * 
 	 * @param path
 	 * @return
 	 * @throws Exception
@@ -74,8 +73,7 @@ public class DownloadUtils {
 		return result;
 	}
 
-	public static byte[] ReadText(Context context, String fileName, String path)
-			throws Exception {
+	public static byte[] ReadText(Context context, String fileName, String path) throws Exception {
 		FileInputStream in = null;
 		ByteArrayOutputStream out = null;
 		byte[] result = null;
@@ -125,8 +123,7 @@ public class DownloadUtils {
 		}
 	}
 
-	public static byte[] downWrite(String path, Context context, String fileName)
-			throws Exception {
+	public static byte[] downWrite(String path, Context context, String fileName) throws Exception {
 		WriteText(context, fileName, getImage(path));
 		return getImage(path);
 	}
@@ -146,11 +143,9 @@ public class DownloadUtils {
 			fileSize = entity.getContentLength();
 			is = entity.getContent();
 			if (is != null) {
-				boolean sdCardExist = Environment.getExternalStorageState()
-						.equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+				boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 				if (sdCardExist) { // 下载到sd卡
-					file = new File(Environment.getExternalStorageDirectory(),
-							apkName);
+					file = new File(Environment.getExternalStorageDirectory(), apkName);
 					if (file.exists()) {
 						file.delete();
 						downFileSize = 0;// 防止超过200%情况
@@ -158,15 +153,13 @@ public class DownloadUtils {
 					ActivityUtils.createFile(file);
 					fileOutputStream = new FileOutputStream(file);
 				} else { // 下载到手机内存
-					file = CrashApplication.getInstance().getFileStreamPath(
-							apkName);
+					file = CrashApplication.getInstance().getFileStreamPath(apkName);
 					if (file.exists()) {
 						file.delete();
 						downFileSize = 0;// 防止超过200%情况
 					}
-					fileOutputStream = CrashApplication.getInstance()
-							.openFileOutput(apkName,
-									Context.MODE_WORLD_READABLE);
+					fileOutputStream = CrashApplication.getInstance().openFileOutput(apkName,
+							Context.MODE_WORLD_READABLE);
 				}
 				int tempProgress = -1;
 				byte[] buf = new byte[1024];

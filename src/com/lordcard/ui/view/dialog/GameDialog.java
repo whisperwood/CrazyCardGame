@@ -23,7 +23,6 @@ import com.lordcard.ui.view.GoogleAdsHelper;
 
 /**
  * com.lordcard.ui.view.dialog.AlertDialog
- * 
  * @author Administrator <br/>
  *         create at 2013 2013-3-25 下午5:32:42
  */
@@ -36,8 +35,7 @@ public class GameDialog extends Dialog implements OnClickListener {
 	// private boolean InterceptKeyBack=false;//是否拦截返回按钮事件
 	private Button cancel, ok;
 
-	protected GameDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected GameDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
@@ -90,18 +88,18 @@ public class GameDialog extends Dialog implements OnClickListener {
 	public void onClick(View v) {
 		try {
 			switch (v.getId()) {
-			case R.id.common_cancel:
-				mst.unRegisterView(layout);
-				dismiss();
-				cancelClick();
-				break;
-			case R.id.common_ok:
-				mst.unRegisterView(layout);
-				dismiss();
-				okClick();
-				break;
-			default:
-				break;
+				case R.id.common_cancel:
+					mst.unRegisterView(layout);
+					dismiss();
+					cancelClick();
+					break;
+				case R.id.common_ok:
+					mst.unRegisterView(layout);
+					dismiss();
+					okClick();
+					break;
+				default:
+					break;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

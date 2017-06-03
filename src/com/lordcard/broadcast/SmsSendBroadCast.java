@@ -24,12 +24,12 @@ public class SmsSendBroadCast extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		if (Constant.ACTION_SMS_SEND.equals(intent.getAction())) {
 			switch (getResultCode()) {
-			case Activity.RESULT_OK:
-				Toast.makeText(context, "短信发送成功!", Toast.LENGTH_LONG).show();
-				break;
-			default:
-				// Toast.makeText(context, "发送失败", Toast.LENGTH_LONG).show();
-				break;
+				case Activity.RESULT_OK:
+					Toast.makeText(context, "短信发送成功!", Toast.LENGTH_LONG).show();
+					break;
+				default:
+					// Toast.makeText(context, "发送失败", Toast.LENGTH_LONG).show();
+					break;
 			}
 			smsSuccess(intent);
 		}

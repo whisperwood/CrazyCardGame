@@ -20,7 +20,6 @@ import com.lordcard.common.util.MultiScreenTool;
 
 /**
  * com.lordcard.ui.view.dialog.AlertDialog
- * 
  * @author Administrator <br/>
  *         create at 2013 2013-3-25 下午5:32:42
  */
@@ -31,8 +30,7 @@ public class BaoXiangDialog extends Dialog implements OnClickListener {
 	private MultiScreenTool mst = MultiScreenTool.singleTonHolizontal();
 	private RelativeLayout layout;
 
-	protected BaoXiangDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected BaoXiangDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
@@ -74,18 +72,18 @@ public class BaoXiangDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.common_cancel:
-			mst.unRegisterView(layout);
-			dismiss();
-			cancelClick();
-			break;
-		case R.id.common_ok:
-			mst.unRegisterView(layout);
-			dismiss();
-			okClick();
-			break;
-		default:
-			break;
+			case R.id.common_cancel:
+				mst.unRegisterView(layout);
+				dismiss();
+				cancelClick();
+				break;
+			case R.id.common_ok:
+				mst.unRegisterView(layout);
+				dismiss();
+				okClick();
+				break;
+			default:
+				break;
 		}
 	}
 

@@ -11,7 +11,6 @@ import android.util.Log;
 
 /**
  * 震动类
- * 
  * @author Administrator
  */
 public class Vibrate {
@@ -25,8 +24,7 @@ public class Vibrate {
 
 	@SuppressWarnings("static-access")
 	public Vibrate(Context context) {
-		vibrator = (Vibrator) context
-				.getSystemService(Context.VIBRATOR_SERVICE);
+		vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 	}
 
 	public void playVibrate(int type) {

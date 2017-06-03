@@ -39,8 +39,7 @@ public class PaySiteConfig implements java.io.Serializable {
 		return siteItemMap;
 	}
 
-	public void setSiteItemMap(
-			HashMap<String, ArrayList<PaySiteConfigItem>> siteItemMap) {
+	public void setSiteItemMap(HashMap<String, ArrayList<PaySiteConfigItem>> siteItemMap) {
 		this.siteItemMap = siteItemMap;
 	}
 }

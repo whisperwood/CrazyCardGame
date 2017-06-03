@@ -21,7 +21,6 @@ import com.sdk.util.vo.PayPoint;
 
 /**
  * 支付监听
- * 
  * @author Administrator
  */
 @SuppressWarnings("rawtypes")
@@ -38,7 +37,6 @@ public class IAPListener implements OnSMSPurchaseListener {
 
 	/**
 	 * 初始化完成
-	 * 
 	 * @see mm.purchasesdk.OnPurchaseListener#onInitFinish(int)
 	 */
 	@Override
@@ -56,8 +54,7 @@ public class IAPListener implements OnSMSPurchaseListener {
 	 */
 	@Override
 	public void onBillingFinish(int code, HashMap returnObj) {
-		if (code == PurchaseCode.ORDER_OK
-				|| (code == PurchaseCode.ORDER_OK_TIMEOUT)) {
+		if (code == PurchaseCode.ORDER_OK || (code == PurchaseCode.ORDER_OK_TIMEOUT)) {
 			billingFinishCallBack(returnObj);
 		} else {
 			// if (iapHandler.context instanceof MMPayActivity) {
@@ -77,18 +74,15 @@ public class IAPListener implements OnSMSPurchaseListener {
 			return;
 		}
 		if (returnObj != null) {
-			String payCode = (String) returnObj
-					.get(OnSMSPurchaseListener.PAYCODE);
-			String tradeID = (String) returnObj
-					.get(OnSMSPurchaseListener.TRADEID);
+			String payCode = (String) returnObj.get(OnSMSPurchaseListener.PAYCODE);
+			String tradeID = (String) returnObj.get(OnSMSPurchaseListener.TRADEID);
 			Log.d("pay_result", payCode + "|" + tradeID);
 			ThreadPool.startWork(new Runnable() {
 				@Override
 				public void run() {
 					try {
 						if (MMSMSConfig.PAY_ORDER != null) {
-							if (Database.chargingProcessDia != null
-									&& Database.chargingProcessDia.isShowing()) {
+							if (Database.chargingProcessDia != null && Database.chargingProcessDia.isShowing()) {
 								Database.chargingProcessDia.dismiss();
 							}
 							// 订单充值完成
@@ -99,29 +93,25 @@ public class IAPListener implements OnSMSPurchaseListener {
 							if (TextUtils.isEmpty(callBack)) {
 								return;
 							}
-							String result = HttpRequest.payCallBack(callBack,
-									paramMap);
+							String result = HttpRequest.payCallBack(callBack, paramMap);
 							if (result.equals(HttpRequest.SUCCESS_STATE)) {
 								MMSMSConfig.PAY_ORDER = null;
 								if (iapHandler != null) {
 									// 成功后同步用户物品
 									HttpRequest.getGameUserGoods(false);
-									Message message = iapHandler
-											.obtainMessage(IAPHandler.SUCCESS);
+									Message message = iapHandler.obtainMessage(IAPHandler.SUCCESS);
 									message.obj = "充值成功";
 									message.sendToTarget();
 								}
 							} else if (result.equals(HttpRequest.FAIL_STATE)) {
 								if (iapHandler != null) {
-									Message message = iapHandler
-											.obtainMessage(IAPHandler.FAIL);
+									Message message = iapHandler.obtainMessage(IAPHandler.FAIL);
 									message.obj = "充值失败";
 									message.sendToTarget();
 								}
 							} else if (result.equals(HttpRequest.TOKEN_ILLEGAL)) {
 								if (iapHandler != null) {
-									Message message = iapHandler
-											.obtainMessage(IAPHandler.FAIL_TOKENID);
+									Message message = iapHandler.obtainMessage(IAPHandler.FAIL_TOKENID);
 									message.obj = "充值失败，无效的tokenid";
 									message.sendToTarget();
 								}

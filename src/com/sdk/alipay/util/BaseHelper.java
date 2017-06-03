@@ -20,7 +20,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-
 public class BaseHelper {
 	public static String convertStreamToString(InputStream is) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -44,8 +43,7 @@ public class BaseHelper {
 		return sb.toString();
 	}
 
-	public static void showDialog(final Activity context, String strTitle,
-			String strText, int icon,
+	public static void showDialog(final Activity context, String strTitle, String strText, int icon,
 			DialogInterface.OnClickListener onClickListener) {
 		AlertDialog.Builder tDialog = new AlertDialog.Builder(context);
 		tDialog.setIcon(icon);
@@ -67,9 +65,8 @@ public class BaseHelper {
 
 	//
 	// show the progress bar.
-	public static ProgressDialog showProgress(Context context,
-			CharSequence title, CharSequence message, boolean indeterminate,
-			boolean cancelable) {
+	public static ProgressDialog showProgress(Context context, CharSequence title, CharSequence message,
+			boolean indeterminate, boolean cancelable) {
 		ProgressDialog dialog = new ProgressDialog(context);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
@@ -86,8 +83,7 @@ public class BaseHelper {
 			String[] arrStr = str.split(split);
 			for (int i = 0; i < arrStr.length; i++) {
 				String[] arrKeyValue = arrStr[i].split("=");
-				json.put(arrKeyValue[0],
-						arrStr[i].substring(arrKeyValue[0].length() + 1));
+				json.put(arrKeyValue[0], arrStr[i].substring(arrKeyValue[0].length() + 1));
 			}
 		} catch (Exception e) {
 			// MyLog.d("BaseHelper", e.getMessage());

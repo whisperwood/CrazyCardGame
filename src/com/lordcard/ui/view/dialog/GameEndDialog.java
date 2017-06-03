@@ -52,20 +52,16 @@ import com.lordcard.prerecharge.PrerechargeManager;
 import com.lordcard.prerecharge.PrerechargeManager.PrerechargeDialogType;
 import com.lordcard.ui.base.IGameView;
 import com.lordcard.ui.payrecord.PayRecordOrder;
-import com.lordcard.ui.view.GoogleAdsHelper;
 import com.sdk.jd.sms.util.JDSMSPayUtil;
 import com.sdk.util.PaySite;
 import com.sdk.util.PayTipUtils;
 import com.sdk.util.RechargeUtils;
 
-
 /**
  * 比赛场游戏结束界面
- * 
  * @author Administrator
  */
-public class GameEndDialog extends Dialog implements IGameView,
-		android.view.View.OnClickListener {
+public class GameEndDialog extends Dialog implements IGameView, android.view.View.OnClickListener {
 	/** 退出结束对话框 */
 	private static final int EXIT = 1212;
 	/** 返回游戏大厅 */
@@ -98,8 +94,7 @@ public class GameEndDialog extends Dialog implements IGameView,
 	private TextView zhiDouTv1, zhiDouTv2, zhiDouTv3 = null;// 金豆
 	private TextView zhiZuangTv1, zhiZuangTv2, zhiZuangTv3 = null;// 钻石
 	private TextView zhiLiTv1, zhiLiTv2, zhiLiTv3 = null;// 经验
-	private TextView zongBeiShuTv, diShuTv, nowZhiDouTv, nowZhiZuangTv,
-			ZhiShangTv = null;// 总倍数，底注，当前金豆，当前钻石，等级
+	private TextView zongBeiShuTv, diShuTv, nowZhiDouTv, nowZhiZuangTv, ZhiShangTv = null;// 总倍数，底注，当前金豆，当前钻石，等级
 	private Button againBtn, backBtn, rechargeBtn;// 关闭，再来一局，返回，微博分享
 	private ListView mBeiShuList;// 左边倍数列表
 	private List<BeiShu> beiShu;// 倍数数据
@@ -111,8 +106,7 @@ public class GameEndDialog extends Dialog implements IGameView,
 	private AutoTask showMaxUpgradeTask = null;// 显示升大级对话框定时器
 	private AutoTask toWaitViewTask = null;// 跳转到等待界面定时器
 
-	public GameEndDialog(Context context, List<Play> list, int order,
-			Handler handler) {
+	public GameEndDialog(Context context, List<Play> list, int order, Handler handler) {
 		super(context, R.style.process_dialog);
 		this.context = context;
 		this.order = order;
@@ -131,86 +125,78 @@ public class GameEndDialog extends Dialog implements IGameView,
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
 				switch (msg.what) {
-				case EXIT:
-					handler.sendEmptyMessage(24);
-					dismiss();
-					release();
-					break;
-				case GO_BACK:// 返回游戏大厅
-					release();
-					handler.sendEmptyMessage(25);
-					dismiss();
-					break;
-				case GO_AGAIN:// 再来一局
-					dismiss();
-					release();
-					handler.sendEmptyMessage(26);
-					break;
-				case SHOW_IQ_GRADE_MIN:// 显示IQ升级对话框(小级)
-					String result = msg.getData()
-							.getString("getCelebratedText");
-					boolean isDiZhu = msg.getData().getBoolean("isCall", false);
-					String gender = Database.userMap.get(order).getGender();// 性别
-																			// 0保密1女2男
-					Map<String, String> headPath = Database.userMap.get(order)
-							.getIqImg();
-					if (null == mIqMinUpgradeDialog
-							|| !mIqMinUpgradeDialog.isShowing()) {
-						mIqMinUpgradeDialog = new GameIqUpgradeDialog(context,
-								mHandler, result, gender, isDiZhu, headPath,
-								GED_SHOW_IQ_GRADE_MAX);
-						android.view.WindowManager.LayoutParams lay = mIqMinUpgradeDialog
-								.getWindow().getAttributes();
-						setParams(lay);
-						Window window = mIqMinUpgradeDialog.getWindow();
-						window.setGravity(Gravity.CENTER); // 此处可以设置dialog显示的位置
-						window.setWindowAnimations(R.style.mystyle2); // 添加动画
-						mIqMinUpgradeDialog.show();
-					}
-					break;
-				case GED_SHOW_IQ_GRADE_MAX:// 升级(大级)
-					if (null == mIqMaxGradeDialog
-							|| !mIqMaxGradeDialog.isShowing()) {
-						// 弹出等级等级对话框
-						int iq = -1;
-						GameUser cacheUser = (GameUser) GameCache
-								.getObj(CacheKey.GAME_USER);
-						if (null != cacheUser) {
-							iq = cacheUser.getIq();
+					case EXIT:
+						handler.sendEmptyMessage(24);
+						dismiss();
+						release();
+						break;
+					case GO_BACK:// 返回游戏大厅
+						release();
+						handler.sendEmptyMessage(25);
+						dismiss();
+						break;
+					case GO_AGAIN:// 再来一局
+						dismiss();
+						release();
+						handler.sendEmptyMessage(26);
+						break;
+					case SHOW_IQ_GRADE_MIN:// 显示IQ升级对话框(小级)
+						String result = msg.getData().getString("getCelebratedText");
+						boolean isDiZhu = msg.getData().getBoolean("isCall", false);
+						String gender = Database.userMap.get(order).getGender();// 性别
+																				// 0保密1女2男
+						Map<String, String> headPath = Database.userMap.get(order).getIqImg();
+						if (null == mIqMinUpgradeDialog || !mIqMinUpgradeDialog.isShowing()) {
+							mIqMinUpgradeDialog = new GameIqUpgradeDialog(context, mHandler, result, gender, isDiZhu,
+									headPath, GED_SHOW_IQ_GRADE_MAX);
+							android.view.WindowManager.LayoutParams lay = mIqMinUpgradeDialog.getWindow()
+									.getAttributes();
+							setParams(lay);
+							Window window = mIqMinUpgradeDialog.getWindow();
+							window.setGravity(Gravity.CENTER); // 此处可以设置dialog显示的位置
+							window.setWindowAnimations(R.style.mystyle2); // 添加动画
+							mIqMinUpgradeDialog.show();
 						}
-						mIqMaxGradeDialog = new IqGradeDialog(context, iq);
-						mIqMaxGradeDialog
-								.setContentView(R.layout.iq_grade_dialog);
-						android.view.WindowManager.LayoutParams lay1 = mIqMaxGradeDialog
-								.getWindow().getAttributes();
-						setParams(lay1);
-						Window window1 = mIqMaxGradeDialog.getWindow();
-						window1.setGravity(Gravity.BOTTOM); // 此处可以设置dialog显示的位置
-						window1.setWindowAnimations(R.style.mystyle); // 添加动画
-						mIqMaxGradeDialog.show();
-					}
-					break;
-				case ENABLE_DIALOG:
-					enableButtons(true);
-					break;
-				case SHOW_ADD_BEEN:
-					JDSMSPayUtil.setContext(context);
-					double money = RechargeUtils
-							.calRoomJoinMoney(Database.JOIN_ROOM);
-					PayTipUtils.showTip(money, PaySite.GAME_END_AUTO);
-					// Dialog dialog = SDKFactory.getPayDialog(context,
-					// Database.JOIN_ROOM,
-					// null,false);
-					// android.view.WindowManager.LayoutParams lay2 =
-					// dialog.getWindow().getAttributes();
-					// setParams(lay2);
-					// Window window2 = dialog.getWindow();
-					// window2.setGravity(Gravity.CENTER); //此处可以设置dialog显示的位置
-					// window2.setWindowAnimations(R.style.mystyle2); //添加动画
-					// dialog.show();
-					break;
-				default:
-					break;
+						break;
+					case GED_SHOW_IQ_GRADE_MAX:// 升级(大级)
+						if (null == mIqMaxGradeDialog || !mIqMaxGradeDialog.isShowing()) {
+							// 弹出等级等级对话框
+							int iq = -1;
+							GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+							if (null != cacheUser) {
+								iq = cacheUser.getIq();
+							}
+							mIqMaxGradeDialog = new IqGradeDialog(context, iq);
+							mIqMaxGradeDialog.setContentView(R.layout.iq_grade_dialog);
+							android.view.WindowManager.LayoutParams lay1 = mIqMaxGradeDialog.getWindow()
+									.getAttributes();
+							setParams(lay1);
+							Window window1 = mIqMaxGradeDialog.getWindow();
+							window1.setGravity(Gravity.BOTTOM); // 此处可以设置dialog显示的位置
+							window1.setWindowAnimations(R.style.mystyle); // 添加动画
+							mIqMaxGradeDialog.show();
+						}
+						break;
+					case ENABLE_DIALOG:
+						enableButtons(true);
+						break;
+					case SHOW_ADD_BEEN:
+						JDSMSPayUtil.setContext(context);
+						double money = RechargeUtils.calRoomJoinMoney(Database.JOIN_ROOM);
+						PayTipUtils.showTip(money, PaySite.GAME_END_AUTO);
+						// Dialog dialog = SDKFactory.getPayDialog(context,
+						// Database.JOIN_ROOM,
+						// null,false);
+						// android.view.WindowManager.LayoutParams lay2 =
+						// dialog.getWindow().getAttributes();
+						// setParams(lay2);
+						// Window window2 = dialog.getWindow();
+						// window2.setGravity(Gravity.CENTER); //此处可以设置dialog显示的位置
+						// window2.setWindowAnimations(R.style.mystyle2); //添加动画
+						// dialog.show();
+						break;
+					default:
+						break;
 				}
 			}
 		};
@@ -239,8 +225,7 @@ public class GameEndDialog extends Dialog implements IGameView,
 		/** 是否显示冻结图标 **/
 		imgFreeze = (ImageView) findViewById(R.id.dzed_img_freeze);
 		if (isWinGame() && PrerechargeManager.isPrePay()) {
-			Animation freezeAnimation = AnimationUtils.loadAnimation(context,
-					R.anim.pre_recharge_freeze_anim);
+			Animation freezeAnimation = AnimationUtils.loadAnimation(context, R.anim.pre_recharge_freeze_anim);
 			freezeAnimation.setAnimationListener(new AnimationListener() {
 				@Override
 				public void onAnimationStart(Animation animation) {
@@ -256,15 +241,12 @@ public class GameEndDialog extends Dialog implements IGameView,
 					PayRecordOrder mPayRecordOrder = PrerechargeManager.mPayRecordOrder;
 					for (Play endPlay : users) {
 						if (endPlay.getOrder() == order) {
-							mPayRecordOrder.setWinBean((long) endPlay
-									.getPayment());
-							mPayRecordOrder.setBaseBean((long) mPayRecordOrder
-									.getMoney() * 10000);
+							mPayRecordOrder.setWinBean((long) endPlay.getPayment());
+							mPayRecordOrder.setBaseBean((long) mPayRecordOrder.getMoney() * 10000);
 							break;
 						}
 					}
-					PrerechargeManager.createPrerechargeDialog(
-							PrerechargeDialogType.Dialog_endgame, context,
+					PrerechargeManager.createPrerechargeDialog(PrerechargeDialogType.Dialog_endgame, context,
 							mPayRecordOrder, mHandler, 0).show();
 				}
 			});
@@ -312,7 +294,6 @@ public class GameEndDialog extends Dialog implements IGameView,
 
 	/**
 	 * 将按钮设成是否可用
-	 * 
 	 * @param isEnable
 	 */
 	private void enableButtons(boolean isEnable) {
@@ -363,7 +344,6 @@ public class GameEndDialog extends Dialog implements IGameView,
 
 	/**
 	 * 设置第一项的数据
-	 * 
 	 * @param isdizhu
 	 * @param dizhuStove
 	 * @param onlyDizhu
@@ -372,20 +352,16 @@ public class GameEndDialog extends Dialog implements IGameView,
 	@SuppressWarnings("unchecked")
 	private void theFirstItem(boolean isdizhu, final Play end) {
 		boolean isWin = false;
-		zhiDouTv1
-				.setText(PatternUtils.changeZhidou(Math.round(end.getPayment())));
+		zhiDouTv1.setText(PatternUtils.changeZhidou(Math.round(end.getPayment())));
 		nameTv1.setText(end.getNickMap().get(end.getOrder()));
-		zhiZuangTv1.setText(PatternUtils.changeZhidou(Math.round(end
-				.getPayment())));
+		zhiZuangTv1.setText(PatternUtils.changeZhidou(Math.round(end.getPayment())));
 		AudioPlayUtils.isPlay = true;
 		AudioPlayUtils.isGameEnd = true;
 		nowZhiDouTv.setText(""
-				+ PatternUtils.changeZhidou(0 > Math.round(end.getBean()) ? 0
-						: Math.round(end.getBean())));
+				+ PatternUtils.changeZhidou(0 > Math.round(end.getBean()) ? 0 : Math.round(end.getBean())));
 		nowZhiZuangTv.setText(""
-				+ PatternUtils.changeZhidou(0 > Database.userMap.get(order)
-						.getDiamSum() ? 0 : Database.userMap.get(order)
-						.getDiamSum()));
+				+ PatternUtils.changeZhidou(0 > Database.userMap.get(order).getDiamSum() ? 0 : Database.userMap.get(
+						order).getDiamSum()));
 		ZhiShangTv.setText("" + end.getIq());
 		// 修改缓存数据
 		GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
@@ -394,41 +370,31 @@ public class GameEndDialog extends Dialog implements IGameView,
 			cacheUser.setBean(bean);
 			GameCache.putObj(CacheKey.GAME_USER, cacheUser);
 		}
-		beiShu.add(new BeiShu(R.drawable.game_end_dibei, "底倍", end
-				.getBaseRatio()));
-		beiShu.add(new BeiShu(R.drawable.game_end_jiaofen, "叫分", end
-				.getCallRatio()));
-		beiShu.add(new BeiShu(R.drawable.game_end_zhadan, "炸弹", end
-				.getBombRatio()));
-		beiShu.add(new BeiShu(R.drawable.game_end_double, "加倍", end
-				.getDoubleRatio()));
-		beiShu.add(new BeiShu(R.drawable.game_end_spring, "春天", end
-				.getSpringRatio()));
+		beiShu.add(new BeiShu(R.drawable.game_end_dibei, "底倍", end.getBaseRatio()));
+		beiShu.add(new BeiShu(R.drawable.game_end_jiaofen, "叫分", end.getCallRatio()));
+		beiShu.add(new BeiShu(R.drawable.game_end_zhadan, "炸弹", end.getBombRatio()));
+		beiShu.add(new BeiShu(R.drawable.game_end_double, "加倍", end.getDoubleRatio()));
+		beiShu.add(new BeiShu(R.drawable.game_end_spring, "春天", end.getSpringRatio()));
 		beishuNumber = String.valueOf(end.getRatio());
 		zongBeiShuTv.setText(beishuNumber);
 		diShuTv.setText(String.valueOf(Database.JOIN_ROOM_BASEPOINT));
 		mBeiShuList.setAdapter(new BeiShuAdapter());
-		Log.i("freshUserInfo", "当前金豆：" + end.getBean() + " 当前等级:" + end.getIq()
-				+ "底倍： " + end.getBaseRatio() + "炸弹：" + end.getBombRatio()
-				+ "春天：" + end.getSpringRatio() + "加倍：" + end.getDoubleRatio()
-				+ "叫分：" + end.getCallRatio() + "总倍数：" + end.getRatio() + "底倍数："
-				+ Database.JOIN_ROOM_BASEPOINT);
+		Log.i("freshUserInfo",
+				"当前金豆：" + end.getBean() + " 当前等级:" + end.getIq() + "底倍： " + end.getBaseRatio() + "炸弹："
+						+ end.getBombRatio() + "春天：" + end.getSpringRatio() + "加倍：" + end.getDoubleRatio() + "叫分："
+						+ end.getCallRatio() + "总倍数：" + end.getRatio() + "底倍数：" + Database.JOIN_ROOM_BASEPOINT);
 		/** 如果当前智不足以支付在本房间再玩一局，弹出提示充值对话框 */
-		if (null != Database.JOIN_ROOM
-				&& end.getBean() < Database.JOIN_ROOM.getLimit()) {
+		if (null != Database.JOIN_ROOM && end.getBean() < Database.JOIN_ROOM.getLimit()) {
 			Log.d("freshUserInfo",
-					"end.getBean()<Database.JOIN_ROOM.getLimit()："
-							+ (end.getBean() < Database.JOIN_ROOM.getLimit()));
+					"end.getBean()<Database.JOIN_ROOM.getLimit()：" + (end.getBean() < Database.JOIN_ROOM.getLimit()));
 			// DialogUtils.rechargeTip(Database.JOIN_ROOM, true, null);
 			mHandler.sendEmptyMessage(SHOW_ADD_BEEN);
 		} else {
 			Log.i("freshUserInfo", "Database.JOIN_ROOM==null");
 		}
 		if (null != Database.JOIN_ROOM) {
-			Log.i("freshUserInfo",
-					"end.getBean():" + end.getBean()
-							+ "<Database.JOIN_ROOM.getLimit():"
-							+ Database.JOIN_ROOM.getLimit());
+			Log.i("freshUserInfo", "end.getBean():" + end.getBean() + "<Database.JOIN_ROOM.getLimit():"
+					+ Database.JOIN_ROOM.getLimit());
 		}
 		// 是否升级
 		if (end.isUpgrade()) {
@@ -462,55 +428,41 @@ public class GameEndDialog extends Dialog implements IGameView,
 		}
 		zhiLiTv1.setText("" + end.getAddIntellect());
 		if (end.isCall()) { // 自己是地主
-			ActivityUtils.setHead(context, headIv1,
-					Database.userMap.get(end.getOrder()).getGender(), true,
+			ActivityUtils.setHead(context, headIv1, Database.userMap.get(end.getOrder()).getGender(), true,
 					Database.userMap.get(end.getOrder()).getIqImg(), false);
 			if (isdizhu) { // 地主赢
 				findViewById(R.id.dzed_lose_win).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.game_end_dialog_win_text, true));
+						ImageUtil.getResDrawable(R.drawable.game_end_dialog_win_text, true));
 				findViewById(R.id.dzed_lose_win_top_iv).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.iq_grade_dialog_win_bg, true));
+						ImageUtil.getResDrawable(R.drawable.iq_grade_dialog_win_bg, true));
 				AudioPlayUtils.getInstance().playMusic(false, R.raw.win); // 胜利
-				setTitalSex(Database.userMap.get(end.getOrder()).getGender(),
-						true, true);
+				setTitalSex(Database.userMap.get(end.getOrder()).getGender(), true, true);
 				isWin = true;
 			} else {
 				findViewById(R.id.dzed_lose_win).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.game_end_dialog_lose_text, true));
+						ImageUtil.getResDrawable(R.drawable.game_end_dialog_lose_text, true));
 				findViewById(R.id.dzed_lose_win_top_iv).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.iq_grade_dialog_lose_bg, true));
+						ImageUtil.getResDrawable(R.drawable.iq_grade_dialog_lose_bg, true));
 				AudioPlayUtils.getInstance().playMusic(false, R.raw.lose); // 失败
-				setTitalSex(Database.userMap.get(end.getOrder()).getGender(),
-						false, false);
+				setTitalSex(Database.userMap.get(end.getOrder()).getGender(), false, false);
 			}
 		} else { // 自己是农民
-			ActivityUtils.setHead(context, headIv1,
-					Database.userMap.get(end.getOrder()).getGender(), false,
+			ActivityUtils.setHead(context, headIv1, Database.userMap.get(end.getOrder()).getGender(), false,
 					Database.userMap.get(end.getOrder()).getIqImg(), false);
 			if (isdizhu) { // 地主赢
 				findViewById(R.id.dzed_lose_win).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.game_end_dialog_lose_text, true));
+						ImageUtil.getResDrawable(R.drawable.game_end_dialog_lose_text, true));
 				findViewById(R.id.dzed_lose_win_top_iv).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.iq_grade_dialog_lose_bg, true));
+						ImageUtil.getResDrawable(R.drawable.iq_grade_dialog_lose_bg, true));
 				AudioPlayUtils.getInstance().playMusic(false, R.raw.lose); // 失败
-				setTitalSex(Database.userMap.get(end.getOrder()).getGender(),
-						true, false);
+				setTitalSex(Database.userMap.get(end.getOrder()).getGender(), true, false);
 			} else {
 				findViewById(R.id.dzed_lose_win).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.game_end_dialog_win_text, true));
+						ImageUtil.getResDrawable(R.drawable.game_end_dialog_win_text, true));
 				findViewById(R.id.dzed_lose_win_top_iv).setBackgroundDrawable(
-						ImageUtil.getResDrawable(
-								R.drawable.iq_grade_dialog_win_bg, true));
+						ImageUtil.getResDrawable(R.drawable.iq_grade_dialog_win_bg, true));
 				AudioPlayUtils.getInstance().playMusic(false, R.raw.win);
-				setTitalSex(Database.userMap.get(end.getOrder()).getGender(),
-						false, true);
+				setTitalSex(Database.userMap.get(end.getOrder()).getGender(), false, true);
 				isWin = true;
 			}
 		}
@@ -526,28 +478,22 @@ public class GameEndDialog extends Dialog implements IGameView,
 					.getObj(CacheKey.KEY_PLAY_GAME_MSG);
 			if (null != gamePlayMsgMap) {
 				if (gamePlayMsgMap.containsKey(Constant.KEY_COUNT_PLAY_INNINGS)) {
-					playInningsCount = Integer.parseInt(gamePlayMsgMap
-							.get(Constant.KEY_COUNT_PLAY_INNINGS));
+					playInningsCount = Integer.parseInt(gamePlayMsgMap.get(Constant.KEY_COUNT_PLAY_INNINGS));
 				}
 				playInningsCount += 1;
 				if (isWin) {
-					if (gamePlayMsgMap
-							.containsKey(Constant.KEY_COUNT_WIN_INNINGS)) {
-						winInningsCount = Integer.parseInt(gamePlayMsgMap
-								.get(Constant.KEY_COUNT_WIN_INNINGS));
+					if (gamePlayMsgMap.containsKey(Constant.KEY_COUNT_WIN_INNINGS)) {
+						winInningsCount = Integer.parseInt(gamePlayMsgMap.get(Constant.KEY_COUNT_WIN_INNINGS));
 					}
 					winInningsCount += 1;
 				} else {
-					if (gamePlayMsgMap
-							.containsKey(Constant.KEY_COUNT_LOSE_INNINGS)) {
-						loseInningsCount = Integer.parseInt(gamePlayMsgMap
-								.get(Constant.KEY_COUNT_LOSE_INNINGS));
+					if (gamePlayMsgMap.containsKey(Constant.KEY_COUNT_LOSE_INNINGS)) {
+						loseInningsCount = Integer.parseInt(gamePlayMsgMap.get(Constant.KEY_COUNT_LOSE_INNINGS));
 					}
 					loseInningsCount += 1;
 				}
 				if (gamePlayMsgMap.containsKey(Constant.KEY_COUNT_IQ_RISE)) {
-					iqRiseCount = Integer.parseInt(gamePlayMsgMap
-							.get(Constant.KEY_COUNT_IQ_RISE));
+					iqRiseCount = Integer.parseInt(gamePlayMsgMap.get(Constant.KEY_COUNT_IQ_RISE));
 				}
 				if (gamePlayMsgMap.containsKey(Constant.KEY_IQ)) {
 					iq = Integer.parseInt(gamePlayMsgMap.get(Constant.KEY_IQ));
@@ -558,14 +504,10 @@ public class GameEndDialog extends Dialog implements IGameView,
 					iqRiseCount = end.getIq() - iq;
 				}
 			}
-			gamePlayMsgMap.put(Constant.KEY_COUNT_PLAY_INNINGS,
-					String.valueOf(playInningsCount));
-			gamePlayMsgMap.put(Constant.KEY_COUNT_WIN_INNINGS,
-					String.valueOf(winInningsCount));
-			gamePlayMsgMap.put(Constant.KEY_COUNT_LOSE_INNINGS,
-					String.valueOf(loseInningsCount));
-			gamePlayMsgMap.put(Constant.KEY_COUNT_IQ_RISE,
-					String.valueOf(iqRiseCount));
+			gamePlayMsgMap.put(Constant.KEY_COUNT_PLAY_INNINGS, String.valueOf(playInningsCount));
+			gamePlayMsgMap.put(Constant.KEY_COUNT_WIN_INNINGS, String.valueOf(winInningsCount));
+			gamePlayMsgMap.put(Constant.KEY_COUNT_LOSE_INNINGS, String.valueOf(loseInningsCount));
+			gamePlayMsgMap.put(Constant.KEY_COUNT_IQ_RISE, String.valueOf(iqRiseCount));
 			gamePlayMsgMap.put(Constant.KEY_IQ, String.valueOf(end.getIq()));
 			GameCache.putObj(CacheKey.KEY_PLAY_GAME_MSG, gamePlayMsgMap);
 		} catch (Exception e) {
@@ -575,8 +517,7 @@ public class GameEndDialog extends Dialog implements IGameView,
 
 	private void setParams(android.view.WindowManager.LayoutParams lay) {
 		DisplayMetrics dm = new DisplayMetrics();
-		((Activity) context).getWindowManager().getDefaultDisplay()
-				.getMetrics(dm);
+		((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
 		Rect rect = new Rect();
 		View view = getWindow().getDecorView();
 		view.getWindowVisibleDisplayFrame(rect);
@@ -586,49 +527,37 @@ public class GameEndDialog extends Dialog implements IGameView,
 
 	/**
 	 * 设置标题人物图片
-	 * 
-	 * @param gender
-	 *            性别
-	 * @param isDizhu
-	 *            是否是地主
-	 * @param iswin
-	 *            是否赢
+	 * @param gender 性别
+	 * @param isDizhu 是否是地主
+	 * @param iswin 是否赢
 	 */
 	private void setTitalSex(String gender, boolean isDizhu, boolean iswin) {
 		if (isDizhu) {// 是否是地主
 			if (gender.equals("1")) {// 性别 0保密/1女/2男
 				if (iswin) {
-					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(
-							R.drawable.game_end_dialog_man_win, true));
+					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(R.drawable.game_end_dialog_man_win, true));
 				} else {
-					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(
-							R.drawable.game_end_dialog_man_lose, true));
+					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(R.drawable.game_end_dialog_man_lose, true));
 				}
 			} else {
 				if (iswin) {
-					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(
-							R.drawable.game_end_dialog_man_win, true));
+					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(R.drawable.game_end_dialog_man_win, true));
 				} else {
-					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(
-							R.drawable.game_end_dialog_man_lose, true));
+					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(R.drawable.game_end_dialog_man_lose, true));
 				}
 			}
 		} else {
 			if (gender.equals("1")) {// 性别 0保密/1女/2男
 				if (iswin) {
-					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(
-							R.drawable.game_end_dialog_man_win, true));
+					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(R.drawable.game_end_dialog_man_win, true));
 				} else {
-					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(
-							R.drawable.game_end_dialog_man_lose, true));
+					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(R.drawable.game_end_dialog_man_lose, true));
 				}
 			} else {
 				if (iswin) {
-					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(
-							R.drawable.game_end_dialog_man_win, true));
+					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(R.drawable.game_end_dialog_man_win, true));
 				} else {
-					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(
-							R.drawable.game_end_dialog_man_lose, true));
+					titlaSexIv.setImageDrawable(ImageUtil.getResDrawable(R.drawable.game_end_dialog_man_lose, true));
 				}
 			}
 		}
@@ -636,33 +565,27 @@ public class GameEndDialog extends Dialog implements IGameView,
 
 	/**
 	 * 设置第三项的数据
-	 * 
 	 * @param isdizhu
 	 * @param dizhuStove
 	 * @param onlyDizhu
 	 * @param end
 	 */
 	private void theThreeItem(boolean isdizhu, Play end) {
-		zhiDouTv3
-				.setText(PatternUtils.changeZhidou(Math.round(end.getPayment())));
-		zhiZuangTv3.setText(PatternUtils.changeZhidou(Math.round(end
-				.getPayment())));
+		zhiDouTv3.setText(PatternUtils.changeZhidou(Math.round(end.getPayment())));
+		zhiZuangTv3.setText(PatternUtils.changeZhidou(Math.round(end.getPayment())));
 		nameTv3.setText(end.getNickMap().get(end.getOrder()));
 		zhiLiTv3.setText("" + end.getAddIntellect());
 		if (end.isCall()) { // 自己是地主
-			ActivityUtils.setHead(context, headIv3,
-					Database.userMap.get(end.getOrder()).getGender(), true,
+			ActivityUtils.setHead(context, headIv3, Database.userMap.get(end.getOrder()).getGender(), true,
 					Database.userMap.get(end.getOrder()).getIqImg(), false);
 		} else { // 自己是农民
-			ActivityUtils.setHead(context, headIv3,
-					Database.userMap.get(end.getOrder()).getGender(), false,
+			ActivityUtils.setHead(context, headIv3, Database.userMap.get(end.getOrder()).getGender(), false,
 					Database.userMap.get(end.getOrder()).getIqImg(), false);
 		}
 	}
 
 	/**
 	 * 设置第二项的数据
-	 * 
 	 * @param isdizhu
 	 * @param dizhuStove
 	 * @param onlyDizhu
@@ -670,19 +593,15 @@ public class GameEndDialog extends Dialog implements IGameView,
 	 */
 	private void theSecondItem(boolean isdizhu, Play end) {
 		nextPlay = end.getOrder();
-		zhiDouTv2
-				.setText(PatternUtils.changeZhidou(Math.round(end.getPayment())));
-		zhiZuangTv2.setText(PatternUtils.changeZhidou(Math.round(end
-				.getPayment())));
+		zhiDouTv2.setText(PatternUtils.changeZhidou(Math.round(end.getPayment())));
+		zhiZuangTv2.setText(PatternUtils.changeZhidou(Math.round(end.getPayment())));
 		nameTv2.setText(end.getNickMap().get(end.getOrder()));
 		zhiLiTv2.setText("" + end.getAddIntellect());
 		if (end.isCall()) { // 自己是地主
-			ActivityUtils.setHead(context, headIv2,
-					Database.userMap.get(end.getOrder()).getGender(), true,
+			ActivityUtils.setHead(context, headIv2, Database.userMap.get(end.getOrder()).getGender(), true,
 					Database.userMap.get(end.getOrder()).getIqImg(), false);
 		} else { // 自己是农民
-			ActivityUtils.setHead(context, headIv2,
-					Database.userMap.get(end.getOrder()).getGender(), false,
+			ActivityUtils.setHead(context, headIv2, Database.userMap.get(end.getOrder()).getGender(), false,
 					Database.userMap.get(end.getOrder()).getIqImg(), false);
 		}
 	}
@@ -733,35 +652,34 @@ public class GameEndDialog extends Dialog implements IGameView,
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.dzed_again:// 再来一局
-			double btBean = 0;
-			if (null != Database.JOIN_ROOM) {
-				GameUser cacheUser = (GameUser) GameCache
-						.getObj(CacheKey.GAME_USER);
-				if (null != cacheUser) {
-					long bean = cacheUser.getBean();
-					btBean = Database.JOIN_ROOM.getLimit() - bean;
+			case R.id.dzed_again:// 再来一局
+				double btBean = 0;
+				if (null != Database.JOIN_ROOM) {
+					GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
+					if (null != cacheUser) {
+						long bean = cacheUser.getBean();
+						btBean = Database.JOIN_ROOM.getLimit() - bean;
+					}
 				}
-			}
-			if (btBean > 0) { // 金豆不足需要充值 ，直接在前端先判断。不需要多准确。
+				if (btBean > 0) { // 金豆不足需要充值 ，直接在前端先判断。不需要多准确。
+					JDSMSPayUtil.setContext(context);
+					PayTipUtils.showTip(btBean / 10000, PaySite.ROOM_ITEM_CLICK); // 房间
+				} else {
+					mHandler.sendEmptyMessage(GO_AGAIN);
+				}
+				break;
+			case R.id.dzed_back:// 返回大厅
+				mHandler.sendEmptyMessage(GO_BACK);
+				// 发消息关闭游戏界面
+				break;
+			case R.id.dzed_recharge_btn:// 充值
+				// SDKFactory.smsPay(0, SDKConstant.PLAYING);
 				JDSMSPayUtil.setContext(context);
-				PayTipUtils.showTip(btBean / 10000, PaySite.ROOM_ITEM_CLICK); // 房间
-			} else {
-				mHandler.sendEmptyMessage(GO_AGAIN);
-			}
-			break;
-		case R.id.dzed_back:// 返回大厅
-			mHandler.sendEmptyMessage(GO_BACK);
-			// 发消息关闭游戏界面
-			break;
-		case R.id.dzed_recharge_btn:// 充值
-			// SDKFactory.smsPay(0, SDKConstant.PLAYING);
-			JDSMSPayUtil.setContext(context);
-			double b = RechargeUtils.calRoomJoinMoney(Database.JOIN_ROOM);
-			PayTipUtils.showTip(b, PaySite.GAME_END_CLICK); // 配置的提示方式
-			break;
-		default:
-			break;
+				double b = RechargeUtils.calRoomJoinMoney(Database.JOIN_ROOM);
+				PayTipUtils.showTip(b, PaySite.GAME_END_CLICK); // 配置的提示方式
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -791,41 +709,30 @@ public class GameEndDialog extends Dialog implements IGameView,
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (null == convertView) {
-				convertView = layoutInflater.inflate(
-						R.layout.game_end_dialog_left_list_item, null);
+				convertView = layoutInflater.inflate(R.layout.game_end_dialog_left_list_item, null);
 				mst.adjustView(convertView.findViewById(R.id.gedlli_ll));
 				holder = new ViewHolder();
-				holder.iconIv = (ImageView) convertView
-						.findViewById(R.id.gedlli_icon_iv);
-				holder.nameTv = (TextView) convertView
-						.findViewById(R.id.gedlli_name_tv);
-				holder.numTv = (TextView) convertView
-						.findViewById(R.id.gedlli_num_tv);
-				holder.symbolTv = (TextView) convertView
-						.findViewById(R.id.gedlli_symbol_tv);
+				holder.iconIv = (ImageView) convertView.findViewById(R.id.gedlli_icon_iv);
+				holder.nameTv = (TextView) convertView.findViewById(R.id.gedlli_name_tv);
+				holder.numTv = (TextView) convertView.findViewById(R.id.gedlli_num_tv);
+				holder.symbolTv = (TextView) convertView.findViewById(R.id.gedlli_symbol_tv);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			if (1 == beiShu.get(position).getNum()
-					&& !"底倍".equals(beiShu.get(position).getName().trim())
+			if (1 == beiShu.get(position).getNum() && !"底倍".equals(beiShu.get(position).getName().trim())
 					&& !"叫分".equals(beiShu.get(position).getName().trim())) {
 				holder.symbolTv.setText("-");
-				holder.symbolTv.setTextColor(context.getResources().getColor(
-						R.color.grey));
-				holder.nameTv.setTextColor(context.getResources().getColor(
-						R.color.grey));
+				holder.symbolTv.setTextColor(context.getResources().getColor(R.color.grey));
+				holder.nameTv.setTextColor(context.getResources().getColor(R.color.grey));
 				holder.numTv.setText("");
 			} else {
-				holder.symbolTv.setTextColor(context.getResources().getColor(
-						R.color.white));
-				holder.nameTv.setTextColor(context.getResources().getColor(
-						R.color.white));
+				holder.symbolTv.setTextColor(context.getResources().getColor(R.color.white));
+				holder.nameTv.setTextColor(context.getResources().getColor(R.color.white));
 				holder.numTv.setText("" + beiShu.get(position).getNum());
 			}
 			holder.nameTv.setText(beiShu.get(position).getName());
-			holder.iconIv.setBackgroundResource(beiShu.get(position)
-					.getIcomId());
+			holder.iconIv.setBackgroundResource(beiShu.get(position).getIcomId());
 			return convertView;
 		}
 

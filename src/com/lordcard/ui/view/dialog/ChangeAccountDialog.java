@@ -46,17 +46,14 @@ import com.lordcard.network.http.GameCache;
 import com.lordcard.network.http.HttpRequest;
 import com.lordcard.ui.LoginActivity;
 
-
 /**
  * 切换账号对话框
- * 
  * @ClassName: ChangeAccountDialog
  * @Description: TODO
  * @author zhenggang
  * @date 2013-5-29 下午3:04:28
  */
-public class ChangeAccountDialog extends Dialog implements OnClickListener,
-		OnItemClickListener, OnDismissListener {
+public class ChangeAccountDialog extends Dialog implements OnClickListener, OnItemClickListener, OnDismissListener {
 	private Context context;
 	private EditText accountEdt, passwordEdt;
 	private Button loginBtn, closeBtn, regBtn;
@@ -106,16 +103,16 @@ public class ChangeAccountDialog extends Dialog implements OnClickListener,
 			@Override
 			public void handleMessage(android.os.Message msg) {
 				switch (msg.what) {
-				case REFRESH:
-					mAdapter.notifyDataSetChanged();
-					break;
-				case HIT_PPT:
-					if (mPopup.isShowing()) {
-						mPopup.dismiss();
-					}
-					break;
-				default:
-					break;
+					case REFRESH:
+						mAdapter.notifyDataSetChanged();
+						break;
+					case HIT_PPT:
+						if (mPopup.isShowing()) {
+							mPopup.dismiss();
+						}
+						break;
+					default:
+						break;
 				}
 			};
 		};
@@ -155,7 +152,6 @@ public class ChangeAccountDialog extends Dialog implements OnClickListener,
 
 	/**
 	 * 布局
-	 * 
 	 * @param context
 	 */
 	private void layout() {
@@ -163,8 +159,7 @@ public class ChangeAccountDialog extends Dialog implements OnClickListener,
 		titleTv.setText("账号登录");
 		accountEdt = (EditText) findViewById(R.id.login_dl_account);
 		if (countList.size() > 0) {
-			accountEdt.setText(countList.get(countList.size() - 1).get(
-					ACCOUNT_SORT));
+			accountEdt.setText(countList.get(countList.size() - 1).get(ACCOUNT_SORT));
 		}
 		passwordEdt = (EditText) findViewById(R.id.login_dl_account_pwd);
 		passwordEdt.setHint("密码");
@@ -197,41 +192,41 @@ public class ChangeAccountDialog extends Dialog implements OnClickListener,
 	public void onClick(View v) {
 		Context ctx = CrashApplication.getInstance();
 		switch (v.getId()) {
-		case R.id.login_dl_login_btn:// 登录
-			mst.unRegisterView(layout);
-			login();
-			break;
-		case R.id.dialog_close_btn:// 退出
-			accountEdt.setText("");
-			passwordEdt.setText("");
-			mst.unRegisterView(layout);
-			dismiss();
-			break;
-		case R.id.login_dl_forget_pwd:// 忘记密码
-			FindPwdDialog findPwdDialog = new FindPwdDialog(context);
-			findPwdDialog.show();
-			break;
-		case R.id.game_register:// 注册
-			dismiss();
-			handler.sendEmptyMessage(LoginActivity.HANDLER_WHAT_LOGIN_RESIGSTER_USER);
-			break;
-		case R.id.show:// 弹出下拉列表
-			if (countList != null && countList.size() > 0 && !mInitPopup) {
-				mInitPopup = true;
-				initPopup();
-			}
-			if (mPopup != null) {
-				if (!mShowing) {
-					mPopup.showAsDropDown(accountEdt, 0, -3);
-					mShowing = true;
-					mImageView.setBackgroundResource(R.drawable.ppt_up);
-				} else {
-					mPopup.dismiss();
+			case R.id.login_dl_login_btn:// 登录
+				mst.unRegisterView(layout);
+				login();
+				break;
+			case R.id.dialog_close_btn:// 退出
+				accountEdt.setText("");
+				passwordEdt.setText("");
+				mst.unRegisterView(layout);
+				dismiss();
+				break;
+			case R.id.login_dl_forget_pwd:// 忘记密码
+				FindPwdDialog findPwdDialog = new FindPwdDialog(context);
+				findPwdDialog.show();
+				break;
+			case R.id.game_register:// 注册
+				dismiss();
+				handler.sendEmptyMessage(LoginActivity.HANDLER_WHAT_LOGIN_RESIGSTER_USER);
+				break;
+			case R.id.show:// 弹出下拉列表
+				if (countList != null && countList.size() > 0 && !mInitPopup) {
+					mInitPopup = true;
+					initPopup();
 				}
-			}
-			break;
-		default:
-			break;
+				if (mPopup != null) {
+					if (!mShowing) {
+						mPopup.showAsDropDown(accountEdt, 0, -3);
+						mShowing = true;
+						mImageView.setBackgroundResource(R.drawable.ppt_up);
+					} else {
+						mPopup.dismiss();
+					}
+				}
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -257,8 +252,7 @@ public class ChangeAccountDialog extends Dialog implements OnClickListener,
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		accountEdt.setText(countList.get(position).get(ACCOUNT_SORT));
 		// 因为直接显示MD5的密码，太长了，所以此处用假密码填充，登录的时候，再获取MD5的密码去注册
 		passwordEdt.setText(Constant.DEFAULT_PWD);
@@ -280,8 +274,7 @@ public class ChangeAccountDialog extends Dialog implements OnClickListener,
 		FOR: for (int i = 0; i < countList.size(); i++) {
 			// 账号是选择本地的，切密码是我们设的加密码，说明用户没有改用户和密码，就直接从本地账号列表中获取密码
 			if (account.equals(countList.get(i).get(ACCOUNT_SORT))
-					&& passwordEdt.getText().toString()
-							.equals(Constant.DEFAULT_PWD)) {
+					&& passwordEdt.getText().toString().equals(Constant.DEFAULT_PWD)) {
 				pws = countList.get(i).get(ACCOUNT_PWD);// 直接从本地账号列表中获取
 				break FOR;
 			}
@@ -309,20 +302,15 @@ public class ChangeAccountDialog extends Dialog implements OnClickListener,
 					pws = EncodeUtils.MD5(password);
 				}
 				String result = HttpRequest.login(account1, pws);
-				JsonResult jsonResult = JsonHelper.fromJson(result,
-						JsonResult.class);
+				JsonResult jsonResult = JsonHelper.fromJson(result, JsonResult.class);
 				progressDialog.dismiss();
-				if (null != jsonResult
-						&& !TextUtils.isEmpty(jsonResult.getMethodCode())
-						&& JsonResult.SUCCESS
-								.equals(jsonResult.getMethodCode())) {
+				if (null != jsonResult && !TextUtils.isEmpty(jsonResult.getMethodCode())
+						&& JsonResult.SUCCESS.equals(jsonResult.getMethodCode())) {
 					String gameUserJson = jsonResult.getMethodMessage();
-					GameUser gameUser = JsonHelper.fromJson(gameUserJson,
-							GameUser.class);
+					GameUser gameUser = JsonHelper.fromJson(gameUserJson, GameUser.class);
 					// Database.USER = gameUser;
 					if (null == gameUser) {
-						Log.e("debugs",
-								"ChangeAccountDialog---Database.USER  清空");
+						Log.e("debugs", "ChangeAccountDialog---Database.USER  清空");
 					} else {
 						GameCache.putObj(CacheKey.GAME_USER, gameUser);
 					}
@@ -338,11 +326,8 @@ public class ChangeAccountDialog extends Dialog implements OnClickListener,
 					}
 					dismiss();
 				} else {
-					if (null != jsonResult
-							&& !TextUtils
-									.isEmpty(jsonResult.getMethodMessage())) {
-						DialogUtils
-								.mesTip(jsonResult.getMethodMessage(), false);
+					if (null != jsonResult && !TextUtils.isEmpty(jsonResult.getMethodMessage())) {
+						DialogUtils.mesTip(jsonResult.getMethodMessage(), false);
 					}
 				}
 			};
@@ -375,38 +360,31 @@ public class ChangeAccountDialog extends Dialog implements OnClickListener,
 		}
 
 		@Override
-		public View getView(final int position, View convertView,
-				ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			ViewHolder mViewHolder = null;
 			if (null == convertView) {
-				convertView = layoutInflater.inflate(
-						R.layout.cad_edit_ppt_lv_item, null);
+				convertView = layoutInflater.inflate(R.layout.cad_edit_ppt_lv_item, null);
 				mViewHolder = new ViewHolder();
-				mViewHolder.ccountTv = (TextView) convertView
-						.findViewById(R.id.cad_edit_ppt_lv_id_tv);
-				mViewHolder.removeIv2 = (ImageView) convertView
-						.findViewById(R.id.cad_edit_ppt_lv_delet_iv2);
-				mViewHolder.removeIv = (ImageView) convertView
-						.findViewById(R.id.cad_edit_ppt_lv_delet_iv);
+				mViewHolder.ccountTv = (TextView) convertView.findViewById(R.id.cad_edit_ppt_lv_id_tv);
+				mViewHolder.removeIv2 = (ImageView) convertView.findViewById(R.id.cad_edit_ppt_lv_delet_iv2);
+				mViewHolder.removeIv = (ImageView) convertView.findViewById(R.id.cad_edit_ppt_lv_delet_iv);
 				convertView.setTag(mViewHolder);
 			} else {
 				mViewHolder = (ViewHolder) convertView.getTag();
 			}
 			String account = countList.get(position).get(ACCOUNT_SORT);
 			mViewHolder.ccountTv.setText(account);
-			mViewHolder.removeIv
-					.setOnClickListener(new android.view.View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							ActivityUtils.removeAccount(countList.get(position)
-									.get(ACCOUNT_SORT));
-							countList.remove(position);
-							if (0 == countList.size()) {
-								mHander.sendEmptyMessage(HIT_PPT);
-							}
-							mHander.sendEmptyMessage(REFRESH);
-						}
-					});
+			mViewHolder.removeIv.setOnClickListener(new android.view.View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					ActivityUtils.removeAccount(countList.get(position).get(ACCOUNT_SORT));
+					countList.remove(position);
+					if (0 == countList.size()) {
+						mHander.sendEmptyMessage(HIT_PPT);
+					}
+					mHander.sendEmptyMessage(REFRESH);
+				}
+			});
 			// 如果是注册账号则不显示删除按钮(list中最后一个是注册账号)
 			// Map<String, String> map=countList.get(position);
 			// Iterator i=map.entrySet().iterator();
@@ -416,8 +394,7 @@ public class ChangeAccountDialog extends Dialog implements OnClickListener,
 			// account=e.getKey();
 			// }
 			// 该账号与注册账号相同
-			if (null != myselfAccount && null != account
-					&& myselfAccount.equals(account)) {
+			if (null != myselfAccount && null != account && myselfAccount.equals(account)) {
 				mViewHolder.removeIv.setVisibility(View.INVISIBLE);
 				mViewHolder.removeIv2.setVisibility(View.INVISIBLE);
 			} else {

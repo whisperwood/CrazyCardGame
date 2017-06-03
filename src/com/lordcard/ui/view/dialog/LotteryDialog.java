@@ -31,7 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lordcard.common.anim.AnimUtils;
-import com.lordcard.common.exception.CrashApplication;
 import com.lordcard.common.util.AudioPlayUtils;
 import com.lordcard.common.util.DialogUtils;
 import com.lordcard.common.util.ImageUtil;
@@ -47,10 +46,8 @@ import com.lordcard.network.http.HttpURL;
 import com.lordcard.network.http.HttpUtils;
 import com.lordcard.ui.interfaces.PrizeInterface;
 
-
 @SuppressLint("HandlerLeak")
-public class LotteryDialog extends Dialog implements PrizeInterface,
-		android.view.View.OnClickListener {
+public class LotteryDialog extends Dialog implements PrizeInterface, android.view.View.OnClickListener {
 	private Context context;
 	private boolean isChouJiang;
 	private LinearLayout lotLeft, lotTop, lotRight, lotBottom;
@@ -59,11 +56,9 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 	private Lottery rCJ10_1, rZD10_1, rHF5_1;
 	private Lottery bCJ_1, bHF_10, bCJ1_1, bCJ_2, bZD5_1, bXX, bZD100;
 	private Lottery lXX, lHF5_1, lCJ1_1;
-	private Lottery zhizuan_100, jiangquan_20, zhidou_500, zhizuan_2,
-			jiangquan_10, zhizuan_20, huafei_10;
+	private Lottery zhizuan_100, jiangquan_20, zhidou_500, zhizuan_2, jiangquan_10, zhizuan_20, huafei_10;
 	private Lottery zhizuan_4, huafei_50, zhidou_1;
-	private Lottery zhizuan_5, huafei_1, zhidou_2, jiangquan_5, zhizuan_10,
-			jiangquan_30, zhizuan_500;
+	private Lottery zhizuan_5, huafei_1, zhidou_2, jiangquan_5, zhizuan_10, jiangquan_30, zhizuan_500;
 	private Lottery xiexie, zhizuan_1, zhidou_5;
 	public TextView lotPm, lotJn;
 	private int quanNum = 0;
@@ -85,8 +80,8 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 	private Map<Integer, Bitmap> bitmapCache;
 	private GoodsDialog gDialog;
 	/**
-	 * a1 2000金豆抽奖 a2 10000金豆抽奖 a3 20000金豆抽奖 a4 50000金豆抽奖 a5 100000金豆抽奖 a6
-	 * 1000000金豆抽奖 a7 5000000金豆抽奖 a8 5000金豆抽奖
+	 * a1 2000金豆抽奖 a2 10000金豆抽奖 a3 20000金豆抽奖 a4 50000金豆抽奖 a5 100000金豆抽奖 a6 1000000金豆抽奖 a7
+	 * 5000000金豆抽奖 a8 5000金豆抽奖
 	 */
 	public String[] a = { "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8" };
 	/**
@@ -94,8 +89,7 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 	 */
 	public String[] zd = { "a1", "a2", "a3", "a4" };
 	/**
-	 * b1 1张抽奖券 b2 2张抽奖券 b3 3张抽奖券 b4 5张抽奖券 b5 10张抽奖券 ,b6 20张抽奖券,b7 30张抽奖券,b8
-	 * 50张抽奖券
+	 * b1 1张抽奖券 b2 2张抽奖券 b3 3张抽奖券 b4 5张抽奖券 b5 10张抽奖券 ,b6 20张抽奖券,b7 30张抽奖券,b8 50张抽奖券
 	 */
 	public String[] b = { "b1", "b2", "b3", "b4", "b5", "b6", "b7" };
 	/**
@@ -135,7 +129,6 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 
 	/**
 	 * 开始抽奖
-	 * 
 	 * @param count
 	 */
 	public synchronized void startLotZhizuan(int count) {
@@ -156,8 +149,7 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 					lotJn.setText(String.valueOf(quanNum - count));
 					zhizuan_100.handle(false);
 				} else {
-					Toast.makeText(context, "您的抽奖券数不足", Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(context, "您的抽奖券数不足", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
@@ -173,7 +165,6 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 
 	/**
 	 * 开始抽奖
-	 * 
 	 * @param count
 	 */
 	public synchronized void startLottery(int count) {
@@ -195,8 +186,7 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 					lotJn.setText(String.valueOf(quanNum - count));
 					tHF5_1.handle(true);
 				} else {
-					Toast.makeText(context, "您的抽奖券数不足", Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(context, "您的抽奖券数不足", Toast.LENGTH_SHORT).show();
 				}
 			} catch (Exception e) {
 			}
@@ -205,33 +195,27 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 
 	/**
 	 * 点击抽奖后去查抽奖结果
-	 * 
 	 * @param count
 	 */
 	public void luckJoy(final int count) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				GameUser cacheUser = (GameUser) GameCache
-						.getObj(CacheKey.GAME_USER);
+				GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 				Map<String, String> paramMap = new HashMap<String, String>();
 				paramMap.put("loginToken", cacheUser.getLoginToken());
 				paramMap.put("count", String.valueOf(count));
 				try {
-					String result = HttpUtils.post(HttpURL.COUPON_LUCKY_URL,
-							paramMap);
-					if (HttpRequest.FAIL_STATE.equals(result)
-							|| HttpRequest.TOKEN_ILLEGAL.equals(result)
-							|| HttpRequest.NO_FULL_GOODS.equals(result)
-							|| HttpRequest.NULL_PRIZE.equals(result)) {
+					String result = HttpUtils.post(HttpURL.COUPON_LUCKY_URL, paramMap);
+					if (HttpRequest.FAIL_STATE.equals(result) || HttpRequest.TOKEN_ILLEGAL.equals(result)
+							|| HttpRequest.NO_FULL_GOODS.equals(result) || HttpRequest.NULL_PRIZE.equals(result)) {
 						handler.sendEmptyMessage(Integer.parseInt(result));
 					} else {
 						String[] parize = result.split("-");
 						String valueName = parize[0];
 						List<Lottery> tempList = new ArrayList<Lottery>();
 						for (int i = 0; i < lotterItemList.size(); i++) {
-							if (lotterItemList.get(i).getValue()
-									.equals(valueName)) {
+							if (lotterItemList.get(i).getValue().equals(valueName)) {
 								tempList.add(lotterItemList.get(i));
 							}
 						}
@@ -243,8 +227,7 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 						tempList = null;
 					}
 				} catch (Exception e) {
-					handler.sendEmptyMessage(Integer
-							.parseInt(HttpRequest.NULL_PRIZE)); // 异常处理(记为不中奖)
+					handler.sendEmptyMessage(Integer.parseInt(HttpRequest.NULL_PRIZE)); // 异常处理(记为不中奖)
 				}
 			}
 		}).start();
@@ -252,33 +235,27 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 
 	/**
 	 * 点击抽奖后去查抽奖结果
-	 * 
 	 * @param count
 	 */
 	public void luckCheck(final int count) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				GameUser cacheUser = (GameUser) GameCache
-						.getObj(CacheKey.GAME_USER);
+				GameUser cacheUser = (GameUser) GameCache.getObj(CacheKey.GAME_USER);
 				Map<String, String> paramMap = new HashMap<String, String>();
 				paramMap.put("loginToken", cacheUser.getLoginToken());
 				paramMap.put("count", String.valueOf(count));
 				try {
-					String result = HttpUtils.post(HttpURL.COUPON_ZHIZUAN_URL,
-							paramMap);
-					if (HttpRequest.FAIL_STATE.equals(result)
-							|| HttpRequest.TOKEN_ILLEGAL.equals(result)
-							|| HttpRequest.NO_FULL_GOODS.equals(result)
-							|| HttpRequest.NULL_PRIZE.equals(result)) {
+					String result = HttpUtils.post(HttpURL.COUPON_ZHIZUAN_URL, paramMap);
+					if (HttpRequest.FAIL_STATE.equals(result) || HttpRequest.TOKEN_ILLEGAL.equals(result)
+							|| HttpRequest.NO_FULL_GOODS.equals(result) || HttpRequest.NULL_PRIZE.equals(result)) {
 						handler.sendEmptyMessage(Integer.parseInt(result));
 					} else {
 						String[] parize = result.split("-");
 						String valueName = parize[0];
 						List<Lottery> tempList = new ArrayList<Lottery>();
 						for (int i = 0; i < zhizuanItemList.size(); i++) {
-							if (zhizuanItemList.get(i).getValue()
-									.equals(valueName)) {
+							if (zhizuanItemList.get(i).getValue().equals(valueName)) {
 								tempList.add(zhizuanItemList.get(i));
 							}
 						}
@@ -290,8 +267,7 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 						tempList = null;
 					}
 				} catch (Exception e) {
-					handler.sendEmptyMessage(Integer
-							.parseInt(HttpRequest.NULL_PRIZE)); // 异常处理(记为不中奖)
+					handler.sendEmptyMessage(Integer.parseInt(HttpRequest.NULL_PRIZE)); // 异常处理(记为不中奖)
 				}
 			}
 		}).start();
@@ -304,8 +280,7 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				GameUserGoods gameUserGoods = HttpRequest
-						.getGameUserGoods(false);
+				GameUserGoods gameUserGoods = HttpRequest.getGameUserGoods(false);
 				if (gameUserGoods != null) {
 					quanNum = gameUserGoods.getCouponNum();
 					handler.sendEmptyMessage(12);
@@ -317,7 +292,6 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 
 	/**
 	 * 设置所有移动框不可见
-	 * 
 	 * @param medal
 	 */
 	public static void setInvisuble(Lottery medal) {
@@ -332,39 +306,39 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch (msg.what) {
-			case 0:
-				queryConpon();
-				break;
-			case 1:
-				stop = true;
-				runIndex = 0;
-				error = true;
-				DialogUtils.mesTip("抽奖失败!", false);
-				break;
-			case 3:
-				stop = true;
-				runIndex = 0;
-				error = true;
-				DialogUtils.reLogin(Database.currentActivity);
-				break;
-			case 8:
-				stop = true;
-				runIndex = 0;
-				error = true;
-				DialogUtils.mesTip("抽奖券不足!", false);
-				break;
-			case 10:
-				if (isChouJiang) {
-					luckResult = "lXX";
-				} else {
-					luckResult = "xiexie";
-				}
-				break;
-			case 12:
-				lotJn.setText(String.valueOf(quanNum));
-				break;
-			default:
-				break;
+				case 0:
+					queryConpon();
+					break;
+				case 1:
+					stop = true;
+					runIndex = 0;
+					error = true;
+					DialogUtils.mesTip("抽奖失败!", false);
+					break;
+				case 3:
+					stop = true;
+					runIndex = 0;
+					error = true;
+					DialogUtils.reLogin(Database.currentActivity);
+					break;
+				case 8:
+					stop = true;
+					runIndex = 0;
+					error = true;
+					DialogUtils.mesTip("抽奖券不足!", false);
+					break;
+				case 10:
+					if (isChouJiang) {
+						luckResult = "lXX";
+					} else {
+						luckResult = "xiexie";
+					}
+					break;
+				case 12:
+					lotJn.setText(String.valueOf(quanNum));
+					break;
+				default:
+					break;
 			}
 		}
 	};
@@ -408,12 +382,10 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 
 	/**
 	 * 保存抽奖结果
-	 * 
 	 * @param lot
 	 */
 	public void saveLottery(Lottery lot) {
-		SharedPreferences sharedData = context.getSharedPreferences(
-				Constant.GAME_ACTIVITE, Context.MODE_PRIVATE);
+		SharedPreferences sharedData = context.getSharedPreferences(Constant.GAME_ACTIVITE, Context.MODE_PRIVATE);
 		saveLottery = sharedData.getString(SAVE_LOTTERY, "");
 		if (!saveLottery.contains(lot.getImageName())) {
 			if (saveLottery.trim().length() == 0) {
@@ -434,11 +406,9 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		isChouJiang = true;
 		lotterItemList = new ArrayList<Lottery>();
 		layout = (RelativeLayout) findViewById(R.id.lot_bg);
-		layout.setBackgroundDrawable(ImageUtil.getDrawableResId(
-				R.drawable.lottery_bg, true, true));
+		layout.setBackgroundDrawable(ImageUtil.getDrawableResId(R.drawable.lottery_bg, true, true));
 		luckLayout = (RelativeLayout) findViewById(R.id.lot_luck);
-		luckLayout.setBackgroundDrawable(ImageUtil.getDrawableResId(
-				R.drawable.lot_right_text, true, true));
+		luckLayout.setBackgroundDrawable(ImageUtil.getDrawableResId(R.drawable.lot_right_text, true, true));
 		// 抽奖框4边布局
 		lotTop = (LinearLayout) findViewById(R.id.lot_top);
 		lotLeft = (LinearLayout) findViewById(R.id.lot_left);
@@ -476,36 +446,22 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		tHF10_1 = new Lottery(context);
 		tCJ_2 = new Lottery(context);
 		tHF_2 = new Lottery(context);
-		tHF5_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_hf_bg, R.drawable.lot_num1,
-						"b_hf_num1.png"));
+		tHF5_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_hf_bg, R.drawable.lot_num1, "b_hf_num1.png"));
 		tHF5_1.setImageName("lot_hf_1");
-		tCJ5_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_cj_bg, R.drawable.lot_cj_5,
-						"b_cj_cj_5.png"));
+		tCJ5_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_cj_bg, R.drawable.lot_cj_5, "b_cj_cj_5.png"));
 		tCJ5_1.setImageName("lot_cj_5");
-		tZD_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_500,
-						"b_zd_500.png"));
+		tZD_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_500, "b_zd_500.png"));
 		tZD_1.setImageName("lot_zd_500");
-		tZD5_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_hf_bg, R.drawable.lot_num10,
-						"b_hf_num10.png"));
+		tZD5_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_hf_bg, R.drawable.lot_num10, "b_hf_num10.png"));
 		tZD5_1.setImageName("lot_zd_5");
-		tHF10_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_cj_bg, R.drawable.lot_cj_1,
-						"b_cj_1.png"));
+		tHF10_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_cj_bg, R.drawable.lot_cj_1, "b_cj_1.png"));
 		tHF10_1.setImageName("lot_hf_10");
-		tCJ_2.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_1w,
-						"b_zd_5.png"));
+		tCJ_2.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_1w, "b_zd_5.png"));
 		tCJ_2.setImageName("lot_zd_1w");
-		tHF_2.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_hf_bg, R.drawable.lot_num01,
-						"b_hf_num01.png"));
+		tHF_2.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_hf_bg, R.drawable.lot_num01, "b_hf_num01.png"));
 		tHF_2.setImageName("lot_h01");
-		LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
-				mst.adjustXIgnoreDensity(82), mst.adjustYIgnoreDensity(82));
+		LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(mst.adjustXIgnoreDensity(82),
+				mst.adjustYIgnoreDensity(82));
 		lotTop.addView(tHF5_1, imageParams);
 		mst.setDebugId(tHF5_1);
 		lotTop.addView(tCJ5_1, imageParams);
@@ -517,20 +473,14 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		rCJ10_1 = new Lottery(context);
 		rZD10_1 = new Lottery(context);
 		rHF5_1 = new Lottery(context);
-		rCJ10_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_2k,
-						"b_zd_2k.png"));
+		rCJ10_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_2k, "b_zd_2k.png"));
 		rCJ10_1.setImageName("lot_cj_10");
-		rZD10_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_cj_bg, R.drawable.lot_cj_1,
-						"b_cj_1.png"));
+		rZD10_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_cj_bg, R.drawable.lot_cj_1, "b_cj_1.png"));
 		rZD10_1.setImageName("lot_cj_1");
-		rHF5_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_1,
-						"b_zd_1.png"));
+		rHF5_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_1, "b_zd_1.png"));
 		rHF5_1.setImageName("lot_hf_5");
-		LinearLayout.LayoutParams rightParams = new LinearLayout.LayoutParams(
-				mst.adjustXIgnoreDensity(82), mst.adjustYIgnoreDensity(82));
+		LinearLayout.LayoutParams rightParams = new LinearLayout.LayoutParams(mst.adjustXIgnoreDensity(82),
+				mst.adjustYIgnoreDensity(82));
 		rightParams.topMargin = mst.adjustYIgnoreDensity(9);
 		lotRight.addView(rCJ10_1, rightParams);
 		lotRight.addView(rZD10_1, rightParams);
@@ -542,37 +492,22 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		bZD5_1 = new Lottery(context);
 		bXX = new Lottery(context);
 		bZD100 = new Lottery(context);
-		bCJ_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_cj_bg, R.drawable.lot_cj_1,
-						"b_cj_1.png"));
+		bCJ_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_cj_bg, R.drawable.lot_cj_1, "b_cj_1.png"));
 		bCJ_1.setImageName("lot_xx");
-		bHF_10.getMedalImage()
-				.setImageDrawable(
-						ImageUtil.getDrawableResId(R.drawable.lot_stove_bg,
-								true, true));
+		bHF_10.getMedalImage().setImageDrawable(ImageUtil.getDrawableResId(R.drawable.lot_stove_bg, true, true));
 		bHF_10.setImageName("lot_stove");
-		bCJ1_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_2,
-						"b_zd_2.png"));
+		bCJ1_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_2, "b_zd_2.png"));
 		bCJ1_1.setImageName("lot_cj_1");
-		bCJ_2.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_hf_bg, R.drawable.lot_num01,
-						"b_hf_num01.png"));
+		bCJ_2.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_hf_bg, R.drawable.lot_num01, "b_hf_num01.png"));
 		bCJ_2.setImageName("lot_h01");
-		bZD5_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_hf_bg, R.drawable.lot_num50,
-						"b_hf_num50.png"));
+		bZD5_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_hf_bg, R.drawable.lot_num50, "b_hf_num50.png"));
 		bZD5_1.setImageName("lot_zd_5");
-		bXX.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_cj_bg, R.drawable.lot_cj_3,
-						"b_cj_3.png"));
+		bXX.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_cj_bg, R.drawable.lot_cj_3, "b_cj_3.png"));
 		bXX.setImageName("lot_xx");
-		bZD100.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_100,
-						"b_zd_100.png"));
+		bZD100.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_100, "b_zd_100.png"));
 		bZD100.setImageName("lot_cj_5");
-		LinearLayout.LayoutParams bottomParams = new LinearLayout.LayoutParams(
-				mst.adjustXIgnoreDensity(82), mst.adjustYIgnoreDensity(82));
+		LinearLayout.LayoutParams bottomParams = new LinearLayout.LayoutParams(mst.adjustXIgnoreDensity(82),
+				mst.adjustYIgnoreDensity(82));
 		lotBottom.addView(bCJ_1, bottomParams);
 		lotBottom.addView(bHF_10, bottomParams);
 		lotBottom.addView(bCJ1_1, bottomParams);
@@ -583,19 +518,14 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		lXX = new Lottery(context);
 		lHF5_1 = new Lottery(context);
 		lCJ1_1 = new Lottery(context);
-		lXX.getMedalImage().setImageDrawable(
-				ImageUtil.getDrawableResId(R.drawable.lot_xx, true, true));
+		lXX.getMedalImage().setImageDrawable(ImageUtil.getDrawableResId(R.drawable.lot_xx, true, true));
 		lXX.setImageName("lot_zd_5");
-		lHF5_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_5k,
-						"b_zd_5k.png"));
+		lHF5_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_5k, "b_zd_5k.png"));
 		lHF5_1.setImageName("lot_hf_5");
-		lCJ1_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_1w,
-						"b_zd_5.png"));
+		lCJ1_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.lot_zd_bg, R.drawable.lot_zd_1w, "b_zd_5.png"));
 		lCJ1_1.setImageName("lot_zd_1w");
-		LinearLayout.LayoutParams leftParams = new LinearLayout.LayoutParams(
-				mst.adjustXIgnoreDensity(82), mst.adjustYIgnoreDensity(82));
+		LinearLayout.LayoutParams leftParams = new LinearLayout.LayoutParams(mst.adjustXIgnoreDensity(82),
+				mst.adjustYIgnoreDensity(82));
 		leftParams.topMargin = mst.adjustYIgnoreDensity(9);
 		lotLeft.addView(lXX, leftParams);
 		lotLeft.addView(lHF5_1, leftParams);
@@ -621,11 +551,9 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		isChouJiang = false;
 		zhizuanItemList = new ArrayList<Lottery>();
 		layout = (RelativeLayout) findViewById(R.id.lot_bg);
-		layout.setBackgroundDrawable(ImageUtil.getDrawableResId(
-				R.drawable.lottery_bg_1, true, true));
+		layout.setBackgroundDrawable(ImageUtil.getDrawableResId(R.drawable.lottery_bg_1, true, true));
 		luckLayout = (RelativeLayout) findViewById(R.id.lot_luck);
-		luckLayout.setBackgroundDrawable(ImageUtil.getDrawableResId(
-				R.drawable.lot_right_text, true, true));
+		luckLayout.setBackgroundDrawable(ImageUtil.getDrawableResId(R.drawable.lot_right_text, true, true));
 		// 抽奖框4边布局
 		lotTop = (LinearLayout) findViewById(R.id.lot_top);
 		lotLeft = (LinearLayout) findViewById(R.id.lot_left);
@@ -661,40 +589,22 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		jiangquan_10 = new Lottery(context);
 		zhizuan_20 = new Lottery(context);
 		huafei_10 = new Lottery(context);
-		zhizuan_100.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.zz_bg2, R.drawable.zd_num_100,
-						"b_zz_100.png"));
+		zhizuan_100.getMedalImage().setImageBitmap(getBitmap(R.drawable.zz_bg2, R.drawable.zd_num_100, "b_zz_100.png"));
 		zhizuan_100.setImageName("lot_zz_100");
-		jiangquan_20.getMedalImage()
-				.setImageBitmap(
-						getBitmap(R.drawable.cj_bg, R.drawable.cj_num_20,
-								"b_cj_20.png"));
+		jiangquan_20.getMedalImage().setImageBitmap(getBitmap(R.drawable.cj_bg, R.drawable.cj_num_20, "b_cj_20.png"));
 		jiangquan_20.setImageName("lot_cj_20");
-		zhidou_500.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.zd_bg, R.drawable.zd_num_500w,
-						"b_zd_500w.png"));
+		zhidou_500.getMedalImage().setImageBitmap(getBitmap(R.drawable.zd_bg, R.drawable.zd_num_500w, "b_zd_500w.png"));
 		zhidou_500.setImageName("lot_zd_500");
-		zhizuan_2.getMedalImage()
-				.setImageBitmap(
-						getBitmap(R.drawable.zz_bg1, R.drawable.zd_num_2,
-								"b_zz_2.png"));
+		zhizuan_2.getMedalImage().setImageBitmap(getBitmap(R.drawable.zz_bg1, R.drawable.zd_num_2, "b_zz_2.png"));
 		zhizuan_2.setImageName("lot_zz_2");
-		jiangquan_10.getMedalImage()
-				.setImageBitmap(
-						getBitmap(R.drawable.cj_bg, R.drawable.cj_num_10,
-								"b_cj_10.png"));
+		jiangquan_10.getMedalImage().setImageBitmap(getBitmap(R.drawable.cj_bg, R.drawable.cj_num_10, "b_cj_10.png"));
 		jiangquan_10.setImageName("lot_cj_10");
-		zhizuan_20.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.zz_bg2, R.drawable.zd_num_20,
-						"b_zz_20.png"));
+		zhizuan_20.getMedalImage().setImageBitmap(getBitmap(R.drawable.zz_bg2, R.drawable.zd_num_20, "b_zz_20.png"));
 		zhizuan_20.setImageName("lot_zz_20");
-		huafei_10.getMedalImage()
-				.setImageBitmap(
-						getBitmap(R.drawable.cz_bg, R.drawable.hf_num_10,
-								"b_cz_10.png"));
+		huafei_10.getMedalImage().setImageBitmap(getBitmap(R.drawable.cz_bg, R.drawable.hf_num_10, "b_cz_10.png"));
 		huafei_10.setImageName("lot_hf_10");
-		LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
-				mst.adjustXIgnoreDensity(82), mst.adjustYIgnoreDensity(82));
+		LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(mst.adjustXIgnoreDensity(82),
+				mst.adjustYIgnoreDensity(82));
 		lotTop.addView(zhizuan_100, imageParams);
 		lotTop.addView(jiangquan_20, imageParams);
 		lotTop.addView(zhidou_500, imageParams);
@@ -706,23 +616,14 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		zhizuan_4 = new Lottery(context);
 		huafei_50 = new Lottery(context);
 		zhidou_1 = new Lottery(context);
-		zhizuan_4.getMedalImage()
-				.setImageBitmap(
-						getBitmap(R.drawable.zz_bg1, R.drawable.zd_num_4,
-								"b_zz_4.png"));
+		zhizuan_4.getMedalImage().setImageBitmap(getBitmap(R.drawable.zz_bg1, R.drawable.zd_num_4, "b_zz_4.png"));
 		zhizuan_4.setImageName("lot_zz_4");
-		huafei_50.getMedalImage()
-				.setImageBitmap(
-						getBitmap(R.drawable.cz_bg, R.drawable.hf_num_50,
-								"b_cz_50.png"));
+		huafei_50.getMedalImage().setImageBitmap(getBitmap(R.drawable.cz_bg, R.drawable.hf_num_50, "b_cz_50.png"));
 		huafei_50.setImageName("lot_hf_50");
-		zhidou_1.getMedalImage()
-				.setImageBitmap(
-						getBitmap(R.drawable.zd_bg, R.drawable.zd_num_1w,
-								"b_zd_1w.png"));
+		zhidou_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.zd_bg, R.drawable.zd_num_1w, "b_zd_1w.png"));
 		zhidou_1.setImageName("lot_zd_1");
-		LinearLayout.LayoutParams rightParams = new LinearLayout.LayoutParams(
-				mst.adjustXIgnoreDensity(82), mst.adjustYIgnoreDensity(82));
+		LinearLayout.LayoutParams rightParams = new LinearLayout.LayoutParams(mst.adjustXIgnoreDensity(82),
+				mst.adjustYIgnoreDensity(82));
 		rightParams.topMargin = mst.adjustYIgnoreDensity(9);
 		lotRight.addView(zhizuan_4, rightParams);
 		lotRight.addView(huafei_50, rightParams);
@@ -735,38 +636,22 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		zhizuan_10 = new Lottery(context);
 		jiangquan_30 = new Lottery(context);
 		zhizuan_500 = new Lottery(context);
-		zhizuan_5.getMedalImage()
-				.setImageBitmap(
-						getBitmap(R.drawable.zz_bg1, R.drawable.zd_num_5,
-								"b_zz_5.png"));
+		zhizuan_5.getMedalImage().setImageBitmap(getBitmap(R.drawable.zz_bg1, R.drawable.zd_num_5, "b_zz_5.png"));
 		zhizuan_5.setImageName("lot_zz_5");
-		huafei_1.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.cz_bg, R.drawable.hf_num_1, "b_cz_1.png"));
+		huafei_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.cz_bg, R.drawable.hf_num_1, "b_cz_1.png"));
 		huafei_1.setImageName("lot_hf_1");
-		zhidou_2.getMedalImage()
-				.setImageBitmap(
-						getBitmap(R.drawable.zd_bg, R.drawable.zd_num_2w,
-								"b_zd_2w.png"));
+		zhidou_2.getMedalImage().setImageBitmap(getBitmap(R.drawable.zd_bg, R.drawable.zd_num_2w, "b_zd_2w.png"));
 		zhidou_2.setImageName("lot_zd_2");
-		jiangquan_5.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.cj_bg, R.drawable.cj_num_5,
-						"b_cj_num_5.png"));
+		jiangquan_5.getMedalImage().setImageBitmap(getBitmap(R.drawable.cj_bg, R.drawable.cj_num_5, "b_cj_num_5.png"));
 		jiangquan_5.setImageName("lot_cj_5");
-		zhizuan_10.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.zz_bg2, R.drawable.zd_num_10,
-						"b_zz_10.png"));
+		zhizuan_10.getMedalImage().setImageBitmap(getBitmap(R.drawable.zz_bg2, R.drawable.zd_num_10, "b_zz_10.png"));
 		zhizuan_10.setImageName("lot_zz_10");
-		jiangquan_30.getMedalImage()
-				.setImageBitmap(
-						getBitmap(R.drawable.cj_bg, R.drawable.cj_num_30,
-								"b_cj_30.png"));
+		jiangquan_30.getMedalImage().setImageBitmap(getBitmap(R.drawable.cj_bg, R.drawable.cj_num_30, "b_cj_30.png"));
 		jiangquan_30.setImageName("lot_cj_30");
-		zhizuan_500.getMedalImage().setImageBitmap(
-				getBitmap(R.drawable.zz_bg2, R.drawable.zd_num_500,
-						"b_zz_500.png"));
+		zhizuan_500.getMedalImage().setImageBitmap(getBitmap(R.drawable.zz_bg2, R.drawable.zd_num_500, "b_zz_500.png"));
 		zhizuan_500.setImageName("lot_zz_500");
-		LinearLayout.LayoutParams bottomParams = new LinearLayout.LayoutParams(
-				mst.adjustXIgnoreDensity(82), mst.adjustYIgnoreDensity(82));
+		LinearLayout.LayoutParams bottomParams = new LinearLayout.LayoutParams(mst.adjustXIgnoreDensity(82),
+				mst.adjustYIgnoreDensity(82));
 		lotBottom.addView(zhizuan_5, bottomParams);
 		lotBottom.addView(huafei_1, bottomParams);
 		lotBottom.addView(zhidou_2, bottomParams);
@@ -777,21 +662,14 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		xiexie = new Lottery(context);
 		zhizuan_1 = new Lottery(context);
 		zhidou_5 = new Lottery(context);
-		xiexie.getMedalImage().setImageDrawable(
-				ImageUtil.getDrawableResId(R.drawable.xiexie, true, true));
+		xiexie.getMedalImage().setImageDrawable(ImageUtil.getDrawableResId(R.drawable.xiexie, true, true));
 		xiexie.setImageName("lot_xx");
-		zhizuan_1.getMedalImage()
-				.setImageBitmap(
-						getBitmap(R.drawable.zz_bg1, R.drawable.zd_num_1,
-								"b_zz_1.png"));
+		zhizuan_1.getMedalImage().setImageBitmap(getBitmap(R.drawable.zz_bg1, R.drawable.zd_num_1, "b_zz_1.png"));
 		zhizuan_1.setImageName("lot_zz_1");
-		zhidou_5.getMedalImage()
-				.setImageBitmap(
-						getBitmap(R.drawable.zd_bg, R.drawable.zd_num_5w,
-								"b_zd_5w.png"));
+		zhidou_5.getMedalImage().setImageBitmap(getBitmap(R.drawable.zd_bg, R.drawable.zd_num_5w, "b_zd_5w.png"));
 		zhidou_5.setImageName("lot_zd_5");
-		LinearLayout.LayoutParams leftParams = new LinearLayout.LayoutParams(
-				mst.adjustXIgnoreDensity(82), mst.adjustYIgnoreDensity(82));
+		LinearLayout.LayoutParams leftParams = new LinearLayout.LayoutParams(mst.adjustXIgnoreDensity(82),
+				mst.adjustYIgnoreDensity(82));
 		leftParams.topMargin = mst.adjustYIgnoreDensity(9);
 		lotLeft.addView(xiexie, leftParams);
 		lotLeft.addView(zhizuan_1, leftParams);
@@ -878,7 +756,6 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 
 	/**
 	 * 合成图片
-	 * 
 	 * @param background
 	 * @param src
 	 * @return
@@ -889,8 +766,7 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 				return bitmapCache.get(src);
 			}
 			String path = HttpURL.HTTP_PATH + "img/lotterydialog/" + name;
-			boolean sdCardExist = Environment.getExternalStorageState().equals(
-					Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
+			boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);// 判断sd卡是否存在
 			if (sdCardExist) {
 				Bitmap bitmap = ImageUtil.getImageFromSdCard(path);
 				if (null != bitmap) {
@@ -906,14 +782,11 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 					return bitmap;
 				}
 			}
-			BitmapDrawable bg = (BitmapDrawable) ImageUtil.getDrawableResId(
-					background, true, true);
-			BitmapDrawable bg1 = (BitmapDrawable) ImageUtil.getDrawableResId(
-					src, true, true);
+			BitmapDrawable bg = (BitmapDrawable) ImageUtil.getDrawableResId(background, true, true);
+			BitmapDrawable bg1 = (BitmapDrawable) ImageUtil.getDrawableResId(src, true, true);
 			Bitmap bp = bg.getBitmap();
 			Bitmap bp1 = bg1.getBitmap();
-			Bitmap bitmap = Bitmap.createBitmap(bp.getWidth(), bp.getHeight(),
-					Bitmap.Config.RGB_565);
+			Bitmap bitmap = Bitmap.createBitmap(bp.getWidth(), bp.getHeight(), Bitmap.Config.RGB_565);
 			Canvas canvas = new Canvas(bitmap);
 			canvas.drawBitmap(bp, 0, 0, null);
 			canvas.drawBitmap(bp1, 0, 0, null);
@@ -922,8 +795,7 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 				ImageUtil.saveImageToSdCard(path, bitmap);
 			} else {
 				ImageUtil.saveImageToData(path, bitmap);
-				Log.i("joinRoom", "------------------------保存图片：" + path
-						+ "----------------------------------");
+				Log.i("joinRoom", "------------------------保存图片：" + path + "----------------------------------");
 			}
 			return bitmap;
 		} catch (OutOfMemoryError e) {
@@ -1108,7 +980,6 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 
 	/**
 	 * 设置抽奖项高亮
-	 * 
 	 * @param lot
 	 */
 	public void setCoverVisible(Lottery lot) {
@@ -1117,7 +988,6 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 
 	/**
 	 * 设置抽奖项去掉高亮
-	 * 
 	 * @param lot
 	 */
 	public static void setCoverInvisble(Lottery lot) {
@@ -1127,65 +997,63 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.choujiang_btn:
-			if (stop) {
-				changeBgLayout.setBackgroundDrawable(ImageUtil
-						.getDrawableResId(R.drawable.choujiang, true, true));
-				lotLeft.removeAllViews();
-				lotTop.removeAllViews();
-				lotRight.removeAllViews();
-				lotBottom.removeAllViews();
-				setInitView();
-				queryConpon();
-			}
-			break;
-		case R.id.zizhuan_btn:
-			if (stop) {
-				changeBgLayout.setBackgroundDrawable(ImageUtil
-						.getDrawableResId(R.drawable.zhizuan, true, true));
-				lotLeft.removeAllViews();
-				lotTop.removeAllViews();
-				lotRight.removeAllViews();
-				lotBottom.removeAllViews();
-				InitZhizuanView();
-				queryConpon();
-			}
-			break;
-		case R.id.lot_start:
-			if (isChouJiang) {
-				startLottery(2);
-			} else {
-				startLotZhizuan(10);
-			}
-			break;
-		case R.id.lot_jj_5:
-			if (isChouJiang) {
-				startLottery(5);
-			} else {
-				startLotZhizuan(20);
-			}
-			break;
-		case R.id.lot_jj_10:
-			if (isChouJiang) {
-				startLottery(10);
-			} else {
-				startLotZhizuan(50);
-			}
-			break;
-		case R.id.lot_df: // 兑换
-			// LotDialog mmDialog = new LotDialog(Database.currentActivity,
-			// R.style.dialog, handler);
-			// mmDialog.show();
-			break;
-		case R.id.lot_wp: // 物品篮
-			gDialog = new GoodsDialog(Database.currentActivity);
-			gDialog.show();
-			break;
-		case R.id.lot_miss: // 返回
-			this.dismiss();
-			break;
-		default:
-			break;
+			case R.id.choujiang_btn:
+				if (stop) {
+					changeBgLayout.setBackgroundDrawable(ImageUtil.getDrawableResId(R.drawable.choujiang, true, true));
+					lotLeft.removeAllViews();
+					lotTop.removeAllViews();
+					lotRight.removeAllViews();
+					lotBottom.removeAllViews();
+					setInitView();
+					queryConpon();
+				}
+				break;
+			case R.id.zizhuan_btn:
+				if (stop) {
+					changeBgLayout.setBackgroundDrawable(ImageUtil.getDrawableResId(R.drawable.zhizuan, true, true));
+					lotLeft.removeAllViews();
+					lotTop.removeAllViews();
+					lotRight.removeAllViews();
+					lotBottom.removeAllViews();
+					InitZhizuanView();
+					queryConpon();
+				}
+				break;
+			case R.id.lot_start:
+				if (isChouJiang) {
+					startLottery(2);
+				} else {
+					startLotZhizuan(10);
+				}
+				break;
+			case R.id.lot_jj_5:
+				if (isChouJiang) {
+					startLottery(5);
+				} else {
+					startLotZhizuan(20);
+				}
+				break;
+			case R.id.lot_jj_10:
+				if (isChouJiang) {
+					startLottery(10);
+				} else {
+					startLotZhizuan(50);
+				}
+				break;
+			case R.id.lot_df: // 兑换
+				// LotDialog mmDialog = new LotDialog(Database.currentActivity,
+				// R.style.dialog, handler);
+				// mmDialog.show();
+				break;
+			case R.id.lot_wp: // 物品篮
+				gDialog = new GoodsDialog(Database.currentActivity);
+				gDialog.show();
+				break;
+			case R.id.lot_miss: // 返回
+				this.dismiss();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -1218,8 +1086,7 @@ public class LotteryDialog extends Dialog implements PrizeInterface,
 		ImageUtil.releaseDrawable(lCJ1_1.getMedalImage().getDrawable());
 		Log.i("bitmapCache", "bitmapCache:" + bitmapCache.size());
 		if (bitmapCache != null) {
-			Iterator<Map.Entry<Integer, Bitmap>> it = bitmapCache.entrySet()
-					.iterator();
+			Iterator<Map.Entry<Integer, Bitmap>> it = bitmapCache.entrySet().iterator();
 			while (it.hasNext()) {
 				try {
 					it.next().getValue().recycle();

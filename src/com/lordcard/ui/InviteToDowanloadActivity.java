@@ -87,7 +87,6 @@ import com.sdk.util.PaySite;
 import com.sdk.util.PayTipUtils;
 import com.sdk.util.RechargeUtils;
 
-
 @SuppressLint({ "HandlerLeak", "DefaultLocale" })
 public class InviteToDowanloadActivity extends BaseActivity {
 	private Button back = null;
@@ -120,8 +119,7 @@ public class InviteToDowanloadActivity extends BaseActivity {
 		setContentView(R.layout.invited_download);
 		this.context = this;
 		setNameText();
-		allSettingMsgMap = (HashMap<String, String>) GameCache
-				.getObj(CacheKey.ALL_SETTING_KEY);
+		allSettingMsgMap = (HashMap<String, String>) GameCache.getObj(CacheKey.ALL_SETTING_KEY);
 		layout = (RelativeLayout) findViewById(R.id.invited_download);
 		mst.adjustView(layout);
 		if (null != Database.ContactPeopleList) {
@@ -148,8 +146,7 @@ public class InviteToDowanloadActivity extends BaseActivity {
 							sendList.add(people);
 						}
 					}
-				} else if (contactPeopleList != null
-						&& contactPeopleList.size() > 0) {
+				} else if (contactPeopleList != null && contactPeopleList.size() > 0) {
 					for (ContactPeople people : contactPeopleList) { // 找到需要发送邀请人
 						if (people.isCheckdownload()) {
 							sendList.add(people);
@@ -158,8 +155,7 @@ public class InviteToDowanloadActivity extends BaseActivity {
 				}
 				if (type == 0) { // 邀请下载游戏
 					if (sendList.size() > 0) {
-						GameDialog gameDialog = new GameDialog(
-								Database.currentActivity) {
+						GameDialog gameDialog = new GameDialog(Database.currentActivity) {
 							@Override
 							public void okClick() {
 								if (!ActivityUtils.simExist()) { // 判断SIM卡是否能使用
@@ -177,8 +173,7 @@ public class InviteToDowanloadActivity extends BaseActivity {
 						gameDialog.show();
 						gameDialog.setText("系统将以手机短信的方式邀请当前选择的好友参与游戏!");
 					} else {
-						GameDialog gameDialog = new GameDialog(
-								Database.currentActivity) {
+						GameDialog gameDialog = new GameDialog(Database.currentActivity) {
 							@Override
 							public void cancelClick() {
 								finish();
@@ -189,8 +184,7 @@ public class InviteToDowanloadActivity extends BaseActivity {
 					}
 				} else if (type == 1) { // 邀请加入vip包房
 					if (sendList.size() > 0) {
-						GameDialog gameDialog = new GameDialog(
-								Database.currentActivity) {
+						GameDialog gameDialog = new GameDialog(Database.currentActivity) {
 							@Override
 							public void okClick() {
 								isInviteFriend = true;
@@ -206,13 +200,11 @@ public class InviteToDowanloadActivity extends BaseActivity {
 				}
 			}
 		});
-		progressDialog = DialogUtils.getWaitProgressDialog(
-				InviteToDowanloadActivity.this, "数据加载中...");
+		progressDialog = DialogUtils.getWaitProgressDialog(InviteToDowanloadActivity.this, "数据加载中...");
 		progressDialog.show();
 		personList = (ListView) findViewById(R.id.InvitedlistView);
 		letterListView = (MyLetterListView) findViewById(R.id.myLetterListView);
-		letterListView
-				.setOnTouchingLetterChangedListener(new LetterListViewListener());
+		letterListView.setOnTouchingLetterChangedListener(new LetterListViewListener());
 		alphaIndexer = new HashMap<String, Integer>();
 		handler = new Handler();
 		overlayThread = new OverlayThread();
@@ -226,55 +218,52 @@ public class InviteToDowanloadActivity extends BaseActivity {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case 100:
-				if (obj_name_find != null) {
-					if (peopleListFounded != null) {
-						for (ContactPeople people : peopleListFounded) { // 找到需要发送邀请人
-							if (people.isCheckdownload()) {
-								people.setCheckdownload(false);
-							}
-						}
-					}
-					peopleListFounded.clear();
-					String str = obj_name_find.getText().toString();
-					if (str.equals("")) {
-						setAdapter(contactPeopleList);
-					} else {
-						for (int i = contactPeopleList.size() - 1; i >= 0; i--) {
-							ContactPeople p = contactPeopleList.get(i);
-							String info = p.getSort_key() + p.getNumber();
-							String currentStr = p.getSort_Name();
-							boolean checkIndex = true;
-							str = str.toUpperCase();
-							if (str.length() == 1 && isAllUni(str)) {
-								checkIndex = false;
-							}
-							if (checkIndex
-									&& (info.indexOf(str) != -1 || info
-											.indexOf(currentStr) != -1)) {
-								peopleListFounded.add(p);
-							} else if (!checkIndex) {
-								if (currentStr.startsWith(str)) {
-									peopleListFounded.add(p);
-								}
-							} else {
-								// 三个字符错误可以接受 //75%匹配可以接受
-								if (/*
-									 * Match.match(2, str,currentStr) ||
-									 */Match.match(0.60, str, currentStr)) {
-									peopleListFounded.add(p);
+				case 100:
+					if (obj_name_find != null) {
+						if (peopleListFounded != null) {
+							for (ContactPeople people : peopleListFounded) { // 找到需要发送邀请人
+								if (people.isCheckdownload()) {
+									people.setCheckdownload(false);
 								}
 							}
 						}
-						if (peopleListFounded.size() > 0) {
-							setAdapter(peopleListFounded);
-							Toast.makeText(getApplicationContext(),
-									"检索到" + peopleListFounded.size() + "个匹配项",
-									Toast.LENGTH_SHORT).show();
+						peopleListFounded.clear();
+						String str = obj_name_find.getText().toString();
+						if (str.equals("")) {
+							setAdapter(contactPeopleList);
+						} else {
+							for (int i = contactPeopleList.size() - 1; i >= 0; i--) {
+								ContactPeople p = contactPeopleList.get(i);
+								String info = p.getSort_key() + p.getNumber();
+								String currentStr = p.getSort_Name();
+								boolean checkIndex = true;
+								str = str.toUpperCase();
+								if (str.length() == 1 && isAllUni(str)) {
+									checkIndex = false;
+								}
+								if (checkIndex && (info.indexOf(str) != -1 || info.indexOf(currentStr) != -1)) {
+									peopleListFounded.add(p);
+								} else if (!checkIndex) {
+									if (currentStr.startsWith(str)) {
+										peopleListFounded.add(p);
+									}
+								} else {
+									// 三个字符错误可以接受 //75%匹配可以接受
+									if (/*
+										 * Match.match(2, str,currentStr) ||
+										 */Match.match(0.60, str, currentStr)) {
+										peopleListFounded.add(p);
+									}
+								}
+							}
+							if (peopleListFounded.size() > 0) {
+								setAdapter(peopleListFounded);
+								Toast.makeText(getApplicationContext(), "检索到" + peopleListFounded.size() + "个匹配项",
+										Toast.LENGTH_SHORT).show();
+							}
 						}
 					}
-				}
-				break;
+					break;
 			}
 			super.handleMessage(msg);
 		}
@@ -286,16 +275,14 @@ public class InviteToDowanloadActivity extends BaseActivity {
 		obj_name_find = (EditText) findViewById(R.id.tv_ObjName);
 		obj_name_find.addTextChangedListener(new TextWatcher() {
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				// TODO Auto-generated method stub
 				// contactPeopleList
 				myHandler_findPeople.sendEmptyMessage(100);
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 				// TODO Auto-generated method stub
 			}
 
@@ -320,10 +307,8 @@ public class InviteToDowanloadActivity extends BaseActivity {
 	public void onResume() {
 		super.onResume();
 		Uri uri = Uri.parse("content://com.android.contacts/data/phones");
-		String[] projection = { BaseColumns._ID, Phone.DISPLAY_NAME,
-				Phone.DATA1, "sort_key", Phone.PHOTO_ID };
-		asyncQuery.startQuery(0, null, uri, projection, null, null,
-				"sort_key COLLATE LOCALIZED asc");
+		String[] projection = { BaseColumns._ID, Phone.DISPLAY_NAME, Phone.DATA1, "sort_key", Phone.PHOTO_ID };
+		asyncQuery.startQuery(0, null, uri, projection, null, null, "sort_key COLLATE LOCALIZED asc");
 	}
 
 	// 异步查询联系人
@@ -338,8 +323,7 @@ public class InviteToDowanloadActivity extends BaseActivity {
 		@Override
 		protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
 			if (cursor != null && cursor.getCount() > 0) {
-				Drawable defaultPhoto = ImageUtil.getResDrawable(
-						R.drawable.default_contact, true);
+				Drawable defaultPhoto = ImageUtil.getResDrawable(R.drawable.default_contact, true);
 				contactPeopleList = new ArrayList<ContactPeople>();
 				cursor.moveToFirst();
 				for (int i = 0; i < cursor.getCount(); i++) {
@@ -365,35 +349,23 @@ public class InviteToDowanloadActivity extends BaseActivity {
 						if (photo_id > 0) {
 							// photo =
 							// ImageUtil.imageCacheMap.get(String.valueOf(photo_id));
-							photo = ImageUtil.getDrawableResId((int) photo_id,
-									true, true);
+							photo = ImageUtil.getDrawableResId((int) photo_id, true, true);
 							if (photo == null) {
 								Uri photoUri = ContactsContract.Data.CONTENT_URI;
 								/**
-								 * 1、Uri（实际上就是要查询的表）
-								 * 2、需要返回的字段名（这里的字段"data15"存储的就是联系人的头像）
-								 * 3、后面两个是where过滤
-								 * ，传入先前查询到的photo_id，注意：其对应的是data表中"_id"字段）
+								 * 1、Uri（实际上就是要查询的表） 2、需要返回的字段名（这里的字段"data15"存储的就是联系人的头像）
+								 * 3、后面两个是where过滤 ，传入先前查询到的photo_id，注意：其对应的是data表中"_id"字段）
 								 **/
-								Cursor photoCr = contentResolver
-										.query(photoUri,
-												new String[] { Phone.DATA15 },
-												"ContactsContract.Data._ID=?",
-												new String[] { String
-														.valueOf(photo_id) },
-												null);
+								Cursor photoCr = contentResolver.query(photoUri, new String[] { Phone.DATA15 },
+										"ContactsContract.Data._ID=?", new String[] { String.valueOf(photo_id) }, null);
 								/** 对返回的Cursor进行遍历 */
 								if (photoCr.moveToFirst()) {
 									/* 对返回来的Cursor进行一系列的处理，最终转换成Bitmap对象 */
-									ByteArrayInputStream inputStream = new ByteArrayInputStream(
-											photoCr.getBlob(0));
-									photo = new BitmapDrawable(
-											BitmapFactory
-													.decodeStream(inputStream));
+									ByteArrayInputStream inputStream = new ByteArrayInputStream(photoCr.getBlob(0));
+									photo = new BitmapDrawable(BitmapFactory.decodeStream(inputStream));
 									// ImageUtil.imageCacheMap.put(String.valueOf(photo_id),
 									// photo);
-									ImageUtil.addDrawable2Cache(
-											String.valueOf(photo_id), photo);
+									ImageUtil.addDrawable2Cache(String.valueOf(photo_id), photo);
 									inputStream = null;
 									photo = null;
 								}
@@ -461,8 +433,7 @@ public class InviteToDowanloadActivity extends BaseActivity {
 				// 当前汉语拼音首字母
 				String currentStr = getAlpha(list.get(i).getSort_key());
 				// 上一个汉语拼音首字母，如果不存在为“ ”
-				String previewStr = (i - 1) >= 0 ? getAlpha(list.get(i - 1)
-						.getSort_key()) : " ";
+				String previewStr = (i - 1) >= 0 ? getAlpha(list.get(i - 1).getSort_key()) : " ";
 				if (!previewStr.equals(currentStr)) {
 					String name = getAlpha(list.get(i).getSort_key());
 					alphaIndexer.put(name, i);
@@ -490,20 +461,16 @@ public class InviteToDowanloadActivity extends BaseActivity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
-				convertView = inflater
-						.inflate(R.layout.contact_list_item, null);
+				convertView = inflater.inflate(R.layout.contact_list_item, null);
 				// if(position % 2 == 0){
 				// convertView.setBackgroundResource(R.color.friend_item_color);
 				// }
 				holder = new ViewHolder();
 				holder.alpha = (TextView) convertView.findViewById(R.id.alpha);
 				holder.name = (TextView) convertView.findViewById(R.id.name);
-				holder.number = (TextView) convertView
-						.findViewById(R.id.number);
-				holder.checkBox = (CheckBox) convertView
-						.findViewById(R.id.people_check);
-				holder.photoView = (ImageView) convertView
-						.findViewById(R.id.photo_view);
+				holder.number = (TextView) convertView.findViewById(R.id.number);
+				holder.checkBox = (CheckBox) convertView.findViewById(R.id.people_check);
+				holder.photoView = (ImageView) convertView.findViewById(R.id.photo_view);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
@@ -512,8 +479,7 @@ public class InviteToDowanloadActivity extends BaseActivity {
 			holder.name.setText(cp.getName());
 			holder.number.setText(cp.getNumber());
 			holder.photoView.setBackgroundDrawable(cp.getPhoto());
-			PeopleCheckLister peopleItemCheck = new PeopleCheckLister(
-					holder.checkBox, position);
+			PeopleCheckLister peopleItemCheck = new PeopleCheckLister(holder.checkBox, position);
 			holder.checkBox.setOnCheckedChangeListener(peopleItemCheck);
 			if (cp.isCheckdownload()) {
 				holder.checkBox.setChecked(true);
@@ -521,8 +487,7 @@ public class InviteToDowanloadActivity extends BaseActivity {
 				holder.checkBox.setChecked(false);
 			}
 			String currentStr = getAlpha(cp.getSort_key());// 当前字母
-			String previewStr = (position - 1) >= 0 ? getAlpha(peopleList.get(
-					position - 1).getSort_key()) : " ";
+			String previewStr = (position - 1) >= 0 ? getAlpha(peopleList.get(position - 1).getSort_key()) : " ";
 			if (!previewStr.equals(currentStr)) {
 				holder.alpha.setVisibility(View.VISIBLE);
 				holder.alpha.setText(currentStr);
@@ -551,8 +516,7 @@ public class InviteToDowanloadActivity extends BaseActivity {
 		}
 
 		@Override
-		public void onCheckedChanged(CompoundButton buttonView,
-				boolean isChecked) {
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			if (peopleListFounded != null && peopleListFounded.size() > 0) {
 				if (peopleListFounded.size() > position) {
 					if (isChecked) {
@@ -576,14 +540,11 @@ public class InviteToDowanloadActivity extends BaseActivity {
 		LayoutInflater inflater = LayoutInflater.from(this);
 		overlay = (TextView) inflater.inflate(R.layout.contact_overlay, null);
 		overlay.setVisibility(View.INVISIBLE);
-		WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,
-				WindowManager.LayoutParams.TYPE_APPLICATION,
-				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-						| WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+		WindowManager.LayoutParams lp = new WindowManager.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.TYPE_APPLICATION,
+				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
 				PixelFormat.TRANSLUCENT);
-		WindowManager windowManager = (WindowManager) this
-				.getSystemService(Context.WINDOW_SERVICE);
+		WindowManager windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
 		windowManager.addView(overlay, lp);
 	}
 
@@ -591,13 +552,11 @@ public class InviteToDowanloadActivity extends BaseActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		// mst.unRegisterView(layout);
-		WindowManager windowManager = (WindowManager) this
-				.getSystemService(Context.WINDOW_SERVICE);
+		WindowManager windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
 		windowManager.removeView(overlay);
 	}
 
-	private class LetterListViewListener implements
-			OnTouchingLetterChangedListener {
+	private class LetterListViewListener implements OnTouchingLetterChangedListener {
 		@Override
 		public void onTouchingLetterChanged(final String s) {
 			if (alphaIndexer.get(s) != null) {
@@ -698,64 +657,48 @@ public class InviteToDowanloadActivity extends BaseActivity {
 					return TaskResult.FAILED;
 				}
 				param = params[0];
-				List<ContactPeople> sendList = (List<ContactPeople>) param
-						.get("sendList");
+				List<ContactPeople> sendList = (List<ContactPeople>) param.get("sendList");
 				List<String> tempList = new ArrayList<String>();
 				for (ContactPeople people : sendList) { // 邀请的人
 					tempList.add(people.getMd5Number());
-					telphoneKeyMap.put(people.getMd5Number(),
-							people.getNumber());
+					telphoneKeyMap.put(people.getMd5Number(), people.getNumber());
 				}
 				// ------------------------------------------------------------------------------
 				if ("close".equals(emsSwitch)) {
 					String peopleNum = "";
 					StringBuffer smsMsg = new StringBuffer();
 					smsMsg.append("邀请你玩掌中游斗地主");
-					if (null != allSettingMsgMap
-							&& allSettingMsgMap.containsKey("sms_send_apk")
-							&& !TextUtils.isEmpty(allSettingMsgMap
-									.get("sms_send_apk"))) {
-						smsMsg.append(" 。游戏下载地址  ："
-								+ allSettingMsgMap.get("sms_send_apk"));
+					if (null != allSettingMsgMap && allSettingMsgMap.containsKey("sms_send_apk")
+							&& !TextUtils.isEmpty(allSettingMsgMap.get("sms_send_apk"))) {
+						smsMsg.append(" 。游戏下载地址  ：" + allSettingMsgMap.get("sms_send_apk"));
 					} else {
-						smsMsg.append(" 。游戏下载地址  ：" + HttpURL.CONFIG_SER
-								+ HttpURL.APK_NAME);
+						smsMsg.append(" 。游戏下载地址  ：" + HttpURL.CONFIG_SER + HttpURL.APK_NAME);
 					}
 					// smsMsg.append(" 。游戏下载地址  ：http://www.xnghm.com/");//xs_test
 					for (String phoneKey : telphoneKeyMap.keySet()) {
 						peopleNum += telphoneKeyMap.get(phoneKey) + ",";
 					}
-					sendSMS(smsMsg.toString(),
-							peopleNum.substring(0, peopleNum.length() - 1));
+					sendSMS(smsMsg.toString(), peopleNum.substring(0, peopleNum.length() - 1));
 				} else {
 					String result = HttpRequest.inviteFriend(tempList);// 邀请好友接口
 					if (HttpRequest.FAIL_STATE.equals(result)) { // 失败
-						DialogUtils.mesTip(
-								getString(R.string.invite_friend_fail), false);
+						DialogUtils.mesTip(getString(R.string.invite_friend_fail), false);
 					} else if (HttpRequest.TOKEN_ILLEGAL.equals(result)) { // 用户登录Token过期
 						DialogUtils.reLogin(Database.currentActivity);
 					} else {
-						GameTask resultTask = JsonHelper.fromJson(result,
-								GameTask.class);
+						GameTask resultTask = JsonHelper.fromJson(result, GameTask.class);
 						if (GameTask.TASK_TYPE[4] == resultTask.getType()) { // 邀请好友
-							if (CmdUtils.FAIL_CODE
-									.equals(resultTask.getValue())) { // 收到验证码失败
+							if (CmdUtils.FAIL_CODE.equals(resultTask.getValue())) { // 收到验证码失败
 								DialogUtils.mesTip("无效验证码!", false);
-							} else if (!CmdUtils.FAIL_CODE.equals(resultTask
-									.getValue())) {
-								Map<String, String> phoneMap = JsonHelper
-										.fromJson(
-												resultTask.getValue(),
-												new TypeToken<Map<String, String>>() {
-												});
+							} else if (!CmdUtils.FAIL_CODE.equals(resultTask.getValue())) {
+								Map<String, String> phoneMap = JsonHelper.fromJson(resultTask.getValue(),
+										new TypeToken<Map<String, String>>() {
+										});
 								// 发送邀请码
 								SmsManager smsManager = SmsManager.getDefault();
-								Intent intent = new Intent(
-										Constant.ACTION_SMS_SEND);
-								PendingIntent sentIntent = PendingIntent
-										.getBroadcast(
-												InviteToDowanloadActivity.this,
-												0, intent, 0);
+								Intent intent = new Intent(Constant.ACTION_SMS_SEND);
+								PendingIntent sentIntent = PendingIntent.getBroadcast(InviteToDowanloadActivity.this,
+										0, intent, 0);
 								ArrayList<PendingIntent> sentIntentList = new ArrayList<PendingIntent>();
 								sentIntentList.add(sentIntent);
 								for (String phoneKey : phoneMap.keySet()) {
@@ -763,34 +706,21 @@ public class InviteToDowanloadActivity extends BaseActivity {
 									StringBuffer smsMsg = new StringBuffer();
 									smsMsg.append("邀请你玩掌中游斗地主");
 									if (!TextUtils.isEmpty(code)) {
-										smsMsg.append("，邀请码: " + code
-												+ "。凭此邀请码可以获系统赠送的金豆");
+										smsMsg.append("，邀请码: " + code + "。凭此邀请码可以获系统赠送的金豆");
 									}
-									if (null != allSettingMsgMap
-											&& allSettingMsgMap
-													.containsKey("sms_send_apk")
-											&& !TextUtils
-													.isEmpty(allSettingMsgMap
-															.get("sms_send_apk"))) {
-										smsMsg.append(" 。游戏下载地址  ："
-												+ allSettingMsgMap
-														.get("sms_send_apk"));
+									if (null != allSettingMsgMap && allSettingMsgMap.containsKey("sms_send_apk")
+											&& !TextUtils.isEmpty(allSettingMsgMap.get("sms_send_apk"))) {
+										smsMsg.append(" 。游戏下载地址  ：" + allSettingMsgMap.get("sms_send_apk"));
 									} else {
-										smsMsg.append(" 。游戏下载地址  ："
-												+ HttpURL.CONFIG_SER
-												+ HttpURL.APK_NAME);
+										smsMsg.append(" 。游戏下载地址  ：" + HttpURL.CONFIG_SER + HttpURL.APK_NAME);
 									}
 									// smsMsg.append(" 。游戏下载地址  ：http://www.xnghm.com/");//xs_test
-									ArrayList<String> sendMsgList = smsManager
-											.divideMessage(smsMsg.toString());
-									smsManager.sendMultipartTextMessage(
-											telphoneKeyMap.get(phoneKey), null,
+									ArrayList<String> sendMsgList = smsManager.divideMessage(smsMsg.toString());
+									smsManager.sendMultipartTextMessage(telphoneKeyMap.get(phoneKey), null,
 											sendMsgList, sentIntentList, null);
 								}
 								if (resultTask.getCount() > 0) {
-									DialogUtils.mesTip("恭喜您！通过邀请好友获取"
-											+ resultTask.getCount() + "金豆!",
-											false);
+									DialogUtils.mesTip("恭喜您！通过邀请好友获取" + resultTask.getCount() + "金豆!", false);
 								}
 							}
 						}
@@ -805,7 +735,6 @@ public class InviteToDowanloadActivity extends BaseActivity {
 
 	/**
 	 * 发送短信
-	 * 
 	 * @param smsBody
 	 * @param smsContact
 	 */
@@ -820,27 +749,22 @@ public class InviteToDowanloadActivity extends BaseActivity {
 		@Override
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
-				String result = HttpRequest.createRoom(Database.GAME_GROUP_NUM,
-						Database.JOIN_ROOM_RATIO, false);
+				String result = HttpRequest.createRoom(Database.GAME_GROUP_NUM, Database.JOIN_ROOM_RATIO, false);
 				// 创建失败
 				if (result.equals(HttpRequest.FAIL_STATE)) {
-					DialogUtils.mesTip(getString(R.string.room_create_fail),
-							false);
+					DialogUtils.mesTip(getString(R.string.room_create_fail), false);
 					return TaskResult.FAILED;
 				} else if (HttpRequest.TOKEN_ILLEGAL.equals(result)) { // 用户登录Token过期
 					DialogUtils.reLogin(Database.currentActivity);
 					return TaskResult.NO_LOGIN;
 				} else {
-					CmdDetail detail = JsonHelper.fromJson(result,
-							CmdDetail.class);
+					CmdDetail detail = JsonHelper.fromJson(result, CmdDetail.class);
 					if (CmdUtils.CMD_ERR_CREATE.equals(detail.getCmd())) { // 创建失败
 						String v = detail.getDetail();
-						if (HttpRequest.NO_LOGIN.equals(v)
-								|| HttpRequest.TOKEN_ILLEGAL.equals(v)) { // 未登录,用户登录token非法
+						if (HttpRequest.NO_LOGIN.equals(v) || HttpRequest.TOKEN_ILLEGAL.equals(v)) { // 未登录,用户登录token非法
 							DialogUtils.reLogin(Database.currentActivity);
 						} else if (HttpRequest.NO_SERVER.equals(v)) { // 游戏服务器不存在
-							DialogUtils.mesTip(
-									getString(R.string.no_game_server), false);
+							DialogUtils.mesTip(getString(R.string.no_game_server), false);
 						}
 					} else if (CmdUtils.CMD_HDETAIL.equals(detail.getCmd())) { // 金豆不足
 						Room vipRoom = new Room();
@@ -851,19 +775,15 @@ public class InviteToDowanloadActivity extends BaseActivity {
 						double b = RechargeUtils.calRoomJoinMoney(vipRoom);
 						PayTipUtils.showTip(b, PaySite.VIP_CREATE); // 配置的提示方式
 					} else if (CmdUtils.CMD_CREATE.equals(detail.getCmd())) { // 成功
-						Room createRoom = JsonHelper.fromJson(
-								detail.getDetail(), Room.class);
+						Room createRoom = JsonHelper.fromJson(detail.getDetail(), Room.class);
 						Database.JOIN_ROOM = createRoom;
-						Database.GAME_SERVER = Database.JOIN_ROOM
-								.getGameServer(); // 游戏服务器
+						Database.GAME_SERVER = Database.JOIN_ROOM.getGameServer(); // 游戏服务器
 						Database.JOIN_ROOM_CODE = createRoom.getCode();
 						Database.JOIN_ROOM_RATIO = createRoom.getRatio(); // vip包房倍数
-						Database.JOIN_ROOM_BASEPOINT = createRoom
-								.getBasePoint();
+						Database.JOIN_ROOM_BASEPOINT = createRoom.getBasePoint();
 						Database.GAME_BG_DRAWABLEID = R.drawable.background_3;
 						if (isInviteFriend) { // 给邀请的好友发邀请短信
-							if (emsSwitch != null && !emsSwitch.equals("")
-									&& emsSwitch.equals("close")) {
+							if (emsSwitch != null && !emsSwitch.equals("") && emsSwitch.equals("close")) {
 								StringBuffer msgBuffer = new StringBuffer();
 								msgBuffer.append("嘿！我在掌中游斗地主开了一个");// 嘿！我在千千游斗地主开了一个斗地主vip包房，房间号
 								// if (Database.VIP_GAME_TYPE ==
@@ -871,21 +791,12 @@ public class InviteToDowanloadActivity extends BaseActivity {
 								// msgBuffer.append("斗地主");
 								// }
 								msgBuffer.append("斗地主");
-								msgBuffer.append("vip包房, 房间号: ")
-										.append(Database.JOIN_ROOM_CODE)
-										.append(" 号。速来！");
-								if (null != allSettingMsgMap
-										&& allSettingMsgMap
-												.containsKey("sms_send_apk")
-										&& !TextUtils.isEmpty(allSettingMsgMap
-												.get("sms_send_apk"))) {
-									msgBuffer.append(" 。游戏下载地址  ："
-											+ allSettingMsgMap
-													.get("sms_send_apk"));
+								msgBuffer.append("vip包房, 房间号: ").append(Database.JOIN_ROOM_CODE).append(" 号。速来！");
+								if (null != allSettingMsgMap && allSettingMsgMap.containsKey("sms_send_apk")
+										&& !TextUtils.isEmpty(allSettingMsgMap.get("sms_send_apk"))) {
+									msgBuffer.append(" 。游戏下载地址  ：" + allSettingMsgMap.get("sms_send_apk"));
 								} else {
-									msgBuffer.append(" 。游戏下载地址  ："
-											+ HttpURL.CONFIG_SER
-											+ HttpURL.APK_NAME);
+									msgBuffer.append(" 。游戏下载地址  ：" + HttpURL.CONFIG_SER + HttpURL.APK_NAME);
 								}
 								String peopleNum = "";
 								for (ContactPeople people : Database.ContactPeopleList) {
@@ -893,17 +804,12 @@ public class InviteToDowanloadActivity extends BaseActivity {
 										peopleNum += people.getNumber() + ",";
 									}
 								}
-								sendSMS(msgBuffer.toString(),
-										peopleNum.substring(0,
-												peopleNum.length() - 1));
+								sendSMS(msgBuffer.toString(), peopleNum.substring(0, peopleNum.length() - 1));
 							} else {
 								SmsManager smsManager = SmsManager.getDefault();
-								Intent intent = new Intent(
-										Constant.ACTION_SMS_SEND);
-								PendingIntent sentIntent = PendingIntent
-										.getBroadcast(
-												InviteToDowanloadActivity.this,
-												0, intent, 0);
+								Intent intent = new Intent(Constant.ACTION_SMS_SEND);
+								PendingIntent sentIntent = PendingIntent.getBroadcast(InviteToDowanloadActivity.this,
+										0, intent, 0);
 								StringBuffer msgBuffer = new StringBuffer();
 								msgBuffer.append("嘿！我在掌中游斗地主开了一个");// 嘿！我在千千游斗地主开了一个斗地主vip包房，房间号
 																	// 100号。速来！
@@ -914,33 +820,20 @@ public class InviteToDowanloadActivity extends BaseActivity {
 																	// {
 								// }
 								msgBuffer.append("斗地主");
-								msgBuffer.append("vip包房, 房间号: ")
-										.append(Database.JOIN_ROOM_CODE)
-										.append(" 号。速来！");
-								if (null != allSettingMsgMap
-										&& allSettingMsgMap
-												.containsKey("sms_send_apk")
-										&& !TextUtils.isEmpty(allSettingMsgMap
-												.get("sms_send_apk"))) {
-									msgBuffer.append(" 。游戏下载地址  ："
-											+ allSettingMsgMap
-													.get("sms_send_apk"));
+								msgBuffer.append("vip包房, 房间号: ").append(Database.JOIN_ROOM_CODE).append(" 号。速来！");
+								if (null != allSettingMsgMap && allSettingMsgMap.containsKey("sms_send_apk")
+										&& !TextUtils.isEmpty(allSettingMsgMap.get("sms_send_apk"))) {
+									msgBuffer.append(" 。游戏下载地址  ：" + allSettingMsgMap.get("sms_send_apk"));
 								} else {
-									msgBuffer.append(" 。游戏下载地址  ："
-											+ HttpURL.CONFIG_SER
-											+ HttpURL.APK_NAME);
+									msgBuffer.append(" 。游戏下载地址  ：" + HttpURL.CONFIG_SER + HttpURL.APK_NAME);
 								}
 								ArrayList<PendingIntent> sentIntentList = new ArrayList<PendingIntent>();
 								sentIntentList.add(sentIntent);
 								for (ContactPeople people : Database.ContactPeopleList) {
 									if (people.isCheckdownload()) {
-										ArrayList<String> sendMsgList = smsManager
-												.divideMessage(msgBuffer
-														.toString());
-										smsManager.sendMultipartTextMessage(
-												people.getNumber(), null,
-												sendMsgList, sentIntentList,
-												null);
+										ArrayList<String> sendMsgList = smsManager.divideMessage(msgBuffer.toString());
+										smsManager.sendMultipartTextMessage(people.getNumber(), null, sendMsgList,
+												sentIntentList, null);
 									}
 								}
 							}
@@ -949,8 +842,7 @@ public class InviteToDowanloadActivity extends BaseActivity {
 						in.putExtra("isviproom", true); // 标识是vip包房
 						// in.setClass(InviteToDowanloadActivity.this,
 						// Database.VIP_GAME_TYPE);
-						in.setClass(InviteToDowanloadActivity.this,
-								DoudizhuMainGameActivity.class);
+						in.setClass(InviteToDowanloadActivity.this, DoudizhuMainGameActivity.class);
 						startActivity(in);
 						finish();
 					}

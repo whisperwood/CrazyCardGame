@@ -17,10 +17,9 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.lordcard.common.schedule.AutoTask;
-import com.lordcard.common.schedule.ScheduledTask;
 import com.lordcard.common.upgrade.UpdateUtils;
 import com.lordcard.common.util.ActivityUtils;
+import com.lordcard.common.util.AudioPlayUtils;
 import com.lordcard.common.util.ChannelUtils;
 import com.lordcard.common.util.ImageUtil;
 import com.lordcard.constant.CacheKey;
@@ -49,22 +48,21 @@ public class StartActivity extends BaseActivity {
 		initMMChannel();
 		layout = new LinearLayout(this);
 		layout.setGravity(Gravity.CENTER);
-		layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT));
+		layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		imageView = new ImageView(this);
 		imageView.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.start_game, false));
-		imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+		imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		layout.addView(imageView);
 		setContentView(layout);
 		sharedData = getApplication().getSharedPreferences(Constant.GAME_ACTIVITE, Context.MODE_PRIVATE);
 		first = sharedData.getBoolean("first", true);
 		// 判断推送服务是否启动
-		if(Constant.isPayEnable){
+		if (Constant.isPayEnable) {
 			Intent newIntent = new Intent(this, NotificationService.class);
 			startService(newIntent);
 		}
 		Constant.startCount = 0;
-		if(Constant.isPayEnable){
+		if (Constant.isPayEnable) {
 			ThreadPool.startWork(new Runnable() {
 				@Override
 				public void run() {
@@ -73,13 +71,12 @@ public class StartActivity extends BaseActivity {
 				}
 			});
 		}
-		if(Constant.isPayEnable){
+		if (Constant.isPayEnable) {
 			if (Database.CHECK_VERSION) {
 				new Thread() {
 					@Override
 					public void run() {
-						Database.HAS_NEW_VERSION = UpdateUtils.checkNewVersion(
-								HttpURL.CONFIG_SER, HttpURL.APK_INFO);
+						Database.HAS_NEW_VERSION = UpdateUtils.checkNewVersion(HttpURL.CONFIG_SER, HttpURL.APK_INFO);
 					};
 				}.start();
 			}
@@ -96,7 +93,7 @@ public class StartActivity extends BaseActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if(Constant.isPayEnable){
+		if (Constant.isPayEnable) {
 			ThreadPool.startWork(new Runnable() {
 				@Override
 				public void run() {
@@ -121,12 +118,16 @@ public class StartActivity extends BaseActivity {
 		alphaAnimation.setRepeatCount(1); // 重复播放次数 如果需要反过来执行 此数值需要为1
 		alphaAnimation.setFillAfter(true);
 		imageView.startAnimation(alphaAnimation);
-		ScheduledTask.addDelayTask(new AutoTask() {
+		final long t1 = System.currentTimeMillis();
+		ThreadPool.startWork(new Runnable() {
 			@Override
 			public void run() {
+				//这里对本地音乐进行加载
+				AudioPlayUtils.init();
+				System.out.println("load Audio costMills:" + (System.currentTimeMillis() - t1));
 				goToLoginActivity();
 			}
-		}, 1000);
+		});
 	}
 
 	private void goToLoginActivity() {
@@ -145,7 +146,7 @@ public class StartActivity extends BaseActivity {
 	}
 
 	private void initMMChannel() {
-		if(Constant.isPayEnable){
+		if (Constant.isPayEnable) {
 			ThreadPool.startWork(new Runnable() {
 				@Override
 				public void run() {

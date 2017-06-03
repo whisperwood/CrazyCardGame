@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 排名大奖 model.SortPriz
- * 
  * @author Administrator <br/>
  *         create at 2013 2013-3-19 下午2:09:16
  */

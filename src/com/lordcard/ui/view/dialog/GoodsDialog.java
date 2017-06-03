@@ -20,7 +20,6 @@ import com.lordcard.constant.Database;
 
 /**
  * 物品弹出框
- * 
  * @author Administrator
  */
 public class GoodsDialog extends Dialog implements OnClickListener {
@@ -29,8 +28,7 @@ public class GoodsDialog extends Dialog implements OnClickListener {
 	private GridView gridView;
 	private GoodsAdapter goodsAdapter;
 
-	protected GoodsDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected GoodsDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 		// layout(context);
@@ -70,8 +68,7 @@ public class GoodsDialog extends Dialog implements OnClickListener {
 	}
 
 	private String[] getImageNames() {
-		SharedPreferences sharedData = context.getSharedPreferences(
-				Constant.GAME_ACTIVITE, Context.MODE_PRIVATE);
+		SharedPreferences sharedData = context.getSharedPreferences(Constant.GAME_ACTIVITE, Context.MODE_PRIVATE);
 		String imageStr = sharedData.getString(LotteryDialog.SAVE_LOTTERY, "");
 		if (imageStr.trim().length() > 0) {
 			String[] images = imageStr.split(",");
@@ -84,11 +81,11 @@ public class GoodsDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.goods_cancel:
-			setDismiss();
-			break;
-		default:
-			break;
+			case R.id.goods_cancel:
+				setDismiss();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -119,13 +116,11 @@ public class GoodsDialog extends Dialog implements OnClickListener {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			convertView = mInflater.inflate(R.layout.goods_item, null);
-			ImageView iv = (ImageView) convertView
-					.findViewById(R.id.goods_item);
+			ImageView iv = (ImageView) convertView.findViewById(R.id.goods_item);
 			try {
 				// iv.setBackgroundDrawable(ImageUtil.getResDrawable(context,
 				// goods[position]));
-				iv.setBackgroundDrawable(ImageUtil.getResDrawable(
-						R.drawable.lot_wp, true));
+				iv.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.lot_wp, true));
 			} catch (Exception e) {
 				// e.printStackTrace();
 			}

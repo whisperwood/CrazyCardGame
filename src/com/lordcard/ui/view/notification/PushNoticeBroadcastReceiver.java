@@ -20,8 +20,7 @@ public class PushNoticeBroadcastReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 			if (Constant.DEBUG) {
-				Intent newIntent = new Intent(context,
-						NotificationService.class);
+				Intent newIntent = new Intent(context, NotificationService.class);
 				context.startService(newIntent);
 			}
 		}

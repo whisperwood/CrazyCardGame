@@ -10,7 +10,6 @@ import java.util.TimerTask;
 
 /**
  * com.lordcard.common.task.HostNameTask
- * 
  * @author Administrator <br/>
  *         create at 2013 2013-4-28 下午1:53:26
  */

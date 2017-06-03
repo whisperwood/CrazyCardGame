@@ -7,16 +7,13 @@ import com.lordcard.network.base.SimpleCache;
 
 /**
  * 游戏的数据缓存管理
- * 
  * @author Administrator
  */
 public class GameCache {
-	private static SimpleCache cache = SimpleCache.get(CrashApplication
-			.getInstance()); // 登录user数据缓存
+	private static SimpleCache cache = SimpleCache.get(CrashApplication.getInstance()); // 登录user数据缓存
 
 	/**
 	 * 放入缓存
-	 * 
 	 * @param key
 	 * @param value
 	 */
@@ -29,7 +26,6 @@ public class GameCache {
 
 	/**
 	 * 获取缓存记录
-	 * 
 	 * @param key
 	 * @return
 	 */
@@ -39,7 +35,6 @@ public class GameCache {
 
 	/**
 	 * 放入缓存
-	 * 
 	 * @param key
 	 * @param value
 	 */
@@ -49,7 +44,6 @@ public class GameCache {
 
 	/**
 	 * 获取缓存记录
-	 * 
 	 * @param key
 	 * @return
 	 */
@@ -59,7 +53,6 @@ public class GameCache {
 
 	/**
 	 * 删除指定的缓存
-	 * 
 	 * @param key
 	 */
 	public static void remove(String key) {

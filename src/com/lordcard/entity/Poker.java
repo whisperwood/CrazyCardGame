@@ -34,11 +34,9 @@ public class Poker extends RelativeLayout {
 		params = new RelativeLayout.LayoutParams(width, height);
 		pokeImage = new ImageView(context);
 		innerLayout = new RelativeLayout(context);
-		imageParams = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
+		imageParams = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
 				android.view.ViewGroup.LayoutParams.FILL_PARENT);
-		innerParams = new RelativeLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.FILL_PARENT,
+		innerParams = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
 				android.view.ViewGroup.LayoutParams.FILL_PARENT);
 		addView(pokeImage, imageParams);
 		addView(innerLayout, innerParams);

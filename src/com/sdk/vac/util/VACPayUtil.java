@@ -35,15 +35,10 @@ public class VACPayUtil {
 					paramMap.put("payNo", "2");
 					/** 判断是不是预充值 **/
 					if (PaySite.PREPARERECHARGE.equalsIgnoreCase(paySiteTag)
-							&& null != PrerechargeManager.mPayRecordOrder
-									.getPreOrderNo()) {
-						paramMap.put(
-								PrerechargeManager.PRERECHARGE_ORDER_PARAMS_PREORDERNO,
-								PrerechargeManager.mPayRecordOrder
-										.getPreOrderNo());
-						paramMap.put(
-								PrerechargeManager.PRERECHARGE_ORDER_PARAMS_PREORDERTYPE,
-								"1");
+							&& null != PrerechargeManager.mPayRecordOrder.getPreOrderNo()) {
+						paramMap.put(PrerechargeManager.PRERECHARGE_ORDER_PARAMS_PREORDERNO,
+								PrerechargeManager.mPayRecordOrder.getPreOrderNo());
+						paramMap.put(PrerechargeManager.PRERECHARGE_ORDER_PARAMS_PREORDERTYPE, "1");
 					}
 					if (Assistant.ASSID != null && Assistant.BTNCODE != null) {
 						paramMap.put("asstId", Assistant.ASSID);
@@ -52,40 +47,25 @@ public class VACPayUtil {
 						Assistant.BTNCODE = null;
 					}
 					if (Database.JOIN_ROOM != null) {
-						paramMap.put("payFromItem",
-								Database.JOIN_ROOM.getCode());
+						paramMap.put("payFromItem", Database.JOIN_ROOM.getCode());
 					}
-					String resultJson = HttpRequest.addPayOrder(
-							VACConfig.VACPAY_URL, paramMap);
-					JsonResult result = JsonHelper.fromJson(resultJson,
-							JsonResult.class);
-					if (result != null
-							&& JsonResult.SUCCESS.equals(result.getMethodCode())) {
-						final VacPayOrder payOrder = JsonHelper.fromJson(
-								result.getMethodMessage(), VacPayOrder.class);
-						final String gameName = Database.currentActivity
-								.getResources().getString(R.string.app_name);
+					String resultJson = HttpRequest.addPayOrder(VACConfig.VACPAY_URL, paramMap);
+					JsonResult result = JsonHelper.fromJson(resultJson, JsonResult.class);
+					if (result != null && JsonResult.SUCCESS.equals(result.getMethodCode())) {
+						final VacPayOrder payOrder = JsonHelper.fromJson(result.getMethodMessage(), VacPayOrder.class);
+						final String gameName = Database.currentActivity.getResources().getString(R.string.app_name);
 						Database.currentActivity.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								MultimodeConfig.setCallbackUrl(payOrder
-										.getPostURL()); // 服务器回调接口
-								MultiModePay.getInstance().vacPay(
-										Database.currentActivity,
-										payOrder.getCompany(), gameName,
-										payOrder.getProductName(),
-										payOrder.getPhone(),
-										String.valueOf(point.getMoney()),
-										payOrder.getPayNo(),
-										payOrder.getOriderid(),
+								MultimodeConfig.setCallbackUrl(payOrder.getPostURL()); // 服务器回调接口
+								MultiModePay.getInstance().vacPay(Database.currentActivity, payOrder.getCompany(),
+										gameName, payOrder.getProductName(), payOrder.getPhone(),
+										String.valueOf(point.getMoney()), payOrder.getPayNo(), payOrder.getOriderid(),
 										new VacCallBack() {
 											@Override
-											public void VacResult(
-													String status,
-													String errorMsg) {
+											public void VacResult(String status, String errorMsg) {
 												if (status.equals("00000")) {
-													DialogUtils
-															.toastTip("支付成功");
+													DialogUtils.toastTip("支付成功");
 												} else {
 													// DialogUtils.toastTip("支付失败");
 												}

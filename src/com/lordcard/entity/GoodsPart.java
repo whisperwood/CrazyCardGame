@@ -41,8 +41,7 @@ public class GoodsPart {
 	}
 
 	/**
-	 * @param fromName
-	 *            the fromName to set
+	 * @param fromName the fromName to set
 	 */
 	public void setFromName(String fromName) {
 		this.fromName = fromName;
@@ -56,8 +55,7 @@ public class GoodsPart {
 	}
 
 	/**
-	 * @param fromTypeId
-	 *            the fromTypeId to set
+	 * @param fromTypeId the fromTypeId to set
 	 */
 	public void setFromTypeId(String fromTypeId) {
 		this.fromTypeId = fromTypeId;
@@ -71,8 +69,7 @@ public class GoodsPart {
 	}
 
 	/**
-	 * @param fromCount
-	 *            the fromCount to set
+	 * @param fromCount the fromCount to set
 	 */
 	public void setFromCount(Integer fromCount) {
 		this.fromCount = fromCount;

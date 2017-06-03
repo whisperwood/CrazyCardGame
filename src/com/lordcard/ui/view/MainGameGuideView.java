@@ -18,7 +18,6 @@ import com.lordcard.common.util.PreferenceHelper;
 
 /**
  * 主界面手势引导View 提示流程: 1.提示"轻敲桌面，智能选牌" 2.提示"向上滑动，选择出牌" 3."向下滑动，本轮不出" 4."双击屏幕，取消选牌"
- * 
  * @author Administrator
  */
 public class MainGameGuideView extends RelativeLayout {
@@ -43,8 +42,7 @@ public class MainGameGuideView extends RelativeLayout {
 	public MainGameGuideView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.game_tishi_view, this);
 		arrowRl = (RelativeLayout) findViewById(R.id.arrow_up_down_rl);
 		arrowIv = (ImageView) findViewById(R.id.arrow_up_down_iv);
@@ -69,12 +67,9 @@ public class MainGameGuideView extends RelativeLayout {
 	 * 显示向下手势引导 提示向上滑动完后再提示向下滑动
 	 */
 	public void setArrowDownVisible() {
-		boolean isOpen = PreferenceHelper.getMyPreference().getSetting()
-				.getBoolean("shoushi", true);
-		int pointCount = PreferenceHelper.getMyPreference().getSetting()
-				.getInt("pointTable", 0);
-		int downCount = PreferenceHelper.getMyPreference().getSetting()
-				.getInt("slideDown", 0);
+		boolean isOpen = PreferenceHelper.getMyPreference().getSetting().getBoolean("shoushi", true);
+		int pointCount = PreferenceHelper.getMyPreference().getSetting().getInt("pointTable", 0);
+		int downCount = PreferenceHelper.getMyPreference().getSetting().getInt("slideDown", 0);
 		if (isOpen && pointCount >= 1 && downCount < 1) {
 			this.setVisibility(View.VISIBLE);
 			arrowRl.setVisibility(View.VISIBLE);
@@ -93,10 +88,8 @@ public class MainGameGuideView extends RelativeLayout {
 	 */
 	public void setArrowDownGone(boolean isCommit) {
 		if (isCommit) {
-			int downCount = PreferenceHelper.getMyPreference().getSetting()
-					.getInt("slideDown", 0);
-			PreferenceHelper.getMyPreference().getEditor()
-					.putInt("slideDown", downCount + 1).commit();
+			int downCount = PreferenceHelper.getMyPreference().getSetting().getInt("slideDown", 0);
+			PreferenceHelper.getMyPreference().getEditor().putInt("slideDown", downCount + 1).commit();
 		}
 		cancelDownAnim();
 		arrowRl.setVisibility(View.GONE);
@@ -106,7 +99,6 @@ public class MainGameGuideView extends RelativeLayout {
 
 	/**
 	 * 是否提示向上滑动
-	 * 
 	 * @return
 	 */
 	public final boolean isArrowIsUp() {
@@ -119,7 +111,6 @@ public class MainGameGuideView extends RelativeLayout {
 
 	/**
 	 * 是否提示向下滑动
-	 * 
 	 * @return
 	 */
 	public final boolean isArrowIsDown() {
@@ -143,12 +134,9 @@ public class MainGameGuideView extends RelativeLayout {
 	 * 显示向上手势引导 轻敲提示完后再提示向上滑动
 	 */
 	public void setArrowUpVisible() {
-		boolean isOpen = PreferenceHelper.getMyPreference().getSetting()
-				.getBoolean("shoushi", true);
-		int upCount = PreferenceHelper.getMyPreference().getSetting()
-				.getInt("slideUp", 0);
-		int pointCount = PreferenceHelper.getMyPreference().getSetting()
-				.getInt("pointTable", 0);
+		boolean isOpen = PreferenceHelper.getMyPreference().getSetting().getBoolean("shoushi", true);
+		int upCount = PreferenceHelper.getMyPreference().getSetting().getInt("slideUp", 0);
+		int pointCount = PreferenceHelper.getMyPreference().getSetting().getInt("pointTable", 0);
 		if (isOpen && pointCount >= 1 && upCount < 1) {
 			this.setVisibility(View.VISIBLE);
 			arrowRl.setVisibility(View.VISIBLE);
@@ -167,10 +155,8 @@ public class MainGameGuideView extends RelativeLayout {
 	 */
 	public void setArrowUpGone(boolean isCommit) {
 		if (isCommit) {
-			int upCount = PreferenceHelper.getMyPreference().getSetting()
-					.getInt("slideUp", 0);
-			PreferenceHelper.getMyPreference().getEditor()
-					.putInt("slideUp", upCount + 1).commit();
+			int upCount = PreferenceHelper.getMyPreference().getSetting().getInt("slideUp", 0);
+			PreferenceHelper.getMyPreference().getEditor().putInt("slideUp", upCount + 1).commit();
 		}
 		cancelUpAnim();
 		arrowRl.setVisibility(View.GONE);
@@ -191,16 +177,13 @@ public class MainGameGuideView extends RelativeLayout {
 	 * 点击手势提示布局显示
 	 */
 	public void setPointVisible() {
-		boolean isOpen = PreferenceHelper.getMyPreference().getSetting()
-				.getBoolean("shoushi", true);
-		int count = PreferenceHelper.getMyPreference().getSetting()
-				.getInt("pointTable", 0);
+		boolean isOpen = PreferenceHelper.getMyPreference().getSetting().getBoolean("shoushi", true);
+		int count = PreferenceHelper.getMyPreference().getSetting().getInt("pointTable", 0);
 		if (isOpen && count < 1) {
 			this.setVisibility(View.VISIBLE);
 			pointRl.setVisibility(View.VISIBLE);
 			// 点的动画
-			AnimUtils.playAnim(pointAimIv, ImageUtil.getResAnimaSoft("point"),
-					0);
+			AnimUtils.playAnim(pointAimIv, ImageUtil.getResAnimaSoft("point"), 0);
 		}
 	}
 
@@ -209,10 +192,8 @@ public class MainGameGuideView extends RelativeLayout {
 	 */
 	public void setPointGone(boolean isCommit) {
 		if (isCommit) {
-			int count = PreferenceHelper.getMyPreference().getSetting()
-					.getInt("pointTable", 0);
-			PreferenceHelper.getMyPreference().getEditor()
-					.putInt("pointTable", count + 1).commit();
+			int count = PreferenceHelper.getMyPreference().getSetting().getInt("pointTable", 0);
+			PreferenceHelper.getMyPreference().getEditor().putInt("pointTable", count + 1).commit();
 		}
 		pointRl.setVisibility(View.GONE);
 		this.setVisibility(View.GONE);
@@ -222,12 +203,9 @@ public class MainGameGuideView extends RelativeLayout {
 	 * 双击手势提示布局显示
 	 */
 	public void setDoublePointVisible() {
-		boolean isOpen = PreferenceHelper.getMyPreference().getSetting()
-				.getBoolean("shoushi", true);
-		int count = PreferenceHelper.getMyPreference().getSetting()
-				.getInt("doublePointTable", 0);
-		int upCount = PreferenceHelper.getMyPreference().getSetting()
-				.getInt("slideUp", 0);
+		boolean isOpen = PreferenceHelper.getMyPreference().getSetting().getBoolean("shoushi", true);
+		int count = PreferenceHelper.getMyPreference().getSetting().getInt("doublePointTable", 0);
+		int upCount = PreferenceHelper.getMyPreference().getSetting().getInt("slideUp", 0);
 		if (isOpen && count < 1 && upCount >= 1) {
 			this.setVisibility(View.VISIBLE);
 			doublePointRl.setVisibility(View.VISIBLE);
@@ -239,10 +217,8 @@ public class MainGameGuideView extends RelativeLayout {
 	 */
 	public void setDoublePointGone(boolean isCommit) {
 		if (isCommit) {
-			int count = PreferenceHelper.getMyPreference().getSetting()
-					.getInt("doublePointTable", 0);
-			PreferenceHelper.getMyPreference().getEditor()
-					.putInt("doublePointTable", count + 1).commit();
+			int count = PreferenceHelper.getMyPreference().getSetting().getInt("doublePointTable", 0);
+			PreferenceHelper.getMyPreference().getEditor().putInt("doublePointTable", count + 1).commit();
 		}
 		doublePointRl.setVisibility(View.GONE);
 		this.setVisibility(View.GONE);
@@ -250,7 +226,6 @@ public class MainGameGuideView extends RelativeLayout {
 
 	/**
 	 * 双击手势引导是否显示
-	 * 
 	 * @return
 	 */
 	public boolean isDoublePoint() {
@@ -259,7 +234,6 @@ public class MainGameGuideView extends RelativeLayout {
 
 	/**
 	 * 点击手势提示布局是否显示
-	 * 
 	 * @return
 	 */
 	public boolean isPoint() {
@@ -270,10 +244,8 @@ public class MainGameGuideView extends RelativeLayout {
 	 * 显示左右滑动引导提示
 	 */
 	public void setArrowLeftRightVisible() {
-		boolean isOpen = PreferenceHelper.getMyPreference().getSetting()
-				.getBoolean("shoushi", true);
-		int lrCount = PreferenceHelper.getMyPreference().getSetting()
-				.getInt("slideLeftRight", 0);
+		boolean isOpen = PreferenceHelper.getMyPreference().getSetting().getBoolean("shoushi", true);
+		int lrCount = PreferenceHelper.getMyPreference().getSetting().getInt("slideLeftRight", 0);
 		if (isOpen && lrCount < 1) {
 			this.setVisibility(View.VISIBLE);
 			arrowLeftRightLl.setVisibility(View.VISIBLE);
@@ -286,16 +258,12 @@ public class MainGameGuideView extends RelativeLayout {
 
 	/**
 	 * 隐藏左右滑动手势引导提示
-	 * 
-	 * @param isCommit
-	 *            是否提交显示次数
+	 * @param isCommit 是否提交显示次数
 	 */
 	public void setArrowLeftRightGone(boolean isCommit) {
 		if (isCommit) {
-			int upCount = PreferenceHelper.getMyPreference().getSetting()
-					.getInt("slideLeftRight", 0);
-			PreferenceHelper.getMyPreference().getEditor()
-					.putInt("slideLeftRight", upCount + 1).commit();
+			int upCount = PreferenceHelper.getMyPreference().getSetting().getInt("slideLeftRight", 0);
+			PreferenceHelper.getMyPreference().getEditor().putInt("slideLeftRight", upCount + 1).commit();
 		}
 		cancelLeftRightAnim();
 		arrowLeftRightLl.setVisibility(View.GONE);
@@ -304,7 +272,6 @@ public class MainGameGuideView extends RelativeLayout {
 
 	/**
 	 * 左右滑动手势引导是否显示
-	 * 
 	 * @return
 	 */
 	public boolean isArrowLeftRightVisible() {

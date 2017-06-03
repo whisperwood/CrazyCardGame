@@ -42,7 +42,6 @@ import com.lordcard.ui.view.Assistant;
 
 /**
  * 消息中心
- * 
  * @author Administrator
  */
 public class DataCentreActivity extends BaseActivity implements OnClickListener {
@@ -82,53 +81,51 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 			public void handleMessage(Message msg) {
 				super.handleMessage(msg);
 				switch (msg.what) {
-				case 1:
-					String[] values = { Integer.valueOf(
-							Double.valueOf(
-									assList.get(0).get(AssistantBean.AS_ID)
-											.toString()).intValue()).toString() };
-					DataCentreBean.getInstance().delete(dbHelper, "id=?",
-							values);
-					assJsonList.remove(assPosition);
-					assListViewadapter.notifyDataSetChanged();
-					// if(assJsonList.size()!=0){
-					// assistantNum.setText(String.valueOf(assJsonList.size()));
-					// }else{
-					// assistantNum.setText("");
-					// }
-					break;
-				case 2:
-					// 删除个人消息UI更新
-					List<HashMap<String, Object>> list = null;
-					TextView num = null;
-					int type = 0;
-					if (msg.arg1 == 1) {
-						list = privateList;
-						num = privateNum;
-						type = 1;
-					} else if (msg.arg1 == 2) {
-						list = announcementList;
-						num = announcementNum;
-						type = 2;
-					}
-					updateNum(list, num, type);
-					break;
-				case 3:
-					// 点击消息UI更新
-					List<HashMap<String, Object>> list2 = null;
-					TextView num2 = null;
-					if (msg.arg2 == 1) {
-						list2 = privateList;
-						num2 = privateNum;
-					} else if (msg.arg2 == 2) {
-						list2 = announcementList;
-						num2 = announcementNum;
-					} else if (msg.arg2 == 3) {
-						list2 = assJsonList;
-						num2 = assistantNum;
-					}
-					updateClickNum(list2, num2);
-					break;
+					case 1:
+						String[] values = { Integer.valueOf(
+								Double.valueOf(assList.get(0).get(AssistantBean.AS_ID).toString()).intValue())
+								.toString() };
+						DataCentreBean.getInstance().delete(dbHelper, "id=?", values);
+						assJsonList.remove(assPosition);
+						assListViewadapter.notifyDataSetChanged();
+						// if(assJsonList.size()!=0){
+						// assistantNum.setText(String.valueOf(assJsonList.size()));
+						// }else{
+						// assistantNum.setText("");
+						// }
+						break;
+					case 2:
+						// 删除个人消息UI更新
+						List<HashMap<String, Object>> list = null;
+						TextView num = null;
+						int type = 0;
+						if (msg.arg1 == 1) {
+							list = privateList;
+							num = privateNum;
+							type = 1;
+						} else if (msg.arg1 == 2) {
+							list = announcementList;
+							num = announcementNum;
+							type = 2;
+						}
+						updateNum(list, num, type);
+						break;
+					case 3:
+						// 点击消息UI更新
+						List<HashMap<String, Object>> list2 = null;
+						TextView num2 = null;
+						if (msg.arg2 == 1) {
+							list2 = privateList;
+							num2 = privateNum;
+						} else if (msg.arg2 == 2) {
+							list2 = announcementList;
+							num2 = announcementNum;
+						} else if (msg.arg2 == 3) {
+							list2 = assJsonList;
+							num2 = assistantNum;
+						}
+						updateClickNum(list2, num2);
+						break;
 				}
 			}
 		};
@@ -156,16 +153,12 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 
 	/**
 	 * 删除消息UI更新
-	 * 
 	 * @param list
 	 * @param num
 	 */
-	public void updateNum(List<HashMap<String, Object>> list, TextView num,
-			int adapterType) {
+	public void updateNum(List<HashMap<String, Object>> list, TextView num, int adapterType) {
 		String[] value = { Integer.valueOf(
-				Double.valueOf(
-						list.get(assPosition).get(DataCentreBean.DATA_ID)
-								.toString()).intValue()).toString() };
+				Double.valueOf(list.get(assPosition).get(DataCentreBean.DATA_ID).toString()).intValue()).toString() };
 		DataCentreBean.getInstance().delete(dbHelper, "id=?", value);
 		list.remove(assPosition);
 		if (adapterType == 1) {
@@ -200,19 +193,19 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.xiaomei:
-			// xiaomeiBtn.setClickable(false);
-			// AnimUtils.startAnimationsOutLeft(xiaomeiLayout, 800);
-			// asslayout.removeAllViews();
-			// Assistant assistant = new
-			// Assistant(Database.currentActivity,dbHelper,BTN_CONTENT,GAME_ASSISTANT,xiaomeiLayout,xiaomeiBtn);
-			// asslayout.addView(assistant);
-			break;
-		case R.id.set_back:
-			finishSelf();
-			break;
-		default:
-			break;
+			case R.id.xiaomei:
+				// xiaomeiBtn.setClickable(false);
+				// AnimUtils.startAnimationsOutLeft(xiaomeiLayout, 800);
+				// asslayout.removeAllViews();
+				// Assistant assistant = new
+				// Assistant(Database.currentActivity,dbHelper,BTN_CONTENT,GAME_ASSISTANT,xiaomeiLayout,xiaomeiBtn);
+				// asslayout.addView(assistant);
+				break;
+			case R.id.set_back:
+				finishSelf();
+				break;
+			default:
+				break;
 		}
 	};
 
@@ -241,26 +234,26 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 			@Override
 			public void onCheckedChanged(RadioGroup arg0, int arg1) {
 				switch (arg1) {
-				case R.id.gen_assistant:// 游戏助理
-					assListView.setVisibility(View.VISIBLE);
-					announcementListView.setVisibility(View.GONE);
-					privateListView.setVisibility(View.GONE);
-					setNomessageTvVisibleOrGone(assJsonList);
-					break;
-				case R.id.gen_announcement:// 系统公告
-					assListView.setVisibility(View.GONE);
-					announcementListView.setVisibility(View.VISIBLE);
-					privateListView.setVisibility(View.GONE);
-					setNomessageTvVisibleOrGone(announcementList);
-					break;
-				case R.id.gen_private:// 个人信息
-					assListView.setVisibility(View.GONE);
-					announcementListView.setVisibility(View.GONE);
-					privateListView.setVisibility(View.VISIBLE);
-					setNomessageTvVisibleOrGone(privateList);
-					break;
-				default:
-					break;
+					case R.id.gen_assistant:// 游戏助理
+						assListView.setVisibility(View.VISIBLE);
+						announcementListView.setVisibility(View.GONE);
+						privateListView.setVisibility(View.GONE);
+						setNomessageTvVisibleOrGone(assJsonList);
+						break;
+					case R.id.gen_announcement:// 系统公告
+						assListView.setVisibility(View.GONE);
+						announcementListView.setVisibility(View.VISIBLE);
+						privateListView.setVisibility(View.GONE);
+						setNomessageTvVisibleOrGone(announcementList);
+						break;
+					case R.id.gen_private:// 个人信息
+						assListView.setVisibility(View.GONE);
+						announcementListView.setVisibility(View.GONE);
+						privateListView.setVisibility(View.VISIBLE);
+						setNomessageTvVisibleOrGone(privateList);
+						break;
+					default:
+						break;
 				}
 			}
 		});
@@ -281,8 +274,7 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 		private LayoutInflater mInflater;
 		private List<HashMap<String, Object>> datalist;
 
-		public AssListViewAdapter(Context context,
-				List<HashMap<String, Object>> datalist) {
+		public AssListViewAdapter(Context context, List<HashMap<String, Object>> datalist) {
 			this.mInflater = LayoutInflater.from(context);
 			this.datalist = datalist;
 		}
@@ -303,56 +295,41 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 		}
 
 		@Override
-		public View getView(final int position, View convertView,
-				ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
 				holder = new ViewHolder();
-				convertView = mInflater.inflate(
-						R.layout.data_centre_assistant_item, null);
-				holder.guideItem = (Button) convertView
-						.findViewById(R.id.cancel_btn);
-				holder.titleText = (TextView) convertView
-						.findViewById(R.id.title);
-				holder.titmeText = (TextView) convertView
-						.findViewById(R.id.time);
-				holder.assistantlayout = (LinearLayout) convertView
-						.findViewById(R.id.assistant_item_show);
-				holder.imageViewRead = (ImageView) convertView
-						.findViewById(R.id.img_read);
+				convertView = mInflater.inflate(R.layout.data_centre_assistant_item, null);
+				holder.guideItem = (Button) convertView.findViewById(R.id.cancel_btn);
+				holder.titleText = (TextView) convertView.findViewById(R.id.title);
+				holder.titmeText = (TextView) convertView.findViewById(R.id.time);
+				holder.assistantlayout = (LinearLayout) convertView.findViewById(R.id.assistant_item_show);
+				holder.imageViewRead = (ImageView) convertView.findViewById(R.id.img_read);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			// 设置已读或未读
-			if (datalist.get(position).get(DataCentreBean.DATA_CLICK)
-					.equals("0")) {
+			if (datalist.get(position).get(DataCentreBean.DATA_CLICK).equals("0")) {
 				holder.imageViewRead.setBackgroundResource(R.drawable.no_read);
 			} else {
-				holder.imageViewRead
-						.setBackgroundResource(R.drawable.already_read);
+				holder.imageViewRead.setBackgroundResource(R.drawable.already_read);
 			}
 			// 获取游戏助理json
-			String json = (String) datalist.get(position).get(
-					DataCentreBean.DATA_CONTENT);
+			String json = (String) datalist.get(position).get(DataCentreBean.DATA_CONTENT);
 			// 解析json
-			final List<HashMap<String, Object>> list2 = JsonHelper.fromJson(
-					json, new TypeToken<List<HashMap<String, Object>>>() {
+			final List<HashMap<String, Object>> list2 = JsonHelper.fromJson(json,
+					new TypeToken<List<HashMap<String, Object>>>() {
 					});
 			// 获取游戏助理点击json
 			final AssistantBtnContent content = JsonHelper.fromJson(
-					String.valueOf(list2.get(0).get(AssistantBean.AS_BTNAC)),
-					AssistantBtnContent.class);
+					String.valueOf(list2.get(0).get(AssistantBean.AS_BTNAC)), AssistantBtnContent.class);
 			BTN_CONTENT = content;
 			// 设置标题和时间
-			holder.titleText.setText(String.valueOf(list2.get(0).get(
-					AssistantBean.AS_TITLE)));
-			String time = String.valueOf(list2.get(0)
-					.get(AssistantBean.AS_TIME));
-			SimpleDateFormat format = new SimpleDateFormat(
-					DateUtil.NOCHAR_PATTERN);
-			SimpleDateFormat format2 = new SimpleDateFormat(
-					DateUtil.TIMESTAMP_PATTERNR);
+			holder.titleText.setText(String.valueOf(list2.get(0).get(AssistantBean.AS_TITLE)));
+			String time = String.valueOf(list2.get(0).get(AssistantBean.AS_TIME));
+			SimpleDateFormat format = new SimpleDateFormat(DateUtil.NOCHAR_PATTERN);
+			SimpleDateFormat format2 = new SimpleDateFormat(DateUtil.TIMESTAMP_PATTERNR);
 			try {
 				Date d = format.parse(time);
 				String timeFormat = format2.format(d);
@@ -378,26 +355,21 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 					assList = list2;
 					assPosition = position;
 					String id = Integer.valueOf(
-							Double.valueOf(
-									datalist.get(position)
-											.get(DataCentreBean.DATA_ID)
-											.toString()).intValue()).toString();
+							Double.valueOf(datalist.get(position).get(DataCentreBean.DATA_ID).toString()).intValue())
+							.toString();
 					// 更新数据库 标志为已读
-					DataCentreBean.getInstance().update(dbHelper,
-							new String[] { id }, new String[] { "1" });
+					DataCentreBean.getInstance().update(dbHelper, new String[] { id }, new String[] { "1" });
 					datalist.get(position).put(DataCentreBean.DATA_CLICK, "1");
 					// Message msg = new Message();
 					// msg.what = 3;
 					// msg.arg2=3;
 					// handler.sendMessage(msg);
-					holder.imageViewRead
-							.setBackgroundResource(R.drawable.already_read);
+					holder.imageViewRead.setBackgroundResource(R.drawable.already_read);
 					if (xiaomeiLayout.getVisibility() == View.VISIBLE) {
 						AnimUtils.startAnimationsOutLeft(xiaomeiLayout, 500);
 					}
 					asslayout.removeAllViews();
-					Assistant assistant = new Assistant(
-							Database.currentActivity, handler, content, list2,
+					Assistant assistant = new Assistant(Database.currentActivity, handler, content, list2,
 							xiaomeiLayout, xiaomeiBtn);
 					asslayout.addView(assistant);
 				}
@@ -410,8 +382,7 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 		private LayoutInflater mInflater;
 		private List<HashMap<String, Object>> datalist;
 
-		public ListViewAdapter(Context context,
-				List<HashMap<String, Object>> datalist) {
+		public ListViewAdapter(Context context, List<HashMap<String, Object>> datalist) {
 			this.mInflater = LayoutInflater.from(context);
 			this.datalist = datalist;
 		}
@@ -432,54 +403,38 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 		}
 
 		@Override
-		public View getView(final int position, View convertView,
-				ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
 				holder = new ViewHolder();
-				convertView = mInflater.inflate(
-						R.layout.data_centre_private_item, null);
-				holder.guideItem = (Button) convertView
-						.findViewById(R.id.cancel_btn);
-				holder.titleText = (TextView) convertView
-						.findViewById(R.id.title);
-				holder.titmeText = (TextView) convertView
-						.findViewById(R.id.time);
-				holder.assistantlayout = (LinearLayout) convertView
-						.findViewById(R.id.item_show);
-				holder.imageViewRead = (ImageView) convertView
-						.findViewById(R.id.img_read);
-				holder.contextText = (TextView) convertView
-						.findViewById(R.id.content);
+				convertView = mInflater.inflate(R.layout.data_centre_private_item, null);
+				holder.guideItem = (Button) convertView.findViewById(R.id.cancel_btn);
+				holder.titleText = (TextView) convertView.findViewById(R.id.title);
+				holder.titmeText = (TextView) convertView.findViewById(R.id.time);
+				holder.assistantlayout = (LinearLayout) convertView.findViewById(R.id.item_show);
+				holder.imageViewRead = (ImageView) convertView.findViewById(R.id.img_read);
+				holder.contextText = (TextView) convertView.findViewById(R.id.content);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			Log.i("lll", "getView" + position);
 			// 设置已读或未读
-			if (datalist.get(position).get(DataCentreBean.DATA_CLICK)
-					.equals("0")) {
+			if (datalist.get(position).get(DataCentreBean.DATA_CLICK).equals("0")) {
 				holder.imageViewRead.setBackgroundResource(R.drawable.no_read);
 			} else {
-				holder.imageViewRead
-						.setBackgroundResource(R.drawable.already_read);
+				holder.imageViewRead.setBackgroundResource(R.drawable.already_read);
 			}
 			if (holder.contextText.getVisibility() == View.VISIBLE) {
 				holder.contextText.setVisibility(View.GONE);
 			}
-			String content = (String) datalist.get(position).get(
-					DataCentreBean.DATA_CONTENT);
+			String content = (String) datalist.get(position).get(DataCentreBean.DATA_CONTENT);
 			holder.contextText.setText(content);
 			// 设置标题和时间
-			holder.titleText.setText(datalist.get(position).get(
-					DataCentreBean.DATA_TITLE)
-					+ "");
-			String time = datalist.get(position).get(DataCentreBean.DATA_TIME)
-					+ "";
-			SimpleDateFormat format = new SimpleDateFormat(
-					DateUtil.NOCHAR_PATTERNYMD);
-			SimpleDateFormat format2 = new SimpleDateFormat(
-					DateUtil.DEFAULT_PATTERN);
+			holder.titleText.setText(datalist.get(position).get(DataCentreBean.DATA_TITLE) + "");
+			String time = datalist.get(position).get(DataCentreBean.DATA_TIME) + "";
+			SimpleDateFormat format = new SimpleDateFormat(DateUtil.NOCHAR_PATTERNYMD);
+			SimpleDateFormat format2 = new SimpleDateFormat(DateUtil.DEFAULT_PATTERN);
 			try {
 				Date d = format.parse(time);
 				String timeFormat = format2.format(d);
@@ -510,16 +465,12 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 					}
 					Log.i("lll", "显示文本" + position);
 					String id = Integer.valueOf(
-							Double.valueOf(
-									datalist.get(position)
-											.get(DataCentreBean.DATA_ID)
-											.toString()).intValue()).toString();
+							Double.valueOf(datalist.get(position).get(DataCentreBean.DATA_ID).toString()).intValue())
+							.toString();
 					// 更新数据库 标志为已读
-					DataCentreBean.getInstance().update(dbHelper,
-							new String[] { id }, new String[] { "1" });
+					DataCentreBean.getInstance().update(dbHelper, new String[] { id }, new String[] { "1" });
 					datalist.get(position).put(DataCentreBean.DATA_CLICK, "1");
-					holder.imageViewRead
-							.setBackgroundResource(R.drawable.already_read);
+					holder.imageViewRead.setBackgroundResource(R.drawable.already_read);
 					// Message msg = new Message();
 					// msg.what = 3;
 					// msg.arg2=1;
@@ -535,8 +486,7 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 		private LayoutInflater mInflater;
 		private List<HashMap<String, Object>> datalist;
 
-		public AListViewAdapter(Context context,
-				List<HashMap<String, Object>> datalist) {
+		public AListViewAdapter(Context context, List<HashMap<String, Object>> datalist) {
 			this.mInflater = LayoutInflater.from(context);
 			this.datalist = datalist;
 		}
@@ -557,54 +507,38 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 		}
 
 		@Override
-		public View getView(final int position, View convertView,
-				ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
 				holder = new ViewHolder();
-				convertView = mInflater.inflate(
-						R.layout.data_centre_private_item, null);
-				holder.guideItem = (Button) convertView
-						.findViewById(R.id.cancel_btn);
-				holder.titleText = (TextView) convertView
-						.findViewById(R.id.title);
-				holder.titmeText = (TextView) convertView
-						.findViewById(R.id.time);
-				holder.assistantlayout = (LinearLayout) convertView
-						.findViewById(R.id.item_show);
-				holder.imageViewRead = (ImageView) convertView
-						.findViewById(R.id.img_read);
-				holder.contextText = (TextView) convertView
-						.findViewById(R.id.content);
+				convertView = mInflater.inflate(R.layout.data_centre_private_item, null);
+				holder.guideItem = (Button) convertView.findViewById(R.id.cancel_btn);
+				holder.titleText = (TextView) convertView.findViewById(R.id.title);
+				holder.titmeText = (TextView) convertView.findViewById(R.id.time);
+				holder.assistantlayout = (LinearLayout) convertView.findViewById(R.id.item_show);
+				holder.imageViewRead = (ImageView) convertView.findViewById(R.id.img_read);
+				holder.contextText = (TextView) convertView.findViewById(R.id.content);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			Log.i("lll", "getView" + position);
 			// 设置已读或未读
-			if (datalist.get(position).get(DataCentreBean.DATA_CLICK)
-					.equals("0")) {
+			if (datalist.get(position).get(DataCentreBean.DATA_CLICK).equals("0")) {
 				holder.imageViewRead.setBackgroundResource(R.drawable.no_read);
 			} else {
-				holder.imageViewRead
-						.setBackgroundResource(R.drawable.already_read);
+				holder.imageViewRead.setBackgroundResource(R.drawable.already_read);
 			}
 			if (holder.contextText.getVisibility() == View.VISIBLE) {
 				holder.contextText.setVisibility(View.GONE);
 			}
-			String content = (String) datalist.get(position).get(
-					DataCentreBean.DATA_CONTENT);
+			String content = (String) datalist.get(position).get(DataCentreBean.DATA_CONTENT);
 			holder.contextText.setText(content);
 			// 设置标题和时间
-			holder.titleText.setText(datalist.get(position).get(
-					DataCentreBean.DATA_TITLE)
-					+ "");
-			String time = datalist.get(position).get(DataCentreBean.DATA_TIME)
-					+ "";
-			SimpleDateFormat format = new SimpleDateFormat(
-					DateUtil.NOCHAR_PATTERNYMD);
-			SimpleDateFormat format2 = new SimpleDateFormat(
-					DateUtil.DEFAULT_PATTERN);
+			holder.titleText.setText(datalist.get(position).get(DataCentreBean.DATA_TITLE) + "");
+			String time = datalist.get(position).get(DataCentreBean.DATA_TIME) + "";
+			SimpleDateFormat format = new SimpleDateFormat(DateUtil.NOCHAR_PATTERNYMD);
+			SimpleDateFormat format2 = new SimpleDateFormat(DateUtil.DEFAULT_PATTERN);
 			try {
 				Date d = format.parse(time);
 				String timeFormat = format2.format(d);
@@ -636,16 +570,12 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 					}
 					Log.i("lll", "显示文本" + position);
 					String id = Integer.valueOf(
-							Double.valueOf(
-									datalist.get(position)
-											.get(DataCentreBean.DATA_ID)
-											.toString()).intValue()).toString();
+							Double.valueOf(datalist.get(position).get(DataCentreBean.DATA_ID).toString()).intValue())
+							.toString();
 					// 更新数据库 标志为已读
-					DataCentreBean.getInstance().update(dbHelper,
-							new String[] { id }, new String[] { "1" });
+					DataCentreBean.getInstance().update(dbHelper, new String[] { id }, new String[] { "1" });
 					datalist.get(position).put(DataCentreBean.DATA_CLICK, "1");
-					holder.imageViewRead
-							.setBackgroundResource(R.drawable.already_read);
+					holder.imageViewRead.setBackgroundResource(R.drawable.already_read);
 				}
 			});
 			return convertView;
@@ -669,20 +599,14 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 		Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
 		long str = Long.valueOf(formatter.format(curDate));
 		for (int i = 0; i < assJsonList.size(); i++) {
-			String json = (String) assJsonList.get(i).get(
-					DataCentreBean.DATA_CONTENT);
+			String json = (String) assJsonList.get(i).get(DataCentreBean.DATA_CONTENT);
 			List<HashMap<String, Object>> list = JsonHelper.fromJson(json,
 					new TypeToken<List<HashMap<String, Object>>>() {
 					});
-			String time = String
-					.valueOf(list.get(0).get(AssistantBean.AS_TIME));
+			String time = String.valueOf(list.get(0).get(AssistantBean.AS_TIME));
 			if (Long.valueOf(time) - str < 0) {
-				String[] valuess = { Integer
-						.valueOf(
-								Double.valueOf(
-										list.get(0).get(AssistantBean.AS_ID)
-												.toString()).intValue())
-						.toString() };
+				String[] valuess = { Integer.valueOf(
+						Double.valueOf(list.get(0).get(AssistantBean.AS_ID).toString()).intValue()).toString() };
 				DataCentreBean.getInstance().delete(dbHelper, "id=?", valuess);
 			}
 		}
@@ -696,19 +620,16 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 	 */
 	public void getPrivateList() {
 		String[] valuePrivate = { DataCentreBean.RACE_PR };
-		privateList = DataCentreBean.getInstance().findList(dbHelper,
-				valuePrivate);
+		privateList = DataCentreBean.getInstance().findList(dbHelper, valuePrivate);
 		if (privateList.size() > 30) {
 			for (int i = 0; i < privateList.size() - 30; i++) {
 				String[] values = { Integer.valueOf(
-						Double.valueOf(
-								privateList.get(i).get(DataCentreBean.DATA_ID)
-										.toString()).intValue()).toString() };
+						Double.valueOf(privateList.get(i).get(DataCentreBean.DATA_ID).toString()).intValue())
+						.toString() };
 				DataCentreBean.getInstance().delete(dbHelper, "id=?", values);
 			}
 		}
-		privateList = DataCentreBean.getInstance().findList(dbHelper,
-				valuePrivate);
+		privateList = DataCentreBean.getInstance().findList(dbHelper, valuePrivate);
 		listViewAdapter = new ListViewAdapter(this, privateList);
 		privateListView.setAdapter(listViewAdapter);
 	}
@@ -718,22 +639,16 @@ public class DataCentreActivity extends BaseActivity implements OnClickListener 
 	 */
 	public void getGonggaoList() {
 		String[] valuePrivate = { DataCentreBean.RACE_SYS };
-		announcementList = DataCentreBean.getInstance().findList(dbHelper,
-				valuePrivate);
+		announcementList = DataCentreBean.getInstance().findList(dbHelper, valuePrivate);
 		if (announcementList.size() > 30) {
 			for (int i = 0; i < announcementList.size() - 30; i++) {
-				String[] values = { Integer
-						.valueOf(
-								Double.valueOf(
-										announcementList.get(i)
-												.get(DataCentreBean.DATA_ID)
-												.toString()).intValue())
+				String[] values = { Integer.valueOf(
+						Double.valueOf(announcementList.get(i).get(DataCentreBean.DATA_ID).toString()).intValue())
 						.toString() };
 				DataCentreBean.getInstance().delete(dbHelper, "id=?", values);
 			}
 		}
-		announcementList = DataCentreBean.getInstance().findList(dbHelper,
-				valuePrivate);
+		announcementList = DataCentreBean.getInstance().findList(dbHelper, valuePrivate);
 		alistViewAdapter = new AListViewAdapter(this, announcementList);
 		announcementListView.setAdapter(alistViewAdapter);
 		setNomessageTvVisibleOrGone(announcementList);

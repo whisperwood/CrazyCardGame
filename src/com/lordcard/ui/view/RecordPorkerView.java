@@ -51,8 +51,8 @@ public class RecordPorkerView extends View {
 		if (null == cardList || cardList.size() == 0)
 			return;
 		if (null == bitmap) {
-			bitmap = scaleBitmap(BitmapFactory.decodeResource(getContext()
-					.getResources(), cardList.get(0).get(0).getBitpamResID()),
+			bitmap = scaleBitmap(
+					BitmapFactory.decodeResource(getContext().getResources(), cardList.get(0).get(0).getBitpamResID()),
 					new Point(cardWidth, cardHeight));
 			width = bitmap.getWidth();
 			height = bitmap.getHeight();
@@ -68,21 +68,17 @@ public class RecordPorkerView extends View {
 		for (int i = cardList.size() - 1; i >= 0; i--) {
 			for (Poker poker : cardList.get(i)) {
 				tempX = centerPointF.x - widthX / 2 + count * cardGapDistance;
-				templeBitmap = scaleBitmap(BitmapFactory.decodeResource(
-						getContext().getResources(), poker.getBitpamResID()),
-						new Point(cardWidth, cardHeight));
-				canvas.drawBitmap(templeBitmap, tempX, centerPointF.y - height
-						/ 2.0f, paint);
+				templeBitmap = scaleBitmap(BitmapFactory.decodeResource(getContext().getResources(),
+						poker.getBitpamResID()), new Point(cardWidth, cardHeight));
+				canvas.drawBitmap(templeBitmap, tempX, centerPointF.y - height / 2.0f, paint);
 				count++;
 			}
 		}
 		if (null == frontColor)
-			frontColor = new RectF(centerPointF.x - widthX / 2f, centerPointF.y
-					- height / 2.f, centerPointF.x + widthX / 2f + 3,
-					centerPointF.y + height / 2.f);
-		frontColor.set(centerPointF.x - widthX / 2f, centerPointF.y - height
-				/ 2.f, centerPointF.x + widthX / 2f + 3, centerPointF.y
-				+ height / 2.f);
+			frontColor = new RectF(centerPointF.x - widthX / 2f, centerPointF.y - height / 2.f, centerPointF.x + widthX
+					/ 2f + 3, centerPointF.y + height / 2.f);
+		frontColor.set(centerPointF.x - widthX / 2f, centerPointF.y - height / 2.f, centerPointF.x + widthX / 2f + 3,
+				centerPointF.y + height / 2.f);
 		paint.setARGB(60, 0, 0, 0);
 		canvas.drawRect(frontColor, paint);
 		paint.setARGB(255, 0, 0, 0);
@@ -115,8 +111,7 @@ public class RecordPorkerView extends View {
 
 	public static int dip2px(Context context, float dpValue, MultiScreenTool mst) {
 		final float scale = context.getResources().getDisplayMetrics().density;
-		return (scale > 1) ? (int) (dpValue * scale + 0.5f) : mst
-				.adjustX((int) dpValue);
+		return (scale > 1) ? (int) (dpValue * scale + 0.5f) : mst.adjustX((int) dpValue);
 	}
 
 	public static Bitmap scaleBitmap(Bitmap bitmap, Point dimenSize) {
@@ -134,8 +129,7 @@ public class RecordPorkerView extends View {
 		// 缩放图片动作
 		matrix.postScale(scaleWidth, scaleHeight);
 		// 创建新的图片
-		Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height,
-				matrix, true);
+		Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
 		return resizedBitmap;
 	}
 }

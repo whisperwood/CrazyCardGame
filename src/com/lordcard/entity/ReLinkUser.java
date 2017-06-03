@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 重连的用户信息
- * 
  * @ClassName: ReLinkUser
  * @Description: TODO
  * @author yinhongbiao

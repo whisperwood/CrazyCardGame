@@ -32,8 +32,8 @@ public class GameGoodsType {
 	 * @param description
 	 * @param display
 	 */
-	public GameGoodsType(String id, String name, Integer type, String picPath,
-			String title, Integer orderNum, String description, Integer display) {
+	public GameGoodsType(String id, String name, Integer type, String picPath, String title, Integer orderNum,
+			String description, Integer display) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -109,8 +109,7 @@ public class GameGoodsType {
 	}
 
 	/**
-	 * @param display
-	 *            the display to set
+	 * @param display the display to set
 	 */
 	public void setDisplay(Integer display) {
 		this.display = display;
