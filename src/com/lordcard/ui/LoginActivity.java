@@ -291,8 +291,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 	public void onResume() {
 		super.onResume();
 		accountTv.setText(GameCache.getStr(Constant.GAME_NAME_CACHE)); // 账号
-		goldTv.setText(checkBeans()); // 金豆
-		goldbean.setNum(Integer.parseInt(checkBeans()));
+		goldbean.setNum(Integer.parseInt(checkBeans()));//金豆
 		AudioReadDataUtils.playOrStopBgMusic(this);
 	}
 
@@ -629,21 +628,24 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 				if (!TextUtils.isEmpty(GameCache.getStr(Constant.GET_BEAN_CACHE))
 						&& GameCache.getStr(Constant.GET_BEAN_CACHE).trim().equals(ActivityUtils.getNowDate().trim())) {
 					int getBeanCount = Integer.parseInt(GameCache.getStr(Constant.GET_BEAN_COUNT).trim());
-					if (getBeanCount < 3) {
+					if (getBeanCount < 5) {
 						getBeanCount++;
-						DialogUtils.mesToastTip("您的金豆不足，系统赠送1000金豆，每天最多三次！");
-						GameCache.putStr(Constant.GAME_BEAN_CACHE, "1000");
+						DialogUtils.mesToastTip("您的金豆不足，系统赠送1000金豆，每天最多5次,还剩"+(5-getBeanCount)+"次！");
+						localBean = "1000";
+						GameCache.putStr(Constant.GAME_BEAN_CACHE, localBean);
 						GameCache.putStr(Constant.GET_BEAN_COUNT, getBeanCount + "");
 					} else {
 						// 提示不能进去了
 						// DialogUtils.mesTip(getString(R.string.link_server_fail),
 						// true);
-						DialogUtils.mesTip("您的金豆不足,可连网参加比赛，更多惊喜等着您！", false, true);
+						//DialogUtils.mesTip("您的金豆不足，赠送次数用完，明天继续！", false, false);
+						localBean = "0";
 					}
 				} else {
 					GameCache.putStr(Constant.GET_BEAN_CACHE, ActivityUtils.getNowDate());
-					DialogUtils.mesToastTip("您的金豆不足，系统赠送1000金豆，每天最多三次！");
-					GameCache.putStr(Constant.GAME_BEAN_CACHE, "1000");
+					localBean = "1000";
+					DialogUtils.mesToastTip("您的金豆不足，系统赠送1000金豆，每天最多5次,还剩4次！");
+					GameCache.putStr(Constant.GAME_BEAN_CACHE, localBean);
 					GameCache.putStr(Constant.GET_BEAN_COUNT, "1");
 				}
 			}

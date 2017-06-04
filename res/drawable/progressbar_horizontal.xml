@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- background -->
+    <item
+        android:id="@android:id/background"
+        android:drawable="@drawable/loading_progress_bg">
+    </item>
+    <!-- progress -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <nine-patch
+                android:dither="true"
+                android:src="@drawable/loading_progress_pg" />
+        </clip>
+    </item>
+
+</layer-list>

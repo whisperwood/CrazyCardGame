@@ -614,7 +614,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 								}
 								System.out.println("count:"+count);
 								// 新建一个道具复原，type为"-1"
-								for (int i = 0; i < count; i++) {
+								for (int i = 0; i < 6; i++) {
 									GamePropsType reback = new GamePropsType();
 									reback.setType("-1");
 									toolList.add(reback);
@@ -5820,22 +5820,24 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 				if (!TextUtils.isEmpty(GameCache.getStr(Constant.GET_BEAN_CACHE))
 						&& GameCache.getStr(Constant.GET_BEAN_CACHE).trim().equals(ActivityUtils.getNowDate().trim())) {
 					int getBeanCount = Integer.parseInt(GameCache.getStr(Constant.GET_BEAN_COUNT).trim());
-					if (getBeanCount < 3) {
+					if (getBeanCount < 5) {
 						getBeanCount++;
-						DialogUtils.mesToastTip("您的金豆不足，系统赠送1000金豆，每天最多三次！");
-						GameCache.putStr(Constant.GAME_BEAN_CACHE, "1000");
+						DialogUtils.mesToastTip("您的金豆不足，系统赠送1000金豆，每天最多5次,还剩"+(5-getBeanCount)+"次！");
+						localBean = "1000";
+						GameCache.putStr(Constant.GAME_BEAN_CACHE, localBean);
 						GameCache.putStr(Constant.GET_BEAN_COUNT, getBeanCount + "");
 					} else {
 						// 提示不能进去了
 						// DialogUtils.mesTip(getString(R.string.link_server_fail),
 						// true);
-						DialogUtils.mesTip("您的金豆不足,可连网参加比赛，更多惊喜等着您！", false, true);
+						DialogUtils.mesTip("您的金豆不足，赠送次数用完，明天继续！", false, true);
 						return;
 					}
 				} else {
 					GameCache.putStr(Constant.GET_BEAN_CACHE, ActivityUtils.getNowDate());
-					DialogUtils.mesToastTip("您的金豆不足，系统赠送1000金豆，每天最多三次！");
-					GameCache.putStr(Constant.GAME_BEAN_CACHE, "1000");
+					DialogUtils.mesToastTip("您的金豆不足，系统赠送1000金豆，每天最多5次,还剩4次！");
+					localBean = "1000";
+					GameCache.putStr(Constant.GAME_BEAN_CACHE, localBean);
 					GameCache.putStr(Constant.GET_BEAN_COUNT, "1");
 				}
 			}

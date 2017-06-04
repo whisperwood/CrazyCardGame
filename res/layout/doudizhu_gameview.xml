@@ -178,7 +178,7 @@
                             android:id="@+id/playimageView1"
                             style="@style/head_pic_wh"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/nongmin_girl" />
+                            android:src="@drawable/nongmin" />
                         <!-- android:background="@drawable/nongmin" -->
 
                         <ImageView
