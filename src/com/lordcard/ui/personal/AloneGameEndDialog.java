@@ -401,6 +401,8 @@ public class AloneGameEndDialog extends Dialog implements IGameView, android.vie
 			}
 		}
 		AnimUtils.playAnim(titlaSexIv, ImageUtil.getResAnimaSoft(loadAnim), 0);
+		((ImageView) findViewById(R.id.end_girl)).setImageDrawable(ImageUtil.getDrawableResId(iswin
+				? R.drawable.smiling_girl : R.drawable.crying_girl, false, true));
 	}
 
 	/**

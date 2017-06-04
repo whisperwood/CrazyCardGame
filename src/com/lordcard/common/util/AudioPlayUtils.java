@@ -177,24 +177,36 @@ public class AudioPlayUtils {
 		return BgisPlaying;
 	}
 
+	private int progress;
+
 	private AudioPlayUtils() {
-		long t1 = System.currentTimeMillis();
 		this.mediaPlayer = new MediaPlayer();
 		this.mediaPlayer2 = new MediaPlayer();
 		this.soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 100);
 		lotIngId = soundPool.load(context, R.raw.lot_ing, 1);
 		lotEndId = soundPool.load(context, R.raw.lot_end, 1);
 		soundPoolMap = new SparseIntArray();
+	}
+
+	public void startLoadResouces() {
+		long t1 = System.currentTimeMillis();
+		progress = 0;
 		for (int i = 0; i < soundId.length; i++) {
 			soundPoolMap.put(soundId[i], soundPool.load(context, soundId[i], 1));
+			progress++;
 		}
-		
 		int[] genderSouds = soundGenders[1];
 		for (int i = 0; i < genderSouds.length; i++) {
 			soundPoolMap.put(genderSouds[i], soundPool.load(context, genderSouds[i], 1));
+			progress++;
 		}
-		
-		System.out.println("AudioPlayUtils init costMills:" + (System.currentTimeMillis() - t1) + " soundId.len:" + soundId.length);
+		System.out.println("AudioPlayUtils init costMills:" + (System.currentTimeMillis() - t1) + " soundId.len:"
+				+ soundId.length);
+	}
+
+	public int getLoadProgress() {
+		int totalProgress = soundId.length + soundGenders[1].length;
+		return (int) (1.0 * progress / totalProgress * 100);
 	}
 
 	/**
@@ -203,15 +215,11 @@ public class AudioPlayUtils {
 	 */
 	public synchronized static AudioPlayUtils getInstance() {
 		if (mediaPlayerUtils == null) {
-			throw new IllegalStateException("You must call init first.");
+			context = CrashApplication.getInstance();
+			audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+			mediaPlayerUtils = new AudioPlayUtils();
 		}
 		return mediaPlayerUtils;
-	}
-
-	public static void init() {
-		context = CrashApplication.getInstance();
-		audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-		mediaPlayerUtils = new AudioPlayUtils();
 	}
 
 	/**

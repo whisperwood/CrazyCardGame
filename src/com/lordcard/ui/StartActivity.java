@@ -3,25 +3,23 @@ package com.lordcard.ui;
 import com.beauty.lord.R;
 
 import java.util.HashMap;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.ViewGroup.LayoutParams;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
+import com.lordcard.common.schedule.AutoTask;
+import com.lordcard.common.schedule.ScheduledTask;
 import com.lordcard.common.upgrade.UpdateUtils;
 import com.lordcard.common.util.ActivityUtils;
 import com.lordcard.common.util.AudioPlayUtils;
 import com.lordcard.common.util.ChannelUtils;
-import com.lordcard.common.util.ImageUtil;
 import com.lordcard.constant.CacheKey;
 import com.lordcard.constant.Constant;
 import com.lordcard.constant.Database;
@@ -36,24 +34,18 @@ import com.sdk.util.PayUtils;
 import com.sdk.util.SDKFactory;
 
 public class StartActivity extends BaseActivity {
-	LinearLayout layout = null;
-	ImageView imageView = null;
+	View root = null;
 	AlphaAnimation alphaAnimation = null;
 	private boolean first;
 	private SharedPreferences sharedData;
+	private ProgressBar loading_progress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		initMMChannel();
-		layout = new LinearLayout(this);
-		layout.setGravity(Gravity.CENTER);
-		layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		imageView = new ImageView(this);
-		imageView.setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.start_game, false));
-		imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		layout.addView(imageView);
-		setContentView(layout);
+		setContentView(R.layout.start_main);
+		root = findViewById(R.id.root);
+		loading_progress = (ProgressBar) findViewById(R.id.loading_progress);
 		sharedData = getApplication().getSharedPreferences(Constant.GAME_ACTIVITE, Context.MODE_PRIVATE);
 		first = sharedData.getBoolean("first", true);
 		// 判断推送服务是否启动
@@ -117,17 +109,29 @@ public class StartActivity extends BaseActivity {
 		alphaAnimation.setRepeatMode(Animation.REVERSE); // 反过来执行
 		alphaAnimation.setRepeatCount(1); // 重复播放次数 如果需要反过来执行 此数值需要为1
 		alphaAnimation.setFillAfter(true);
-		imageView.startAnimation(alphaAnimation);
-		final long t1 = System.currentTimeMillis();
+		root.startAnimation(alphaAnimation);
 		ThreadPool.startWork(new Runnable() {
 			@Override
 			public void run() {
-				//这里对本地音乐进行加载
-				AudioPlayUtils.init();
-				System.out.println("load Audio costMills:" + (System.currentTimeMillis() - t1));
-				goToLoginActivity();
+				AudioPlayUtils.getInstance().startLoadResouces();
 			}
 		});
+		ScheduledTask.addRateTask(new AutoTask() {
+			@Override
+			public void run() {
+				int progress = AudioPlayUtils.getInstance().getLoadProgress();
+				loading_progress.setProgress(progress);
+				if (progress == 100) {
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					goToLoginActivity();
+					stop(false);
+				}
+			}
+		}, 200, 20);
 	}
 
 	private void goToLoginActivity() {
