@@ -6,7 +6,7 @@
  */
 package com.lordcard.common.upgrade;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -95,7 +95,7 @@ public class UpdateService extends Service {
 	public void downLoadNewVesion() {
 		String notimsg = ctx.getResources().getString(R.string.app_name) + UPVersion.versionName + "正在下载更新";
 		notification = new Notification();
-		notification.icon = R.drawable.icon;
+		notification.icon = R.drawable.ic_launcher;
 		notification.tickerText = notimsg;
 		// 放置在"正在运行"栏目中
 		notification.flags = Notification.FLAG_ONGOING_EVENT;

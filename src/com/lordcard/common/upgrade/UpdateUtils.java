@@ -1,6 +1,6 @@
 package com.lordcard.common.upgrade;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.io.File;
 import java.io.FileOutputStream;

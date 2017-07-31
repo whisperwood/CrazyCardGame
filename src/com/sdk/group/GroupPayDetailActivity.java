@@ -1,6 +1,6 @@
 package com.sdk.group;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.util.List;
 

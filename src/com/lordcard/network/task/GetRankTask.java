@@ -1,6 +1,6 @@
 package com.lordcard.network.task;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 import android.content.Context;
 
 import com.lordcard.common.exception.CrashApplication;

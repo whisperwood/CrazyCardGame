@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.dialog;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.util.List;
 import java.util.Map;

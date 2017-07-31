@@ -1,6 +1,6 @@
 package com.lordcard.ui;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.util.List;
 
@@ -101,7 +101,7 @@ public class GameGuideView extends Activity implements OnGestureListener {
 	}
 
 	private void goToLogin() {
-		// ActivityUtils.createShortCut(GameGuideView.this,R.drawable.icon,R.string.app_name);
+		// ActivityUtils.createShortCut(GameGuideView.this,R.drawable.ic_launcher,R.string.app_name);
 		Intent intent = new Intent();
 		intent.setClass(GameGuideView.this, SDKFactory.getLoginView());
 		intent.putExtra("auto_login", true);

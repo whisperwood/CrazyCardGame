@@ -1,6 +1,6 @@
 package com.lordcard.ui.personal;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

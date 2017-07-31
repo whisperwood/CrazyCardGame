@@ -115,7 +115,7 @@ public class ClientName {
 
 	public static List<String> getallClientNames() {
 		allClientNames = new ArrayList<String>();
-		for (String str : client_womanNames) {
+		for (String str : client_manNames) {
 			allClientNames.add(str);
 		}
 		List<String> ClientNames = new ArrayList<String>();

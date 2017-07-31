@@ -1,6 +1,6 @@
 package com.lordcard.ui;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.util.HashMap;
 import android.content.Context;
@@ -137,7 +137,7 @@ public class StartActivity extends BaseActivity {
 	private void goToLoginActivity() {
 		if (first) {
 			// 第一次生成快捷方式
-			ActivityUtils.createShortCut(R.drawable.icon, R.string.app_name);
+			ActivityUtils.createShortCut(R.drawable.ic_launcher, R.string.app_name);
 			Editor editor = sharedData.edit();
 			editor.putBoolean("first", false);
 			editor.commit();

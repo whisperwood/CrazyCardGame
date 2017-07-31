@@ -1,14 +1,14 @@
 package com.lordcard.ui.view;
 
 //
-//import com.beauty.lord.BuildConfig;
-//import com.beauty.lord.R;
+//import com.warrior.lord.BuildConfig;
+//import com.warrior.lord.R;
 //import com.google.android.gms.ads.AdListener;
 //import com.google.android.gms.ads.AdRequest;
 //import com.google.android.gms.ads.AdView;
 //import com.google.android.gms.ads.InterstitialAd;
 //
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -25,9 +25,9 @@ public class GoogleAdsHelper {
 	private static Context context;
 	private static GoogleAdsHelper instance;
 
-	//	private final static String TAG = "GoogleAdsHelper";
-	//	private boolean isLoading;
-	//
+	private final static String TAG = "GoogleAdsHelper";
+	private boolean isLoading;
+	
 	public static GoogleAdsHelper getInstance() {
 		return instance;
 	}

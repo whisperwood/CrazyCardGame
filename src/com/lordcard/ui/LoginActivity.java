@@ -1,6 +1,6 @@
 package com.lordcard.ui;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -192,7 +192,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 		taskManager.addTask(gameNoticeTask);
 		mst.adjustView(gameBg);
 		GoogleAdsHelper.getInstance().showBanner(gameBg);
-		GameCache.putStr(Constant.GAME_NAME_CACHE, "武则天");
+		GameCache.putStr(Constant.GAME_NAME_CACHE, "项羽");
 	}
 
 	@Override

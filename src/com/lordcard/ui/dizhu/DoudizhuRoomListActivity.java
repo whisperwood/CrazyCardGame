@@ -1,6 +1,6 @@
 package com.lordcard.ui.dizhu;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;

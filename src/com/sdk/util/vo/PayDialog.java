@@ -1,6 +1,6 @@
 package com.sdk.util.vo;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;

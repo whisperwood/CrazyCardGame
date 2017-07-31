@@ -6,7 +6,7 @@
  */
 package com.lordcard.ui.base;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;

@@ -2,7 +2,7 @@
 	<item type="id" name="view_tag_id"></item>
     <!-- 相关提示信息 -->
     <string name="desc">abc</string>
-    <string name="app_name">美女斗地主</string>
+    <string name="app_name">勇士斗地主</string>
     <string name="net_interrupt">网络连接异常,请稍候再试</string>
     <string name="gs_update">游戏服务器临时维护，请重新进入</string>
     <string name="net_timeout">网络连接超时</string>
@@ -190,8 +190,8 @@
 	
 	    <!--Replace with your own ad unit id. ca-app-pub-3940256099942544/6300978111-->
     <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ad_unit_id_banner">ca-app-pub-6571779790787196/1380917795</string>
-    <string name="ad_unit_id_banner2">ca-app-pub-6571779790787196/7427451394</string>
-    <string name="ad_unit_id_banner3">ca-app-pub-6571779790787196/2857650997</string>
+    <string name="ad_unit_id_banner">ca-app-pub-6571779790787196/5304486512</string>
+    <string name="ad_unit_id_banner2">ca-app-pub-6571779790787196/4852705152</string>
+    <string name="ad_unit_id_banner3">ca-app-pub-6571779790787196/4198099031</string>
     <string name="ad_unit_id_bannertest">ca-app-pub-3940256099942544/6300978111</string>
 </resources>

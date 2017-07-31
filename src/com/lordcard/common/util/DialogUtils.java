@@ -1,6 +1,6 @@
 package com.lordcard.common.util;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;

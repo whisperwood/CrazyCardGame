@@ -1,6 +1,6 @@
 package com.lordcard.adapter;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;

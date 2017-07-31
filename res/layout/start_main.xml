@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="16dip"
         android:layout_above="@+id/loading_text"
+        android:progress="0"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dip"
         android:layout_marginLeft="100dip"

@@ -1,6 +1,6 @@
 package com.lordcard.common.util;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.util.HashMap;
 
@@ -195,7 +195,7 @@ public class AudioPlayUtils {
 			soundPoolMap.put(soundId[i], soundPool.load(context, soundId[i], 1));
 			progress++;
 		}
-		int[] genderSouds = soundGenders[1];
+		int[] genderSouds = soundGenders[0];
 		for (int i = 0; i < genderSouds.length; i++) {
 			soundPoolMap.put(genderSouds[i], soundPool.load(context, genderSouds[i], 1));
 			progress++;
@@ -205,7 +205,7 @@ public class AudioPlayUtils {
 	}
 
 	public int getLoadProgress() {
-		int totalProgress = soundId.length + soundGenders[1].length;
+		int totalProgress = soundId.length + soundGenders[0].length;
 		return (int) (1.0 * progress / totalProgress * 100);
 	}
 

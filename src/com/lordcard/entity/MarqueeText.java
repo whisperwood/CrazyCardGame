@@ -6,6 +6,12 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+/**
+ * @ClassName: MarqueeText
+ * @Description: 跑马灯用handler实现比Timer性能更好
+ * @author: Administrator
+ * @date: 2017-6-17 下午4:41:49
+ */
 public class MarqueeText extends TextView implements Runnable {
 	public int currentScrollX;// 当前滚动的位置
 	private boolean isStop = false;
@@ -15,7 +21,6 @@ public class MarqueeText extends TextView implements Runnable {
 
 	public MarqueeText(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 	}
 
 	public MarqueeText(Context context, AttributeSet attrs) {
@@ -55,8 +60,6 @@ public class MarqueeText extends TextView implements Runnable {
 		if (getScrollX() >= textWidth) {
 			currentScrollX = 0;
 			scrollTo(currentScrollX, 0);
-			// startFor0();
-			// return;
 		}
 		postDelayed(this, 5);
 	}

@@ -1,6 +1,6 @@
 package com.lordcard.common.anim;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;

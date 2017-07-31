@@ -1,6 +1,6 @@
 package com.lordcard.ui.view;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;

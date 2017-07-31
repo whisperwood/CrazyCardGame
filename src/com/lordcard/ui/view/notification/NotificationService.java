@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.notification;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -175,7 +175,7 @@ public class NotificationService extends Service {
 								}
 							} else {
 								NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-								Notification n = new Notification(R.drawable.icon, "通知", System.currentTimeMillis());
+								Notification n = new Notification(R.drawable.ic_launcher, "通知", System.currentTimeMillis());
 								n.flags |= Notification.FLAG_ONGOING_EVENT; // 将此通知放到通知栏
 								n.flags |= Notification.FLAG_AUTO_CANCEL;
 								Intent intent2 = new Intent(NotificationService.this, StartActivity.class);
@@ -214,7 +214,7 @@ public class NotificationService extends Service {
 									DialogUtils.mesTip(msg, false, false);
 								} else {
 									NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-									Notification n = new Notification(R.drawable.icon, "通知", System.currentTimeMillis());
+									Notification n = new Notification(R.drawable.ic_launcher, "通知", System.currentTimeMillis());
 									n.flags |= Notification.FLAG_ONGOING_EVENT; // 将此通知放到通知栏
 									n.flags |= Notification.FLAG_AUTO_CANCEL;
 									n.setLatestEventInfo(NotificationService.this, "”" + gp.getRoomName() + "“比赛结果",

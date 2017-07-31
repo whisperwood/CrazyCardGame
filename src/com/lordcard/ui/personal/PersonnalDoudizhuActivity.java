@@ -1,7 +1,7 @@
 package com.lordcard.ui.personal;
 
-import com.beauty.lord.R;
-import com.beauty.lord.R.color;
+import com.warrior.lord.R;
+import com.warrior.lord.R.color;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ import java.util.Timer;
 
 import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -75,7 +74,6 @@ import com.lordcard.common.task.GenericTask;
 import com.lordcard.common.util.ActivityPool;
 import com.lordcard.common.util.ActivityUtils;
 import com.lordcard.common.util.AudioPlayUtils;
-import com.lordcard.common.util.AudioReadDataUtils;
 import com.lordcard.common.util.DialogUtils;
 import com.lordcard.common.util.ImageUtil;
 import com.lordcard.common.util.ImageUtil.ImageCallback;
@@ -127,9 +125,6 @@ import com.lordcard.ui.view.dialog.ChatDialog;
 import com.lordcard.ui.view.dialog.PhotoDialog;
 import com.lordcard.ui.view.dialog.SettingDialog;
 
-@SuppressLint({
-		"HandlerLeak",
-		"UseSparseArrays" })
 public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView, OnTouchListener, HasTiShiListenner,
 		OnGestureListener, InitMainGameInterface {
 	private static final String TAG = "PersonnalDoudizhuActivity";
@@ -288,9 +283,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 	private View leftJiPaiQiLayout;
 	private View rightJiPaiQiLayout;
 	private boolean isJiPaiQiEnable = false;
-	// private String jiPaiQiTipsMsg;
 	private Button btn_jipaiqi;
-	// private List<Bitmap> bitmapList = null;
 	private TextView text_kingb;
 	private TextView text_kings;
 	private TextView text_2;
@@ -2969,7 +2962,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 				bierenchupai = null;
 				// 检测加倍
 				checkJiaBei(typeMe, false);
-				playDiZhuCardAudio(typeMe, valueMe, "1"); // 出牌的声音
+				playDiZhuCardAudio(typeMe, valueMe, backData.getUsers().get(0).getGender()); // 出牌的声音
 				// 如果是炸弹显示特效
 				PlayCardEffect.bomEffect(typeMe, doudizhuBackGround);
 				if (myCardsTouchLayout.getChildCount() > 0) {
@@ -3009,7 +3002,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 			firstChupai = true;
 			// 自己出完牌后将别人出牌清空
 			bierenchupai = null;
-			playDiZhuCardAudio(typeMe, valueMe, "1"); // 出牌的声音
+			playDiZhuCardAudio(typeMe, valueMe, backData.getUsers().get(0).getGender()); // 出牌的声音
 			// 如果是炸弹显示特效
 			PlayCardEffect.bomEffect(typeMe, doudizhuBackGround);
 			if (myCardsTouchLayout.getChildCount() > 0) {
@@ -4019,7 +4012,7 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 			addOutPokers(play.getOrder(), carList);
 			int type = DoudizhuRule.checkpai(carList);
 			int value = DoudizhuRule.checkpaiValue(type, carList);
-			playDiZhuCardAudio(type, value, "1"); // 出牌的声音
+			playDiZhuCardAudio(type, value, backData.getUsers().get(0).getGender()); // 出牌的声音
 			// 如果是炸弹显示特效
 			PlayCardEffect.bomEffect(type, doudizhuBackGround);
 			if (play.getCount() > 0) {
@@ -4196,13 +4189,13 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 	 * 斗地主出牌声音
 	 */
 	public void playDiZhuCardAudio(int audioType, int value, final String gender) {
+		System.out.println("audioType:"+audioType+" value:"+value+" gender:"+gender);
 		switch (audioType) {
 			case DoudizhuRule.Danpai: // 如果是一张牌
 				if (value > 0) {
 					value -= 3;
 					if (value >= 0 && value < DoudizhuMainGameActivity.sound_single[0].length) {
-						AudioPlayUtils.getInstance().playSound(
-								DoudizhuMainGameActivity.sound_single["1".equals(gender) ? 1 : 0][value]); // 出牌
+						AudioPlayUtils.getInstance().playSound(DoudizhuMainGameActivity.sound_single["1".equals(gender) ? 1 : 0][value]); // 出牌
 					}
 				}
 				// AudioPlayUtils.getInstance().playSound(R.raw.outcard); // 出牌
@@ -5260,13 +5253,15 @@ public class PersonnalDoudizhuActivity extends BaseActivity implements IGameView
 		List<String> clientNames = ClientName.getallClientNames();
 		ClientUser user1 = new ClientUser();
 		user1.setOrder(1);
-		user1.setGender("1");
+		user1.setGender("0");
 		user1.setName(GameCache.getStr(Constant.GAME_NAME_CACHE)); // 自己
 		ClientUser user2 = new ClientUser();
 		user2.setOrder(2);
+		user2.setGender("0");
 		user2.setName(clientNames.get(0));
 		ClientUser user3 = new ClientUser();
 		user3.setOrder(3);
+		user3.setGender("0");
 		user3.setName(clientNames.get(1));
 		users.add(user1);
 		users.add(user2);

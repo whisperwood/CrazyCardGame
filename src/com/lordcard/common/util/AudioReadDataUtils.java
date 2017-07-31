@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 public class AudioReadDataUtils {
 	/**

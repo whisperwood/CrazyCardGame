@@ -1,6 +1,6 @@
 package com.lordcard.ui.view;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.util.List;
 
@@ -102,9 +102,7 @@ public class GameWaitView extends LinearLayout implements ChangeProInterface {
 		puKeHuaSe3.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait30, true, true));
 		// puKeHuaSe4.setImageResource(R.drawable.wait40);
 		puKeHuaSe4.setImageDrawable(ImageUtil.getDrawableResId(R.drawable.wait40, true, true));
-		mainView.findViewById(R.id.doudizhu_waitting).setBackgroundResource(R.drawable.game_waiting_bg);
-		mainView.findViewById(R.id.join_ad_layout).setBackgroundDrawable(
-				ImageUtil.getResDrawable(R.drawable.join_ad, true));
+		mainView.findViewById(R.id.join_ad_layout).setBackgroundDrawable(ImageUtil.getResDrawable(R.drawable.join_ad, true));
 		joinProgrees = (TextView) mainView.findViewById(R.id.join_home_text);
 		exitGame = (Button) mainView.findViewById(R.id.join_gp_exit_btn);
 		exitGame.setOnClickListener(new OnClickListener() {

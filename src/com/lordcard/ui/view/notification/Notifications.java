@@ -1,6 +1,6 @@
 package com.lordcard.ui.view.notification;
 
-import com.beauty.lord.R;
+import com.warrior.lord.R;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,7 @@ public class Notifications {
 		nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		notification = new Notification();
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-		notification.icon = R.drawable.icon;
+		notification.icon = R.drawable.ic_launcher;
 		notification.tickerText = "掌中游斗地主通知内容...";
 		notification.defaults = Notification.DEFAULT_SOUND;
 		notification.setLatestEventInfo(context, title, content, null);
@@ -55,7 +55,7 @@ public class Notifications {
 				notification.flags |= Notification.FLAG_AUTO_CANCEL;
 				intent = new Intent(context, NotifiyActivity.class);
 				pIntent = PendingIntent.getActivity(context, 0, intent, 0);
-				notification.icon = R.drawable.icon;
+				notification.icon = R.drawable.ic_launcher;
 				notification.tickerText = "掌中游斗地主通知内容...";
 				notification.defaults = Notification.DEFAULT_SOUND;
 				notification.setLatestEventInfo(context, title, content, pIntent);
@@ -81,7 +81,7 @@ public class Notifications {
 				}
 			}
 			if (hasApp) {
-				int icon = R.drawable.icon1;
+				int icon = R.drawable.ic_launcher;
 				CharSequence tickerText = noticeBar.getTicker();
 				long when = System.currentTimeMillis();
 				Notification notification = new Notification(icon, tickerText, when);
